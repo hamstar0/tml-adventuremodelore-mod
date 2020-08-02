@@ -1,0 +1,19 @@
+v1
+-	Create intro cutscene
+	-	Cleanup loaded set
+	-	Implement dialog
+	-	Implement actors
+	-	Implement camera script
+	-	Implement event sequence
+	-	Cutscene mode: Lock player, npc spawns, time, etc.
+
+	-	@Test loading sets
+	-	Load set for cutscene
+	-	Load set data in session (via. TileStructure)
+	-	Create set
+		-	Ship interior
+		-	Ship exterior
+-	Implement 'cutscene session' (world has no boss kills)
+	-	Implement activation and rememberance (no kills, default hp/mp, AM-genned, no lore progress)
+-	Setup project
+-	@Implement TileStructure class and commands (via. MH)
