@@ -17,9 +17,31 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 		////////////////
 
-		public abstract bool HasValidPlayerConditions( Player player );
+		public virtual bool CanBeginForWorld() {
+			var cutsceneMngr = CutsceneManager.Instance;
 
-		public abstract bool HasValidWorldConditions();
+			if( cutsceneMngr.CurrentActiveCutscene != 0 ) {
+				return false;
+			}
+			if( cutsceneMngr.IsCutsceneActivatedForWorld(this.UniqueId) ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		public virtual bool CanBeginForPlayer( Player player ) {
+			var cutsceneMngr = CutsceneManager.Instance;
+
+			if( cutsceneMngr.CurrentActiveCutscene != 0 ) {
+				return false;
+			}
+			if( cutsceneMngr.IsCutsceneActivatedForPlayer(this.UniqueId, player) ) {
+				return false;
+			}
+
+			return true;
+		}
 
 
 		public abstract void BeginForPlayer( Player player );

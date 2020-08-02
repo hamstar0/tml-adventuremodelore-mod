@@ -10,28 +10,12 @@ using AdventureModeLore.Cutscenes.Intro;
 
 namespace AdventureModeLore.Cutscenes {
 	public partial class CutsceneManager : ILoadable {
-		public bool CanBeginForWorld( CutsceneID cutsceneId ) {
-			if( this.CurrentActiveCutscene != 0 ) {
-				return false;
-			}
-			if( this.IsCutsceneActivatedForWorld(cutsceneId) ) {
-				return false;
-			}
-
-			return this.Cutscenes[cutsceneId]
-				.HasValidWorldConditions();
+		internal bool CanBeginForWorld( CutsceneID cutsceneId ) {
+			return this.Cutscenes[ cutsceneId ].CanBeginForWorld();
 		}
 
 		public bool CanBeginForPlayer( CutsceneID cutsceneId, Player player ) {
-			if( this.CurrentActiveCutscene != 0 ) {
-				return false;
-			}
-			if( this.IsCutsceneActivatedForPlayer(cutsceneId, player) ) {
-				return false;
-			}
-
-			return this.Cutscenes[cutsceneId]
-				.HasValidPlayerConditions( player );
+			return this.Cutscenes[ cutsceneId ].CanBeginForPlayer( player );
 		}
 
 
@@ -39,7 +23,7 @@ namespace AdventureModeLore.Cutscenes {
 
 		public bool BeginCutscene( CutsceneID cutsceneId, Player player ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
-			if( !cutscene.HasValidPlayerConditions(player) ) {
+			if( !cutscene.CanBeginForPlayer(player) ) {
 				return false;
 			}
 
@@ -57,7 +41,7 @@ namespace AdventureModeLore.Cutscenes {
 
 		internal bool BeginCutsceneForPlayer( CutsceneID cutsceneId, Player player ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
-			if( !cutscene.HasValidPlayerConditions( player ) ) {
+			if( !cutscene.CanBeginForPlayer( player ) ) {
 				return false;
 			}
 

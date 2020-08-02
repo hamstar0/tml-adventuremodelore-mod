@@ -38,8 +38,8 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 		////////////////
 		
-		public override bool HasValidWorldConditions() {
-			return true;
+		public override bool CanBeginForWorld() {
+			return base.CanBeginForWorld();
 		}
 
 		public override void BeginForWorld() {
