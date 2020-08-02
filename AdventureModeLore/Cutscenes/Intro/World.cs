@@ -37,7 +37,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 
 		////////////////
-
+		
 		public override bool HasValidWorldConditions() {
 			return true;
 		}
@@ -55,6 +55,12 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
 			shipInterior.PaintToWorld( left, top - 160, false, isFlipped, false );
+		}
+
+
+		////////////////
+
+		internal override void UpdateForWorld() {
 		}
 	}
 }

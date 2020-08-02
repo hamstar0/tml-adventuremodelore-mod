@@ -7,17 +7,17 @@ using HamstarHelpers.Services.Network.NetIO.PayloadTypes;
 
 namespace AdventureModeLore.Net {
 	[Serializable]
-	class AMLPlayerDataNetData : NetProtocolBroadcastPayload {
-		public static void SendToClients( int ignoreWho, AMLPlayer plrData ) {
+	class AMLPlayerDataNetData : NetProtocolBidirectionalPayload {
+		public static void SendToServer( AMLPlayer plrData ) {
 			var protocol = new AMLPlayerDataNetData( plrData );
 
-			NetIO.SendToClients( protocol, ignoreWho );
+			NetIO.SendToServer( protocol );
 		}
 
-		public static void BroadcastFromCurrentPlayer( AMLPlayer plrData ) {
+		public static void SendToClients( AMLPlayer plrData, int toWho, int ignoreWho ) {
 			var protocol = new AMLPlayerDataNetData( plrData );
 
-			NetIO.Broadcast( protocol );
+			NetIO.SendToClients( protocol, toWho, ignoreWho );
 		}
 
 
@@ -45,12 +45,12 @@ namespace AdventureModeLore.Net {
 
 		////////////////
 
-		public override void ReceiveOnServerBeforeRebroadcast( int fromWho ) {
+		public override void ReceiveOnServer( int fromWho ) {
 			var myplr = Main.player[this.FromWho].GetModPlayer<AMLPlayer>();
 			myplr.SyncFromNet( this );
 		}
 
-		public override void ReceiveBroadcastOnClient( int fromWho ) {
+		public override void ReceiveOnClient( int fromWho ) {
 			var myplr = Main.player[this.FromWho].GetModPlayer<AMLPlayer>();
 			myplr.SyncFromNet( this );
 		}

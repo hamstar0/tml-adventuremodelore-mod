@@ -26,6 +26,15 @@ namespace AdventureModeLore {
 
 		////////////////
 
+		public override void clientClone( ModPlayer clientClone ) {
+			var myclone = clientClone as AMLPlayer;
+			myclone.ActivatedCutscenes = new HashSet<CutsceneID>( this.ActivatedCutscenes );
+			myclone.IsAdventureModePlayer = this.IsAdventureModePlayer;
+		}
+
+
+		////////////////
+
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsAdventureModePlayer" ) ) {
 				this.IsAdventureModePlayer = true;
@@ -55,9 +64,9 @@ namespace AdventureModeLore {
 		
 		public override void SyncPlayer( int toWho, int fromWho, bool newPlayer ) {
 			if( Main.netMode == NetmodeID.Server ) {
-				AMLPlayerDataNetData.SendToClients( fromWho, this );
+				AMLPlayerDataNetData.SendToClients( this, toWho, fromWho );
 			} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				AMLPlayerDataNetData.BroadcastFromCurrentPlayer( this );
+				AMLPlayerDataNetData.SendToServer( this );
 			}
 		}
 
@@ -67,7 +76,11 @@ namespace AdventureModeLore {
 				|| !this.ActivatedCutscenes.SetEquals( myclone.ActivatedCutscenes );
 
 			if( isDesynced ) {
-				AMLPlayerDataNetData.BroadcastFromCurrentPlayer( this );
+				if( Main.netMode == NetmodeID.Server ) {
+					AMLPlayerDataNetData.SendToClients( this, -1, this.player.whoAmI );
+				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
+					AMLPlayerDataNetData.SendToServer( this );	// server only?
+				}
 			}
 		}
 

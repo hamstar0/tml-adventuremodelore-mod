@@ -1,6 +1,6 @@
-﻿using HamstarHelpers.Helpers.Players;
-using System;
+﻿using System;
 using Terraria;
+using HamstarHelpers.Helpers.Players;
 
 
 namespace AdventureModeLore.Cutscenes.Intro {
@@ -14,8 +14,10 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		}
 
 
-		public override void UpdateForPlayer( Player player ) {
-			PlayerHelpers.LockdownPlayerPerTick( player );
+		////
+
+		internal override void UpdateForPlayer( AMLPlayer myplayer ) {
+			PlayerHelpers.LockdownPlayerPerTick( myplayer.player );
 		}
 	}
 }
