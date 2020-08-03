@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Net;
 using AdventureModeLore.Cutscenes;
 using AdventureModeLore.Cutscenes.Intro;
@@ -11,7 +12,7 @@ using AdventureModeLore.Cutscenes.Intro;
 
 namespace AdventureModeLore {
 	partial class AMLPlayer : ModPlayer {
-		internal ISet<CutsceneID> ActivatedCutscenes = new HashSet<CutsceneID>();
+		internal ISet<CutsceneID> TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>();
 
 
 		////////////////
@@ -28,7 +29,7 @@ namespace AdventureModeLore {
 
 		public override void clientClone( ModPlayer clientClone ) {
 			var myclone = clientClone as AMLPlayer;
-			myclone.ActivatedCutscenes = new HashSet<CutsceneID>( this.ActivatedCutscenes );
+			myclone.TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>( this.TriggeredCutsceneIDsForPlayer );
 			myclone.IsAdventureModePlayer = this.IsAdventureModePlayer;
 		}
 
@@ -56,6 +57,7 @@ namespace AdventureModeLore {
 		public override void SetupStartInventory( IList<Item> items, bool mediumcoreDeath ) {
 			if( !mediumcoreDeath ) {
 				this.IsAdventureModePlayer = true;
+				LogHelpers.Log( "Player " + this.player.name + " prepped for Adventure Mode." );
 			}
 		}
 
@@ -73,7 +75,7 @@ namespace AdventureModeLore {
 		public override void SendClientChanges( ModPlayer clientPlayer ) {
 			var myclone = clientPlayer as AMLPlayer;
 			bool isDesynced = myclone.IsAdventureModePlayer != this.IsAdventureModePlayer
-				|| !this.ActivatedCutscenes.SetEquals( myclone.ActivatedCutscenes );
+				|| !this.TriggeredCutsceneIDsForPlayer.SetEquals( myclone.TriggeredCutsceneIDsForPlayer );
 
 			if( isDesynced ) {
 				if( Main.netMode == NetmodeID.Server ) {
@@ -88,7 +90,7 @@ namespace AdventureModeLore {
 
 		internal void SyncFromNet( AMLPlayerDataNetData payload ) {
 			this.IsAdventureModePlayer = this.IsAdventureModePlayer;
-			this.ActivatedCutscenes = new HashSet<CutsceneID>(
+			this.TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>(
 				payload.ActivatedCutscenes.Select( c => (CutsceneID)c )
 			);
 		}

@@ -39,7 +39,7 @@ namespace AdventureModeLore.Net {
 		private AMLPlayerDataNetData( AMLPlayer plrData ) {
 			this.FromWho = plrData.player.whoAmI;
 			this.IsAdventureModePlayer = plrData.IsAdventureModePlayer;
-			this.ActivatedCutscenes = plrData.ActivatedCutscenes.Select( c=>(int)c ).ToArray();
+			this.ActivatedCutscenes = plrData.TriggeredCutsceneIDsForPlayer.Select( c=>(int)c ).ToArray();
 		}
 
 

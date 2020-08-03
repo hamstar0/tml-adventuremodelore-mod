@@ -6,6 +6,8 @@ v1
 	-	Implement camera script
 	-	Implement event sequence
 	-	Cutscene mode: Lock player, npc spawns, time, etc.
+		-	Lock controls (PlayerInput.Triggers.Current.KeyStatus)
+		-	Lock player
 
 	-	@Test loading sets
 	-	Load set for cutscene

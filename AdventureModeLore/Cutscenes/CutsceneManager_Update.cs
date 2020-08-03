@@ -1,23 +1,22 @@
 ﻿using System;
 using Terraria;
-using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Classes.Errors;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager : ILoadable {
+	public partial class CutsceneManager {
 		internal void UpdateForWorld() {
-			if( this.CurrentActiveCutscene == 0 ) {
+			if( this.CurrentlyPlayingCutsceneID == 0 ) {
 				this.UpdateToActivate();
 			} else {
-				this.Cutscenes[this.CurrentActiveCutscene].UpdateForWorld();
+				this.Cutscenes[this.CurrentlyPlayingCutsceneID].UpdateForWorld();
 			}
 		}
 
 		private void UpdateToActivate() {
 			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				if( !this.CanBeginForWorld( cutscene.UniqueId ) ) {
+				if( !cutscene.CanBeginForWorld() ) {
 					continue;
 				}
 
@@ -26,7 +25,9 @@ namespace AdventureModeLore.Cutscenes {
 					Player plr = Main.player[i];
 					if( plr?.active != true ) { continue; }
 
-					this.BeginCutscene( cutscene.UniqueId, plr );
+					if( cutscene.CanBeginForPlayer(plr) ) {
+						this.BeginCutscene( cutscene.UniqueId, plr );
+					}
 					break;
 				}
 			}
@@ -36,8 +37,8 @@ namespace AdventureModeLore.Cutscenes {
 		////////////////
 
 		internal void UpdateForPlayer( AMLPlayer myplayer ) {
-			if( this.CurrentActiveCutscene != 0 ) {
-				this.Cutscenes[this.CurrentActiveCutscene].UpdateForPlayer( myplayer );
+			if( this.CurrentlyPlayingCutsceneID != 0 ) {
+				this.Cutscenes[this.CurrentlyPlayingCutsceneID].UpdateForPlayer( myplayer );
 			}
 		}
 	}

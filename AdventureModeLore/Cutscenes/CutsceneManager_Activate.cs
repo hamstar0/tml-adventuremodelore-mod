@@ -2,33 +2,20 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Classes.Errors;
 using AdventureModeLore.Net;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager : ILoadable {
-		internal bool CanBeginForWorld( CutsceneID cutsceneId ) {
-			return this.Cutscenes[ cutsceneId ].CanBeginForWorld();
-		}
-
-		public bool CanBeginForPlayer( CutsceneID cutsceneId, Player player ) {
-			return this.Cutscenes[ cutsceneId ].CanBeginForPlayer( player );
-		}
-
-
-		////////////////
-
+	public partial class CutsceneManager {
 		public bool BeginCutscene( CutsceneID cutsceneId, Player player ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
 			if( !cutscene.CanBeginForPlayer(player) ) {
 				return false;
 			}
 
-			var myworld = ModContent.GetInstance<AMLWorld>();
-			myworld.ActivatedCutscenes.Add( cutsceneId );
+			this.TriggeredCutsceneIDs.Add( cutsceneId );
 
 			cutscene.BeginForWorld();
 			this.BeginCutsceneForPlayer( cutsceneId, player );
@@ -36,8 +23,6 @@ namespace AdventureModeLore.Cutscenes {
 			return true;
 		}
 
-
-		////
 
 		internal bool BeginCutsceneForPlayer( CutsceneID cutsceneId, Player player ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];

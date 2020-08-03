@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Terraria;
-using Terraria.ModLoader;
-using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Classes.Errors;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager : ILoadable {
-		public static CutsceneManager Instance => ModContent.GetInstance<CutsceneManager>();
+	public partial class CutsceneManager {
+		public static CutsceneManager Instance { get; internal set; }
 
 
 
@@ -18,7 +16,9 @@ namespace AdventureModeLore.Cutscenes {
 
 		public IReadOnlyDictionary<CutsceneID, Cutscene> Cutscenes { get; }
 
-		public CutsceneID CurrentActiveCutscene { get; private set; }
+		public ISet<CutsceneID> TriggeredCutsceneIDs { get; } = new HashSet<CutsceneID>();
+
+		public CutsceneID CurrentlyPlayingCutsceneID { get; private set; }
 
 
 		////////////////
@@ -35,21 +35,16 @@ namespace AdventureModeLore.Cutscenes {
 			this.Cutscenes = new ReadOnlyDictionary<CutsceneID, Cutscene>( this._Cutscenes );
 		}
 
-		void ILoadable.OnModsLoad() { }
-		void ILoadable.OnPostModsLoad() { }
-		void ILoadable.OnModsUnload() { }
-
 
 		////////////////
 		
 		public bool IsCutsceneActivatedForWorld( CutsceneID cutsceneId ) {
-			var myworld = ModContent.GetInstance<AMLWorld>();
-			return myworld.ActivatedCutscenes.Contains( cutsceneId );
+			return this.TriggeredCutsceneIDs.Contains( cutsceneId );
 		}
 
 		public bool IsCutsceneActivatedForPlayer( CutsceneID cutsceneId, Player player ) {
 			var myplayer = player.GetModPlayer<AMLPlayer>();
-			return myplayer.ActivatedCutscenes.Contains( cutsceneId );
+			return myplayer.TriggeredCutsceneIDsForPlayer.Contains( cutsceneId );
 		}
 	}
 }

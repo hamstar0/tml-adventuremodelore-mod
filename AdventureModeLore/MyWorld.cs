@@ -1,10 +1,9 @@
 using System.IO;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using AdventureModeLore.Cutscenes.Intro;
+using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Cutscenes;
 
 
@@ -12,13 +11,12 @@ namespace AdventureModeLore {
 	partial class AMLWorld : ModWorld {
 		private bool IsThisWorldAdventureMode = false;
 
-		internal ISet<CutsceneID> ActivatedCutscenes = new HashSet<CutsceneID>();
-
 
 
 		////////////////
 
 		public override void PostWorldGen() {
+			LogHelpers.Log( "World "+Main.worldName+" prepped for Adventure Mode." );
 			this.IsThisWorldAdventureMode = true;
 		}
 
@@ -27,7 +25,7 @@ namespace AdventureModeLore {
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsThisWorldAdventureMode" ) ) {
 				this.IsThisWorldAdventureMode = true;
-				CutsceneManager.Instance.LoadForWorld( this, tag );
+				CutsceneManager.Instance.LoadForWorld( tag );
 			}
 		}
 
@@ -35,7 +33,7 @@ namespace AdventureModeLore {
 			var tag = new TagCompound {
 				{ "IsThisWorldAdventureMode", this.IsThisWorldAdventureMode },
 			};
-			CutsceneManager.Instance.SaveForWorld( this, tag );
+			CutsceneManager.Instance.SaveForWorld( tag );
 			return tag;
 		}
 
@@ -44,14 +42,14 @@ namespace AdventureModeLore {
 		public override void NetSend( BinaryWriter writer ) {
 			try {
 				writer.Write( this.IsThisWorldAdventureMode );
-				CutsceneManager.Instance.NetSendForWorld( this, writer );
+				CutsceneManager.Instance.NetSendForWorld( writer );
 			} catch { }
 		}
 
 		public override void NetReceive( BinaryReader reader ) {
 			try {
 				this.IsThisWorldAdventureMode = reader.ReadBoolean();
-				CutsceneManager.Instance.NetReceiveForWorld( this, reader );
+				CutsceneManager.Instance.NetReceiveForWorld( reader );
 			} catch { }
 		}
 

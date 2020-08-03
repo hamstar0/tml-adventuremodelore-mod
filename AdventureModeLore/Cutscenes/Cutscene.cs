@@ -20,7 +20,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		public virtual bool CanBeginForWorld() {
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( cutsceneMngr.CurrentActiveCutscene != 0 ) {
+			if( cutsceneMngr.CurrentlyPlayingCutsceneID != 0 ) {
 				return false;
 			}
 			if( cutsceneMngr.IsCutsceneActivatedForWorld(this.UniqueId) ) {
@@ -33,7 +33,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		public virtual bool CanBeginForPlayer( Player player ) {
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( cutsceneMngr.CurrentActiveCutscene != 0 ) {
+			if( cutsceneMngr.CurrentlyPlayingCutsceneID != 0 ) {
 				return false;
 			}
 			if( cutsceneMngr.IsCutsceneActivatedForPlayer(this.UniqueId, player) ) {
