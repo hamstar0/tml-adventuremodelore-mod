@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Players;
 
 
 namespace AdventureModeLore.Cutscenes.Intro {
@@ -18,7 +17,9 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		////
 
 		internal override void UpdateForPlayer( AMLPlayer myplayer ) {
-			PlayerHelpers.LockdownPlayerPerTick( myplayer.player );
+			myplayer.player.immune = true;
+			myplayer.player.immuneTime = 2;
+			//PlayerHelpers.LockdownPlayerPerTick( myplayer.player );
 		}
 	}
 }

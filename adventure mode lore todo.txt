@@ -5,10 +5,13 @@ v1
 	-	Implement actors
 	-	Implement camera script
 	-	Implement event sequence
-	-	Cutscene mode: Lock player, npc spawns, time, etc.
-		-	Lock controls (PlayerInput.Triggers.Current.KeyStatus)
-		-	Lock player
+	-	Cutscene mode: Lock player, npc spawns, etc.
+		-	Stop NPC spawns
+		-	Hide UI
+		-	Revert map mode, camera mode
 
+		-	Set player invincibility
+		-	Lock controls (PlayerInput.Triggers.Current.KeyStatus)
 	-	@Test loading sets
 	-	Load set for cutscene
 	-	Load set data in session (via. TileStructure)

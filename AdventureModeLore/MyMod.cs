@@ -2,8 +2,9 @@ using System.Linq;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
+using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Cutscenes;
-using HamstarHelpers.Helpers.TModLoader;
+
 
 namespace AdventureModeLore {
 	public class AMLMod : Mod {
@@ -33,10 +34,15 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PostUpdateInput() {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<AMLPlayer>( Main.LocalPlayer );
+			if( Main.gameMenu ) { return; }
+
+			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
 
 			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
 				foreach( string key in PlayerInput.Triggers.Current.KeyStatus.Keys.ToArray() ) {
+					if( key == "Inventory" ) {
+						continue;	// don't overdo it!
+					}
 					PlayerInput.Triggers.Current.KeyStatus[key] = false;
 				}
 			}
