@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Cutscenes;
+using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore {
@@ -35,16 +37,20 @@ namespace AdventureModeLore {
 
 		public override void PostUpdateInput() {
 			if( Main.gameMenu ) { return; }
+			if( AMLConfig.Instance.DebugModeFreeMove ) { return; }
 
-			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
+			Cutscene currCutscene = CutsceneManager.Instance?.GetCurrentPlayerCutscene( Main.LocalPlayer );
+			if( currCutscene?.IsSiezingControls() != true ) {
+				return;
+			}
 
-			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
-				foreach( string key in PlayerInput.Triggers.Current.KeyStatus.Keys.ToArray() ) {
-					if( key == "Inventory" ) {
-						continue;	// don't overdo it!
-					}
-					PlayerInput.Triggers.Current.KeyStatus[key] = false;
-				}
+			IDictionary<string, bool> keys = PlayerInput.Triggers.Current.KeyStatus;
+
+			foreach( string key in keys.Keys.ToArray() ) {
+				bool on = keys[key];
+
+				currCutscene.SiezeControl( key, ref on );
+				keys[key] = on;
 			}
 		}
 	}

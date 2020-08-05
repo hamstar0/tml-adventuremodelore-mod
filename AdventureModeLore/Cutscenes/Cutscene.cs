@@ -48,12 +48,23 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		}
 
 
+		////////////////
+
+		public abstract bool IsSiezingControls();
+
+		public virtual void SiezeControl( string control, ref bool state ) {
+			if( control == "Inventory" ) { return; }
+			state = false;
+		}
+
+		////
+
 		public abstract void BeginForPlayer( Player player );
 
 		public abstract void BeginForWorld();
 
 		////
-
+		
 		internal virtual void UpdateForWorld() { }
 
 		internal virtual void UpdateForPlayer( AMLPlayer myplayer ) { }

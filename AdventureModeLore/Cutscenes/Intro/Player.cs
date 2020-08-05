@@ -14,7 +14,12 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		}
 
 
-		////
+		////////////////
+
+		public override bool IsSiezingControls() => true;
+
+
+		////////////////
 
 		internal override void UpdateForPlayer( AMLPlayer myplayer ) {
 			myplayer.player.immune = true;

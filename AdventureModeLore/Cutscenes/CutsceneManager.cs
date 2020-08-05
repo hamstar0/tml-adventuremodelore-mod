@@ -34,7 +34,7 @@ namespace AdventureModeLore.Cutscenes {
 
 
 		////////////////
-		
+
 		public bool IsCutsceneActivatedForWorld( CutsceneID cutsceneId ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			return myworld.TriggeredCutsceneIDsForWorld.Contains( cutsceneId );
@@ -43,6 +43,27 @@ namespace AdventureModeLore.Cutscenes {
 		public bool IsCutsceneActivatedForPlayer( CutsceneID cutsceneId, Player player ) {
 			var myplayer = player.GetModPlayer<AMLPlayer>();
 			return myplayer.TriggeredCutsceneIDsForPlayer.Contains( cutsceneId );
+		}
+
+
+		////////////////
+
+		public Cutscene GetCurrentPlayerCutscene( Player player ) {
+			var myplayer = player.GetModPlayer<AMLPlayer>();
+			if( myplayer.CurrentPlayingCutsceneForPlayer == 0 ) {
+				return null;
+			}
+
+			return this.Cutscenes[ myplayer.CurrentPlayingCutsceneForPlayer ];
+		}
+
+		public Cutscene GetCurrentWorldCutscene() {
+			var myworld = ModContent.GetInstance<AMLWorld>();
+			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
+				return null;
+			}
+
+			return this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ];
 		}
 	}
 }
