@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.UI;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
 
@@ -24,9 +25,11 @@ namespace AdventureModeLore.Cutscenes.Intro {
 			var cutsceneMngr = CutsceneManager.Instance;
 
 			if( myworld.CurrentPlayingCutsceneForWorld != 0 ) {
+LogHelpers.LogOnce("Fail 1a");
 				return false;
 			}
 			if( cutsceneMngr.IsCutsceneActivatedForWorld(this.UniqueId) ) {
+LogHelpers.LogOnce("Fail 2a");
 				return false;
 			}
 			
@@ -38,9 +41,11 @@ namespace AdventureModeLore.Cutscenes.Intro {
 			var cutsceneMngr = CutsceneManager.Instance;
 
 			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
+LogHelpers.LogOnce("Fail 1b");
 				return false;
 			}
 			if( cutsceneMngr.IsCutsceneActivatedForPlayer(this.UniqueId, player) ) {
+LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
 			
@@ -56,8 +61,21 @@ namespace AdventureModeLore.Cutscenes.Intro {
 			if( control == "Inventory" ) { return; }
 			state = false;
 		}
+		
+		////////////////
 
-		////
+		public virtual bool AllowInterfaceLayer( GameInterfaceLayer layer ) {
+			return false;
+		}
+		
+		////////////////
+
+		public virtual bool AllowNPC( NPC npc ) {
+			return npc.friendly;
+		}
+
+
+		////////////////
 
 		public abstract void BeginForPlayer( Player player );
 

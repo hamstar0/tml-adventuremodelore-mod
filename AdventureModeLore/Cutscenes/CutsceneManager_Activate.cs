@@ -3,13 +3,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Net;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager {
+	public partial class CutsceneManager : ILoadable {
 		public bool BeginCutscene( CutsceneID cutsceneId, Player player ) {
 			Cutscene cutscene = this.Cutscenes[ cutsceneId ];
 			if( !cutscene.CanBeginForPlayer(player) ) {

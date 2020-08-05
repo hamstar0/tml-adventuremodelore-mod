@@ -1,11 +1,12 @@
 ﻿using System;
 using Terraria;
 using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Classes.Loadable;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager {
+	public partial class CutsceneManager : ILoadable {
 		internal void UpdateForWorld( AMLWorld myworld ) {
 			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
 				this.UpdateToActivate();

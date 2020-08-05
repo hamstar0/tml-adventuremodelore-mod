@@ -3,12 +3,13 @@ using System.IO;
 using Terraria;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager {
+	public partial class CutsceneManager : ILoadable {
 		internal void LoadForWorld( AMLWorld myworld, TagCompound tag ) {
 			myworld.TriggeredCutsceneIDsForWorld.Clear();
 

@@ -7,11 +7,11 @@ v1
 		-	Cleanup loaded set after all scenes traversed
 		-	Implement scene progression (duration, confirm, or abort)
 		-	Define scene concept (settings: duration, needs player confirm, player can abort)
+
 	-	Cutscene mode: Lock player, npc spawns, etc.
 		-	Stop NPC spawns
 		-	Hide UI
 		-	Revert map mode, camera mode
-
 		-	Set player invincibility
 		-	Lock controls (PlayerInput.Triggers.Current.KeyStatus)
 	-	@Test loading sets

@@ -4,12 +4,13 @@ using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Classes.Loadable;
 using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore.Cutscenes {
-	public partial class CutsceneManager {
-		public static CutsceneManager Instance { get; internal set; }
+	public partial class CutsceneManager : ILoadable {
+		public static CutsceneManager Instance { get; private set; }
 
 
 
@@ -30,6 +31,16 @@ namespace AdventureModeLore.Cutscenes {
 
 		internal CutsceneManager() {
 			this.Cutscenes = new ReadOnlyDictionary<CutsceneID, Cutscene>( this._Cutscenes );
+		}
+
+		void ILoadable.OnModsLoad() {
+			CutsceneManager.Instance = new CutsceneManager();
+		}
+
+		void ILoadable.OnPostModsLoad() { }
+
+		void ILoadable.OnModsUnload() {
+			CutsceneManager.Instance = null;
 		}
 
 
