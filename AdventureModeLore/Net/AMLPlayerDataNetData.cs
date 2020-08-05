@@ -50,7 +50,7 @@ namespace AdventureModeLore.Net {
 			myplr.SyncFromNet( this );
 		}
 
-		public override void ReceiveOnClient( int fromWho ) {
+		public override void ReceiveOnClient() {
 			var myplr = Main.player[this.FromWho].GetModPlayer<AMLPlayer>();
 			myplr.SyncFromNet( this );
 		}

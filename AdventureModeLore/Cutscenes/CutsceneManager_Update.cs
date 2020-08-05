@@ -6,11 +6,11 @@ using AdventureModeLore.Cutscenes.Intro;
 
 namespace AdventureModeLore.Cutscenes {
 	public partial class CutsceneManager {
-		internal void UpdateForWorld() {
-			if( this.CurrentlyPlayingCutsceneID == 0 ) {
+		internal void UpdateForWorld( AMLWorld myworld ) {
+			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
 				this.UpdateToActivate();
 			} else {
-				this.Cutscenes[this.CurrentlyPlayingCutsceneID].UpdateForWorld();
+				this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ].UpdateForWorld();
 			}
 		}
 
@@ -37,8 +37,8 @@ namespace AdventureModeLore.Cutscenes {
 		////////////////
 
 		internal void UpdateForPlayer( AMLPlayer myplayer ) {
-			if( this.CurrentlyPlayingCutsceneID != 0 ) {
-				this.Cutscenes[this.CurrentlyPlayingCutsceneID].UpdateForPlayer( myplayer );
+			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
+				this.Cutscenes[ myplayer.CurrentPlayingCutsceneForPlayer ].UpdateForPlayer( myplayer );
 			}
 		}
 	}

@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Net;
 using AdventureModeLore.Cutscenes.Intro;
 
@@ -10,12 +11,14 @@ using AdventureModeLore.Cutscenes.Intro;
 namespace AdventureModeLore.Cutscenes {
 	public partial class CutsceneManager {
 		public bool BeginCutscene( CutsceneID cutsceneId, Player player ) {
-			Cutscene cutscene = this.Cutscenes[cutsceneId];
+			Cutscene cutscene = this.Cutscenes[ cutsceneId ];
 			if( !cutscene.CanBeginForPlayer(player) ) {
 				return false;
 			}
 
-			this.TriggeredCutsceneIDs.Add( cutsceneId );
+			var myworld = ModContent.GetInstance<AMLWorld>();
+			myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
+			myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
 
 			cutscene.BeginForWorld();
 			this.BeginCutsceneForPlayer( cutsceneId, player );
@@ -29,6 +32,10 @@ namespace AdventureModeLore.Cutscenes {
 			if( !cutscene.CanBeginForPlayer( player ) ) {
 				return false;
 			}
+
+			var myplayer = player.GetModPlayer<AMLPlayer>();
+			myplayer.TriggeredCutsceneIDsForPlayer.Add( cutsceneId );
+			myplayer.CurrentPlayingCutsceneForPlayer = cutsceneId;
 
 			if( Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.MultiplayerClient ) {
 				cutscene.BeginForPlayer( player );

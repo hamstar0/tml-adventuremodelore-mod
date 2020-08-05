@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 using Terraria;
-using Terraria.GameInput;
+using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Players;
 
 

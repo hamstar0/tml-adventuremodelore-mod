@@ -1,16 +1,33 @@
 using System.IO;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Cutscenes;
+using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore {
 	partial class AMLWorld : ModWorld {
 		private bool IsThisWorldAdventureMode = false;
 
+
+		////////////////
+
+		internal ISet<CutsceneID> TriggeredCutsceneIDsForWorld { get; } = new HashSet<CutsceneID>();
+
+		public CutsceneID CurrentPlayingCutsceneForWorld { get; internal set; }
+
+
+
+		////////////////
+
+		public override void Initialize() {
+			this.IsThisWorldAdventureMode = false;
+			this.TriggeredCutsceneIDsForWorld.Clear();
+		}
 
 
 		////////////////
@@ -25,7 +42,7 @@ namespace AdventureModeLore {
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsThisWorldAdventureMode" ) ) {
 				this.IsThisWorldAdventureMode = true;
-				CutsceneManager.Instance.LoadForWorld( tag );
+				CutsceneManager.Instance.LoadForWorld( this, tag );
 			}
 		}
 
@@ -33,7 +50,7 @@ namespace AdventureModeLore {
 			var tag = new TagCompound {
 				{ "IsThisWorldAdventureMode", this.IsThisWorldAdventureMode },
 			};
-			CutsceneManager.Instance.SaveForWorld( tag );
+			CutsceneManager.Instance.SaveForWorld( this, tag );
 			return tag;
 		}
 
@@ -42,14 +59,14 @@ namespace AdventureModeLore {
 		public override void NetSend( BinaryWriter writer ) {
 			try {
 				writer.Write( this.IsThisWorldAdventureMode );
-				CutsceneManager.Instance.NetSendForWorld( writer );
+				CutsceneManager.Instance.NetSendForWorld( this, writer );
 			} catch { }
 		}
 
 		public override void NetReceive( BinaryReader reader ) {
 			try {
 				this.IsThisWorldAdventureMode = reader.ReadBoolean();
-				CutsceneManager.Instance.NetReceiveForWorld( reader );
+				CutsceneManager.Instance.NetReceiveForWorld( this, reader );
 			} catch { }
 		}
 
@@ -64,7 +81,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			CutsceneManager.Instance.UpdateForWorld();
+			CutsceneManager.Instance.UpdateForWorld( this );
 		}
 	}
 }

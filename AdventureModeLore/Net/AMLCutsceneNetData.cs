@@ -34,7 +34,7 @@ namespace AdventureModeLore.Net {
 
 		////////////////
 
-		public override void ReceiveOnClient( int fromWho ) {
+		public override void ReceiveOnClient() {
 			CutsceneManager.Instance.BeginCutsceneForPlayer( (CutsceneID)this.CutsceneID, Main.LocalPlayer );
 		}
 	}

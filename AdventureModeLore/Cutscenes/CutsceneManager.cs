@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Terraria;
+using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using AdventureModeLore.Cutscenes.Intro;
 
@@ -15,10 +16,6 @@ namespace AdventureModeLore.Cutscenes {
 		////////////////
 
 		public IReadOnlyDictionary<CutsceneID, Cutscene> Cutscenes { get; }
-
-		public ISet<CutsceneID> TriggeredCutsceneIDs { get; } = new HashSet<CutsceneID>();
-
-		public CutsceneID CurrentlyPlayingCutsceneID { get; private set; }
 
 
 		////////////////
@@ -39,7 +36,8 @@ namespace AdventureModeLore.Cutscenes {
 		////////////////
 		
 		public bool IsCutsceneActivatedForWorld( CutsceneID cutsceneId ) {
-			return this.TriggeredCutsceneIDs.Contains( cutsceneId );
+			var myworld = ModContent.GetInstance<AMLWorld>();
+			return myworld.TriggeredCutsceneIDsForWorld.Contains( cutsceneId );
 		}
 
 		public bool IsCutsceneActivatedForPlayer( CutsceneID cutsceneId, Player player ) {

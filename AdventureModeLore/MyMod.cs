@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using AdventureModeLore.Cutscenes;
-
+using HamstarHelpers.Helpers.TModLoader;
 
 namespace AdventureModeLore {
 	public class AMLMod : Mod {
@@ -33,9 +33,9 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PostUpdateInput() {
-			var cutsceneMngr = CutsceneManager.Instance;
+			var myplayer = TmlHelpers.SafelyGetModPlayer<AMLPlayer>( Main.LocalPlayer );
 
-			if( cutsceneMngr != null && cutsceneMngr.CurrentlyPlayingCutsceneID != 0 ) {
+			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
 				foreach( string key in PlayerInput.Triggers.Current.KeyStatus.Keys.ToArray() ) {
 					PlayerInput.Triggers.Current.KeyStatus[key] = false;
 				}
