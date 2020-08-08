@@ -1,4 +1,5 @@
 v1
+-	Add debug info
 -	Create intro cutscene
 	-	Implement dialog
 	-	Implement actors
@@ -8,7 +9,6 @@ v1
 		-	Cleanup loaded set after all scenes traversed
 		-	Implement UI for dialog choices responses
 		-	Implement UI for dialog
-		-	Add debug info
 
 		-	Implement basic scene progression
 		-	Define scene concept
