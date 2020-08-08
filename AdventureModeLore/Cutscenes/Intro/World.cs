@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
@@ -37,12 +38,12 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 
 		////////////////
-		
+
 		public override bool CanBeginForWorld() {
 			return base.CanBeginForWorld();
 		}
 
-		public override void BeginForWorld() {
+		protected override Vector2 BeginForWorld() {
 			TileStructure shipInterior = TileStructure.Load( AMLMod.Instance, "Ship Interior.dat" );
 			TileStructure shipExterior = TileStructure.Load( AMLMod.Instance, "Ship Exterior.dat" );
 //LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
@@ -53,14 +54,18 @@ namespace AdventureModeLore.Cutscenes.Intro {
 			IntroCutscene.GetSceneCoordinates( shipExterior.Bounds.Width, out left, out top, out isFlipped );
 			shipExterior.PaintToWorld( left, top, false, isFlipped, false );
 
+			var startPos = new Vector2( left*16, top*16 );
+
 			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
 			shipInterior.PaintToWorld( left, top - 160, false, isFlipped, false );
+
+			return startPos;
 		}
 
 
 		////////////////
 
-		internal override void UpdateForWorld() {
+		protected override void UpdateForWorld() {
 		}
 	}
 }

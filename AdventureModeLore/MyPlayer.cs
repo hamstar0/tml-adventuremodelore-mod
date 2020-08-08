@@ -11,7 +11,7 @@ using AdventureModeLore.Cutscenes.Intro;
 
 
 namespace AdventureModeLore {
-	partial class AMLPlayer : ModPlayer {
+	public partial class AMLPlayer : ModPlayer {
 		internal ISet<CutsceneID> TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>();
 
 

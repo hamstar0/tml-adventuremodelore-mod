@@ -2,12 +2,15 @@ v1
 -	Create intro cutscene
 	-	Implement dialog
 	-	Implement actors
+		-	Implement movement control for NPCs and projectiles
 	-	Implement camera script
 	-	Implement scene sequence
 		-	Cleanup loaded set after all scenes traversed
+		-	Implement UI for dialog choices responses
+		-	Implement UI for dialog
 		-	Implement scene progression (duration, confirm, or abort)
-		-	Define scene concept (settings: duration, needs player confirm, player can abort)
 
+		-	Define scene concept
 	-	Cutscene mode: Lock player, npc spawns, etc.
 		-	Stop NPC spawns
 		-	Hide UI

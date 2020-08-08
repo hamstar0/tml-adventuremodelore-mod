@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI;
 using Terraria.ModLoader;
@@ -15,6 +16,12 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 	public abstract class Cutscene {
 		public abstract CutsceneID UniqueId { get; }
+
+		public abstract Scene[] Scenes { get; }
+
+		////
+
+		public Vector2 StartPosition { get; protected set; }
 
 
 
@@ -77,23 +84,36 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////////////////
 
-		public abstract void BeginForPlayer( Player player );
+		protected abstract void BeginForPlayer( Player player );
 
-		public abstract void BeginForWorld();
+		/// <summary></summary>
+		/// <returns>Start position of the cutscene (for players).</returns>
+		protected abstract Vector2 BeginForWorld();
 
 		////
-		
-		internal virtual void UpdateForWorld() { }
 
-		internal virtual void UpdateForPlayer( AMLPlayer myplayer ) { }
+		internal void BeginForPlayer_Internal( Player player ) {
+			this.BeginForPlayer( player );
+		}
 
+		internal void BeginForWorld_Internal() {
+			this.StartPosition = this.BeginForWorld();
+		}
 
 		////////////////
 
-		/*void ILoadable.OnModsLoad() { }
+		protected virtual void UpdateForWorld() { }
 
-		void ILoadable.OnPostModsLoad() { }
+		protected virtual void UpdateForPlayer( AMLPlayer myplayer ) { }
 
-		void ILoadable.OnModsUnload() { }*/
+		////
+
+		internal virtual void UpdateForWorld_Internal() {
+			this.UpdateForWorld();
+		}
+
+		internal virtual void UpdateForPlayer_Internal( AMLPlayer myplayer ) {
+			this.UpdateForPlayer( myplayer );
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.Graphics.Capture;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using AdventureModeLore.Cutscenes.Intro;
@@ -11,7 +12,7 @@ namespace AdventureModeLore.Cutscenes {
 			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
 				this.UpdateToActivate();
 			} else {
-				this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ].UpdateForWorld();
+				this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ].UpdateForWorld_Internal();
 			}
 		}
 
@@ -39,7 +40,15 @@ namespace AdventureModeLore.Cutscenes {
 
 		internal void UpdateForPlayer( AMLPlayer myplayer ) {
 			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
-				this.Cutscenes[ myplayer.CurrentPlayingCutsceneForPlayer ].UpdateForPlayer( myplayer );
+				myplayer.player.immune = true;
+				myplayer.player.immuneTime = 2;
+
+				//Main.mapFullscreen = false;
+				//Main.mapEnabled = false;
+				Main.mapStyle = 0;
+				CaptureManager.Instance.Active = false;
+
+				this.Cutscenes[ myplayer.CurrentPlayingCutsceneForPlayer ].UpdateForPlayer_Internal( myplayer );
 			}
 		}
 	}

@@ -21,7 +21,7 @@ namespace AdventureModeLore.Cutscenes {
 			myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
 			myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
 
-			cutscene.BeginForWorld();
+			cutscene.BeginForWorld_Internal();
 			this.BeginCutsceneForPlayer( cutsceneId, player );
 
 			return true;
@@ -30,6 +30,9 @@ namespace AdventureModeLore.Cutscenes {
 
 		internal bool BeginCutsceneForPlayer( CutsceneID cutsceneId, Player player ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
+			if( cutscene.StartPosition == null ) {
+				throw new ModHelpersException( "No start position defined." );
+			}
 			if( !cutscene.CanBeginForPlayer( player ) ) {
 				return false;
 			}
@@ -39,7 +42,7 @@ namespace AdventureModeLore.Cutscenes {
 			myplayer.CurrentPlayingCutsceneForPlayer = cutsceneId;
 
 			if( Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.MultiplayerClient ) {
-				cutscene.BeginForPlayer( player );
+				cutscene.BeginForPlayer_Internal( player );
 			} else if( Main.netMode == NetmodeID.Server ) {
 				AMLCutsceneNetData.SendToClient( player.whoAmI, cutsceneId );
 			}
