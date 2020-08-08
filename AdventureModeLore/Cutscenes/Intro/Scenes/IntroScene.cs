@@ -14,9 +14,10 @@ namespace AdventureModeLore.Cutscenes.Intro.Scenes {
 
 		////////////////
 
-		protected override (Vector2, Vector2, int, int) OnBeginOnLocal( Cutscene parent ) {
+		protected override (Vector2 cameraBegin, Vector2 cameraEnd, int cameraMoveDuration, int cameraLingerDuration)
+					GetCameraData( Cutscene parent ) {
 			Vector2 startPos = parent.StartPosition;
-			Vector2 endPos = startPos + new Vector2(0f, -4f);
+			Vector2 endPos = startPos + new Vector2( 0f, -4f );
 			int duration = 60 * 5;
 
 			return (startPos, endPos, duration, 0);

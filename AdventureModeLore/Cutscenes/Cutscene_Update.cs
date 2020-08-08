@@ -9,7 +9,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 	public abstract partial class Cutscene {
 		protected virtual void UpdateForWorld() { }
 
-		protected virtual void UpdateForPlayer( AMLPlayer myplayer ) { }
+		protected virtual void UpdateForPlayer( Player player ) { }
 
 		////
 
@@ -21,19 +21,19 @@ namespace AdventureModeLore.Cutscenes.Intro {
 			}
 
 			this.CurrentScene++;
-			if( this.CurrentScene < (this.Scenes.Length - 1) ) {
-				this.CurrentScene++;
+
+			if( this.CurrentScene < this.Scenes.Length ) {
 				AMLCutsceneNetData.SendToClients( -1, this, this.CurrentScene );
 			} else {
 				CutsceneManager.Instance.EndCutscene( this.UniqueId, true );
 			}
 		}
 
-		internal void UpdateForPlayer_Internal( AMLPlayer myplayer ) {
-			this.UpdateForPlayer( myplayer );
+		internal void UpdateForPlayer_Internal( Player player ) {
+			this.UpdateForPlayer( player );
 
 			if( Main.netMode != NetmodeID.Server ) {
-				if( myplayer.player.whoAmI == Main.myPlayer ) {
+				if( player.whoAmI == Main.myPlayer ) {
 					this.UpdateForLocal();
 				}
 			}
@@ -52,8 +52,9 @@ namespace AdventureModeLore.Cutscenes.Intro {
 				return;
 			}
 
-			if( this.CurrentScene < (this.Scenes.Length - 1) ) {
-				this.CurrentScene++;
+			this.CurrentScene++;
+
+			if( this.CurrentScene < this.Scenes.Length ) {
 				AMLCutsceneNetData.Broadcast( this, this.CurrentScene );
 			} else {
 				CutsceneManager.Instance.EndCutscene( this.UniqueId, true );

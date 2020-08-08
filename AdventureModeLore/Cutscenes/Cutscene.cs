@@ -42,7 +42,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		}
 		
 		////////////////
-
+		
 		public virtual bool AllowNPC( NPC npc ) {
 			return npc.friendly;
 		}

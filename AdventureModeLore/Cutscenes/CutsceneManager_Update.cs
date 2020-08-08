@@ -43,17 +43,20 @@ namespace AdventureModeLore.Cutscenes {
 		////////////////
 
 		internal void UpdateForPlayer( AMLPlayer myplayer ) {
-			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
-				myplayer.player.immune = true;
-				myplayer.player.immuneTime = 2;
-
-				//Main.mapFullscreen = false;
-				//Main.mapEnabled = false;
-				Main.mapStyle = 0;
-				CaptureManager.Instance.Active = false;
-
-				this.Cutscenes[ myplayer.CurrentPlayingCutsceneForPlayer ].UpdateForPlayer_Internal( myplayer );
+			CutsceneID currCutID = myplayer.CurrentPlayingCutsceneForPlayer;
+			if( currCutID == 0 ) {
+				return;
 			}
+
+			myplayer.player.immune = true;
+			myplayer.player.immuneTime = 2;
+
+			//Main.mapFullscreen = false;
+			//Main.mapEnabled = false;
+			Main.mapStyle = 0;
+			CaptureManager.Instance.Active = false;
+
+			this.Cutscenes[currCutID].UpdateForPlayer_Internal( myplayer.player );
 		}
 	}
 }

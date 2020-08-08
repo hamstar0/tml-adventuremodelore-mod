@@ -64,11 +64,13 @@ namespace AdventureModeLore.Net {
 			var mngr = CutsceneManager.Instance;
 			var uid = (CutsceneID)this.CutsceneID;
 
-			if( this.SceneIdx >= 0 ) {
+			if( this.SceneIdx == 0 ) {
 				string result;
-				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, this.SceneIdx, out result );
+				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, 0, out result );
 
 				LogHelpers.Log( "Cutscene " + uid + " result for client: " + result );
+			} else if( this.SceneIdx > 0 ) {
+				mngr.SetCutsceneScene( uid, this.SceneIdx, false );
 			} else {
 				mngr.EndCutscene( uid, false );
 			}

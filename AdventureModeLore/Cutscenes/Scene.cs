@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using HamstarHelpers.Services.Camera;
 using AdventureModeLore.Cutscenes.Intro;
 
@@ -11,15 +12,26 @@ namespace AdventureModeLore.Cutscenes {
 
 		public abstract string SequenceName { get; }
 
-		public int PlayingForWhom { get; protected set; }
-
 
 
 		////////////////
 
-		internal void BeginOnLocal_Internal( Cutscene parent, int playerWho ) {
-			this.PlayingForWhom = playerWho;
-			(Vector2 beg, Vector2 end, int time, int linger) camera = this.OnBeginOnLocal( parent );
+		internal void BeginOnPlayer_Internal( Cutscene parent, Player player ) {
+			if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
+				this.BeginOnLocal( parent );
+			}
+
+			this.OnBeginOnPlayer( parent, player );
+		}
+
+		internal void BeginOnWorld_Internal( Cutscene parent ) {
+			this.OnBeginOnWorld( parent );
+		}
+
+		////
+		
+		private void BeginOnLocal( Cutscene parent ) {
+			(Vector2 beg, Vector2 end, int time, int linger) camera = this.GetCameraData( parent );
 
 			AnimatedCamera.BeginMoveSequence(
 				this.SequenceName,
@@ -32,17 +44,32 @@ namespace AdventureModeLore.Cutscenes {
 			);
 		}
 
-		internal void BeginOnServer_Internal( int playerWho ) {
-			this.PlayingForWhom = playerWho;
+		////
 
-			this.OnBeginOnServer();
+		protected virtual void OnBeginOnPlayer( Cutscene parent, Player player ) { }
+
+		protected virtual void OnBeginOnWorld( Cutscene parent ) { }
+
+		////////////////
+
+		internal void EndForWorld_Private() {
+			this.OnEndOnWorld();
+		}
+		
+		internal void EndForPlayer_Private( Player player ) {
+			this.OnEndOnPlayer( player );
 		}
 
 		////
 
-		protected abstract (Vector2 cameraBegin, Vector2 cameraEnd, int cameraMoveDuration, int cameraLingerDuration)
-				OnBeginOnLocal( Cutscene parent );
+		protected virtual void OnEndOnPlayer( Player player ) { }
 
-		protected virtual void OnBeginOnServer() { }
+		protected virtual void OnEndOnWorld() { }
+
+
+		////////////////
+
+		protected abstract (Vector2 cameraBegin, Vector2 cameraEnd, int cameraMoveDuration, int cameraLingerDuration)
+				GetCameraData( Cutscene parent );
 	}
 }

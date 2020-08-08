@@ -1,14 +1,14 @@
 v1
 -	Add debug info
 -	Create intro cutscene
-	-	Implement dialog
+	-	Implement dialogue
 	-	Implement actors
 		-	Implement movement control for NPCs and projectiles
 	-	Implement camera script
 	-	Implement scene sequence
 		-	Cleanup loaded set after all scenes traversed
-		-	Implement UI for dialog choices responses
-		-	Implement UI for dialog
+		-	Implement UI for dialogue choices responses
+		-	Implement UI for dialogue
 
 		-	Implement basic scene progression
 		-	Define scene concept

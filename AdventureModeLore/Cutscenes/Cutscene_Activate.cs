@@ -53,13 +53,25 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////
 
-		internal void BeginForWorld_Internal( int sceneIdx ) {
+		internal void BeginForWorld_Internal( Player player, int sceneIdx ) {
+			failsafe against running cutscenes
+
 			this.CurrentScene = sceneIdx;
+
+			Scene scene = this.Scenes[sceneIdx];
+			scene.BeginOnWorld_Internal( this );
+
 			this.StartPosition = this.OnBeginForWorld();
 		}
 
 		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {
+			failsafe against running cutscenes
+
 			this.CurrentScene = sceneIdx;
+
+			Scene scene = this.Scenes[sceneIdx];
+			scene.BeginOnPlayer_Internal( this, player );
+
 			this.OnBeginForPlayer( player, sceneIdx );
 		}
 
@@ -67,7 +79,7 @@ LogHelpers.LogOnce("Fail 2b");
 
 		protected virtual void OnEndForWorld() { }
 
-		protected virtual void OnEndForPlayer( AMLPlayer myplayer ) { }
+		protected virtual void OnEndForPlayer( Player player ) { }
 
 		////
 
@@ -76,9 +88,32 @@ LogHelpers.LogOnce("Fail 2b");
 			this.OnEndForWorld();
 		}
 
-		internal void OnEndForPlayer_Internal( AMLPlayer myplayer ) {
+		internal void OnEndForPlayer_Internal( Player player ) {
 			this.CurrentScene = 0;
-			this.OnEndForPlayer( myplayer );
+			this.OnEndForPlayer( player );
+		}
+
+
+		////////////////
+
+		internal void SetCurrentSceneForWorld( int sceneIdx ) {
+			Scene prevScene = this.Scenes[this.CurrentScene];
+			prevScene.EndForWorld_Private();
+
+			this.CurrentScene = sceneIdx;
+
+			Scene currScene = this.Scenes[this.CurrentScene];
+			currScene.BeginOnWorld_Internal( this );
+		}
+		
+		internal void SetCurrentSceneForPlayer( Player player, int sceneIdx ) {
+			Scene prevScene = this.Scenes[this.CurrentScene];
+			prevScene.EndForPlayer_Private( player );
+
+			this.CurrentScene = sceneIdx;
+
+			Scene currScene = this.Scenes[this.CurrentScene];
+			currScene.BeginOnPlayer_Internal( this, player );
 		}
 	}
 }
