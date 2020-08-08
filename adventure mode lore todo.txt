@@ -8,8 +8,9 @@ v1
 		-	Cleanup loaded set after all scenes traversed
 		-	Implement UI for dialog choices responses
 		-	Implement UI for dialog
-		-	Implement scene progression (duration, confirm, or abort)
+		-	Add debug info
 
+		-	Implement basic scene progression
 		-	Define scene concept
 	-	Cutscene mode: Lock player, npc spawns, etc.
 		-	Stop NPC spawns

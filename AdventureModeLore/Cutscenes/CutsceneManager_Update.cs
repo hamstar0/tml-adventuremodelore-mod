@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Graphics.Capture;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
+using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Cutscenes.Intro;
 
 
@@ -10,13 +11,13 @@ namespace AdventureModeLore.Cutscenes {
 	public partial class CutsceneManager : ILoadable {
 		internal void UpdateForWorld( AMLWorld myworld ) {
 			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
-				this.UpdateToActivate();
+				this.UpdateForWorldToActivate();
 			} else {
 				this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ].UpdateForWorld_Internal();
 			}
 		}
 
-		private void UpdateToActivate() {
+		private void UpdateForWorldToActivate() {
 			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
 				if( !cutscene.CanBeginForWorld() ) {
 					continue;
@@ -28,7 +29,10 @@ namespace AdventureModeLore.Cutscenes {
 					if( plr?.active != true ) { continue; }
 
 					if( cutscene.CanBeginForPlayer(plr) ) {
-						this.BeginCutscene( cutscene.UniqueId, plr );
+						if( !this.BeginCutscene(cutscene.UniqueId, plr, out string result) ) {
+							LogHelpers.WarnOnce( result );
+							continue;
+						}
 					}
 					break;
 				}

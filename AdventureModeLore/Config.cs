@@ -16,6 +16,8 @@ namespace AdventureModeLore {
 
 		////////////////
 
+		public bool DebugModeInfo { get; set; } = false;
+
 		public bool DebugModeFreeMove { get; set; } = false;
 	}
 }

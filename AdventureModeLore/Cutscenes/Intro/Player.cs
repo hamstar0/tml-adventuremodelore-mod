@@ -10,18 +10,8 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		}
 
 
-		protected override void BeginForPlayer( Player player ) {
-		}
-
-
 		////////////////
 
 		public override bool IsSiezingControls() => true;
-
-
-		////////////////
-
-		protected override void UpdateForPlayer( AMLPlayer myplayer ) {
-		}
 	}
 }

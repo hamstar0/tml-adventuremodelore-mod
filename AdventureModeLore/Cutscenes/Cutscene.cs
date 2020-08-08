@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.UI;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
+using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Cutscenes.Intro {
@@ -14,10 +16,12 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 
 
-	public abstract class Cutscene {
+	public abstract partial class Cutscene {
 		public abstract CutsceneID UniqueId { get; }
 
 		public abstract Scene[] Scenes { get; }
+
+		public int CurrentScene { get; protected set; } = 0;
 
 		////
 
@@ -84,21 +88,45 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////////////////
 
-		protected abstract void BeginForPlayer( Player player );
-
 		/// <summary></summary>
 		/// <returns>Start position of the cutscene (for players).</returns>
-		protected abstract Vector2 BeginForWorld();
+		protected abstract Vector2 OnBeginForWorld();
+
+		/// <summary></summary>
+		/// <param name="player"></param>
+		/// <param name="sceneIdx"></param>
+		protected virtual void OnBeginForPlayer( Player player, int sceneIdx ) { }
 
 		////
 
-		internal void BeginForPlayer_Internal( Player player ) {
-			this.BeginForPlayer( player );
+		internal void BeginForWorld_Internal( int sceneIdx ) {
+			this.CurrentScene = sceneIdx;
+			this.StartPosition = this.OnBeginForWorld();
 		}
 
-		internal void BeginForWorld_Internal() {
-			this.StartPosition = this.BeginForWorld();
+		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {
+			this.CurrentScene = sceneIdx;
+			this.OnBeginForPlayer( player, sceneIdx );
 		}
+
+		////////////////
+
+		protected virtual void OnEndForWorld() { }
+
+		protected virtual void OnEndForPlayer( AMLPlayer myplayer ) { }
+
+		////
+
+		internal void OnEndForWorld_Internal() {
+			this.CurrentScene = 0;
+			this.OnEndForWorld();
+		}
+
+		internal void OnEndForPlayer_Internal( AMLPlayer myplayer ) {
+			this.CurrentScene = 0;
+			this.OnEndForPlayer( myplayer );
+		}
+
 
 		////////////////
 
@@ -108,12 +136,51 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////
 
-		internal virtual void UpdateForWorld_Internal() {
+		internal void UpdateForWorld_Internal() {
 			this.UpdateForWorld();
+
+			if( !this.Scenes[this.CurrentScene].UpdateOnWorld_Internal() ) {
+				return;
+			}
+
+			this.CurrentScene++;
+			if( this.CurrentScene < (this.Scenes.Length - 1) ) {
+				this.CurrentScene++;
+				AMLCutsceneNetData.SendToClients( -1, this, this.CurrentScene );
+			} else {
+				CutsceneManager.Instance.EndCutscene( this.UniqueId, true );
+			}
 		}
 
-		internal virtual void UpdateForPlayer_Internal( AMLPlayer myplayer ) {
+		internal void UpdateForPlayer_Internal( AMLPlayer myplayer ) {
 			this.UpdateForPlayer( myplayer );
+
+			if( Main.netMode != NetmodeID.Server ) {
+				if( myplayer.player.whoAmI == Main.myPlayer ) {
+					this.UpdateForLocal();
+				}
+			}
+		}
+
+		////
+
+		internal void UpdateForLocal() {
+			Scene scene = this.Scenes[ this.CurrentScene ];
+			if( !scene.MustSync ) {
+				return;
+			}
+
+			// Has scene ended?
+			if( !scene.UpdateOnLocal_Internal() ) {
+				return;
+			}
+
+			if( this.CurrentScene < (this.Scenes.Length - 1) ) {
+				this.CurrentScene++;
+				AMLCutsceneNetData.Broadcast( this, this.CurrentScene );
+			} else {
+				CutsceneManager.Instance.EndCutscene( this.UniqueId, true );
+			}
 		}
 	}
 }

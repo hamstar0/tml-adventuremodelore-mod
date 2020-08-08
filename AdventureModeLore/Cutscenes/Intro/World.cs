@@ -39,11 +39,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 		////////////////
 
-		public override bool CanBeginForWorld() {
-			return base.CanBeginForWorld();
-		}
-
-		protected override Vector2 BeginForWorld() {
+		protected override Vector2 OnBeginForWorld() {
 			TileStructure shipInterior = TileStructure.Load( AMLMod.Instance, "Ship Interior.dat" );
 			TileStructure shipExterior = TileStructure.Load( AMLMod.Instance, "Ship Exterior.dat" );
 //LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
@@ -60,12 +56,6 @@ namespace AdventureModeLore.Cutscenes.Intro {
 			shipInterior.PaintToWorld( left, top - 160, false, isFlipped, false );
 
 			return startPos;
-		}
-
-
-		////////////////
-
-		protected override void UpdateForWorld() {
 		}
 	}
 }
