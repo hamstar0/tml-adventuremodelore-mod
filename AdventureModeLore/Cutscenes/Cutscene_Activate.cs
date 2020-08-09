@@ -53,12 +53,12 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////
 
-		internal void BeginForWorld_Internal( Player player, int sceneIdx ) {
+		internal Vector2? BeginForWorld_Internal( int sceneIdx ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			if( myworld.CurrentPlayingCutsceneForWorld != 0 ) {
 				LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
 					+ myworld.CurrentPlayingCutsceneForWorld + " is active." );
-				return;
+				return null;
 			}
 
 			this.CurrentScene = sceneIdx;
@@ -66,7 +66,7 @@ LogHelpers.LogOnce("Fail 2b");
 			Scene scene = this.Scenes[sceneIdx];
 			scene.BeginOnWorld_Internal( this );
 
-			this.StartPosition = this.OnBeginForWorld();
+			return this.OnBeginForWorld();
 		}
 
 		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {

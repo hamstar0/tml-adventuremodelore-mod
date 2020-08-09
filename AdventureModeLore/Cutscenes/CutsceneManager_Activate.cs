@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,30 +32,37 @@ namespace AdventureModeLore.Cutscenes {
 			myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
 			myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
 
-			cutscene.BeginForWorld_Internal( player, 0 );
+			Vector2? startPos = cutscene.BeginForWorld_Internal( 0 );
+			if( !startPos.HasValue ) {
+				result = "Cutscene "+cutsceneId+" doesn't allow being begun.";
+				return false;
+			}
 
-			return this.BeginCutsceneForPlayer( cutsceneId, player, 0, out result );
+			return this.BeginCutsceneForPlayer( cutsceneId, player, 0, startPos.Value, out result );
 		}
 
 
-		internal bool BeginCutsceneForPlayer( CutsceneID cutsceneId, Player player, int sceneIdx, out string result ) {
+		internal bool BeginCutsceneForPlayer(
+					CutsceneID cutsceneId,
+					Player player,
+					int sceneIdx,
+					Vector2 startPos,
+					out string result ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
-			if( cutscene.StartPosition == null ) {
-				result = "No start position defined.";
-				return false;
-			}
 			if( !cutscene.CanBeginForPlayer( player ) ) {
 				result = "Player still cannot play cutscene " + cutsceneId;
 				return false;
 			}
 
+			cutscene.SetStartPosition( startPos );
+
 			var myplayer = player.GetModPlayer<AMLPlayer>();
 			myplayer.TriggeredCutsceneIDsForPlayer.Add( cutsceneId );
 			myplayer.CurrentPlayingCutsceneForPlayer = cutsceneId;
 
-			if( Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.MultiplayerClient ) {
-				cutscene.BeginForPlayer_Internal( player, sceneIdx );
-			} else if( Main.netMode == NetmodeID.Server ) {
+			cutscene.BeginForPlayer_Internal( player, sceneIdx );
+
+			if( Main.netMode == NetmodeID.Server ) {
 				AMLCutsceneNetData.SendToClient( player.whoAmI, cutscene, sceneIdx );
 			}
 

@@ -16,7 +16,7 @@ namespace AdventureModeLore.Cutscenes.Intro {
 	public abstract partial class Cutscene {
 		public abstract CutsceneID UniqueId { get; }
 
-		public abstract Scene[] Scenes { get; }
+		public Scene[] Scenes { get; }
 
 		public int CurrentScene { get; protected set; } = 0;
 
@@ -24,6 +24,24 @@ namespace AdventureModeLore.Cutscenes.Intro {
 
 		public Vector2 StartPosition { get; protected set; }
 
+
+
+		////////////////
+
+		protected Cutscene() {
+			this.Scenes = this.LoadScenes();
+		}
+
+		////
+
+		protected abstract Scene[] LoadScenes();
+
+
+		////////////////
+		
+		internal void SetStartPosition( Vector2 pos ) {
+			this.StartPosition = pos;
+		}
 
 
 		////////////////

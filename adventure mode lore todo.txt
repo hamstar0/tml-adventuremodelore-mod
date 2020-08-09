@@ -1,17 +1,18 @@
 v1
 -	Add debug info
+-	Finish implementing cutscene mechanics
+	-	Cleanup loaded set after all scenes traversed
+	-	Implement UI for dialogue choices responses
 -	Create intro cutscene
-	-	Implement dialogue
 	-	Implement actors
 		-	Implement movement control for NPCs and projectiles
-	-	Implement camera script
-	-	Implement scene sequence
-		-	Cleanup loaded set after all scenes traversed
-		-	Implement UI for dialogue choices responses
-		-	Implement UI for dialogue
+	-	Implement dialogue
+	-	Implement scene sequence + camera
 
-		-	Implement basic scene progression
-		-	Define scene concept
+-	Implement cutscene mechanics
+	-	Implement UI for dialogue
+	-	Implement basic scene progression
+	-	Define scene concept
 	-	Cutscene mode: Lock player, npc spawns, etc.
 		-	Stop NPC spawns
 		-	Hide UI

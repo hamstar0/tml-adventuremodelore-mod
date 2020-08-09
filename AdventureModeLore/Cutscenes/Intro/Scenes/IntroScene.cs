@@ -6,6 +6,17 @@ using HamstarHelpers.Services.Camera;
 
 namespace AdventureModeLore.Cutscenes.Intro.Scenes {
 	class IntroScene : Scene {
+		private Vector2 CameraStart;
+
+		private Vector2 CameraEnd;
+
+		private int CameraMoveDuration;
+
+		private int CameraLingerDuration;
+
+
+		////////////////
+
 		public override bool MustSync => false;
 
 		public override string SequenceName => "Intro";
@@ -13,14 +24,19 @@ namespace AdventureModeLore.Cutscenes.Intro.Scenes {
 
 
 		////////////////
+		
+		public IntroScene( Vector2 cameraBegin, Vector2 cameraEnd, int cameraMoveDuration, int cameraLingerDuration ) {
+			this.CameraStart = cameraBegin;
+			this.CameraEnd = cameraEnd;
+			this.CameraMoveDuration = cameraMoveDuration;
+			this.CameraLingerDuration = cameraLingerDuration;
+		}
 
-		protected override (Vector2 cameraBegin, Vector2 cameraEnd, int cameraMoveDuration, int cameraLingerDuration)
-					GetCameraData( Cutscene parent ) {
-			Vector2 startPos = parent.StartPosition;
-			Vector2 endPos = startPos + new Vector2( 0f, -4f );
-			int duration = 60 * 5;
 
-			return (startPos, endPos, duration, 0);
+		////////////////
+
+		protected override (Vector2, Vector2, int, int) GetCameraData( Cutscene parent ) {
+			return (this.CameraStart, this.CameraEnd, this.CameraMoveDuration, this.CameraLingerDuration);
 		}
 
 

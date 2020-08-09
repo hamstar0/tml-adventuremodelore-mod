@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.Network.NetIO;
@@ -34,6 +35,7 @@ namespace AdventureModeLore.Net {
 
 		public int CutsceneID;
 		public int SceneIdx;
+		public Vector2 StartPosition;
 
 
 
@@ -44,6 +46,7 @@ namespace AdventureModeLore.Net {
 		private AMLCutsceneNetData( Cutscene cutscene, int sceneIdx ) {
 			this.CutsceneID = (int)cutscene.UniqueId;
 			this.SceneIdx = sceneIdx;
+			this.StartPosition = cutscene.StartPosition;
 		}
 
 
@@ -66,7 +69,7 @@ namespace AdventureModeLore.Net {
 
 			if( this.SceneIdx == 0 ) {
 				string result;
-				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, 0, out result );
+				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, 0, this.StartPosition, out result );
 
 				LogHelpers.Log( "Cutscene " + uid + " result for client: " + result );
 			} else if( this.SceneIdx > 0 ) {
