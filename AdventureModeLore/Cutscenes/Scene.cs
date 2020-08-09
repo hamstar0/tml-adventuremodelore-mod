@@ -8,6 +8,11 @@ using AdventureModeLore.Cutscenes.Intro;
 
 namespace AdventureModeLore.Cutscenes {
 	public abstract partial class Scene {
+		protected CutsceneDialogue Dialogue = null;
+
+
+		////////////////
+
 		public abstract bool MustSync { get; }
 
 		public abstract string SequenceName { get; }
@@ -19,6 +24,7 @@ namespace AdventureModeLore.Cutscenes {
 		internal void BeginOnPlayer_Internal( Cutscene parent, Player player ) {
 			if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
 				this.BeginOnLocal( parent );
+				this.Dialogue?.ShowDialogue();
 			}
 
 			this.OnBeginOnPlayer( parent, player );
@@ -57,6 +63,7 @@ namespace AdventureModeLore.Cutscenes {
 		}
 		
 		internal void EndForPlayer_Private( Player player ) {
+			this.Dialogue?.HideDialogue();
 			this.OnEndOnPlayer( player );
 		}
 

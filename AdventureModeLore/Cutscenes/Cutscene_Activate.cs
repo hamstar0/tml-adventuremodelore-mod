@@ -54,7 +54,12 @@ LogHelpers.LogOnce("Fail 2b");
 		////
 
 		internal void BeginForWorld_Internal( Player player, int sceneIdx ) {
-			failsafe against running cutscenes
+			var myworld = ModContent.GetInstance<AMLWorld>();
+			if( myworld.CurrentPlayingCutsceneForWorld != 0 ) {
+				LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
+					+ myworld.CurrentPlayingCutsceneForWorld + " is active." );
+				return;
+			}
 
 			this.CurrentScene = sceneIdx;
 
@@ -65,7 +70,12 @@ LogHelpers.LogOnce("Fail 2b");
 		}
 
 		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {
-			failsafe against running cutscenes
+			var myplayer = player.GetModPlayer<AMLPlayer>();
+			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
+				LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
+					+ myplayer.CurrentPlayingCutsceneForPlayer + " is active." );
+				return;
+			}
 
 			this.CurrentScene = sceneIdx;
 
