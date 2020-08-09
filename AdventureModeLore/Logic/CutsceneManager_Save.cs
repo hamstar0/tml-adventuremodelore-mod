@@ -5,10 +5,10 @@ using Terraria.ModLoader.IO;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Cutscenes.Intro;
+using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Cutscenes {
+namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		internal void LoadForWorld( AMLWorld myworld, TagCompound tag ) {
 			myworld.TriggeredCutsceneIDsForWorld.Clear();

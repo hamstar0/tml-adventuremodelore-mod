@@ -4,8 +4,8 @@ using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.Network.NetIO;
 using HamstarHelpers.Services.Network.NetIO.PayloadTypes;
-using AdventureModeLore.Cutscenes;
-using AdventureModeLore.Cutscenes.Intro;
+using AdventureModeLore.Logic;
+using AdventureModeLore.Definitions;
 
 
 namespace AdventureModeLore.Net {

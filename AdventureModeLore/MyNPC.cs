@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using AdventureModeLore.Cutscenes;
-using AdventureModeLore.Cutscenes.Intro;
+using AdventureModeLore.Logic;
+using AdventureModeLore.Definitions;
 
 
 namespace AdventureModeLore {

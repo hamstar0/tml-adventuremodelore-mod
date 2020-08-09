@@ -5,8 +5,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Cutscenes;
-using AdventureModeLore.Cutscenes.Intro;
+using AdventureModeLore.Definitions;
+using AdventureModeLore.Logic;
 
 
 namespace AdventureModeLore {

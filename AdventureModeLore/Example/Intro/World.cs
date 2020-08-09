@@ -1,12 +1,14 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
+using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Cutscenes.Intro {
+namespace AdventureModeLore.Example.Intro {
 	partial class IntroCutscene : Cutscene {
 		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
 			isFlipped = Main.spawnTileX > (Main.maxTilesX / 2);
@@ -40,8 +42,9 @@ namespace AdventureModeLore.Cutscenes.Intro {
 		////////////////
 
 		protected override Vector2 OnBeginForWorld() {
-			TileStructure shipInterior = TileStructure.Load( AMLMod.Instance, "Ship Interior.dat" );
-			TileStructure shipExterior = TileStructure.Load( AMLMod.Instance, "Ship Exterior.dat" );
+			char d = Path.DirectorySeparatorChar;
+			TileStructure shipInterior = TileStructure.Load( AMLMod.Instance, "Example" + d+"Intro"+d+"Ship Interior.dat" );
+			TileStructure shipExterior = TileStructure.Load( AMLMod.Instance, "Example" + d+"Intro"+d+"Ship Exterior.dat" );
 //LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
 //	+", exterior: "+shipExterior.Bounds.ToString()+" ("+shipExterior.TileCount+")");
 			int left, top;

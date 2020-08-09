@@ -3,10 +3,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Services.Camera;
-using AdventureModeLore.Cutscenes.Intro;
 
 
-namespace AdventureModeLore.Cutscenes {
+namespace AdventureModeLore.Definitions {
 	public abstract partial class Scene {
 		protected CutsceneDialogue Dialogue = null;
 

@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
+using AdventureModeLore.Logic;
 
 
-namespace AdventureModeLore.Cutscenes.Intro {
+namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
 		public virtual bool CanBeginForWorld() {
 			var myworld = ModContent.GetInstance<AMLWorld>();

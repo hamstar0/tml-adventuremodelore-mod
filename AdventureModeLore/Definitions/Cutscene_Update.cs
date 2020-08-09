@@ -3,9 +3,10 @@ using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Net;
+using AdventureModeLore.Logic;
 
 
-namespace AdventureModeLore.Cutscenes.Intro {
+namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
 		protected virtual void UpdateForWorld() { }
 

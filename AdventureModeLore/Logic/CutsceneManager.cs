@@ -5,10 +5,11 @@ using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
-using AdventureModeLore.Cutscenes.Intro;
+using AdventureModeLore.Example.Intro;
+using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Cutscenes {
+namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		public static CutsceneManager Instance { get; private set; }
 

@@ -3,7 +3,7 @@ using Terraria;
 using HamstarHelpers.Services.Camera;
 
 
-namespace AdventureModeLore.Cutscenes {
+namespace AdventureModeLore.Definitions {
 	public abstract partial class Scene {
 		internal bool UpdateOnLocal_Internal() {
 			if( AnimatedCamera.Instance.CurrentMoveSequence != this.SequenceName ) {

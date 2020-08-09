@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
+using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Cutscenes.Intro {
+namespace AdventureModeLore.Example.Intro {
 	partial class IntroCutscene : Cutscene {
 		public override bool CanBeginForPlayer( Player player ) {
 			return base.CanBeginForPlayer( player );

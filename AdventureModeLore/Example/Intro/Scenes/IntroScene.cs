@@ -2,9 +2,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Services.Camera;
+using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Cutscenes.Intro.Scenes {
+namespace AdventureModeLore.Example.Intro.Scenes {
 	class IntroScene : Scene {
 		private Vector2 CameraStart;
 

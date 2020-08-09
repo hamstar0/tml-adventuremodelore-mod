@@ -7,7 +7,7 @@ using HamstarHelpers.Classes.UI.Theme;
 using HamstarHelpers.Services.UI.FreeHUD;
 
 
-namespace AdventureModeLore.Cutscenes {
+namespace AdventureModeLore.Definitions {
 	public class CutsceneDialogue : ILoadable {
 		protected UIThemedTextPanel DialogueDisplay { get; }
 

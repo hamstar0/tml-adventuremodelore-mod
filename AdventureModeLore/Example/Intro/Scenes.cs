@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Cutscenes.Intro.Scenes;
+using AdventureModeLore.Definitions;
+using AdventureModeLore.Example.Intro.Scenes;
 
 
-namespace AdventureModeLore.Cutscenes.Intro {
+namespace AdventureModeLore.Example.Intro {
 	partial class IntroCutscene : Cutscene {
 		protected override Scene[] LoadScenes() {
 			return new Scene[] {

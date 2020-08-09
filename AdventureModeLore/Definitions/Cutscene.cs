@@ -5,7 +5,7 @@ using Terraria.UI;
 using HamstarHelpers.Helpers.Debug;
 
 
-namespace AdventureModeLore.Cutscenes.Intro {
+namespace AdventureModeLore.Definitions {
 	public enum CutsceneID {
 		Intro = 1
 	}

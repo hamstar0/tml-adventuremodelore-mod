@@ -7,10 +7,10 @@ using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Net;
-using AdventureModeLore.Cutscenes.Intro;
+using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Cutscenes {
+namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		public bool BeginCutscene( CutsceneID cutsceneId, Player player, out string result ) {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
