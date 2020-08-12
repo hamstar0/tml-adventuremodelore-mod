@@ -10,6 +10,16 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Example.Intro {
 	partial class IntroCutscene : Cutscene {
+		public static IntroCutscene Create( string affix ) {
+			return new IntroCutscene( new CutsceneID(
+				mod: AMLMod.Instance,
+				name: "Intro_"+ affix
+			) );
+		}
+
+
+		////////////////
+		
 		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
 			isFlipped = Main.spawnTileX > (Main.maxTilesX / 2);
 
@@ -21,9 +31,9 @@ namespace AdventureModeLore.Example.Intro {
 
 			boatTop = Math.Max( Main.spawnTileY - 100, 20 );
 
-			for( Tile tile = Framing.GetTileSafely( boatLeft, boatTop );
-				tile.liquid == 0 && boatTop < WorldHelpers.SurfaceLayerBottomTileY;
-				tile = Framing.GetTileSafely( boatLeft, ++boatTop ) ) {
+			Tile tile = Framing.GetTileSafely( boatLeft, boatTop );
+			while( tile.liquid == 0 && boatTop < WorldHelpers.SurfaceLayerBottomTileY ) {
+				tile = Framing.GetTileSafely( boatLeft, ++boatTop );
 			}
 
 			boatTop -= 18;
@@ -34,10 +44,8 @@ namespace AdventureModeLore.Example.Intro {
 
 
 		////////////////
-
-		public override CutsceneID UniqueId => CutsceneID.Intro;
-
-
+		
+		private IntroCutscene( CutsceneID uid ) : base(uid) { }
 
 		////////////////
 
@@ -54,6 +62,7 @@ namespace AdventureModeLore.Example.Intro {
 			shipExterior.PaintToWorld( left, top, false, isFlipped, false );
 
 			var startPos = new Vector2( left*16, top*16 );
+			startPos.X += shipExterior.Bounds.Width * 8;	// (wid*16) / 2
 
 			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
 			shipInterior.PaintToWorld( left, top - 160, false, isFlipped, false );

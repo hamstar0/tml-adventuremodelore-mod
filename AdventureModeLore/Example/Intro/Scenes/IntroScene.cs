@@ -1,57 +1,42 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using HamstarHelpers.Services.Camera;
 using AdventureModeLore.Definitions;
 
 
 namespace AdventureModeLore.Example.Intro.Scenes {
 	class IntroScene : Scene {
-		private Vector2 CameraStart;
+		protected Vector2 CameraEnd;
 
-		private Vector2 CameraEnd;
+		protected int CameraMoveDuration;
 
-		private int CameraMoveDuration;
-
-		private int CameraLingerDuration;
-
-
-		////////////////
-
-		public override bool MustSync => false;
-
-		public override string SequenceName => "Intro";
+		protected int CameraLingerDuration;
 
 
 
 		////////////////
 		
-		public IntroScene( Vector2 cameraBegin, Vector2 cameraEnd, int cameraMoveDuration, int cameraLingerDuration ) {
-			this.CameraStart = cameraBegin;
-			this.CameraEnd = cameraEnd;
-			this.CameraMoveDuration = cameraMoveDuration;
-			this.CameraLingerDuration = cameraLingerDuration;
-		}
-
-
-		////////////////
-
-		protected override (Vector2, Vector2, int, int) GetCameraData( Cutscene parent ) {
-			return (this.CameraStart, this.CameraEnd, this.CameraMoveDuration, this.CameraLingerDuration);
+		public IntroScene( Vector2 camBegin, Vector2 camEnd, int camMoveDuration, int camLingerDuration ) 
+					: base( false, camBegin ) {
+			this.CameraEnd = camEnd;
+			this.CameraMoveDuration = camMoveDuration;
+			this.CameraLingerDuration = camLingerDuration;
 		}
 
 
 		////////////////
 
 		protected override bool UpdateOnLocal() {
-			var animCam = AnimatedCamera.Instance;
+			//var animCam = CameraMover.Current;
+			//if( animCam?.Name != this.UniqueId.Name || !animCam.IsAnimating() || animCam.IsPaused ) {
+			//	return false;
+			//}
 
-			if( animCam.CurrentMoveSequence != this.SequenceName ) {
-				return true;
-			}
-			if( animCam.MoveTicksLingerElapsed >= animCam.MoveTicksLingerDuration ) {
-				return true;
-			}
+			//CameraMover.Current = new CameraMover(
+			//	name: "AdventureModeIntro",
+			//	moveXFrom: (int)this.CameraStart.X,
+			//	moveYFrom: (int)this.CameraStart.Y,
+			//	moveXTo:
 
 			return false;
 		}

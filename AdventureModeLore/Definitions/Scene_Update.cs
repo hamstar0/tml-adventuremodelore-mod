@@ -1,14 +1,14 @@
 ﻿using System;
 using Terraria;
-using HamstarHelpers.Services.Camera;
 
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Scene {
 		internal bool UpdateOnLocal_Internal() {
-			if( AnimatedCamera.Instance.CurrentMoveSequence != this.SequenceName ) {
-				return false;
-			}
+			//var animCam = CameraMover.Current;
+			//if( animCam?.Name != this.SequenceName || !animCam.IsAnimating() || animCam.IsPaused ) {
+			//	return false;
+			//}
 			return this.UpdateOnLocal();
 		}
 

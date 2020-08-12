@@ -7,7 +7,7 @@ using HamstarHelpers.Services.Network.NetIO.PayloadTypes;
 
 namespace AdventureModeLore.Net {
 	[Serializable]
-	class AMLPlayerDataNetData : NetProtocolBidirectionalPayload {
+	class AMLPlayerDataNetData : NetIOBidirectionalPayload {
 		public static void SendToServer( AMLPlayer plrData ) {
 			var protocol = new AMLPlayerDataNetData( plrData );
 
@@ -28,7 +28,8 @@ namespace AdventureModeLore.Net {
 
 		public bool IsAdventureModePlayer = false;
 
-		public int[] ActivatedCutscenes;
+		public string[] ActivatedCutsceneModNames;
+		public string[] ActivatedCutsceneNames;
 
 
 
@@ -39,7 +40,10 @@ namespace AdventureModeLore.Net {
 		private AMLPlayerDataNetData( AMLPlayer plrData ) {
 			this.FromWho = plrData.player.whoAmI;
 			this.IsAdventureModePlayer = plrData.IsAdventureModePlayer;
-			this.ActivatedCutscenes = plrData.TriggeredCutsceneIDsForPlayer.Select( c=>(int)c ).ToArray();
+			this.ActivatedCutsceneModNames = plrData.TriggeredCutsceneIDsForPlayer
+				.Select( c=>c.ModName ).ToArray();
+			this.ActivatedCutsceneNames = plrData.TriggeredCutsceneIDsForPlayer
+				.Select( c=>c.Name ).ToArray();
 		}
 
 

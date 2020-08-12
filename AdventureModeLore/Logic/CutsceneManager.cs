@@ -23,7 +23,7 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private IDictionary<CutsceneID, Cutscene> _Cutscenes = new Dictionary<CutsceneID, Cutscene> {
-			{ CutsceneID.Intro, new IntroCutscene() }
+			{ new CutsceneID("AdventureModeLore", "Intro"), IntroCutscene.Create("Opening") }
 		};
 
 
@@ -62,7 +62,7 @@ namespace AdventureModeLore.Logic {
 
 		public Cutscene GetCurrentPlayerCutscene( Player player ) {
 			var myplayer = player.GetModPlayer<AMLPlayer>();
-			if( myplayer.CurrentPlayingCutsceneForPlayer == 0 ) {
+			if( myplayer.CurrentPlayingCutsceneForPlayer == null ) {
 				return null;
 			}
 
@@ -71,7 +71,7 @@ namespace AdventureModeLore.Logic {
 
 		public Cutscene GetCurrentWorldCutscene() {
 			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
+			if( myworld.CurrentPlayingCutsceneForWorld == null ) {
 				return null;
 			}
 

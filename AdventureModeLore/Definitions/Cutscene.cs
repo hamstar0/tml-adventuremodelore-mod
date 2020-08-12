@@ -2,19 +2,46 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI;
+using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
 
 
 namespace AdventureModeLore.Definitions {
-	public enum CutsceneID {
-		Intro = 1
+	public class CutsceneID {
+		public string ModName { get; }
+		public string Name { get; }
+
+
+
+		////////////////
+
+		public CutsceneID( Mod mod, string name ) {
+			this.ModName = mod.Name;
+			this.Name = name;
+		}
+
+		public CutsceneID( string modName, string name ) {
+			this.ModName = modName;
+			this.Name = name;
+		}
+
+		public override int GetHashCode() {
+			return this.ModName.GetHashCode() ^ this.Name.GetHashCode();
+		}
+
+		public override bool Equals( object obj ) {
+			var comp = obj as CutsceneID;
+			if( comp == null ) { return false; }
+
+			return comp.ModName == this.ModName && comp.Name == this.Name;
+		}
 	}
 
 
 
 
 	public abstract partial class Cutscene {
-		public abstract CutsceneID UniqueId { get; }
+		public CutsceneID UniqueId { get; }
 
 		public Scene[] Scenes { get; }
 
@@ -28,7 +55,8 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		protected Cutscene() {
+		protected Cutscene( CutsceneID uid ) {
+			this.UniqueId = uid;
 			this.Scenes = this.LoadScenes();
 		}
 

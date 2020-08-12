@@ -10,7 +10,7 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		internal void UpdateForWorld( AMLWorld myworld ) {
-			if( myworld.CurrentPlayingCutsceneForWorld == 0 ) {
+			if( myworld.CurrentPlayingCutsceneForWorld == null ) {
 				this.UpdateForWorldToActivate();
 			} else {
 				this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ].UpdateForWorld_Internal();
@@ -43,8 +43,8 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		internal void UpdateForPlayer( AMLPlayer myplayer ) {
-			CutsceneID currCutID = myplayer.CurrentPlayingCutsceneForPlayer;
-			if( currCutID == 0 ) {
+			CutsceneID currCutsceneID = myplayer.CurrentPlayingCutsceneForPlayer;
+			if( currCutsceneID == null ) {
 				return;
 			}
 
@@ -56,7 +56,7 @@ namespace AdventureModeLore.Logic {
 			Main.mapStyle = 0;
 			CaptureManager.Instance.Active = false;
 
-			this.Cutscenes[currCutID].UpdateForPlayer_Internal( myplayer.player );
+			this.Cutscenes[ currCutsceneID ].UpdateForPlayer_Internal( myplayer.player );
 		}
 	}
 }

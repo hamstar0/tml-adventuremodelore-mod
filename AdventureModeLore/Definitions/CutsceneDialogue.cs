@@ -5,11 +5,12 @@ using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Classes.UI.Elements;
 using HamstarHelpers.Classes.UI.Theme;
 using HamstarHelpers.Services.UI.FreeHUD;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace AdventureModeLore.Definitions {
 	public class CutsceneDialogue : ILoadable {
-		protected UIThemedTextPanel DialogueDisplay { get; }
+		protected UIThemedTextPanel DialogueDisplay;
 
 
 		////////////////
@@ -32,10 +33,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		private CutsceneDialogue() {
-			this.DialogueDisplay = new UIThemedTextPanel( UITheme.Vanilla, false, "" );
-			this.DialogueDisplay.Hide();
-		}
+		private CutsceneDialogue() { }
 
 		public CutsceneDialogue( string dialogue ) : this( dialogue, new List<CutsceneDialogue>(), null ) { }
 
@@ -55,6 +53,9 @@ namespace AdventureModeLore.Definitions {
 		void ILoadable.OnModsLoad() { }
 
 		void ILoadable.OnPostModsLoad() {
+			this.DialogueDisplay = new UIThemedTextPanel( UITheme.Vanilla, false, "" );
+			this.DialogueDisplay.Hide();
+
 			FreeHUD.AddElement( "CutsceneDialogue", this.DialogueDisplay );
 		}
 

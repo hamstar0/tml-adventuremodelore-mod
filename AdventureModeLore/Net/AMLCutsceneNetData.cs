@@ -10,7 +10,7 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Net {
 	[Serializable]
-	class AMLCutsceneNetData : NetProtocolBroadcastPayload {
+	class AMLCutsceneNetData : NetIOBroadcastPayload {
 		public static void Broadcast( Cutscene cutscene, int sceneIdx ) {
 			var protocol = new AMLCutsceneNetData( cutscene, sceneIdx );
 
@@ -33,7 +33,8 @@ namespace AdventureModeLore.Net {
 
 		////////////////
 
-		public int CutsceneID;
+		public string ModName;
+		public string Name;
 		public int SceneIdx;
 		public Vector2 StartPosition;
 
@@ -44,7 +45,8 @@ namespace AdventureModeLore.Net {
 		private AMLCutsceneNetData() { }
 		
 		private AMLCutsceneNetData( Cutscene cutscene, int sceneIdx ) {
-			this.CutsceneID = (int)cutscene.UniqueId;
+			this.ModName = cutscene.UniqueId.ModName;
+			this.Name = cutscene.UniqueId.Name;
 			this.SceneIdx = sceneIdx;
 			this.StartPosition = cutscene.StartPosition;
 		}
@@ -65,7 +67,7 @@ namespace AdventureModeLore.Net {
 
 		private void Receive() {
 			var mngr = CutsceneManager.Instance;
-			var uid = (CutsceneID)this.CutsceneID;
+			var uid = new CutsceneID( this.ModName, this.Name );
 
 			if( this.SceneIdx == 0 ) {
 				string result;

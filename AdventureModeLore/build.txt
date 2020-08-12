@@ -1,6 +1,6 @@
 displayName = Adventure Mode Lore
 author = hamstar
-version = 0.3.5
-modReferences = HamstarHelpers@5.9.1
+version = 0.3.6
+modReferences = HamstarHelpers@5.9.2
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://forums.terraria.org/index.php?threads/emitters.87584/

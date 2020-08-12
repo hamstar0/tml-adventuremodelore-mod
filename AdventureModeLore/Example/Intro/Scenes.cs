@@ -11,10 +11,10 @@ namespace AdventureModeLore.Example.Intro {
 		protected override Scene[] LoadScenes() {
 			return new Scene[] {
 				new IntroScene(
-					cameraBegin: this.StartPosition,
-					cameraEnd: this.StartPosition + new Vector2( 0f, -4f ),
-					cameraMoveDuration: 60 * 5,
-					cameraLingerDuration: 0
+					camBegin: this.StartPosition,
+					camEnd: this.StartPosition + new Vector2( 0f, -4f ),
+					camMoveDuration: 60 * 5,
+					camLingerDuration: 0
 				)
 			};
 		}

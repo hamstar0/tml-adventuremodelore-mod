@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -92,9 +91,15 @@ namespace AdventureModeLore {
 
 		internal void SyncFromNet( AMLPlayerDataNetData payload ) {
 			this.IsAdventureModePlayer = this.IsAdventureModePlayer;
-			this.TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>(
-				payload.ActivatedCutscenes.Select( c => (CutsceneID)c )
-			);
+			this.TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>();
+
+			int len = payload.ActivatedCutsceneModNames.Length;
+			for( int i=0; i<len; i++ ) {
+				string modName = payload.ActivatedCutsceneModNames[i];
+				string name = payload.ActivatedCutsceneNames[i];
+
+				this.TriggeredCutsceneIDsForPlayer.Add( new CutsceneID(modName, name) );
+			}
 		}
 
 

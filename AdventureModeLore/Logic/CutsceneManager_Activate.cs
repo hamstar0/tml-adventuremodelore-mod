@@ -20,7 +20,7 @@ namespace AdventureModeLore.Logic {
 			}
 
 			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutsceneForWorld != 0 ) {
+			if( myworld.CurrentPlayingCutsceneForWorld != null ) {
 				result = "Could not play cutscene " + cutsceneId + "; world already playing cutscene " + myworld.CurrentPlayingCutsceneForWorld;
 				return false;
 			}
@@ -29,16 +29,19 @@ namespace AdventureModeLore.Logic {
 				return false;
 			}
 
-			myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
-			myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
-
-			Vector2? startPos = cutscene.BeginForWorld_Internal( 0 );
-			if( !startPos.HasValue ) {
+			Vector2 startPos;
+			if( !cutscene.BeginForWorld_Internal(0, out startPos) ) {
 				result = "Cutscene "+cutsceneId+" doesn't allow being begun.";
 				return false;
 			}
 
-			return this.BeginCutsceneForPlayer( cutsceneId, player, 0, startPos.Value, out result );
+			if( this.BeginCutsceneForPlayer(cutsceneId, player, 0, startPos, out result) ) {
+				myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
+				myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
+				return true;
+			}
+
+			return false;
 		}
 
 
@@ -54,13 +57,13 @@ namespace AdventureModeLore.Logic {
 				return false;
 			}
 
+LogHelpers.Log( "Start pos: "+startPos );
 			cutscene.SetStartPosition( startPos );
+			cutscene.BeginForPlayer_Internal( player, sceneIdx );
 
 			var myplayer = player.GetModPlayer<AMLPlayer>();
 			myplayer.TriggeredCutsceneIDsForPlayer.Add( cutsceneId );
 			myplayer.CurrentPlayingCutsceneForPlayer = cutsceneId;
-
-			cutscene.BeginForPlayer_Internal( player, sceneIdx );
 
 			if( Main.netMode == NetmodeID.Server ) {
 				AMLCutsceneNetData.SendToClient( player.whoAmI, cutscene, sceneIdx );
@@ -102,7 +105,7 @@ namespace AdventureModeLore.Logic {
 
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			if( myworld.CurrentPlayingCutsceneForWorld == cutsceneId ) {
-				myworld.CurrentPlayingCutsceneForWorld = 0;
+				myworld.CurrentPlayingCutsceneForWorld = null;
 				cutscene.OnEndForWorld_Internal();
 			}
 
@@ -112,7 +115,7 @@ namespace AdventureModeLore.Logic {
 
 				var myplayer = player.GetModPlayer<AMLPlayer>();
 				if( myplayer.CurrentPlayingCutsceneForPlayer == cutsceneId ) {
-					myplayer.CurrentPlayingCutsceneForPlayer = 0;
+					myplayer.CurrentPlayingCutsceneForPlayer = null;
 					cutscene.OnEndForPlayer_Internal( player );
 				}
 			}

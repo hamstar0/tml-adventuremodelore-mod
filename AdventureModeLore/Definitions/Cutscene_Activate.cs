@@ -12,7 +12,7 @@ namespace AdventureModeLore.Definitions {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( myworld.CurrentPlayingCutsceneForWorld != 0 ) {
+			if( myworld.CurrentPlayingCutsceneForWorld != null ) {
 LogHelpers.LogOnce("Fail 1a");
 				return false;
 			}
@@ -28,7 +28,7 @@ LogHelpers.LogOnce("Fail 2a");
 			var myplayer = player.GetModPlayer<AMLPlayer>();
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
+			if( myplayer.CurrentPlayingCutsceneForPlayer != null ) {
 LogHelpers.LogOnce("Fail 1b");
 				return false;
 			}
@@ -54,12 +54,13 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////
 
-		internal Vector2? BeginForWorld_Internal( int sceneIdx ) {
+		internal bool BeginForWorld_Internal( int sceneIdx, out Vector2 startPosition ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutsceneForWorld != 0 ) {
+			if( myworld.CurrentPlayingCutsceneForWorld != null ) {
 				LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
 					+ myworld.CurrentPlayingCutsceneForWorld + " is active." );
-				return null;
+				startPosition = default( Vector2 );
+				return false;
 			}
 
 			this.CurrentScene = sceneIdx;
@@ -67,17 +68,11 @@ LogHelpers.LogOnce("Fail 2b");
 			Scene scene = this.Scenes[sceneIdx];
 			scene.BeginOnWorld_Internal( this );
 
-			return this.OnBeginForWorld();
+			startPosition = this.OnBeginForWorld();
+			return true;
 		}
 
 		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {
-			var myplayer = player.GetModPlayer<AMLPlayer>();
-			if( myplayer.CurrentPlayingCutsceneForPlayer != 0 ) {
-				LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
-					+ myplayer.CurrentPlayingCutsceneForPlayer + " is active." );
-				return;
-			}
-
 			this.CurrentScene = sceneIdx;
 
 			Scene scene = this.Scenes[sceneIdx];

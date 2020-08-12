@@ -13,24 +13,28 @@ namespace AdventureModeLore.Logic {
 		internal void LoadForWorld( AMLWorld myworld, TagCompound tag ) {
 			myworld.TriggeredCutsceneIDsForWorld.Clear();
 
-			if( !tag.ContainsKey( "TriggeredCutsceneCount" ) ) {
+			if( !tag.ContainsKey( "TriggeredCutscenesCount" ) ) {
 				return;
 			}
-			int count = tag.GetInt( "TriggeredCutsceneCount" );
+			int count = tag.GetInt( "TriggeredCutscenesCount" );
 
 			for( int i = 0; i < count; i++ ) {
-				var cutsceneId = (CutsceneID)tag.GetInt( "TriggeredCutscene_" + i );
-				myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
+				string modName = tag.GetString( "TriggeredCutsceneMod_"+i );
+				string name = tag.GetString( "TriggeredCutsceneName_"+i );
+				var uid = new CutsceneID( modName, name );
+
+				myworld.TriggeredCutsceneIDsForWorld.Add( uid );
 			}
 		}
 
 		internal void SaveForWorld( AMLWorld myworld, TagCompound tag ) {
 			int count = myworld.TriggeredCutsceneIDsForWorld.Count;
-			tag["TriggeredCutsceneCount"] = count;
+			tag["TriggeredCutscenesCount"] = count;
 
 			int i = 0;
 			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDsForWorld ) {
-				tag["TriggeredCutscene_" + i] = (int)uid;
+				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
+				tag["TriggeredCutsceneName_" + i] = uid.Name;
 				i++;
 			}
 		}
@@ -41,7 +45,8 @@ namespace AdventureModeLore.Logic {
 			writer.Write( (int)myworld.TriggeredCutsceneIDsForWorld.Count );
 
 			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDsForWorld ) {
-				writer.Write( (int)uid );
+				writer.Write( uid.ModName );
+				writer.Write( uid.Name );
 			}
 		}
 
@@ -51,8 +56,11 @@ namespace AdventureModeLore.Logic {
 			int count = reader.ReadInt32();
 
 			for( int i=0; i<count; i++ ) {
-				var cutsceneId = (CutsceneID)reader.ReadInt32();
-				myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
+				string modName = reader.ReadString();
+				string name = reader.ReadString();
+				var uid = new CutsceneID( modName, name );
+
+				myworld.TriggeredCutsceneIDsForWorld.Add( uid );
 			}
 		}
 
@@ -62,23 +70,28 @@ namespace AdventureModeLore.Logic {
 		internal void LoadForPlayer( AMLPlayer myplayer, TagCompound tag ) {
 			myplayer.TriggeredCutsceneIDsForPlayer.Clear();
 
-			if( !tag.ContainsKey("TriggeredCutsceneCount") ) {
+			if( !tag.ContainsKey("TriggeredCutscenesCount") ) {
 				return;
 			}
-			int count = tag.GetInt( "TriggeredCutsceneCount" );
+			int count = tag.GetInt( "TriggeredCutscenesCount" );
 
 			for( int i=0; i<count; i++ ) {
-				myplayer.TriggeredCutsceneIDsForPlayer.Add( (CutsceneID)tag.GetInt("TriggeredCutscene_"+i) );
+				string modName = tag.GetString( "TriggeredCutsceneMod_" + i );
+				string name = tag.GetString( "TriggeredCutsceneName_" + i );
+				var uid = new CutsceneID( modName, name );
+
+				myplayer.TriggeredCutsceneIDsForPlayer.Add( uid );
 			}
 		}
 
 		internal void SaveForPlayer( AMLPlayer myplayer, TagCompound tag ) {
 			int count = myplayer.TriggeredCutsceneIDsForPlayer.Count;
-			tag["TriggeredCutsceneCount"] = count;
+			tag["TriggeredCutscenesCount"] = count;
 
 			int i = 0;
 			foreach( CutsceneID uid in myplayer.TriggeredCutsceneIDsForPlayer ) {
-				tag["TriggeredCutscene_" + i] = (int)uid;
+				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
+				tag["TriggeredCutsceneName_" + i] = uid.Name;
 				i++;
 			}
 		}
