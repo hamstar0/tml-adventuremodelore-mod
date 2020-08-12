@@ -8,7 +8,7 @@ using HamstarHelpers.Helpers.World;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Example.Intro {
+namespace AdventureModeLore.ExampleCutscene.Intro {
 	partial class IntroCutscene : Cutscene {
 		public static IntroCutscene Create( string affix ) {
 			return new IntroCutscene( new CutsceneID(

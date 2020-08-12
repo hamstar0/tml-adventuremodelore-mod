@@ -4,7 +4,7 @@ using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Example.Intro {
+namespace AdventureModeLore.ExampleCutscene.Intro {
 	partial class IntroCutscene : Cutscene {
 		public override bool CanBeginForPlayer( Player player ) {
 			return base.CanBeginForPlayer( player );

@@ -4,7 +4,7 @@ using Terraria;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.Example.Intro.Scenes {
+namespace AdventureModeLore.ExampleCutscene.Intro.Scenes {
 	class IntroScene : Scene {
 		protected Vector2 CameraEnd;
 

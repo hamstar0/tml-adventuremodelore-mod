@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
-using AdventureModeLore.Example.Intro;
+using AdventureModeLore.ExampleCutscene.Intro;
 using AdventureModeLore.Definitions;
 
 
