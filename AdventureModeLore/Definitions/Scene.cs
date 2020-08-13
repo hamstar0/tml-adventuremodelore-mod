@@ -1,67 +1,47 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class Scene {
-		protected Vector2 CameraStart;
-
-		////
-
-		protected CutsceneDialogue Dialogue = null;
-
-
-		////////////////
-
-		public bool MustSync { get; }
-
-
-
-		////////////////
-
-		protected Scene( bool mustSync, Vector2 cameraBegin ) {
-			this.MustSync = mustSync;
-			this.CameraStart = cameraBegin;
+	public abstract partial class Scene<T> : Scene where T : Cutscene {
+		protected Scene( bool mustSync ) : base( mustSync ) {
 		}
 
 
 		////////////////
 
-		internal void BeginOnPlayer_Internal( Cutscene parent, Player player ) {
-			if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
-				this.Dialogue?.ShowDialogue();
-			}
-
-			this.OnBeginOnPlayer( parent, player );
+		internal sealed override void BeginOnPlayer_Internal( Cutscene parent, Player player ) {
+			base.BeginOnPlayer_Internal( parent, player );
+			this.OnBeginOnPlayer( (T)parent, player );
 		}
 
-		internal void BeginOnWorld_Internal( Cutscene parent ) {
-			this.OnBeginOnWorld( parent );
+		internal sealed override void BeginOnWorld_Internal( Cutscene parent ) {
+			base.BeginOnWorld_Internal( parent );
+			this.OnBeginOnWorld( (T)parent );
 		}
 
 		////
 
-		protected virtual void OnBeginOnPlayer( Cutscene parent, Player player ) { }
+		protected virtual void OnBeginOnPlayer( T parent, Player player ) { }
 
-		protected virtual void OnBeginOnWorld( Cutscene parent ) { }
+		protected virtual void OnBeginOnWorld( T parent ) { }
 
 		////////////////
 
-		internal void EndForWorld_Private() {
-			this.OnEndOnWorld();
+		internal sealed override void EndForWorld_Internal( Cutscene parent ) {
+			base.EndForWorld_Internal( parent );
+			this.OnEndOnWorld( (T)parent );
 		}
 		
-		internal void EndForPlayer_Private( Player player ) {
-			this.Dialogue?.HideDialogue();
-			this.OnEndOnPlayer( player );
+		internal sealed override void EndForPlayer_Internal( Cutscene parent, Player player ) {
+			base.EndForPlayer_Internal( parent, player );
+			this.OnEndOnPlayer( (T)parent, player );
 		}
 
 		////
 
-		protected virtual void OnEndOnPlayer( Player player ) { }
+		protected virtual void OnEndOnPlayer( T parent, Player player ) { }
 
-		protected virtual void OnEndOnWorld() { }
+		protected virtual void OnEndOnWorld( T parent ) { }
 	}
 }

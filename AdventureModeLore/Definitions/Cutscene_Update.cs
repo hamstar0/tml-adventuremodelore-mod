@@ -17,7 +17,7 @@ namespace AdventureModeLore.Definitions {
 		internal void UpdateForWorld_Internal() {
 			this.UpdateForWorld();
 
-			if( !this.Scenes[this.CurrentScene].UpdateOnWorld_Internal() ) {
+			if( !this.Scenes[this.CurrentScene].UpdateOnWorld_Internal(this) ) {
 				return;
 			}
 
@@ -49,7 +49,7 @@ namespace AdventureModeLore.Definitions {
 			}
 
 			// Has scene ended?
-			if( !scene.UpdateOnLocal_Internal() ) {
+			if( !scene.UpdateOnLocal_Internal(this) ) {
 				return;
 			}
 

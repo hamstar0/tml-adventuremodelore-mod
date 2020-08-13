@@ -104,7 +104,7 @@ LogHelpers.LogOnce("Fail 2b");
 
 		internal void SetCurrentSceneForWorld( int sceneIdx ) {
 			Scene prevScene = this.Scenes[this.CurrentScene];
-			prevScene.EndForWorld_Private();
+			prevScene.EndForWorld_Internal( this );
 
 			this.CurrentScene = sceneIdx;
 
@@ -114,7 +114,7 @@ LogHelpers.LogOnce("Fail 2b");
 		
 		internal void SetCurrentSceneForPlayer( Player player, int sceneIdx ) {
 			Scene prevScene = this.Scenes[this.CurrentScene];
-			prevScene.EndForPlayer_Private( player );
+			prevScene.EndForPlayer_Internal( this, player );
 
 			this.CurrentScene = sceneIdx;
 

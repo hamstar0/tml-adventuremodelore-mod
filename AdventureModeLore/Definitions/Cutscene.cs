@@ -43,7 +43,7 @@ namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
 		public CutsceneID UniqueId { get; }
 
-		public Scene[] Scenes { get; }
+		protected Scene[] Scenes { get; }
 
 		public int CurrentScene { get; protected set; } = 0;
 

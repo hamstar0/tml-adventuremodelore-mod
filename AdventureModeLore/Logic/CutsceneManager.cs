@@ -5,8 +5,8 @@ using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
-using AdventureModeLore.ExampleCutscene.Intro;
 using AdventureModeLore.Definitions;
+using AdventureModeLore.ExampleCutscene.Intro;
 
 
 namespace AdventureModeLore.Logic {

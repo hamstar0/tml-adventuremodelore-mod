@@ -51,7 +51,7 @@ namespace AdventureModeLore.Logic {
 					int sceneIdx,
 					Vector2 startPos,
 					out string result ) {
-			Cutscene cutscene = this.Cutscenes[cutsceneId];
+			Cutscene cutscene = this.Cutscenes[ cutsceneId ];
 			if( !cutscene.CanBeginForPlayer( player ) ) {
 				result = "Player still cannot play cutscene " + cutsceneId;
 				return false;
