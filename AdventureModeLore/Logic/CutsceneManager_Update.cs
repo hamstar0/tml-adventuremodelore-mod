@@ -33,8 +33,8 @@ namespace AdventureModeLore.Logic {
 							LogHelpers.WarnOnce( result );
 							continue;
 						}
+						break;
 					}
-					break;
 				}
 			}
 		}

@@ -35,13 +35,13 @@ namespace AdventureModeLore.Logic {
 				return false;
 			}
 
-			if( this.BeginCutsceneForPlayer(cutsceneId, player, 0, startPos, out result) ) {
-				myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
-				myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
-				return true;
+			if( !this.BeginCutsceneForPlayer(cutsceneId, player, 0, startPos, out result) ) {
+				return false;
 			}
 
-			return false;
+			myworld.TriggeredCutsceneIDsForWorld.Add( cutsceneId );
+			myworld.CurrentPlayingCutsceneForWorld = cutsceneId;
+			return true;
 		}
 
 
@@ -58,7 +58,7 @@ namespace AdventureModeLore.Logic {
 			}
 
 LogHelpers.Log( "Start pos: "+startPos );
-			cutscene.SetStartPosition( startPos );
+			cutscene.SetCurrentPosition( startPos );
 			cutscene.BeginForPlayer_Internal( player, sceneIdx );
 
 			var myplayer = player.GetModPlayer<AMLPlayer>();

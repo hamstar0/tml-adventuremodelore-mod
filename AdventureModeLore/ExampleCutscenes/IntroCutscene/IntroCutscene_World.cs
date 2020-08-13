@@ -2,13 +2,15 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Info;
 using HamstarHelpers.Helpers.World;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.ExampleCutscene.Intro {
+namespace AdventureModeLore.ExampleCutscenes.Intro {
 	partial class IntroCutscene : Cutscene {
 		public static IntroCutscene Create( string affix ) {
 			return new IntroCutscene( new CutsceneID(
@@ -49,10 +51,27 @@ namespace AdventureModeLore.ExampleCutscene.Intro {
 
 		////////////////
 
+		public override bool CanBeginForWorld() {
+			if( GameInfoHelpers.GetVanillaProgressList().Count > 0 ) {
+				return false;
+			}
+			if( NPC.AnyNPCs(NPCID.Merchant) ) {
+				return false;
+			}
+			
+			return base.CanBeginForWorld();
+		}
+
+		////////////////
+
 		protected override Vector2 OnBeginForWorld() {
 			char d = Path.DirectorySeparatorChar;
-			TileStructure shipInterior = TileStructure.Load( AMLMod.Instance, "Example" + d+"Intro"+d+"Ship Interior.dat" );
-			TileStructure shipExterior = TileStructure.Load( AMLMod.Instance, "Example" + d+"Intro"+d+"Ship Exterior.dat" );
+			TileStructure shipInterior = TileStructure.Load(
+				AMLMod.Instance,
+				"ExampleCutscenes"+d+"IntroCutscene"+d+"Ship Interior.dat" );
+			TileStructure shipExterior = TileStructure.Load(
+				AMLMod.Instance,
+				"ExampleCutscenes"+d+"IntroCutscene"+d+"Ship Exterior.dat" );
 //LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
 //	+", exterior: "+shipExterior.Bounds.ToString()+" ("+shipExterior.TileCount+")");
 			int left, top;

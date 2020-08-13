@@ -36,7 +36,7 @@ namespace AdventureModeLore.Net {
 		public string ModName;
 		public string Name;
 		public int SceneIdx;
-		public Vector2 StartPosition;
+		public Vector2 CurrentPosition;
 
 
 
@@ -48,7 +48,7 @@ namespace AdventureModeLore.Net {
 			this.ModName = cutscene.UniqueId.ModName;
 			this.Name = cutscene.UniqueId.Name;
 			this.SceneIdx = sceneIdx;
-			this.StartPosition = cutscene.StartPosition;
+			this.CurrentPosition = cutscene.CurrentPosition;
 		}
 
 
@@ -71,7 +71,7 @@ namespace AdventureModeLore.Net {
 
 			if( this.SceneIdx == 0 ) {
 				string result;
-				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, 0, this.StartPosition, out result );
+				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, 0, this.CurrentPosition, out result );
 
 				LogHelpers.Log( "Cutscene " + uid + " result for client: " + result );
 			} else if( this.SceneIdx > 0 ) {

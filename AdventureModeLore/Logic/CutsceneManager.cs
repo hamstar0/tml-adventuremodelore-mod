@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using AdventureModeLore.Definitions;
-using AdventureModeLore.ExampleCutscene.Intro;
+using AdventureModeLore.ExampleCutscenes.Intro;
 
 
 namespace AdventureModeLore.Logic {
@@ -22,15 +22,18 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		private IDictionary<CutsceneID, Cutscene> _Cutscenes = new Dictionary<CutsceneID, Cutscene> {
-			{ new CutsceneID("AdventureModeLore", "Intro"), IntroCutscene.Create("Opening") }
-		};
+		private IDictionary<CutsceneID, Cutscene> _Cutscenes;
 
 
 
 		////////////////
 
 		internal CutsceneManager() {
+			Cutscene exampleAmIntro = IntroCutscene.Create( "Opening" );
+
+			this._Cutscenes = new Dictionary<CutsceneID, Cutscene> {
+				{ exampleAmIntro.UniqueId, exampleAmIntro }
+			};
 			this.Cutscenes = new ReadOnlyDictionary<CutsceneID, Cutscene>( this._Cutscenes );
 		}
 

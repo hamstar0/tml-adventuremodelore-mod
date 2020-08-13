@@ -4,7 +4,7 @@ using Terraria;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Scene<T> : Scene where T : Cutscene {
-		protected Scene( bool mustSync ) : base( mustSync ) {
+		protected Scene( bool worldControlsSyncOnly ) : base( worldControlsSyncOnly ) {
 		}
 
 

@@ -40,7 +40,7 @@ namespace AdventureModeLore {
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsAdventureModePlayer" ) ) {
 				this.IsAdventureModePlayer = true;
-				CutsceneManager.Instance.LoadForPlayer( this, tag );
+				CutsceneManager.Instance?.LoadForPlayer( this, tag );
 			}
 		}
 

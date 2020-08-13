@@ -9,11 +9,11 @@ namespace AdventureModeLore.Definitions {
 			//if( animCam?.Name != this.SequenceName || !animCam.IsAnimating() || animCam.IsPaused ) {
 			//	return false;
 			//}
-			return true;
+			return false;
 		}
 
 		internal virtual bool UpdateOnWorld_Internal( Cutscene parent ) {
-			return true;
+			return false;
 		}
 	}
 }

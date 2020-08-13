@@ -43,17 +43,6 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////////////////
 
-		/// <summary></summary>
-		/// <returns>Start position of the cutscene (for players).</returns>
-		protected abstract Vector2 OnBeginForWorld();
-
-		/// <summary></summary>
-		/// <param name="player"></param>
-		/// <param name="sceneIdx"></param>
-		protected virtual void OnBeginForPlayer( Player player, int sceneIdx ) { }
-
-		////
-
 		internal bool BeginForWorld_Internal( int sceneIdx, out Vector2 startPosition ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			if( myworld.CurrentPlayingCutsceneForWorld != null ) {
@@ -63,7 +52,7 @@ LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
 
-			this.CurrentScene = sceneIdx;
+			this.CurrentSceneIdx = sceneIdx;
 
 			Scene scene = this.Scenes[sceneIdx];
 			scene.BeginOnWorld_Internal( this );
@@ -73,7 +62,7 @@ LogHelpers.LogOnce("Fail 2b");
 		}
 
 		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {
-			this.CurrentScene = sceneIdx;
+			this.CurrentSceneIdx = sceneIdx;
 
 			Scene scene = this.Scenes[sceneIdx];
 			scene.BeginOnPlayer_Internal( this, player );
@@ -81,45 +70,34 @@ LogHelpers.LogOnce("Fail 2b");
 			this.OnBeginForPlayer( player, sceneIdx );
 		}
 
-		////////////////
-
-		protected virtual void OnEndForWorld() { }
-
-		protected virtual void OnEndForPlayer( Player player ) { }
-
 		////
 
+		/// <summary></summary>
+		/// <returns>Start position of the cutscene (for players).</returns>
+		protected abstract Vector2 OnBeginForWorld();
+
+		/// <summary></summary>
+		/// <param name="player"></param>
+		/// <param name="sceneIdx"></param>
+		protected virtual void OnBeginForPlayer( Player player, int sceneIdx ) { }
+
+
+		////////////////
+
 		internal void OnEndForWorld_Internal() {
-			this.CurrentScene = 0;
+			this.CurrentSceneIdx = 0;
 			this.OnEndForWorld();
 		}
 
 		internal void OnEndForPlayer_Internal( Player player ) {
-			this.CurrentScene = 0;
+			this.CurrentSceneIdx = 0;
 			this.OnEndForPlayer( player );
 		}
 
+		////
 
-		////////////////
+		protected virtual void OnEndForWorld() { }
 
-		internal void SetCurrentSceneForWorld( int sceneIdx ) {
-			Scene prevScene = this.Scenes[this.CurrentScene];
-			prevScene.EndForWorld_Internal( this );
-
-			this.CurrentScene = sceneIdx;
-
-			Scene currScene = this.Scenes[this.CurrentScene];
-			currScene.BeginOnWorld_Internal( this );
-		}
-		
-		internal void SetCurrentSceneForPlayer( Player player, int sceneIdx ) {
-			Scene prevScene = this.Scenes[this.CurrentScene];
-			prevScene.EndForPlayer_Internal( this, player );
-
-			this.CurrentScene = sceneIdx;
-
-			Scene currScene = this.Scenes[this.CurrentScene];
-			currScene.BeginOnPlayer_Internal( this, player );
-		}
+		protected virtual void OnEndForPlayer( Player player ) { }
 	}
 }
