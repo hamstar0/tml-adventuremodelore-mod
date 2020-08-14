@@ -32,5 +32,10 @@ namespace AdventureModeLore.Definitions {
 
 			return comp.ModName == this.ModName && comp.Name == this.Name;
 		}
+
+
+		public override string ToString() {
+			return this.ModName+":"+this.Name;
+		}
 	}
 }

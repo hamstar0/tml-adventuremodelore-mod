@@ -57,7 +57,7 @@ namespace AdventureModeLore.Definitions {
 			if( scene.WorldControlsScenesOnly ) {
 				return;
 			}
-
+			
 			this.AdvanceSceneForPlayer();
 		}
 	}

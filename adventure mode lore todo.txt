@@ -8,6 +8,7 @@ v1
 		-	Implement movement control for NPCs and projectiles
 	-	Implement dialogue
 	-	Implement scene sequence + camera
+-	Fix set loading
 
 -	Implement cutscene mechanics
 	-	Implement UI for dialogue

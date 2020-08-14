@@ -104,7 +104,10 @@ LogHelpers.Log( "Start pos: "+startPos );
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
 
 			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutsceneForWorld == cutsceneId ) {
+			if( myworld.CurrentPlayingCutsceneForWorld != cutsceneId ) {
+				LogHelpers.Warn( "Incorrect current cutscene;"
+					+" expected "+cutsceneId.ToString()+", found "+myworld.CurrentPlayingCutsceneForWorld.ToString() );
+			} else {
 				myworld.CurrentPlayingCutsceneForWorld = null;
 				cutscene.OnEndForWorld_Internal();
 			}
@@ -114,10 +117,14 @@ LogHelpers.Log( "Start pos: "+startPos );
 				if( player?.active != true ) { continue; }
 
 				var myplayer = player.GetModPlayer<AMLPlayer>();
-				if( myplayer.CurrentPlayingCutsceneForPlayer == cutsceneId ) {
-					myplayer.CurrentPlayingCutsceneForPlayer = null;
-					cutscene.OnEndForPlayer_Internal( player );
+				if( myplayer.CurrentPlayingCutsceneForPlayer != cutsceneId ) {
+					LogHelpers.Warn( "Incorrect cutscene for player "+player.name+" ("+i+");"
+						+" expected "+cutsceneId.ToString()+", found "+myplayer.CurrentPlayingCutsceneForPlayer.ToString() );
+					continue;
 				}
+
+				myplayer.CurrentPlayingCutsceneForPlayer = null;
+				cutscene.OnEndForPlayer_Internal( player );
 			}
 
 			if( sync ) {
