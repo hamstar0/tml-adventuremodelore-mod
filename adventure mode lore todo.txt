@@ -4,12 +4,37 @@ v1
 	-	Cleanup loaded set after all scenes traversed
 	-	Implement UI for dialogue choices responses
 -	Create intro cutscene
-	-	Implement actors
-		-	Implement movement control for NPCs and projectiles
 	-	Implement dialogue
+	-	Implement actors
+		-	@Plan
+			1	Populate ship deck with guides
+				-	Give guides different colors (and sizes?)
+				-	Give 1 guide a pair of binoculars and hold its position and frame
+			3	Pirates!
+				-	Spawn cannon ball projectiles that kill guides
+				-	Pirates leap up onto deck
+			4	Spawn player and some guides below deck, "conversing"
+			5	Pirates start attacking below deck
+			6	Spawn captain, have a pirate "converse" with them
+			7	Ambush
+				-	Arrange player and surviving guide in ambush position
+				-	Captain walks up to survivors
+			8	Player and guide moved to raft, pirates celebrate on deck
+			9	Cleanup
 	-	Implement scene sequence + camera
--	Fix set loading
+		-	Implement sequence
 
+		-	@Plan
+			1	Bring ship exterior into view, linger
+			2	View dungeon briefly, play sound of explosions
+			3	View ship exterior again, stuff is now happening
+			4	View ship interior, stuff is happening
+			5	Player gains control for 20s
+			6	View ship exterior
+			7	View ship interior
+			8	Modify set to add raft in front of ship, view exterior with raft
+			9	Fade to black, cleanup sets
+-	Fix set loading
 -	Implement cutscene mechanics
 	-	Implement UI for dialogue
 	-	Implement basic scene progression
