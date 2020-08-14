@@ -27,6 +27,9 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 			if( isFlipped ) {
 				boatLeft = (Main.maxTilesX - 40) - width;
+				if( (boatLeft % 2) == 0 ) {
+					boatLeft++;
+				}
 			} else {
 				boatLeft = 40;
 			}
@@ -78,13 +81,25 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			bool isFlipped;
 
 			IntroCutscene.GetSceneCoordinates( shipExterior.Bounds.Width, out left, out top, out isFlipped );
-			shipExterior.PaintToWorld( left, top, false, isFlipped, false );
+			shipExterior.PaintToWorld(
+				leftTileX: left,
+				topTileY: top,
+				paintAir: false,
+				respectLiquids: true,
+				flipHorizontally: isFlipped,
+				flipVertically: false );
 
 			var startPos = new Vector2( left*16, top*16 );
 			startPos.X += shipExterior.Bounds.Width * 8;	// (wid*16) / 2
 
 			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
-			shipInterior.PaintToWorld( left, top - 160, false, isFlipped, false );
+			shipInterior.PaintToWorld(
+				leftTileX: left,
+				topTileY: top - 160,
+				paintAir: false,
+				respectLiquids: true,
+				flipHorizontally: isFlipped,
+				flipVertically: false );
 
 			return startPos;
 		}
