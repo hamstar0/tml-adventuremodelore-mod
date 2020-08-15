@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI;
 using HamstarHelpers.Helpers.Debug;
+using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Definitions {
@@ -32,7 +33,12 @@ namespace AdventureModeLore.Definitions {
 
 
 		////////////////
-		
+
+		public abstract AMLCutsceneNetData GetPacketPayload( int sceneIdx );
+
+
+		////////////////
+
 		internal void SetCurrentPosition( Vector2 pos ) {
 			this.CurrentPosition = pos;
 		}

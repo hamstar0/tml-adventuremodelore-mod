@@ -12,16 +12,6 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro {
 	partial class IntroCutscene : Cutscene {
-		public static IntroCutscene Create( string affix ) {
-			return new IntroCutscene( new CutsceneID(
-				mod: AMLMod.Instance,
-				name: "Intro_"+ affix
-			) );
-		}
-
-
-		////////////////
-		
 		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
 			isFlipped = Main.spawnTileX > (Main.maxTilesX / 2);
 
@@ -47,10 +37,6 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 		}
 
 
-
-		////////////////
-		
-		private IntroCutscene( CutsceneID uid ) : base(uid) { }
 
 		////////////////
 

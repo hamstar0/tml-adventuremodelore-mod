@@ -14,8 +14,9 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 		////////////////
 
 		protected override void OnBeginOnPlayer( IntroCutscene parent, Player player ) {
-			CameraMover cam1 = null, cam2 = null, cam3 = null;
+			CameraMover cam1 = null, cam2 = null, cam3 = null, cam4 = null;
 
+			Vector2 interiorShipStartPos = parent.CurrentPosition;
 			Vector2 exteriorShipStartPos = parent.CurrentPosition;
 
 			bool isShipOnLeft = (int)exteriorShipStartPos.X < ((16 * Main.maxTilesX) / 2);
@@ -43,8 +44,30 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				moveYTo: (int)dungeonViewPos.Y - (4 * 16),
 				toDuration: 60 * 5,
 				lingerDuration: 0,
+				froDuration: 0,
+				onStop: () => CameraMover.Current = cam3
+			);
+			cam3 = new CameraMover(
+				name: "AdventureModeIntro",
+				moveXFrom: (int)exteriorShipStartPos.X,
+				moveYFrom: (int)exteriorShipStartPos.Y,
+				moveXTo: (int)exteriorShipStartPos.X,
+				moveYTo: (int)exteriorShipStartPos.Y,
+				toDuration: 0,
+				lingerDuration: 60 * 5,
+				froDuration: 0,
+				onStop: () => CameraMover.Current = cam4
+			);
+			cam4 = new CameraMover(
+				name: "AdventureModeIntro",
+				moveXFrom: (int)interiorShipStartPos.X,
+				moveYFrom: (int)interiorShipStartPos.Y,
+				moveXTo: (int)interiorShipStartPos.X,
+				moveYTo: (int)interiorShipStartPos.Y,
+				toDuration: 0,
+				lingerDuration: 60 * 5,
 				froDuration: 0
-				//onStop: () => CameraMover.Current = cam3
+				//onStop: () => CameraMover.Current = cam5
 			);
 
 			CameraMover.Current = cam1;
