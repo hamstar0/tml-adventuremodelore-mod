@@ -10,8 +10,9 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
-		internal void LoadForWorld( AMLWorld myworld, TagCompound tag ) {
-			myworld.TriggeredCutsceneIDsForWorld.Clear();
+		internal void Load_World( AMLWorld myworld, TagCompound tag ) {
+			myworld.TriggeredCutsceneIDs_World.Clear();
+			myworld.CurrentPlayingCutscenes_World.Clear();
 
 			if( !tag.ContainsKey( "TriggeredCutscenesCount" ) ) {
 				return;
@@ -23,16 +24,16 @@ namespace AdventureModeLore.Logic {
 				string name = tag.GetString( "TriggeredCutsceneName_"+i );
 				var uid = new CutsceneID( modName, name );
 
-				myworld.TriggeredCutsceneIDsForWorld.Add( uid );
+				myworld.TriggeredCutsceneIDs_World.Add( uid );
 			}
 		}
 
-		internal void SaveForWorld( AMLWorld myworld, TagCompound tag ) {
-			int count = myworld.TriggeredCutsceneIDsForWorld.Count;
+		internal void Save_World( AMLWorld myworld, TagCompound tag ) {
+			int count = myworld.TriggeredCutsceneIDs_World.Count;
 			tag["TriggeredCutscenesCount"] = count;
 
 			int i = 0;
-			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDsForWorld ) {
+			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDs_World ) {
 				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
 				tag["TriggeredCutsceneName_" + i] = uid.Name;
 				i++;
@@ -41,17 +42,17 @@ namespace AdventureModeLore.Logic {
 
 		////
 
-		internal void NetSendForWorld( AMLWorld myworld, BinaryWriter writer ) {
-			writer.Write( (int)myworld.TriggeredCutsceneIDsForWorld.Count );
+		internal void NetSend_World( AMLWorld myworld, BinaryWriter writer ) {
+			writer.Write( (int)myworld.TriggeredCutsceneIDs_World.Count );
 
-			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDsForWorld ) {
+			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDs_World ) {
 				writer.Write( uid.ModName );
 				writer.Write( uid.Name );
 			}
 		}
 
-		internal void NetReceiveForWorld( AMLWorld myworld, BinaryReader reader ) {
-			myworld.TriggeredCutsceneIDsForWorld.Clear();
+		internal void NetReceive_World( AMLWorld myworld, BinaryReader reader ) {
+			myworld.TriggeredCutsceneIDs_World.Clear();
 
 			int count = reader.ReadInt32();
 
@@ -60,15 +61,16 @@ namespace AdventureModeLore.Logic {
 				string name = reader.ReadString();
 				var uid = new CutsceneID( modName, name );
 
-				myworld.TriggeredCutsceneIDsForWorld.Add( uid );
+				myworld.TriggeredCutsceneIDs_World.Add( uid );
 			}
 		}
 
 
 		////////////////
 
-		internal void LoadForPlayer( AMLPlayer myplayer, TagCompound tag ) {
-			myplayer.TriggeredCutsceneIDsForPlayer.Clear();
+		internal void Load_Player( AMLPlayer myplayer, TagCompound tag ) {
+			myplayer.TriggeredCutsceneIDs_Player.Clear();
+			myplayer.CurrentPlayingCutscene_Player = null;
 
 			if( !tag.ContainsKey("TriggeredCutscenesCount") ) {
 				return;
@@ -80,16 +82,16 @@ namespace AdventureModeLore.Logic {
 				string name = tag.GetString( "TriggeredCutsceneName_" + i );
 				var uid = new CutsceneID( modName, name );
 
-				myplayer.TriggeredCutsceneIDsForPlayer.Add( uid );
+				myplayer.TriggeredCutsceneIDs_Player.Add( uid );
 			}
 		}
 
-		internal void SaveForPlayer( AMLPlayer myplayer, TagCompound tag ) {
-			int count = myplayer.TriggeredCutsceneIDsForPlayer.Count;
+		internal void Save_Player( AMLPlayer myplayer, TagCompound tag ) {
+			int count = myplayer.TriggeredCutsceneIDs_Player.Count;
 			tag["TriggeredCutscenesCount"] = count;
 
 			int i = 0;
-			foreach( CutsceneID uid in myplayer.TriggeredCutsceneIDsForPlayer ) {
+			foreach( CutsceneID uid in myplayer.TriggeredCutsceneIDs_Player ) {
 				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
 				tag["TriggeredCutsceneName_" + i] = uid.Name;
 				i++;

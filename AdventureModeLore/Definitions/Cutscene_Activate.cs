@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
@@ -8,15 +7,14 @@ using AdventureModeLore.Logic;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		public virtual bool CanBeginForWorld() {
+		public virtual bool CanBegin_World() {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( myworld.CurrentPlayingCutsceneForWorld != null ) {
-LogHelpers.LogOnce("Fail 1a");
-				return false;
-			}
-			if( cutsceneMngr.IsCutsceneActivatedForWorld(this.UniqueId) ) {
+			//if( myworld.CurrentPlayingCutscenes_World.Count > 0 ) {
+			//	return false;
+			//}	<- Multiple world cutscenes allowed?
+			if( cutsceneMngr.IsCutsceneActivated_World(this.UniqueId) ) {
 LogHelpers.LogOnce("Fail 2a");
 				return false;
 			}
@@ -24,15 +22,15 @@ LogHelpers.LogOnce("Fail 2a");
 			return true;
 		}
 
-		public virtual bool CanBeginForPlayer( Player player ) {
+		public virtual bool CanBegin_Player( Player player ) {
 			var myplayer = player.GetModPlayer<AMLPlayer>();
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( myplayer.CurrentPlayingCutsceneForPlayer != null ) {
+			if( myplayer.CurrentPlayingCutscene_Player != null ) {
 LogHelpers.LogOnce("Fail 1b");
 				return false;
 			}
-			if( cutsceneMngr.IsCutsceneActivatedForPlayer(this.UniqueId, player) ) {
+			if( cutsceneMngr.IsCutsceneActivated_Player(this.UniqueId, player) ) {
 LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
@@ -43,61 +41,44 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////////////////
 
-		internal bool BeginForWorld_Internal( int sceneIdx, out Vector2 startPosition ) {
-			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutsceneForWorld != null ) {
-				LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
-					+ myworld.CurrentPlayingCutsceneForWorld + " is active." );
-				startPosition = default( Vector2 );
-				return false;
-			}
+		internal bool Begin_World_Internal( int sceneIdx ) {
+			//var myworld = ModContent.GetInstance<AMLWorld>();
+			//if( myworld.CurrentPlayingCutscenes_World.Count > 0 ) {
+			//	LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
+			//		+ string.Join(", ", myworld.CurrentPlayingCutscenes_World) + " is active." );
+			//	return false;
+			//}	<- Multiple world cutscenes allowed?
 
 			this.CurrentSceneIdx = sceneIdx;
+			this.Scenes[ sceneIdx ].Begin_World_Internal( this );
 
-			Scene scene = this.Scenes[sceneIdx];
-			scene.BeginOnWorld_Internal( this );
+			this.ActiveForWorld = this.CreateActiveCutscene();
+			this.ActiveForWorld.OnBegin_World( sceneIdx );
 
-			startPosition = this.OnBeginForWorld();
 			return true;
 		}
 
-		internal void BeginForPlayer_Internal( Player player, int sceneIdx ) {
+		internal void Begin_Player_Internal( Player player, int sceneIdx ) {
 			this.CurrentSceneIdx = sceneIdx;
 
-			Scene scene = this.Scenes[sceneIdx];
-			scene.BeginOnPlayer_Internal( this, player );
-
-			this.OnBeginForPlayer( player, sceneIdx );
+			Scene scene = this.Scenes[ sceneIdx ];
+			scene.Begin_Player_Internal( this, player );
+			
+			this.ActiveForPlayer[ player.whoAmI ] = this.CreateActiveCutscene();
+			this.ActiveForPlayer[ player.whoAmI ].OnBegin_Player( player, sceneIdx );
 		}
-
-		////
-
-		/// <summary></summary>
-		/// <returns>Start position of the cutscene (for players).</returns>
-		protected abstract Vector2 OnBeginForWorld();
-
-		/// <summary></summary>
-		/// <param name="player"></param>
-		/// <param name="sceneIdx"></param>
-		protected virtual void OnBeginForPlayer( Player player, int sceneIdx ) { }
 
 
 		////////////////
 
-		internal void OnEndForWorld_Internal() {
+		internal void OnEnd_World_Internal() {
 			this.CurrentSceneIdx = 0;
-			this.OnEndForWorld();
+			this.ActiveForWorld.OnEnd_World();
 		}
 
-		internal void OnEndForPlayer_Internal( Player player ) {
+		internal void OnEnd_Player_Internal( Player player ) {
 			this.CurrentSceneIdx = 0;
-			this.OnEndForPlayer( player );
+			this.ActiveForPlayer[ player.whoAmI ]?.OnEnd_Player( player );
 		}
-
-		////
-
-		protected virtual void OnEndForWorld() { }
-
-		protected virtual void OnEndForPlayer( Player player ) { }
 	}
 }

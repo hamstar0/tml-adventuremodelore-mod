@@ -30,7 +30,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		internal IntroData Data;
+		internal IntroData Data = null;
 
 
 
@@ -41,16 +41,29 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		public override AMLCutsceneNetData GetPacketPayload( int sceneIdx ) {
-			return new IntroCutsceneNetData( this, sceneIdx );
+		protected override Scene[] LoadScenes() {
+			return new Scene[] {
+				new AA_OpeningScene()
+			};
+		}
+
+		////
+
+		protected override ActiveCutscene CreateActiveCutscene() {
+			return new IntroActiveCutscene();
 		}
 
 
 		////////////////
 
-		protected override Scene[] LoadScenes() {
-			return new Scene[] {
-				new AA_OpeningScene()
+		public override AMLCutsceneNetData GetPacketPayload( int sceneIdx ) {
+			return new IntroCutsceneNetData( this, sceneIdx );
+		}
+
+		public void SetData( Vector2 exteriorShipViewPosition, Vector2 interiorShipViewPosition ) {
+			this.Data = new IntroData {
+				ExteriorShipViewPosition = exteriorShipViewPosition,
+				InteriorShipViewPosition = interiorShipViewPosition
 			};
 		}
 	}

@@ -9,32 +9,20 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
-		internal void UpdateForWorld( AMLWorld myworld ) {
-			if( myworld.CurrentPlayingCutsceneForWorld == null ) {
-				this.UpdateForWorldToActivate();
-			} else {
-				this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ].UpdateForWorld_Internal();
+		internal void Update_WorldAndHost( AMLWorld myworld ) {
+			this.UpdateActivations_WorldAndHost();
+
+			if( myworld.CurrentPlayingCutscenes_World.Count >= 1 ) {
+				foreach( CutsceneID uid in myworld.CurrentPlayingCutscenes_World ) {
+					this.Cutscenes[ uid ].Update_WorldAndHost_Internal();
+				}
 			}
 		}
 
-		private void UpdateForWorldToActivate() {
+		private void UpdateActivations_WorldAndHost() {
 			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				if( !cutscene.CanBeginForWorld() ) {
-					continue;
-				}
-
-				int plrMax = Main.player.Length;
-				for( int i = 0; i < plrMax; i++ ) {
-					Player plr = Main.player[i];
-					if( plr?.active != true ) { continue; }
-
-					if( cutscene.CanBeginForPlayer( plr ) ) {
-						if( !this.BeginCutscene( cutscene.UniqueId, plr, out string result) ) {
-							LogHelpers.WarnOnce( result );
-							continue;
-						}
-						break;
-					}
+				if( !this.BeginCutscene_Host(cutscene.UniqueId, out string result) ) {
+					LogHelpers.WarnOnce( result );
 				}
 			}
 		}
@@ -42,9 +30,9 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		internal void UpdateForPlayer( AMLPlayer myplayer ) {
-			CutsceneID currCutsceneID = myplayer.CurrentPlayingCutsceneForPlayer;
-			if( currCutsceneID == null ) {
+		internal void Update_Player( AMLPlayer myplayer ) {
+			CutsceneID uid = myplayer.CurrentPlayingCutscene_Player;
+			if( uid == null ) {
 				return;
 			}
 
@@ -56,7 +44,7 @@ namespace AdventureModeLore.Logic {
 			Main.mapStyle = 0;
 			CaptureManager.Instance.Active = false;
 
-			this.Cutscenes[ currCutsceneID ].UpdateForPlayer_Internal( myplayer.player );
+			this.Cutscenes[ uid ].Update_Player_Internal( myplayer.player );
 		}
 	}
 }

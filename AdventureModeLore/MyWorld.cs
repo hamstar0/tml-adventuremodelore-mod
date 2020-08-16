@@ -16,9 +16,9 @@ namespace AdventureModeLore {
 
 		////////////////
 
-		internal ISet<CutsceneID> TriggeredCutsceneIDsForWorld { get; } = new HashSet<CutsceneID>();
+		internal ISet<CutsceneID> TriggeredCutsceneIDs_World { get; } = new HashSet<CutsceneID>();
 
-		public CutsceneID CurrentPlayingCutsceneForWorld { get; internal set; }
+		public ISet<CutsceneID> CurrentPlayingCutscenes_World { get; } = new HashSet<CutsceneID>();
 
 
 
@@ -26,7 +26,7 @@ namespace AdventureModeLore {
 
 		public override void Initialize() {
 			this.IsThisWorldAdventureMode = false;
-			this.TriggeredCutsceneIDsForWorld.Clear();
+			this.TriggeredCutsceneIDs_World.Clear();
 		}
 
 
@@ -42,7 +42,7 @@ namespace AdventureModeLore {
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsThisWorldAdventureMode" ) ) {
 				this.IsThisWorldAdventureMode = true;
-				CutsceneManager.Instance.LoadForWorld( this, tag );
+				CutsceneManager.Instance.Load_World( this, tag );
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace AdventureModeLore {
 			var tag = new TagCompound {
 				{ "IsThisWorldAdventureMode", this.IsThisWorldAdventureMode },
 			};
-			CutsceneManager.Instance.SaveForWorld( this, tag );
+			CutsceneManager.Instance.Save_World( this, tag );
 			return tag;
 		}
 
@@ -59,14 +59,14 @@ namespace AdventureModeLore {
 		public override void NetSend( BinaryWriter writer ) {
 			try {
 				writer.Write( this.IsThisWorldAdventureMode );
-				CutsceneManager.Instance.NetSendForWorld( this, writer );
+				CutsceneManager.Instance.NetSend_World( this, writer );
 			} catch { }
 		}
 
 		public override void NetReceive( BinaryReader reader ) {
 			try {
 				this.IsThisWorldAdventureMode = reader.ReadBoolean();
-				CutsceneManager.Instance.NetReceiveForWorld( this, reader );
+				CutsceneManager.Instance.NetReceive_World( this, reader );
 			} catch { }
 		}
 
@@ -81,7 +81,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			CutsceneManager.Instance.UpdateForWorld( this );
+			CutsceneManager.Instance.Update_WorldAndHost( this );
 		}
 	}
 }

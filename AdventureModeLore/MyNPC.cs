@@ -29,7 +29,7 @@ namespace AdventureModeLore {
 		////
 
 		public override bool PreAI( NPC npc ) {
-			Cutscene nowCutscene = CutsceneManager.Instance?.GetCurrentPlayerCutscene( Main.LocalPlayer );
+			Cutscene nowCutscene = CutsceneManager.Instance?.GetCurrentCutscene_Player( Main.LocalPlayer );
 			if( nowCutscene == null ) {
 				return base.PreAI( npc );
 			}

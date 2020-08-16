@@ -7,7 +7,7 @@ using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.Intro;
-
+using System.Linq;
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
@@ -50,35 +50,49 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		public bool IsCutsceneActivatedForWorld( CutsceneID cutsceneId ) {
+		public bool IsCutsceneActivated_World( CutsceneID cutsceneId ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
-			return myworld.TriggeredCutsceneIDsForWorld.Contains( cutsceneId );
+			return myworld.TriggeredCutsceneIDs_World.Contains( cutsceneId );
 		}
 
-		public bool IsCutsceneActivatedForPlayer( CutsceneID cutsceneId, Player player ) {
+		public bool IsCutsceneActivated_Player( CutsceneID cutsceneId, Player player ) {
 			var myplayer = player.GetModPlayer<AMLPlayer>();
-			return myplayer.TriggeredCutsceneIDsForPlayer.Contains( cutsceneId );
+			return myplayer.TriggeredCutsceneIDs_Player.Contains( cutsceneId );
 		}
 
 
 		////////////////
 
-		public Cutscene GetCurrentPlayerCutscene( Player player ) {
-			var myplayer = player.GetModPlayer<AMLPlayer>();
-			if( myplayer.CurrentPlayingCutsceneForPlayer == null ) {
-				return null;
+		public T GetCutscene<T>() where T : Cutscene {
+			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
+				if( typeof(T) == cutscene.GetType() ) {
+					return (T)cutscene;
+				}
 			}
-
-			return this.Cutscenes[ myplayer.CurrentPlayingCutsceneForPlayer ];
+			return null;
 		}
 
-		public Cutscene GetCurrentWorldCutscene() {
-			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutsceneForWorld == null ) {
+
+		////////////////
+
+		public Cutscene GetCurrentCutscene_Player( Player player ) {
+			var myplayer = player.GetModPlayer<AMLPlayer>();
+			if( myplayer.CurrentPlayingCutscene_Player == null ) {
 				return null;
 			}
 
-			return this.Cutscenes[ myworld.CurrentPlayingCutsceneForWorld ];
+			return this.Cutscenes[ myplayer.CurrentPlayingCutscene_Player ];
+		}
+
+		public IEnumerable<Cutscene> GetCurrentCutscenes_World() {
+			var myworld = ModContent.GetInstance<AMLWorld>();
+			if( myworld.CurrentPlayingCutscenes_World.Count == 0 ) {
+				return null;
+			}
+
+			return this.Cutscenes
+				.Where( kv => myworld.CurrentPlayingCutscenes_World.Contains(kv.Key) )
+				.Select( kv => kv.Value );
 		}
 	}
 }

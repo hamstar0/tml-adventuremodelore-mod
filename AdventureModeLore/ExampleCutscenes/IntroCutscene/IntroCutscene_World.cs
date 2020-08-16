@@ -12,6 +12,49 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro {
 	partial class IntroCutscene : Cutscene {
+		protected class IntroActiveCutscene : ActiveCutscene {
+			public override void OnBegin_World( int sceneIdx ) {
+				char d = Path.DirectorySeparatorChar;
+				TileStructure shipInterior = TileStructure.Load(
+					AMLMod.Instance,
+					"ExampleCutscenes" + d + "IntroCutscene" + d + "Ship Interior.dat" );
+				TileStructure shipExterior = TileStructure.Load(
+					AMLMod.Instance,
+					"ExampleCutscenes" + d + "IntroCutscene" + d + "Ship Exterior.dat" );
+				//LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
+				//	+", exterior: "+shipExterior.Bounds.ToString()+" ("+shipExterior.TileCount+")");
+				int left, top;
+				bool isFlipped;
+
+				IntroCutscene.GetSceneCoordinates( shipExterior.Bounds.Width, out left, out top, out isFlipped );
+				shipExterior.PaintToWorld(
+					leftTileX: left,
+					topTileY: top,
+					paintAir: false,
+					respectLiquids: true,
+					flipHorizontally: isFlipped,
+					flipVertically: false );
+
+				var startPos = new Vector2( left * 16, top * 16 );
+				startPos.X += shipExterior.Bounds.Width * 8;    // (wid*16) / 2
+
+				IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
+				shipInterior.PaintToWorld(
+					leftTileX: left,
+					topTileY: top - 160,
+					paintAir: false,
+					respectLiquids: true,
+					flipHorizontally: isFlipped,
+					flipVertically: false );
+
+				set this.Data
+			}
+		}
+
+
+
+		////////////////
+
 		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
 			isFlipped = Main.spawnTileX > (Main.maxTilesX / 2);
 
@@ -40,7 +83,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		public override bool CanBeginForWorld() {
+		public override bool CanBegin_World() {
 			if( GameInfoHelpers.GetVanillaProgressList().Count > 0 ) {
 				return false;
 			}
@@ -48,46 +91,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 				return false;
 			}
 			
-			return base.CanBeginForWorld();
-		}
-
-		////////////////
-
-		protected override Vector2 OnBeginForWorld() {
-			char d = Path.DirectorySeparatorChar;
-			TileStructure shipInterior = TileStructure.Load(
-				AMLMod.Instance,
-				"ExampleCutscenes"+d+"IntroCutscene"+d+"Ship Interior.dat" );
-			TileStructure shipExterior = TileStructure.Load(
-				AMLMod.Instance,
-				"ExampleCutscenes"+d+"IntroCutscene"+d+"Ship Exterior.dat" );
-//LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
-//	+", exterior: "+shipExterior.Bounds.ToString()+" ("+shipExterior.TileCount+")");
-			int left, top;
-			bool isFlipped;
-
-			IntroCutscene.GetSceneCoordinates( shipExterior.Bounds.Width, out left, out top, out isFlipped );
-			shipExterior.PaintToWorld(
-				leftTileX: left,
-				topTileY: top,
-				paintAir: false,
-				respectLiquids: true,
-				flipHorizontally: isFlipped,
-				flipVertically: false );
-
-			var startPos = new Vector2( left*16, top*16 );
-			startPos.X += shipExterior.Bounds.Width * 8;	// (wid*16) / 2
-
-			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
-			shipInterior.PaintToWorld(
-				leftTileX: left,
-				topTileY: top - 160,
-				paintAir: false,
-				respectLiquids: true,
-				flipHorizontally: isFlipped,
-				flipVertically: false );
-
-			return startPos;
+			return base.CanBegin_World();
 		}
 	}
 }

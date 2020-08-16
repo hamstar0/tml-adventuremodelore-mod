@@ -2,14 +2,15 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Definitions;
 using AdventureModeLore.Net;
+using AdventureModeLore.Logic;
 
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 	[Serializable]
 	class IntroCutsceneNetData : AMLCutsceneNetData {
 		public Vector2 InteriorShipViewPosition;
+		public Vector2 ExteriorShipViewPosition;
 
 
 
@@ -17,13 +18,17 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 
 		private IntroCutsceneNetData() : base() { }
 		
-		public IntroCutsceneNetData( IntroCutscene cutscene, int sceneIdx ) : base( cutscene, sceneIdx ) { }
+		public IntroCutsceneNetData( IntroCutscene cutscene, int sceneIdx ) : base( cutscene, sceneIdx ) {
+			this.InteriorShipViewPosition = cutscene.Data.InteriorShipViewPosition;
+			this.ExteriorShipViewPosition = cutscene.Data.ExteriorShipViewPosition;
+		}
 
 
 		////////////////
 
-		protected override bool PreReceive( CutsceneID uid ) {
-			f
+		protected override bool PreReceive() {
+			var cutscene = CutsceneManager.Instance.GetCutscene<IntroCutscene>();
+			cutscene.SetData( this.InteriorShipViewPosition, this.ExteriorShipViewPosition );
 			return true;
 		}
 	}

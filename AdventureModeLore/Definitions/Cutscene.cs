@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI;
 using HamstarHelpers.Helpers.Debug;
@@ -14,9 +13,11 @@ namespace AdventureModeLore.Definitions {
 
 		public int CurrentSceneIdx { get; protected set; } = 0;
 
-		////
+		////////////////
 
-		public Vector2 CurrentPosition { get; protected set; }
+		protected ActiveCutscene ActiveForWorld = null;
+
+		protected ActiveCutscene[] ActiveForPlayer = new ActiveCutscene[255];
 
 
 
@@ -31,17 +32,12 @@ namespace AdventureModeLore.Definitions {
 
 		protected abstract Scene[] LoadScenes();
 
+		protected abstract ActiveCutscene CreateActiveCutscene();
+
 
 		////////////////
 
 		public abstract AMLCutsceneNetData GetPacketPayload( int sceneIdx );
-
-
-		////////////////
-
-		internal void SetCurrentPosition( Vector2 pos ) {
-			this.CurrentPosition = pos;
-		}
 
 
 		////////////////

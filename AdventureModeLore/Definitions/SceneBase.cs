@@ -1,7 +1,7 @@
-﻿using HamstarHelpers.Classes.Errors;
-using System;
+﻿using System;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Classes.Errors;
 
 
 namespace AdventureModeLore.Definitions {
@@ -13,17 +13,22 @@ namespace AdventureModeLore.Definitions {
 
 		public bool WorldControlsScenesOnly { get; }
 
+		public bool DefersToHostForSync { get; }
+
 
 
 		////////////////
 
-		protected Scene( bool worldControlsSyncOnly ) {
+		protected Scene( bool worldControlsSyncOnly, bool defersToHostForSync ) {
 			if( !this.ValidateSceneType(this.GetType()) ) {
 				throw new ModHelpersException( "Invalid Scene type "+this.GetType().Name );
 			}
 
 			this.WorldControlsScenesOnly = worldControlsSyncOnly;
+			this.DefersToHostForSync = defersToHostForSync;
 		}
+
+		////
 
 		private bool ValidateSceneType( Type sceneType ) {
 			Type parentType = sceneType.BaseType;
@@ -42,27 +47,24 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal virtual void BeginOnPlayer_Internal( Cutscene parent, Player player ) {
+		internal virtual void Begin_Player_Internal( Cutscene parent, Player player ) {
 			if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
 				this.Dialogue?.ShowDialogue();
 			}
-
-			//this.OnBeginOnPlayer( parent, player );
 		}
 
-		internal virtual void BeginOnWorld_Internal( Cutscene parent ) {
-			//this.OnBeginOnWorld( parent );
+		internal virtual void Begin_World_Internal( Cutscene parent ) {
 		}
 
 		////////////////
-
-		internal virtual void EndForWorld_Internal( Cutscene parent ) {
-			//this.OnEndOnWorld();
-		}
 		
-		internal virtual void EndForPlayer_Internal( Cutscene parent, Player player ) {
+		internal virtual void End_Player_Internal( Cutscene parent, Player player ) {
 			this.Dialogue?.HideDialogue();
 			//this.OnEndOnPlayer( player );
+		}
+
+		internal virtual void End_World_Internal( Cutscene parent ) {
+			//this.OnEndOnWorld();
 		}
 	}
 }

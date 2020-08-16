@@ -8,18 +8,18 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	class AA_OpeningScene : Scene<IntroCutscene> {
-		public AA_OpeningScene()  : base( false ) { }
+		public AA_OpeningScene()  : base( false, false ) { }
 
 
 		////////////////
 
-		protected override void OnBeginOnPlayer( IntroCutscene parent, Player player ) {
+		protected override void OnBegin_Player( IntroCutscene parent, Player player ) {
 			CameraMover cam1 = null, cam2 = null, cam3 = null, cam4 = null;
 
-			Vector2 interiorShipStartPos = parent.CurrentPosition;
-			Vector2 exteriorShipStartPos = parent.CurrentPosition;
+			Vector2 interiorViewPos = parent.Data.InteriorShipViewPosition;
+			Vector2 exteriorViewPos = parent.Data.ExteriorShipViewPosition;
 
-			bool isShipOnLeft = (int)exteriorShipStartPos.X < ((16 * Main.maxTilesX) / 2);
+			bool isShipOnLeft = (int)exteriorViewPos.X < ((16 * Main.maxTilesX) / 2);
 
 			Vector2 dungeonViewPos = new Vector2( Main.dungeonX * 16, Main.dungeonY * 16 );
 			dungeonViewPos.X += isShipOnLeft ? (-32 * 16) : (32 * 16);
@@ -27,10 +27,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 			cam1 = new CameraMover(
 				name: "AdventureModeIntro",
-				moveXFrom: (int)exteriorShipStartPos.X,
-				moveYFrom: (int)exteriorShipStartPos.Y,
-				moveXTo: (int)exteriorShipStartPos.X,
-				moveYTo: (int)exteriorShipStartPos.Y - (12 * 16),
+				moveXFrom: (int)exteriorViewPos.X,
+				moveYFrom: (int)exteriorViewPos.Y,
+				moveXTo: (int)exteriorViewPos.X,
+				moveYTo: (int)exteriorViewPos.Y - (12 * 16),
 				toDuration: 60 * 3,
 				lingerDuration: 60 * 3,
 				froDuration: 0,
@@ -49,10 +49,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			);
 			cam3 = new CameraMover(
 				name: "AdventureModeIntro",
-				moveXFrom: (int)exteriorShipStartPos.X,
-				moveYFrom: (int)exteriorShipStartPos.Y,
-				moveXTo: (int)exteriorShipStartPos.X,
-				moveYTo: (int)exteriorShipStartPos.Y,
+				moveXFrom: (int)exteriorViewPos.X,
+				moveYFrom: (int)exteriorViewPos.Y,
+				moveXTo: (int)exteriorViewPos.X,
+				moveYTo: (int)exteriorViewPos.Y,
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0,
@@ -60,10 +60,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			);
 			cam4 = new CameraMover(
 				name: "AdventureModeIntro",
-				moveXFrom: (int)interiorShipStartPos.X,
-				moveYFrom: (int)interiorShipStartPos.Y,
-				moveXTo: (int)interiorShipStartPos.X,
-				moveYTo: (int)interiorShipStartPos.Y,
+				moveXFrom: (int)interiorViewPos.X,
+				moveYFrom: (int)interiorViewPos.Y,
+				moveXTo: (int)interiorViewPos.X,
+				moveYTo: (int)interiorViewPos.Y,
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0
@@ -75,7 +75,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		////////////////
 
-		protected override bool UpdateOnLocal( IntroCutscene parent ) {
+		protected override bool Update_Local( IntroCutscene parent ) {
 			var animCam = CameraMover.Current;
 			if( animCam?.Name != "AdventureModeIntro" || !animCam.IsAnimating() ) {
 				return true;
@@ -84,7 +84,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			return false;
 		}
 
-		protected override bool UpdateOnWorld( IntroCutscene parent ) {
+		protected override bool Update_World( IntroCutscene parent ) {
 			return false;
 		}
 	}

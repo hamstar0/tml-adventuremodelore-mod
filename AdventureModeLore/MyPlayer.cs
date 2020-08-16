@@ -11,14 +11,14 @@ using AdventureModeLore.Logic;
 
 namespace AdventureModeLore {
 	public partial class AMLPlayer : ModPlayer {
-		internal ISet<CutsceneID> TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>();
+		internal ISet<CutsceneID> TriggeredCutsceneIDs_Player = new HashSet<CutsceneID>();
 
 
 		////////////////
 
 		public bool IsAdventureModePlayer { get; internal set; } = false;
 
-		public CutsceneID CurrentPlayingCutsceneForPlayer { get; internal set; }
+		public CutsceneID CurrentPlayingCutscene_Player { get; internal set; }
 
 		////
 
@@ -30,7 +30,7 @@ namespace AdventureModeLore {
 
 		public override void clientClone( ModPlayer clientClone ) {
 			var myclone = clientClone as AMLPlayer;
-			myclone.TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>( this.TriggeredCutsceneIDsForPlayer );
+			myclone.TriggeredCutsceneIDs_Player = new HashSet<CutsceneID>( this.TriggeredCutsceneIDs_Player );
 			myclone.IsAdventureModePlayer = this.IsAdventureModePlayer;
 		}
 
@@ -40,7 +40,7 @@ namespace AdventureModeLore {
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsAdventureModePlayer" ) ) {
 				this.IsAdventureModePlayer = true;
-				CutsceneManager.Instance?.LoadForPlayer( this, tag );
+				CutsceneManager.Instance?.Load_Player( this, tag );
 			}
 		}
 
@@ -48,7 +48,7 @@ namespace AdventureModeLore {
 			var tag = new TagCompound {
 				{ "IsAdventureModePlayer", this.IsAdventureModePlayer },
 			};
-			CutsceneManager.Instance.SaveForPlayer( this, tag );
+			CutsceneManager.Instance.Save_Player( this, tag );
 			return tag;
 		}
 
@@ -76,7 +76,7 @@ namespace AdventureModeLore {
 		public override void SendClientChanges( ModPlayer clientPlayer ) {
 			var myclone = clientPlayer as AMLPlayer;
 			bool isDesynced = myclone.IsAdventureModePlayer != this.IsAdventureModePlayer
-				|| !this.TriggeredCutsceneIDsForPlayer.SetEquals( myclone.TriggeredCutsceneIDsForPlayer );
+				|| !this.TriggeredCutsceneIDs_Player.SetEquals( myclone.TriggeredCutsceneIDs_Player );
 
 			if( isDesynced ) {
 				if( Main.netMode == NetmodeID.Server ) {
@@ -91,14 +91,14 @@ namespace AdventureModeLore {
 
 		internal void SyncFromNet( AMLPlayerDataNetData payload ) {
 			this.IsAdventureModePlayer = this.IsAdventureModePlayer;
-			this.TriggeredCutsceneIDsForPlayer = new HashSet<CutsceneID>();
+			this.TriggeredCutsceneIDs_Player = new HashSet<CutsceneID>();
 
-			int len = payload.ActivatedCutsceneModNames.Length;
+			int len = payload.ActivatedCutsceneModNames_Player.Length;
 			for( int i=0; i<len; i++ ) {
-				string modName = payload.ActivatedCutsceneModNames[i];
-				string name = payload.ActivatedCutsceneNames[i];
+				string modName = payload.ActivatedCutsceneModNames_Player[i];
+				string name = payload.ActivatedCutsceneNames_Player[i];
 
-				this.TriggeredCutsceneIDsForPlayer.Add( new CutsceneID(modName, name) );
+				this.TriggeredCutsceneIDs_Player.Add( new CutsceneID(modName, name) );
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PreUpdate() {
-			CutsceneManager.Instance.UpdateForPlayer( this );
+			CutsceneManager.Instance.Update_Player( this );
 		}
 	}
 }

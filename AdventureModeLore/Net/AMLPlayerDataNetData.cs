@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Terraria;
+using Terraria.ModLoader;
 using HamstarHelpers.Services.Network.NetIO;
 using HamstarHelpers.Services.Network.NetIO.PayloadTypes;
 
@@ -28,8 +29,12 @@ namespace AdventureModeLore.Net {
 
 		public bool IsAdventureModePlayer = false;
 
-		public string[] ActivatedCutsceneModNames;
-		public string[] ActivatedCutsceneNames;
+		public string[] CurrentCutsceneModNames_World;
+		public string[] CurrentCutsceneNames_World;
+		public string[] ActivatedCutsceneModNames_World;
+		public string[] ActivatedCutsceneNames_World;
+		public string[] ActivatedCutsceneModNames_Player;
+		public string[] ActivatedCutsceneNames_Player;
 
 
 
@@ -37,12 +42,25 @@ namespace AdventureModeLore.Net {
 
 		private AMLPlayerDataNetData() { }
 		
-		private AMLPlayerDataNetData( AMLPlayer plrData ) {
-			this.FromWho = plrData.player.whoAmI;
-			this.IsAdventureModePlayer = plrData.IsAdventureModePlayer;
-			this.ActivatedCutsceneModNames = plrData.TriggeredCutsceneIDsForPlayer
+		private AMLPlayerDataNetData( AMLPlayer myplayer ) {
+			var myworld = ModContent.GetInstance<AMLWorld>();
+
+			this.FromWho = myplayer.player.whoAmI;
+			this.IsAdventureModePlayer = myplayer.IsAdventureModePlayer;
+
+			this.CurrentCutsceneModNames_World = myworld.CurrentPlayingCutscenes_World
 				.Select( c=>c.ModName ).ToArray();
-			this.ActivatedCutsceneNames = plrData.TriggeredCutsceneIDsForPlayer
+			this.CurrentCutsceneNames_World = myworld.CurrentPlayingCutscenes_World
+				.Select( c=>c.Name ).ToArray();
+
+			this.ActivatedCutsceneModNames_World = myworld.TriggeredCutsceneIDs_World
+				.Select( c=>c.ModName ).ToArray();
+			this.ActivatedCutsceneNames_World = myworld.TriggeredCutsceneIDs_World
+				.Select( c=>c.Name ).ToArray();
+
+			this.ActivatedCutsceneModNames_Player = myplayer.TriggeredCutsceneIDs_Player
+				.Select( c=>c.ModName ).ToArray();
+			this.ActivatedCutsceneNames_Player = myplayer.TriggeredCutsceneIDs_Player
 				.Select( c=>c.Name ).ToArray();
 		}
 

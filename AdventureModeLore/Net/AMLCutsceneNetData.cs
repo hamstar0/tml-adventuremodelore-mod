@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.Network.NetIO;
@@ -36,7 +35,6 @@ namespace AdventureModeLore.Net {
 		public string ModName;
 		public string Name;
 		public int SceneIdx;
-		public Vector2 CurrentPosition;
 
 
 
@@ -48,7 +46,6 @@ namespace AdventureModeLore.Net {
 			this.ModName = cutscene.UniqueId.ModName;
 			this.Name = cutscene.UniqueId.Name;
 			this.SceneIdx = sceneIdx;
-			this.CurrentPosition = cutscene.CurrentPosition;
 		}
 
 
@@ -69,25 +66,25 @@ namespace AdventureModeLore.Net {
 			var mngr = CutsceneManager.Instance;
 			var uid = new CutsceneID( this.ModName, this.Name );
 
-			if( !this.PreReceive(uid) ) {
+			if( !this.PreReceive() ) {
 				return;
 			}
 
 			if( this.SceneIdx == 0 ) {
 				string result;
-				mngr.BeginCutsceneForPlayer( uid, Main.LocalPlayer, 0, this.CurrentPosition, out result );
+				mngr.BeginCutscene_Player( uid, Main.LocalPlayer, 0, false, out result );
 
 				LogHelpers.Log( "Cutscene " + uid + " result for client: " + result );
 			} else if( this.SceneIdx > 0 ) {
-				mngr.SetCutsceneScene( uid, this.SceneIdx, false );
+				mngr.SetCutsceneScene_Any( uid, this.SceneIdx, false );
 			} else {
-				mngr.EndCutscene( uid, false );
+				mngr.EndCutscene_Any( uid, false );
 			}
 		}
 
 
 		////
 
-		protected abstract bool PreReceive( CutsceneID uid );
+		protected abstract bool PreReceive();
 	}
 }

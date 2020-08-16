@@ -22,6 +22,8 @@ namespace AdventureModeLore.Definitions {
 			this.Name = name;
 		}
 
+		////
+
 		public override int GetHashCode() {
 			return this.ModName.GetHashCode() ^ this.Name.GetHashCode();
 		}
@@ -33,6 +35,7 @@ namespace AdventureModeLore.Definitions {
 			return comp.ModName == this.ModName && comp.Name == this.Name;
 		}
 
+		////
 
 		public override string ToString() {
 			return this.ModName+":"+this.Name;

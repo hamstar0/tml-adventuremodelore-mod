@@ -38,7 +38,7 @@ namespace AdventureModeLore {
 			if( Main.gameMenu ) { return; }
 			if( AMLConfig.Instance.DebugModeFreeMove ) { return; }
 
-			Cutscene nowCutscene = CutsceneManager.Instance?.GetCurrentPlayerCutscene( Main.LocalPlayer );
+			Cutscene nowCutscene = CutsceneManager.Instance?.GetCurrentCutscene_Player( Main.LocalPlayer );
 			if( nowCutscene?.IsSiezingControls() != true ) {
 				return;
 			}
@@ -60,7 +60,7 @@ namespace AdventureModeLore {
 			if( Main.gameMenu ) { return; }
 			if( AMLConfig.Instance.DebugModeFreeMove ) { return; }
 
-			Cutscene nowCutscene = CutsceneManager.Instance?.GetCurrentPlayerCutscene( Main.LocalPlayer );
+			Cutscene nowCutscene = CutsceneManager.Instance?.GetCurrentCutscene_Player( Main.LocalPlayer );
 			if( nowCutscene == null ) {
 				return;
 			}
