@@ -1,5 +1,7 @@
 ﻿using System;
 using Terraria;
+using Terraria.ID;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.Network.NetIO;
 using HamstarHelpers.Services.Network.NetIO.PayloadTypes;
@@ -10,28 +12,47 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Net {
 	[Serializable]
 	public abstract class AMLCutsceneNetData : NetIOBroadcastPayload {
-		public static void Broadcast( Cutscene cutscene, int sceneIdx ) {
-			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( sceneIdx );
+		public static void Broadcast( Player playsFor, Cutscene cutscene, int sceneIdx ) {
+			if( Main.netMode != NetmodeID.Server ) {
+				throw new ModHelpersException("Not server");
+			}
+
+			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( playsFor, sceneIdx );
 
 			NetIO.Broadcast( protocol );
 		}
 
-		public static void SendToClients( int ignoreWho, Cutscene cutscene, int sceneIdx ) {
-			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( sceneIdx );
+		public static void SendToClients( Player playsFor, int ignoreWho, Cutscene cutscene, int sceneIdx ) {
+			if( Main.netMode != NetmodeID.Server ) {
+				throw new ModHelpersException( "Not client" );
+			}
 
-			NetIO.SendToClients( protocol, ignoreWho );
+			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( playsFor, sceneIdx );
+
+			NetIO.SendToClients(
+				data: protocol,
+				ignoreWho: ignoreWho
+			);
 		}
 
-		public static void SendToClient( int toWho, Cutscene cutscene, int sceneIdx ) {
-			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( sceneIdx );
+		public static void SendToClient( Player playsFor, int toWho, Cutscene cutscene, int sceneIdx ) {
+			if( Main.netMode != NetmodeID.Server ) {
+				throw new ModHelpersException( "Not client" );
+			}
 
-			NetIO.SendToClient( protocol, toWho );
+			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( playsFor, sceneIdx );
+
+			NetIO.SendToClient(
+				data: protocol,
+				toWho: toWho
+			);
 		}
 
 
 
 		////////////////
 
+		public int PlaysForWho;
 		public string ModName;
 		public string Name;
 		public int SceneIdx;
@@ -42,7 +63,8 @@ namespace AdventureModeLore.Net {
 
 		protected AMLCutsceneNetData() { }
 
-		protected AMLCutsceneNetData( Cutscene cutscene, int sceneIdx ) {
+		protected AMLCutsceneNetData( Player playsForWho, Cutscene cutscene, int sceneIdx ) {
+			this.PlaysForWho = playsForWho.whoAmI;
 			this.ModName = cutscene.UniqueId.ModName;
 			this.Name = cutscene.UniqueId.Name;
 			this.SceneIdx = sceneIdx;

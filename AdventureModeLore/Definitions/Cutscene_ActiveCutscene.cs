@@ -5,13 +5,26 @@ using HamstarHelpers.Helpers.Debug;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		protected abstract class ActiveCutscene {
-			/// <summary></summary>
-			public abstract void OnBegin_World( int sceneIdx );
+		protected abstract partial class ActiveCutscene {
+			public Cutscene Parent { get; }
 
-			/// <summary></summary>
-			/// <param name="sceneIdx"></param>
-			public virtual void OnBegin_Player( Player player, int sceneIdx ) { }
+			public int PlaysForWhom { get; }
+
+			////
+
+			public int CurrentSceneIdx { get; internal set; } = 0;
+
+
+
+			////////////////
+
+			public ActiveCutscene( Cutscene parent, Player playsFor, int sceneIdx ) {
+				this.Parent = parent;
+				this.PlaysForWhom = playsFor.whoAmI;
+				this.CurrentSceneIdx = sceneIdx;
+			}
+
+			public abstract ActiveCutscene Clone();
 
 
 			////////////////

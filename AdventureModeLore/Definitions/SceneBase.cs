@@ -53,8 +53,7 @@ namespace AdventureModeLore.Definitions {
 			}
 		}
 
-		internal virtual void Begin_World_Internal( Cutscene parent ) {
-		}
+		internal virtual void Begin_World_Internal( Cutscene parent ) { }
 
 		////////////////
 		

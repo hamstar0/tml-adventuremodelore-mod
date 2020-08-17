@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Terraria;
@@ -7,7 +8,7 @@ using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.Intro;
-using System.Linq;
+
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
@@ -50,12 +51,12 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		public bool IsCutsceneActivated_World( CutsceneID cutsceneId ) {
+		public bool HasCutscenePlayed_World( CutsceneID cutsceneId ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			return myworld.TriggeredCutsceneIDs_World.Contains( cutsceneId );
 		}
 
-		public bool IsCutsceneActivated_Player( CutsceneID cutsceneId, Player player ) {
+		public bool HasCutscenePlayed_Player( CutsceneID cutsceneId, Player player ) {
 			var myplayer = player.GetModPlayer<AMLPlayer>();
 			return myplayer.TriggeredCutsceneIDs_Player.Contains( cutsceneId );
 		}

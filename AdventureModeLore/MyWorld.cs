@@ -18,8 +18,6 @@ namespace AdventureModeLore {
 
 		internal ISet<CutsceneID> TriggeredCutsceneIDs_World { get; } = new HashSet<CutsceneID>();
 
-		public ISet<CutsceneID> CurrentPlayingCutscenes_World { get; } = new HashSet<CutsceneID>();
-
 
 
 		////////////////

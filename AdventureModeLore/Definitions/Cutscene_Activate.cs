@@ -2,35 +2,35 @@
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Classes.Errors;
 using AdventureModeLore.Logic;
 
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		public virtual bool CanBegin_World() {
-			var myworld = ModContent.GetInstance<AMLWorld>();
+		public virtual bool CanBegin_World( Player playsFor ) {
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			//if( myworld.CurrentPlayingCutscenes_World.Count > 0 ) {
-			//	return false;
-			//}	<- Multiple world cutscenes allowed?
-			if( cutsceneMngr.IsCutsceneActivated_World(this.UniqueId) ) {
-LogHelpers.LogOnce("Fail 2a");
+			if( this.ActiveInstances.ContainsKey( playsFor.whoAmI ) ) {
+LogHelpers.LogOnce( "Fail 2a" );
+				return false;
+			}
+			if( cutsceneMngr.HasCutscenePlayed_World(this.UniqueId) ) {
+LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
 			
 			return true;
 		}
 
-		public virtual bool CanBegin_Player( Player player ) {
-			var myplayer = player.GetModPlayer<AMLPlayer>();
+		public virtual bool CanBegin_Player( Player playsFor ) {
 			var cutsceneMngr = CutsceneManager.Instance;
 
-			if( myplayer.CurrentPlayingCutscene_Player != null ) {
+			if( this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
 LogHelpers.LogOnce("Fail 1b");
 				return false;
 			}
-			if( cutsceneMngr.IsCutsceneActivated_Player(this.UniqueId, player) ) {
+			if( cutsceneMngr.HasCutscenePlayed_Player(this.UniqueId, playsFor) ) {
 LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
@@ -41,44 +41,48 @@ LogHelpers.LogOnce("Fail 2b");
 
 		////////////////
 
-		internal bool Begin_World_Internal( int sceneIdx ) {
-			//var myworld = ModContent.GetInstance<AMLWorld>();
-			//if( myworld.CurrentPlayingCutscenes_World.Count > 0 ) {
-			//	LogHelpers.Warn( "Cannot begin cutscene " + this.UniqueId + " (scene " + sceneIdx + ") while "
-			//		+ string.Join(", ", myworld.CurrentPlayingCutscenes_World) + " is active." );
-			//	return false;
-			//}	<- Multiple world cutscenes allowed?
+		internal bool Begin_World_Internal( Player playsFor, int sceneIdx ) {
+			this.ActiveInstances[ playsFor.whoAmI ] = this.Begin_World( playsFor, sceneIdx );
 
-			this.CurrentSceneIdx = sceneIdx;
 			this.Scenes[ sceneIdx ].Begin_World_Internal( this );
-
-			this.ActiveForWorld = this.CreateActiveCutscene();
-			this.ActiveForWorld.OnBegin_World( sceneIdx );
 
 			return true;
 		}
 
-		internal void Begin_Player_Internal( Player player, int sceneIdx ) {
-			this.CurrentSceneIdx = sceneIdx;
+		internal bool Begin_Player_Internal( Player playsFor, int sceneIdx ) {
+			if( !this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
+				LogHelpers.Warn( "No active cutscene to engage player code for, playing for player "
+					+playsFor.name+" ("+playsFor.whoAmI+")" );
+				return false;
+			}
 
 			Scene scene = this.Scenes[ sceneIdx ];
-			scene.Begin_Player_Internal( this, player );
-			
-			this.ActiveForPlayer[ player.whoAmI ] = this.CreateActiveCutscene();
-			this.ActiveForPlayer[ player.whoAmI ].OnBegin_Player( player, sceneIdx );
+			scene.Begin_Player_Internal( this, playsFor );
+
+			return true;
+		}
+
+
+		////////////////
+		
+		internal void End_World_Internal( Player playsFor ) {
+			this.ActiveInstances[ playsFor.whoAmI ].OnEnd_World();
+			this.ActiveInstances.Remove( playsFor.whoAmI );
+		}
+
+		internal void End_Player_Internal( Player player ) {
+			ActiveCutscene actCut = this.ActiveInstances[ player.whoAmI ];
+			if( actCut == null ) {
+				throw new ModHelpersException( "No active cutsene for player "+player.name+" ("+player.whoAmI+")" );
+			}
+
+			actCut.CurrentSceneIdx = 0;
+			actCut.OnEnd_Player( player );
 		}
 
 
 		////////////////
 
-		internal void OnEnd_World_Internal() {
-			this.CurrentSceneIdx = 0;
-			this.ActiveForWorld.OnEnd_World();
-		}
-
-		internal void OnEnd_Player_Internal( Player player ) {
-			this.CurrentSceneIdx = 0;
-			this.ActiveForPlayer[ player.whoAmI ]?.OnEnd_Player( player );
-		}
+		protected abstract ActiveCutscene Begin_World( Player playsForWho, int sceneIdx );
 	}
 }

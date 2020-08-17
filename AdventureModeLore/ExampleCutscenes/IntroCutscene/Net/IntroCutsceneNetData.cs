@@ -18,7 +18,8 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 
 		private IntroCutsceneNetData() : base() { }
 		
-		public IntroCutsceneNetData( IntroCutscene cutscene, int sceneIdx ) : base( cutscene, sceneIdx ) {
+		public IntroCutsceneNetData( Player playsForWho, IntroCutscene cutscene, int sceneIdx )
+					: base( playsForWho, cutscene, sceneIdx ) {
 			this.InteriorShipViewPosition = cutscene.Data.InteriorShipViewPosition;
 			this.ExteriorShipViewPosition = cutscene.Data.ExteriorShipViewPosition;
 		}

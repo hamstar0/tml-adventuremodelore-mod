@@ -47,17 +47,11 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			};
 		}
 
-		////
-
-		protected override ActiveCutscene CreateActiveCutscene() {
-			return new IntroActiveCutscene();
-		}
-
 
 		////////////////
 
-		public override AMLCutsceneNetData GetPacketPayload( int sceneIdx ) {
-			return new IntroCutsceneNetData( this, sceneIdx );
+		public override AMLCutsceneNetData GetPacketPayload( Player playsFor, int sceneIdx ) {
+			return new IntroCutsceneNetData( playsFor, this, sceneIdx );
 		}
 
 		public void SetData( Vector2 exteriorShipViewPosition, Vector2 interiorShipViewPosition ) {

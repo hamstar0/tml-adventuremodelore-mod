@@ -18,8 +18,6 @@ namespace AdventureModeLore {
 
 		public bool IsAdventureModePlayer { get; internal set; } = false;
 
-		public CutsceneID CurrentPlayingCutscene_Player { get; internal set; }
-
 		////
 
 		public override bool CloneNewInstances => false;
