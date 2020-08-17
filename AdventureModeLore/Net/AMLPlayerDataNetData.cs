@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Services.Network.NetIO;
 using HamstarHelpers.Services.Network.NetIO.PayloadTypes;
+using AdventureModeLore.Logic;
+using AdventureModeLore.Definitions;
 
 
 namespace AdventureModeLore.Net {
@@ -44,14 +47,16 @@ namespace AdventureModeLore.Net {
 		
 		private AMLPlayerDataNetData( AMLPlayer myplayer ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
+			var cutMngr = CutsceneManager.Instance;
+			IEnumerable<Cutscene> activeCutscenes = cutMngr.GetActiveCutscenes_World();
 
 			this.FromWho = myplayer.player.whoAmI;
 			this.IsAdventureModePlayer = myplayer.IsAdventureModePlayer;
 
-			this.CurrentCutsceneModNames_World = myworld.CurrentPlayingCutscenes_World
-				.Select( c=>c.ModName ).ToArray();
-			this.CurrentCutsceneNames_World = myworld.CurrentPlayingCutscenes_World
-				.Select( c=>c.Name ).ToArray();
+			this.CurrentCutsceneModNames_World = activeCutscenes
+				.Select( c=>c.UniqueId.ModName ).ToArray();
+			this.CurrentCutsceneNames_World = activeCutscenes
+				.Select( c=>c.UniqueId.Name ).ToArray();
 
 			this.ActivatedCutsceneModNames_World = myworld.TriggeredCutsceneIDs_World
 				.Select( c=>c.ModName ).ToArray();

@@ -33,9 +33,9 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			}
 
 			public override ActiveCutscene Clone() {
-				Player plr = Main.player[ this.PlayingForWho ];
+				Player plr = Main.player[ this.PlaysForWhom ];
 				if( plr?.active != true ) {
-					LogHelpers.Warn( "Inactive player "+this.PlayingForWho );
+					LogHelpers.Warn( "Inactive player "+this.PlaysForWhom );
 					return null;
 				}
 
@@ -118,21 +118,6 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			boatTop -= 18;
 //LogHelpers.Log( "left:"+boatLeft+" ("+Main.maxTilesX+")"
 //	+", top:"+boatTop+" ("+Main.maxTilesY+", "+Math.Max(Main.spawnTileY - 100, 20)+")");
-		}
-
-
-
-		////////////////
-
-		public override bool CanBegin_World() {
-			if( GameInfoHelpers.GetVanillaProgressList().Count > 0 ) {
-				return false;
-			}
-			if( NPC.AnyNPCs(NPCID.Merchant) ) {
-				return false;
-			}
-			
-			return base.CanBegin_World();
 		}
 	}
 }

@@ -75,16 +75,12 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		////////////////
 
-		protected override bool Update_Local( IntroCutscene parent ) {
+		protected override bool Update( IntroCutscene parent, Player playsFor ) {
 			var animCam = CameraMover.Current;
 			if( animCam?.Name != "AdventureModeIntro" || !animCam.IsAnimating() ) {
 				return true;
 			}
 
-			return false;
-		}
-
-		protected override bool Update_World( IntroCutscene parent ) {
 			return false;
 		}
 	}
