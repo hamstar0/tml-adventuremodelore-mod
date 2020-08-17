@@ -87,6 +87,7 @@ namespace AdventureModeLore.Net {
 		private void Receive() {
 			var mngr = CutsceneManager.Instance;
 			var uid = new CutsceneID( this.ModName, this.Name );
+			Player playsFor = Main.player[ this.PlaysForWho ];
 
 			if( !this.PreReceive() ) {
 				return;
@@ -94,13 +95,13 @@ namespace AdventureModeLore.Net {
 
 			if( this.SceneIdx == 0 ) {
 				string result;
-				mngr.BeginCutscene_Player( uid, Main.LocalPlayer, 0, false, out result );
+				mngr.BeginCutscene( uid, playsFor, this.SceneIdx, false, out result );
 
-				LogHelpers.Log( "Cutscene " + uid + " result for client: " + result );
+				LogHelpers.Log( "Beginning cutscene "+uid+" result for client: " + result );
 			} else if( this.SceneIdx > 0 ) {
-				mngr.SetCutsceneScene_Any( uid, this.SceneIdx, false );
+				mngr.SetCutsceneScene( uid, playsFor, this.SceneIdx, false );
 			} else {
-				mngr.EndCutscene_Any( uid, false );
+				mngr.EndCutscene( uid, playsFor, false );
 			}
 		}
 

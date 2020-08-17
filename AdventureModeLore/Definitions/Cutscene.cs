@@ -35,6 +35,17 @@ namespace AdventureModeLore.Definitions {
 
 
 		////////////////
+
+		public void Reset() {
+			this.ActiveInstances.Clear();
+		}
+
+
+		////////////////
+
+		public bool IsPlaying() {
+			return this.ActiveInstances.Count > 0;
+		}
 		
 		public bool IsPlayingFor( int playsForWho ) {
 			return this.ActiveInstances.ContainsKey( playsForWho );
@@ -49,8 +60,14 @@ namespace AdventureModeLore.Definitions {
 		////////////////
 
 		public abstract bool IsSiezingControls();
+		
+		////
 
-		public virtual void SiezeControl( string control, ref bool state ) {
+		internal void SiezeControl_Internal( string control, ref bool state ) {
+			this.SiezeControl( control, ref state );
+		}
+
+		protected virtual void SiezeControl( string control, ref bool state ) {
 			if( control == "Inventory" ) { return; }
 			state = false;
 		}
@@ -65,6 +82,18 @@ namespace AdventureModeLore.Definitions {
 		
 		public virtual bool AllowNPC( NPC npc ) {
 			return npc.friendly;
+		}
+
+
+		////////////////
+
+		internal bool SetScene_Internal( Player playsFor, int sceneIdx ) {
+			if( !this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
+				return false;
+			}
+
+			this.ActiveInstances[ playsFor.whoAmI ].SetCurrentScene( sceneIdx );
+			return true;
 		}
 	}
 }

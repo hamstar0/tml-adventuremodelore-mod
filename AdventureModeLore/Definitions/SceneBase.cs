@@ -47,23 +47,27 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal virtual void Begin_Player_Internal( Cutscene parent, Player player ) {
-			if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
+		/// <summary></summary>
+		/// <returns>`true` signifies scene has ended.</returns>
+		internal virtual bool Update_Internal( Cutscene parent, Player playsFor ) {
+			return false;
+		}
+
+
+		////////////////
+
+		internal virtual void Begin_Internal( Cutscene parent, Player playsFor ) {
+			if( playsFor.whoAmI == Main.myPlayer ) {
 				this.Dialogue?.ShowDialogue();
 			}
 		}
 
-		internal virtual void Begin_World_Internal( Cutscene parent ) { }
-
 		////////////////
 		
-		internal virtual void End_Player_Internal( Cutscene parent, Player player ) {
-			this.Dialogue?.HideDialogue();
-			//this.OnEndOnPlayer( player );
-		}
-
-		internal virtual void End_World_Internal( Cutscene parent ) {
-			//this.OnEndOnWorld();
+		internal virtual void End_Internal( Cutscene parent, Player playsFor ) {
+			if( playsFor.whoAmI == Main.myPlayer ) {
+				this.Dialogue?.HideDialogue();
+			}
 		}
 	}
 }

@@ -1,7 +1,6 @@
 using System.IO;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
@@ -11,10 +10,9 @@ using AdventureModeLore.Logic;
 
 namespace AdventureModeLore {
 	partial class AMLWorld : ModWorld {
-		private bool IsThisWorldAdventureMode = false;
+		public bool IsThisWorldAdventureMode { get; private set; } = false;
 
-
-		////////////////
+		////
 
 		internal ISet<CutsceneID> TriggeredCutsceneIDs_World { get; } = new HashSet<CutsceneID>();
 
@@ -66,20 +64,6 @@ namespace AdventureModeLore {
 				this.IsThisWorldAdventureMode = reader.ReadBoolean();
 				CutsceneManager.Instance.NetReceive_World( this, reader );
 			} catch { }
-		}
-
-
-		////////////////
-
-		public override void PreUpdate() {
-			if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				return;
-			}
-			if( !this.IsThisWorldAdventureMode ) {
-				return;
-			}
-
-			CutsceneManager.Instance.Update_WorldAndHost( this );
 		}
 	}
 }

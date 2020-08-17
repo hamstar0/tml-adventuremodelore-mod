@@ -51,6 +51,15 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
+		public void ResetCutscenes() {
+			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
+				cutscene.Reset();
+			}
+		}
+
+
+		////////////////
+
 		public bool HasCutscenePlayed_World( CutsceneID cutsceneId ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			return myworld.TriggeredCutsceneIDs_World.Contains( cutsceneId );
@@ -77,23 +86,18 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		public Cutscene GetCurrentCutscene_Player( Player player ) {
-			var myplayer = player.GetModPlayer<AMLPlayer>();
-			if( myplayer.CurrentPlayingCutscene_Player == null ) {
-				return null;
+			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
+				if( cutscene.IsPlayingFor(player.whoAmI) ) {
+					return cutscene;
+				}
 			}
-
-			return this.Cutscenes[ myplayer.CurrentPlayingCutscene_Player ];
+			return null;
 		}
 
-		public IEnumerable<Cutscene> GetCurrentCutscenes_World() {
-			var myworld = ModContent.GetInstance<AMLWorld>();
-			if( myworld.CurrentPlayingCutscenes_World.Count == 0 ) {
-				return null;
-			}
-
+		public IEnumerable<Cutscene> GetActiveCutscenes_World() {
 			return this.Cutscenes
-				.Where( kv => myworld.CurrentPlayingCutscenes_World.Contains(kv.Key) )
-				.Select( kv => kv.Value );
+				.Select( kv => kv.Value )
+				.Where( c => c.IsPlaying() );
 		}
 	}
 }

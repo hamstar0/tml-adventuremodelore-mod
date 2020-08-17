@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.Graphics.Capture;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
@@ -9,20 +10,31 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
-		internal void Update_WorldAndHost( AMLWorld myworld ) {
-			this.UpdateActivations_WorldAndHost();
+		internal void Update_Host_Internal() {
+			this.UpdateActivations_Host_Internal();
 
-			if( myworld.CurrentPlayingCutscenes_World.Count >= 1 ) {
-				foreach( CutsceneID uid in myworld.CurrentPlayingCutscenes_World ) {
-					this.Cutscenes[ uid ].Update_WorldAndHost_Internal();
+			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
+				if( cutscene.IsPlaying() ) {
+					cutscene.Update_Internal();
 				}
 			}
 		}
 
-		private void UpdateActivations_WorldAndHost() {
+		private void UpdateActivations_Host_Internal() {
+			int playerCount = Main.player.Length;
+
 			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				if( !this.BeginCutscene_Host(cutscene.UniqueId, out string result) ) {
-					LogHelpers.WarnOnce( result );
+				for( int i=0; i<playerCount; i++ ) {
+					Player plr = Main.player[i];
+					if( plr?.active != true )
+
+					if( !this.BeginCutscene(cutscene.UniqueId, plr, 0, true, out string result) ) {
+						LogHelpers.WarnOnce( result );
+					}
+
+					if( Main.netMode == NetmodeID.SinglePlayer ) {
+						break;
+					}
 				}
 			}
 		}
@@ -30,21 +42,23 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		internal void Update_Player( AMLPlayer myplayer ) {
-			CutsceneID uid = myplayer.CurrentPlayingCutscene_Player;
-			if( uid == null ) {
+		internal void Update_Player_Internal( AMLPlayer myplayer ) {
+			Cutscene cutscene = this.GetCurrentCutscene_Player( myplayer.player );
+			if( cutscene == null ) {
 				return;
 			}
 
 			myplayer.player.immune = true;
 			myplayer.player.immuneTime = 2;
 
-			//Main.mapFullscreen = false;
-			//Main.mapEnabled = false;
-			Main.mapStyle = 0;
-			CaptureManager.Instance.Active = false;
-
-			this.Cutscenes[ uid ].Update_Player_Internal( myplayer.player );
+			if( Main.netMode != NetmodeID.Server ) {
+				if( myplayer.player.whoAmI == Main.myPlayer ) {
+					//Main.mapFullscreen = false;
+					//Main.mapEnabled = false;
+					Main.mapStyle = 0;
+					CaptureManager.Instance.Active = false;
+				}
+			}
 		}
 	}
 }

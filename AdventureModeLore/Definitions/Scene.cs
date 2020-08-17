@@ -10,38 +10,24 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal override void Begin_Player_Internal( Cutscene parent, Player player ) {
-			base.Begin_Player_Internal( parent, player );
-			this.OnBegin_Player( (T)parent, player );
-		}
-
-		internal sealed override void Begin_World_Internal( Cutscene parent ) {
-			base.Begin_World_Internal( parent );
-			this.OnBegin_World( (T)parent );
+		internal override void Begin_Internal( Cutscene parent, Player playsFor ) {
+			base.Begin_Internal( parent, playsFor );
+			this.OnBegin_Any( (T)parent, playsFor );
 		}
 
 		////
 
-		protected virtual void OnBegin_Player( T parent, Player player ) { }
-
-		protected virtual void OnBegin_World( T parent ) { }
+		protected virtual void OnBegin_Any( T parent, Player playsFor ) { }
 
 		////////////////
 
-		internal sealed override void End_World_Internal( Cutscene parent ) {
-			base.End_World_Internal( parent );
-			this.OnEnd_World( (T)parent );
-		}
-		
-		internal sealed override void End_Player_Internal( Cutscene parent, Player player ) {
-			base.End_Player_Internal( parent, player );
-			this.OnEnd_Player( (T)parent, player );
+		internal sealed override void End_Internal( Cutscene parent, Player playsFor ) {
+			base.End_Internal( parent, playsFor );
+			this.OnEnd_Any( (T)parent, playsFor );
 		}
 
 		////
 
-		protected virtual void OnEnd_Player( T parent, Player player ) { }
-
-		protected virtual void OnEnd_World( T parent ) { }
+		protected virtual void OnEnd_Any( T parent, Player playsFor ) { }
 	}
 }

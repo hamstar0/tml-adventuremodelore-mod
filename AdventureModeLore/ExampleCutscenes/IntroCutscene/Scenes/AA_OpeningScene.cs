@@ -13,7 +13,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		////////////////
 
-		protected override void OnBegin_Player( IntroCutscene parent, Player player ) {
+		protected override void OnBegin_Any( IntroCutscene parent, Player player ) {
 			CameraMover cam1 = null, cam2 = null, cam3 = null, cam4 = null;
 
 			Vector2 interiorViewPos = parent.Data.InteriorShipViewPosition;

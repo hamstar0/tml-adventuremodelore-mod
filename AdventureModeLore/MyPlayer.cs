@@ -104,7 +104,7 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PreUpdate() {
-			CutsceneManager.Instance.Update_Player( this );
+			CutsceneManager.Instance.Update_Player_Internal( this );
 		}
 	}
 }

@@ -53,7 +53,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		protected override ActiveCutscene Begin_World( Player playsForWho, int sceneIdx ) {
+		protected override ActiveCutscene Begin( Player playsForWho, int sceneIdx ) {
 			char d = Path.DirectorySeparatorChar;
 			TileStructure shipInterior = TileStructure.Load(
 				AMLMod.Instance,

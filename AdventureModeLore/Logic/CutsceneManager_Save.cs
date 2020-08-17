@@ -11,8 +11,9 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		internal void Load_World( AMLWorld myworld, TagCompound tag ) {
+			this.ResetCutscenes();
+
 			myworld.TriggeredCutsceneIDs_World.Clear();
-			myworld.CurrentPlayingCutscenes_World.Clear();
 
 			if( !tag.ContainsKey( "TriggeredCutscenesCount" ) ) {
 				return;
@@ -70,7 +71,6 @@ namespace AdventureModeLore.Logic {
 
 		internal void Load_Player( AMLPlayer myplayer, TagCompound tag ) {
 			myplayer.TriggeredCutsceneIDs_Player.Clear();
-			myplayer.CurrentPlayingCutscene_Player = null;
 
 			if( !tag.ContainsKey("TriggeredCutscenesCount") ) {
 				return;

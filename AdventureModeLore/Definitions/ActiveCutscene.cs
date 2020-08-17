@@ -4,43 +4,41 @@ using HamstarHelpers.Helpers.Debug;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class ActiveCutscene {
-		public Cutscene Parent { get; }
+	public abstract partial class Cutscene {
+		protected abstract partial class ActiveCutscene {
+			public Cutscene Parent { get; }
 
-		public int PlaysForWhom { get; }
+			public int PlaysForWhom { get; }
 
-		////
+			////
 
-		public int CurrentSceneIdx { get; internal set; } = 0;
-
-
-
-		////////////////
-
-		public ActiveCutscene( Cutscene parent, Player playsFor, int sceneIdx ) {
-			this.Parent = parent;
-			this.PlaysForWhom = playsFor.whoAmI;
-			this.CurrentSceneIdx = sceneIdx;
-		}
-
-		public abstract ActiveCutscene Clone();
+			public int CurrentSceneIdx { get; internal set; } = 0;
 
 
-		////////////////
 
-		public virtual void OnEnd_World() { }
+			////////////////
 
-		public virtual void OnEnd_Player( Player player ) { }
+			public ActiveCutscene( Cutscene parent, Player playsFor, int sceneIdx ) {
+				this.Parent = parent;
+				this.PlaysForWhom = playsFor.whoAmI;
+				this.CurrentSceneIdx = sceneIdx;
+			}
+
+			public abstract ActiveCutscene Clone();
 
 
-		////////////////
+			////////////////
 
-		public virtual bool Update_World() {
-			return false;
-		}
+			public virtual void OnEnd( Player playsFor ) { }
 
-		public virtual bool Update_Player( Player player ) {
-			return false;
+
+			////////////////
+
+			/// <summary></summary>
+			/// <returns>`false` to end current scene.</returns>
+			public virtual bool Update() {
+				return true;
+			}
 		}
 	}
 }

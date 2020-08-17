@@ -1,61 +1,50 @@
 ﻿using System;
 using Terraria;
-using Terraria.ID;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
+using Terraria.ID;
 
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		protected virtual bool Update_World() {
-			return false;
+		internal void Update_Internal() {
+			int playerCount = Main.player.Length;
+			for( int i=0; i<playerCount; i++ ) {
+				Player plr = Main.player[i];
+				if( plr?.active != true ) {
+					continue;
+				}
+
+				this.UpdateActiveInstances_Internal( plr );
+
+				if( Main.netMode == NetmodeID.SinglePlayer ) {
+					break;
+				}
+			}
 		}
 
-		protected virtual bool Update_Player( Player player ) {
-			return false;
-		}
 
-
-		////
-
-		internal void Update_WorldAndHost_Internal() {
-			ActiveCutscene actCut = this.ActiveForWorld;
-			if( actCut == null ) {
-				throw new ModHelpersException( "No active cutscene" );
+		internal void UpdateActiveInstances_Internal( Player playsFor ) {
+			if( !this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
+				return;
 			}
 
-			Scene scene = this.Scenes[ actCut.CurrentSceneIdx ];
+			ActiveCutscene actCut = this.ActiveInstances[ playsFor.whoAmI ];
 
-			// If the cutscene code says so, continue to next scene
-			if( this.Update_World() ) {
-				if( !actCut.CanAdvanceCurrentScene_Any() ) {
-					actCut.AdvanceScene_Any( true );
+			// If the cutscene says so, continue to next scene
+			if( !actCut.Update() ) {
+				if( !actCut.CanAdvanceCurrentScene() ) {
+					actCut.AdvanceScene( true );
 				}
 				return;
 			}
 
+			Scene scene = this.Scenes[ actCut.CurrentSceneIdx ];
+
 			// If the current scene has ended, continue to next scene
-			if( scene.Update_World_Internal(this) ) {
-				if( !actCut.CanAdvanceCurrentScene_Any() ) {
-					actCut.AdvanceScene_Any( true );
-				}
-			}
-		}
-
-		////
-
-		internal void Update_Player_Internal( Player player ) {
-			ActiveCutscene actCut = this.ActiveForPlayer[ player.whoAmI ];
-			if( actCut == null ) {
-				throw new ModHelpersException( "No active cutscene for player "+player.name+" ("+player.whoAmI+")" );
-			}
-
-			if( !this.Update_Player(player) ) {
-				// Only the local player can advance scenes (if allowed)
-				if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
-					if( !actCut.CanAdvanceCurrentScene_Any() ) {
-						actCut.AdvanceScene_Any( true );
-					}
+			if( scene.Update_Internal(this, playsFor) ) {
+				if( !actCut.CanAdvanceCurrentScene() ) {
+					actCut.AdvanceScene( true );
 				}
 			}
 		}
