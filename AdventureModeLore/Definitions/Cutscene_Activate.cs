@@ -19,7 +19,7 @@ LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
 			if( cutsceneMngr.HasCutscenePlayed_Player( this.UniqueId, playsFor ) ) {
-				LogHelpers.LogOnce( "Fail 2b" );
+LogHelpers.LogOnce( "Fail 2b" );
 				return false;
 			}
 
@@ -30,13 +30,15 @@ LogHelpers.LogOnce("Fail 2b");
 		////////////////
 
 		internal bool Begin_Internal( Player playsFor, int sceneIdx ) {
-			this.ActiveInstances[playsFor.whoAmI] = this.Begin( playsFor, sceneIdx );
+			ActiveCutscene actCut = this.Begin( playsFor, sceneIdx );
 
-			if( !this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
+			if( actCut == null ) {
 				LogHelpers.Warn( "No active cutscene to engage player code for, playing for player "
 					+playsFor.name+" ("+playsFor.whoAmI+")" );
 				return false;
 			}
+
+			this.ActiveInstances[ playsFor.whoAmI ] = actCut;
 
 			Scene scene = this.Scenes[ sceneIdx ];
 			scene.Begin_Internal( this, playsFor );

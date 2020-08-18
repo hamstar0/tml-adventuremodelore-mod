@@ -18,10 +18,12 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 
 		private IntroCutsceneNetData() : base() { }
 		
-		public IntroCutsceneNetData( Player playsForWho, IntroCutscene cutscene, int sceneIdx )
-					: base( playsForWho, cutscene, sceneIdx ) {
-			this.InteriorShipViewPosition = cutscene.Data.InteriorShipViewPosition;
-			this.ExteriorShipViewPosition = cutscene.Data.ExteriorShipViewPosition;
+		public IntroCutsceneNetData( IntroCutscene cutscene, Player playsFor, int sceneIdx )
+					: base( cutscene, playsFor, sceneIdx ) {
+			cutscene.GetData( playsFor, out Vector2 exteriorShipPos, out Vector2 interiorShipPos );
+
+			this.ExteriorShipViewPosition = exteriorShipPos;
+			this.InteriorShipViewPosition = interiorShipPos;
 		}
 
 
@@ -29,7 +31,8 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 
 		protected override bool PreReceive() {
 			var cutscene = CutsceneManager.Instance.GetCutscene<IntroCutscene>();
-			cutscene.SetData( this.InteriorShipViewPosition, this.ExteriorShipViewPosition );
+
+			cutscene.SetData( Main.player[this.PlaysForWho], this.ExteriorShipViewPosition, this.InteriorShipViewPosition );
 			return true;
 		}
 	}

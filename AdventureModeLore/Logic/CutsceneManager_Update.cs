@@ -26,10 +26,12 @@ namespace AdventureModeLore.Logic {
 			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
 				for( int i=0; i<playerCount; i++ ) {
 					Player plr = Main.player[i];
-					if( plr?.active != true )
+					if( plr?.active != true ) {
+						continue;
+					}
 
-					if( !this.BeginCutscene(cutscene.UniqueId, plr, 0, true, out string result) ) {
-						LogHelpers.WarnOnce( result );
+					if( !this.TryBeginCutscene(cutscene.UniqueId, plr, 0, true, out string result) ) {
+						LogHelpers.WarnOnce( "Tried to begin cutscene: "+result );
 					}
 
 					if( Main.netMode == NetmodeID.SinglePlayer ) {

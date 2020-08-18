@@ -48,9 +48,9 @@ namespace AdventureModeLore.Definitions {
 				if( this.CurrentSceneIdx < this.Parent.Scenes.Length ) {
 					if( sync ) {
 						if( Main.netMode == NetmodeID.MultiplayerClient ) {
-							AMLCutsceneNetData.Broadcast( playsFor, this.Parent, this.CurrentSceneIdx );
+							AMLCutsceneNetData.Broadcast( this.Parent, playsFor, this.CurrentSceneIdx );
 						} else if( Main.netMode == NetmodeID.Server ) {
-							AMLCutsceneNetData.SendToClients( playsFor, -1, this.Parent, this.CurrentSceneIdx );
+							AMLCutsceneNetData.SendToClients( this.Parent, playsFor, this.CurrentSceneIdx, -1 );
 						}
 					}
 				} else {

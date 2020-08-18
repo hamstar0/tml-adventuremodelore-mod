@@ -37,7 +37,7 @@ namespace AdventureModeLore {
 
 		public override void Load( TagCompound tag ) {
 			if( tag.ContainsKey( "IsThisWorldAdventureMode" ) ) {
-				this.IsThisWorldAdventureMode = true;
+				this.IsThisWorldAdventureMode = tag.GetBool( "IsThisWorldAdventureMode" );
 				CutsceneManager.Instance.Load_World( this, tag );
 			}
 		}

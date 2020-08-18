@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using Terraria;
 using Terraria.UI;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.DotNET.Extensions;
 using AdventureModeLore.Net;
 
 
@@ -53,6 +54,15 @@ namespace AdventureModeLore.Definitions {
 
 
 		////////////////
+
+		protected T GetActiveCutscene<T>( Player playsFor ) where T : ActiveCutscene {
+			if( playsFor?.active != null ) {
+				LogHelpers.Warn( "Inactive player #" + playsFor.whoAmI );
+				return null;
+			}
+
+			return this.ActiveInstances.GetOrDefault( playsFor.whoAmI ) as T;
+		}
 
 		public abstract AMLCutsceneNetData GetPacketPayload( Player playsFor, int sceneIdx );
 

@@ -2,58 +2,44 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Info;
 using HamstarHelpers.Helpers.World;
 using AdventureModeLore.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.Intro {
 	partial class IntroCutscene : Cutscene {
-		protected class IntroActiveCutscene : ActiveCutscene {
-			public Vector2 InteriorShipPos;
-			public Vector2 ExteriorShipPos;
+		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
+			isFlipped = Main.spawnTileX > ( Main.maxTilesX / 2 );
 
-
-
-			////////////////
-
-			public IntroActiveCutscene(
-						Cutscene parent,
-						Player playsForWho,
-						int sceneIdx,
-						Vector2 shipInteriorPos,
-						Vector2 shipExteriorPos )
-					: base( parent, playsForWho, sceneIdx ) {
-				this.InteriorShipPos = shipInteriorPos;
-				this.ExteriorShipPos = shipExteriorPos;
-			}
-
-			public override ActiveCutscene Clone() {
-				Player plr = Main.player[ this.PlaysForWhom ];
-				if( plr?.active != true ) {
-					LogHelpers.Warn( "Inactive player "+this.PlaysForWhom );
-					return null;
+			if( isFlipped ) {
+				boatLeft = ( Main.maxTilesX - 40 ) - width;
+				if( ( boatLeft % 2 ) == 0 ) {
+					boatLeft++;
 				}
-
-				return new IntroActiveCutscene(
-					this.Parent,
-					plr,
-					this.CurrentSceneIdx,
-					this.InteriorShipPos,
-					this.ExteriorShipPos
-				);
+			} else {
+				boatLeft = 40;
 			}
+
+			boatTop = Math.Max( Main.spawnTileY - 100, 20 );
+
+			Tile tile = Framing.GetTileSafely( boatLeft, boatTop );
+			while( tile.liquid == 0 && boatTop < WorldHelpers.SurfaceLayerBottomTileY ) {
+				tile = Framing.GetTileSafely( boatLeft, ++boatTop );
+			}
+
+			boatTop -= 18;
+			//LogHelpers.Log( "left:"+boatLeft+" ("+Main.maxTilesX+")"
+			//	+", top:"+boatTop+" ("+Main.maxTilesY+", "+Math.Max(Main.spawnTileY - 100, 20)+")");
 		}
 
 
 
 		////////////////
 
-		protected override ActiveCutscene Begin( Player playsForWho, int sceneIdx ) {
+		protected override ActiveCutscene Begin( Player playsFor, int sceneIdx ) {
 			char d = Path.DirectorySeparatorChar;
 			TileStructure shipInterior = TileStructure.Load(
 				AMLMod.Instance,
@@ -90,34 +76,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			Vector2 interiorShipPos = exteriorShipPos;
 			interiorShipPos.Y -= 160 * 16;
 
-			return new IntroActiveCutscene( this, playsForWho, sceneIdx, interiorShipPos, exteriorShipPos );
-		}
-
-
-		////////////////
-
-		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
-			isFlipped = Main.spawnTileX > (Main.maxTilesX / 2);
-
-			if( isFlipped ) {
-				boatLeft = (Main.maxTilesX - 40) - width;
-				if( (boatLeft % 2) == 0 ) {
-					boatLeft++;
-				}
-			} else {
-				boatLeft = 40;
-			}
-
-			boatTop = Math.Max( Main.spawnTileY - 100, 20 );
-
-			Tile tile = Framing.GetTileSafely( boatLeft, boatTop );
-			while( tile.liquid == 0 && boatTop < WorldHelpers.SurfaceLayerBottomTileY ) {
-				tile = Framing.GetTileSafely( boatLeft, ++boatTop );
-			}
-
-			boatTop -= 18;
-//LogHelpers.Log( "left:"+boatLeft+" ("+Main.maxTilesX+")"
-//	+", top:"+boatTop+" ("+Main.maxTilesY+", "+Math.Max(Main.spawnTileY - 100, 20)+")");
+			return new IntroActiveCutscene( this, playsFor, sceneIdx, exteriorShipPos, interiorShipPos );
 		}
 	}
 }

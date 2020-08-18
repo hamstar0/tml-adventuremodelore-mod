@@ -52,16 +52,6 @@ namespace AdventureModeLore {
 
 
 		////////////////
-
-		public override void SetupStartInventory( IList<Item> items, bool mediumcoreDeath ) {
-			if( !mediumcoreDeath ) {
-				this.IsAdventureModePlayer = true;
-				LogHelpers.Log( "Player " + this.player.name + " prepped for Adventure Mode." );
-			}
-		}
-
-
-		////////////////
 		
 		public override void SyncPlayer( int toWho, int fromWho, bool newPlayer ) {
 			if( Main.netMode == NetmodeID.Server ) {

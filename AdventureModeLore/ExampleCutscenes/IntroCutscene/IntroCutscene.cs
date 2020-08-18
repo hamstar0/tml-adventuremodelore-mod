@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Info;
 using AdventureModeLore.Definitions;
 using AdventureModeLore.Net;
 using AdventureModeLore.ExampleCutscenes.Intro.Scenes;
@@ -10,15 +12,6 @@ using AdventureModeLore.ExampleCutscenes.Intro.Net;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro {
 	partial class IntroCutscene : Cutscene {
-		public class IntroData {
-			public Vector2 ExteriorShipViewPosition;
-			public Vector2 InteriorShipViewPosition;
-		}
-
-
-
-		////////////////
-
 		public static IntroCutscene Create( string affix ) {
 			return new IntroCutscene( new CutsceneID(
 				mod: AMLMod.Instance,
@@ -30,12 +23,12 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		internal IntroData Data = null;
+		public override bool IsSiezingControls() => true;
 
 
 
 		////////////////
-		
+
 		private IntroCutscene( CutsceneID uid ) : base(uid) { }
 
 
@@ -50,15 +43,38 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		public override AMLCutsceneNetData GetPacketPayload( Player playsFor, int sceneIdx ) {
-			return new IntroCutsceneNetData( playsFor, this, sceneIdx );
+		public override bool CanBegin( Player playsFor ) {
+			if( GameInfoHelpers.GetVanillaProgressList().Count > 0 ) {
+				return false;
+			}
+			if( NPC.AnyNPCs( NPCID.Merchant ) ) {
+				return false;
+			}
+
+			return base.CanBegin( playsFor );
 		}
 
-		public void SetData( Vector2 exteriorShipViewPosition, Vector2 interiorShipViewPosition ) {
-			this.Data = new IntroData {
-				ExteriorShipViewPosition = exteriorShipViewPosition,
-				InteriorShipViewPosition = interiorShipViewPosition
-			};
+
+		////////////////
+		
+		public override AMLCutsceneNetData GetPacketPayload( Player playsFor, int sceneIdx ) {
+			return new IntroCutsceneNetData( this, playsFor, sceneIdx );
+		}
+
+
+		////////////////
+
+		public void GetData( Player playsFor, out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
+			var actCut = this.GetActiveCutscene<IntroActiveCutscene>( playsFor );
+
+			exteriorShipViewPos = actCut.ExteriorShipPos;
+			interiorShipViewPos = actCut.InteriorShipPos;
+		}
+
+		internal void SetData( Player playsFor, Vector2 exteriorShipViewPos, Vector2 interiorShipViewPos ) {
+			var actCut = this.GetActiveCutscene<IntroActiveCutscene>( playsFor );
+
+			actCut.SetData( exteriorShipViewPos, interiorShipViewPos );
 		}
 	}
 }
