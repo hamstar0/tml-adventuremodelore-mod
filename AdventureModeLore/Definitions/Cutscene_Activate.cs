@@ -11,15 +11,12 @@ namespace AdventureModeLore.Definitions {
 			var cutsceneMngr = CutsceneManager.Instance;
 
 			if( this.ActiveInstances.ContainsKey( playsFor.whoAmI ) ) {
-LogHelpers.LogOnce( "Fail 2a" );
 				return false;
 			}
 			if( cutsceneMngr.HasCutscenePlayed_World(this.UniqueId) ) {
-LogHelpers.LogOnce("Fail 2b");
 				return false;
 			}
 			if( cutsceneMngr.HasCutscenePlayed_Player( this.UniqueId, playsFor ) ) {
-LogHelpers.LogOnce( "Fail 2b" );
 				return false;
 			}
 

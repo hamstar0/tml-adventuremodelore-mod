@@ -13,7 +13,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		////////////////
 
-		protected override void OnBegin_Any( IntroCutscene parent, Player playsFor ) {
+		protected override void OnBegin( IntroCutscene parent, Player playsFor ) {
 			CameraMover cam1 = null, cam2 = null, cam3 = null, cam4 = null;
 
 			parent.GetData( playsFor, out Vector2 exteriorViewPos, out Vector2 interiorViewPos );

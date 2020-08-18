@@ -56,7 +56,7 @@ namespace AdventureModeLore.Definitions {
 		////////////////
 
 		protected T GetActiveCutscene<T>( Player playsFor ) where T : ActiveCutscene {
-			if( playsFor?.active != null ) {
+			if( playsFor?.active != true ) {
 				LogHelpers.Warn( "Inactive player #" + playsFor.whoAmI );
 				return null;
 			}

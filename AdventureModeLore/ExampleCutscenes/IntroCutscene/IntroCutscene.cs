@@ -64,7 +64,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		public void GetData( Player playsFor, out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
+		internal void GetData( Player playsFor, out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
 			var actCut = this.GetActiveCutscene<IntroActiveCutscene>( playsFor );
 
 			exteriorShipViewPos = actCut.ExteriorShipPos;

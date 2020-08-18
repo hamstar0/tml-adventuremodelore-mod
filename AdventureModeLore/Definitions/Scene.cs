@@ -12,12 +12,12 @@ namespace AdventureModeLore.Definitions {
 
 		internal override void Begin_Internal( Cutscene parent, Player playsFor ) {
 			base.Begin_Internal( parent, playsFor );
-			this.OnBegin_Any( (T)parent, playsFor );
+			this.OnBegin( (T)parent, playsFor );
 		}
 
 		////
 
-		protected virtual void OnBegin_Any( T parent, Player playsFor ) { }
+		protected virtual void OnBegin( T parent, Player playsFor ) { }
 
 		////////////////
 

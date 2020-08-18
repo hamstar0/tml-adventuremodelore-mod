@@ -31,7 +31,7 @@ namespace AdventureModeLore.Logic {
 					}
 
 					if( !this.TryBeginCutscene(cutscene.UniqueId, plr, 0, true, out string result) ) {
-						LogHelpers.WarnOnce( "Tried to begin cutscene: "+result );
+						LogHelpers.LogOnce( "Tried to begin cutscene: "+result );
 					}
 
 					if( Main.netMode == NetmodeID.SinglePlayer ) {
