@@ -14,7 +14,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 		////////////////
 
 		protected override void OnBegin( IntroCutscene parent, Player playsFor ) {
-			CameraMover cam1 = null, cam2 = null, cam3 = null, cam4 = null;
+			CameraMover cam0 = null, cam1 = null, cam2 = null, cam3 = null, cam4 = null;
 
 			parent.GetData( playsFor, out Vector2 exteriorViewPos, out Vector2 interiorViewPos );
 
@@ -22,8 +22,25 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 			Vector2 dungeonViewPos = new Vector2( Main.dungeonX * 16, Main.dungeonY * 16 );
 			dungeonViewPos.X += isShipOnLeft ? (-32 * 16) : (32 * 16);
-			dungeonViewPos.Y += -40 * 16;
+			dungeonViewPos.Y += -32 * 16;
 
+			int extShipViewY = (int)exteriorViewPos.Y - (6 * 16);
+			int intShipViewY = (int)interiorViewPos.Y - (12 * 16);
+
+			cam0 = new CameraMover(
+				name: "AdventureModeIntro",
+				moveXFrom: 1,
+				moveYFrom: 1,
+				moveXTo: 1,
+				moveYTo: 1,
+				toDuration: 0,
+				lingerDuration: 60 * 5,
+				froDuration: 0,
+				onTraversed: () => {
+
+				},
+				onStop: () => CameraMover.Current = cam1
+			);
 			cam1 = new CameraMover(
 				name: "AdventureModeIntro",
 				moveXFrom: (int)exteriorViewPos.X,
@@ -49,9 +66,9 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			cam3 = new CameraMover(
 				name: "AdventureModeIntro",
 				moveXFrom: (int)exteriorViewPos.X,
-				moveYFrom: (int)exteriorViewPos.Y,
+				moveYFrom: extShipViewY,
 				moveXTo: (int)exteriorViewPos.X,
-				moveYTo: (int)exteriorViewPos.Y,
+				moveYTo: extShipViewY,
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0,
@@ -69,8 +86,9 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				//onStop: () => CameraMover.Current = cam5
 			);
 
-			CameraMover.Current = cam1;
+			CameraMover.Current = cam0;
 		}
+
 
 		////////////////
 

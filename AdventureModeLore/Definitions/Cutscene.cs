@@ -64,6 +64,8 @@ namespace AdventureModeLore.Definitions {
 			return this.ActiveInstances.GetOrDefault( playsFor.whoAmI ) as T;
 		}
 
+		////
+
 		public abstract AMLCutsceneNetData GetPacketPayload( Player playsFor, int sceneIdx );
 
 
@@ -97,13 +99,9 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal bool SetScene_Internal( Player playsFor, int sceneIdx ) {
-			if( !this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
-				return false;
-			}
-
-			this.ActiveInstances[ playsFor.whoAmI ].SetCurrentScene( sceneIdx );
-			return true;
+		internal void DrawInterface() {
+			Scene currScene = this.GetCurrentScene( Main.LocalPlayer );
+			currScene?.DrawInterface();
 		}
 	}
 }

@@ -6,6 +6,12 @@ v1
 -	Create intro cutscene
 	-	Implement dialogue
 	-	Implement actors
+		-	...
+		-	Spawn pirates
+		-	Kill guides with cannon fire
+		-	Apply behaviors to guides
+		-	Spawn guides on ship deck
+
 		-	@Plan
 			1	Populate ship deck with guides
 				-	Give guides different colors (and sizes?)
@@ -24,7 +30,6 @@ v1
 	-	Implement cutscene sync for players
 	-	Implement scene sequence + camera
 		-	Implement sequence
-
 		-	@Plan
 			1	Bring ship exterior into view, linger
 			2	View dungeon briefly, play sound of explosions

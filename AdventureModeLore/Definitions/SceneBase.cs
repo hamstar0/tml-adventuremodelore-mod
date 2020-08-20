@@ -55,7 +55,7 @@ namespace AdventureModeLore.Definitions {
 
 
 		////////////////
-
+		
 		internal virtual void Begin_Internal( Cutscene parent, Player playsFor ) {
 			if( playsFor.whoAmI == Main.myPlayer ) {
 				this.Dialogue?.ShowDialogue();
@@ -69,5 +69,10 @@ namespace AdventureModeLore.Definitions {
 				this.Dialogue?.HideDialogue();
 			}
 		}
+
+
+		////////////////
+
+		public virtual void DrawInterface() { }
 	}
 }

@@ -12,7 +12,8 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.ExampleCutscenes.Intro {
 	partial class IntroCutscene : Cutscene {
 		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
-			isFlipped = Main.spawnTileX > ( Main.maxTilesX / 2 );
+			//isFlipped = Main.spawnTileX > ( Main.maxTilesX / 2 );
+			isFlipped = false;
 
 			if( isFlipped ) {
 				boatLeft = ( Main.maxTilesX - 40 ) - width;
@@ -72,9 +73,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 				respectLiquids: true,
 				flipHorizontally: isFlipped,
 				flipVertically: false );
-
-			Vector2 interiorShipPos = exteriorShipPos;
-			interiorShipPos.Y -= 160 * 16;
+			
+			Vector2 interiorShipPos = new Vector2( left * 16, (top - 160) * 16 );
+			interiorShipPos.X += shipInterior.Bounds.Width * 8;    // (wid*16) / 2
+			interiorShipPos.Y += 16 * 16;
 
 			return new IntroActiveCutscene( this, playsFor, sceneIdx, exteriorShipPos, interiorShipPos );
 		}
