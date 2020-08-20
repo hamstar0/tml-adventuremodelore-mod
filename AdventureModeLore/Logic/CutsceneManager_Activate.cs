@@ -20,7 +20,7 @@ namespace AdventureModeLore.Logic {
 			Cutscene cutscene = this.Cutscenes[cutsceneId];
 
 			if( cutscene.IsPlayingFor(playsFor.whoAmI) ) {
-				result = playsFor.name+" ("+playsFor.whoAmI+") already playing cutscene"+cutsceneId;
+				result = playsFor.name+" ("+playsFor.whoAmI+") already playing cutscene "+cutsceneId;
 				return false;
 			}
 			if( !cutscene.CanBegin(playsFor) ) {

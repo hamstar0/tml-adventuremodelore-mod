@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using ReLogic.Graphics;
 using Terraria;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
@@ -28,17 +29,14 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			int intShipViewY = (int)interiorViewPos.Y - (12 * 16);
 
 			cam0 = new CameraMover(
-				name: "AdventureModeIntro",
-				moveXFrom: 1,
-				moveYFrom: 1,
-				moveXTo: 1,
-				moveYTo: 1,
+				name: "AdventureModeIntro_Title",
+				moveXFrom: (Main.maxTilesX - 40) - (Main.screenWidth / 16),
+				moveYFrom: 40,
+				moveXTo: (Main.maxTilesX - 40) - (Main.screenWidth / 16),
+				moveYTo: 40,
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0,
-				onTraversed: () => {
-
-				},
 				onStop: () => CameraMover.Current = cam1
 			);
 			cam1 = new CameraMover(
@@ -94,11 +92,37 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		protected override bool Update( IntroCutscene parent, Player playsFor ) {
 			var animCam = CameraMover.Current;
-			if( animCam?.Name != "AdventureModeIntro" || !animCam.IsAnimating() ) {
+			if( animCam == null || !animCam.Name.StartsWith("AdventureModeIntro") || !animCam.IsAnimating() ) {
 				return true;
 			}
 
 			return false;
+		}
+
+
+		////////////////
+
+		public override void DrawInterface() {
+			var animCam = CameraMover.Current;
+			switch( animCam.Name ) {
+			case "AdventureModeIntro_Title":
+				string titleText = "Test Title";
+				Vector2 titleDim = Main.fontMouseText.MeasureString( titleText );
+				var pos = new Vector2( (Main.screenWidth / 2) - titleDim.X, (Main.screenHeight / 2) - titleDim.Y );
+
+				Utils.DrawBorderStringFourWay(
+					sb: Main.spriteBatch,
+					font: Main.fontMouseText,
+					text: titleText,
+					x: pos.X,
+					y: pos.Y,
+					textColor: Color.White,
+					borderColor: Color.Black,
+					origin: default(Vector2),
+					scale: 2f
+				);
+				break;
+			}
 		}
 	}
 }

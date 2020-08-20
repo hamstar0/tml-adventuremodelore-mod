@@ -19,9 +19,13 @@ namespace AdventureModeLore {
 			}
 
 			foreach( GameInterfaceLayer layer in layers ) {
-				if( !nowCutscene.AllowInterfaceLayer(layer) || layer.Name != "Adventure Mode Lore: Titles" ) {
-					layer.Active = false;
+				if( layer.Name.Equals("Adventure Mode Lore: Titles") ) {
+					continue;
 				}
+				if( nowCutscene.AllowInterfaceLayer(layer) ) {
+					continue;
+				}
+				layer.Active = false;
 			}
 
 			this.AddTitleDisplayLayer( layers );
