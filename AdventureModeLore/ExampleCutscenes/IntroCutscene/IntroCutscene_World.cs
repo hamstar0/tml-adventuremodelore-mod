@@ -66,15 +66,16 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			exteriorShipPos.X += shipExterior.Bounds.Width * 8;    // (wid*16) / 2
 
 			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
+			top = Math.Max( top - 160, 40 );
 			shipInterior.PaintToWorld(
 				leftTileX: left,
-				topTileY: top - 160,
+				topTileY: top,
 				paintAir: false,
 				respectLiquids: true,
 				flipHorizontally: isFlipped,
 				flipVertically: false );
 			
-			Vector2 interiorShipPos = new Vector2( left * 16, (top - 160) * 16 );
+			Vector2 interiorShipPos = new Vector2( left * 16, top * 16 );
 			interiorShipPos.X += shipInterior.Bounds.Width * 8;    // (wid*16) / 2
 			interiorShipPos.Y += 16 * 16;
 

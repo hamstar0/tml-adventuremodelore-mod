@@ -36,7 +36,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		protected override Scene[] LoadScenes() {
 			return new Scene[] {
-				new AA_OpeningScene()
+				new IntroCutsceneScene_00()
 			};
 		}
 
