@@ -9,7 +9,14 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
-		private void GetCam04_InteriorChat( IList<CameraMover> cams, Vector2 interiorShipView ) {
+		private void BeginShot04_InteriorChat() {
+
+		}
+
+
+		////////////////
+
+		private void GetCam04_InteriorChat( IList<CameraMover> cams, Action onCamStop, Vector2 interiorShipView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
 				name: "AdventureModeIntro",
@@ -20,7 +27,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0
-				//onStop: () => CameraMover.Current = cams[next + 1]
+				/*onStop: () => {
+					onCamStop?.Invoke();
+					CameraMover.Current = cams[next + 1];
+				}*/
 			);
 
 			cams.Add( cam );

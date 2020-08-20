@@ -6,7 +6,7 @@ using HamstarHelpers.Helpers.Debug;
 namespace AdventureModeLore.Definitions {
 	public class CutsceneID {
 		public string ModName { get; }
-		public string Name { get; }
+		public string ClassName { get; }
 
 
 
@@ -14,31 +14,31 @@ namespace AdventureModeLore.Definitions {
 
 		public CutsceneID( Mod mod, string name ) {
 			this.ModName = mod.Name;
-			this.Name = name;
+			this.ClassName = name;
 		}
 
 		public CutsceneID( string modName, string name ) {
 			this.ModName = modName;
-			this.Name = name;
+			this.ClassName = name;
 		}
 
 		////
 
 		public override int GetHashCode() {
-			return this.ModName.GetHashCode() ^ this.Name.GetHashCode();
+			return this.ModName.GetHashCode() ^ this.ClassName.GetHashCode();
 		}
 
 		public override bool Equals( object obj ) {
 			var comp = obj as CutsceneID;
 			if( comp == null ) { return false; }
 
-			return comp.ModName == this.ModName && comp.Name == this.Name;
+			return comp.ModName == this.ModName && comp.ClassName == this.ClassName;
 		}
 
 		////
 
 		public override string ToString() {
-			return this.ModName+":"+this.Name;
+			return this.ModName+":"+this.ClassName;
 		}
 	}
 }

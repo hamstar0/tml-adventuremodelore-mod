@@ -9,7 +9,7 @@ namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
 		internal void Update_Internal() {
 			int playerCount = Main.player.Length;
-			for( int i=0; i<playerCount; i++ ) {
+			for( int i = 0; i < playerCount; i++ ) {
 				Player plr = Main.player[i];
 				if( plr?.active != true ) {
 					continue;
@@ -25,28 +25,27 @@ namespace AdventureModeLore.Definitions {
 
 
 		internal void UpdateActiveInstances_Internal( Player playsFor ) {
-			if( !this.ActiveInstances.ContainsKey(playsFor.whoAmI) ) {
-				return;
-			}
-
-			ActiveCutscene actCut = this.ActiveInstances[ playsFor.whoAmI ];
-
 			// If the cutscene says so, continue to next scene
-			if( !actCut.Update() ) {
-				if( !actCut.CanAdvanceCurrentScene() ) {
-					actCut.AdvanceScene( true );
+			if( !this.Update() ) {
+				if( !this.CanAdvanceCurrentScene() ) {
+					this.AdvanceScene( true );
 				}
 				return;
 			}
 
-			Scene scene = this.Scenes[ actCut.CurrentSceneIdx ];
-
 			// If the current scene has ended, continue to next scene
-			if( scene.Update_Internal(this, playsFor) ) {
-				if( !actCut.CanAdvanceCurrentScene() ) {
-					actCut.AdvanceScene( true );
+			if( this.CurrentScene.Update_Internal( this, playsFor ) ) {
+				if( !this.CanAdvanceCurrentScene() ) {
+					this.AdvanceScene( true );
 				}
 			}
 		}
+
+
+		////
+
+		/// <summary></summary>
+		/// <returns>`false` ends the current scene, thus triggering the next (or else ending the cutscene).</returns>
+		protected abstract bool Update();
 	}
 }

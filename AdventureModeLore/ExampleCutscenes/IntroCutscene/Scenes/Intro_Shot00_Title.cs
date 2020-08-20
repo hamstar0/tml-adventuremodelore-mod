@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
@@ -9,7 +10,20 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
-		private void GetCam00_Title( IList<CameraMover> cams ) {
+		private void BeginShot00_Title( IntroCutscene cutscene ) {
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
+				return;
+			}
+
+			cutscene.GetData()
+
+			cutscene.AddActor( NPCID.Guide, )
+		}
+
+
+		////////////////
+
+		private void GetCam00_Title( IList<CameraMover> cams, Action onCamStop ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
 				name: "AdventureModeIntro_Title",
@@ -20,7 +34,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0,
-				onStop: () => CameraMover.Current = cams[next+1]
+				onStop: () => {
+					onCamStop?.Invoke();
+					CameraMover.Current = cams[next + 1];
+				}
 			);
 
 			cams.Add( cam );
@@ -28,7 +45,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 
 		////////////////
-
+		
 		private void DrawInterface00_Title() {
 			string titleText = "Test Title";
 			Vector2 titleDim = Main.fontMouseText.MeasureString( titleText );

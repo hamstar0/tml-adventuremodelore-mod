@@ -12,22 +12,22 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Net {
 	[Serializable]
 	public abstract class AMLCutsceneNetData : NetIOBroadcastPayload {
-		public static void Broadcast( Cutscene cutscene, Player playsFor, int sceneIdx ) {
+		public static void Broadcast( Cutscene cutscene, int sceneIdx ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				throw new ModHelpersException("Not server");
 			}
 
-			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( playsFor, sceneIdx );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneIdx );
 
 			NetIO.Broadcast( protocol );
 		}
 
-		public static void SendToClients( Cutscene cutscene, Player playsFor, int sceneIdx, int ignoreWho ) {
+		public static void SendToClients( Cutscene cutscene, int sceneIdx, int ignoreWho ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				throw new ModHelpersException( "Not client" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( playsFor, sceneIdx );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneIdx );
 
 			NetIO.SendToClients(
 				data: protocol,
@@ -35,12 +35,12 @@ namespace AdventureModeLore.Net {
 			);
 		}
 
-		public static void SendToClient( Cutscene cutscene, Player playsFor, int sceneIdx, int toWho ) {
+		public static void SendToClient( Cutscene cutscene, int sceneIdx, int toWho ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				throw new ModHelpersException( "Not client" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.GetPacketPayload( playsFor, sceneIdx );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneIdx );
 
 			NetIO.SendToClient(
 				data: protocol,
@@ -66,7 +66,7 @@ namespace AdventureModeLore.Net {
 		protected AMLCutsceneNetData( Cutscene cutscene, Player playsFor, int sceneIdx ) {
 			this.PlaysForWho = playsFor.whoAmI;
 			this.ModName = cutscene.UniqueId.ModName;
-			this.Name = cutscene.UniqueId.Name;
+			this.Name = cutscene.UniqueId.ClassName;
 			this.SceneIdx = sceneIdx;
 		}
 

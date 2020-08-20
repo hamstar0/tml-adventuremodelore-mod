@@ -9,7 +9,7 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
-		private void GetCam02_Dungeon( IList<CameraMover> cams, Vector2 dungeonView ) {
+		private void GetCam02_Dungeon( IList<CameraMover> cams, Action onCamStop, Vector2 dungeonView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
 				name: "AdventureModeIntro",
@@ -20,7 +20,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				toDuration: 60 * 5,
 				lingerDuration: 0,
 				froDuration: 0,
-				onStop: () => CameraMover.Current = cams[next + 1]
+				onStop: () => {
+					onCamStop?.Invoke();
+					CameraMover.Current = cams[next + 1];
+				}
 			);
 
 			cams.Add( cam );

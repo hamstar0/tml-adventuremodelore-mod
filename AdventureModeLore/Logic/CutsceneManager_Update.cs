@@ -10,20 +10,20 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
-		internal void Update_Host_Internal() {
-			this.UpdateActivations_Host_Internal();
+		internal void Update_Internal() {
+			if( Main.netMode != NetmodeID.MultiplayerClient ) {
+				this.UpdateActivations_Host_Internal();
+			}
 
-			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				if( cutscene.IsPlaying() ) {
-					cutscene.Update_Internal();
-				}
+			foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
+				cutscene.Update_Internal();
 			}
 		}
 
 		private void UpdateActivations_Host_Internal() {
 			int playerCount = Main.player.Length;
 
-			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
+			foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
 				for( int i=0; i<playerCount; i++ ) {
 					Player plr = Main.player[i];
 					if( plr?.active != true ) {

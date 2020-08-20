@@ -28,11 +28,13 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			int extShipViewScrollY = (int)exteriorShipView.Y - (6 * 16);
 			interiorShipView.Y = interiorShipView.Y - (12f * 16f);
 
-			this.GetCam00_Title( cams );
-			this.GetCam01_ExteriorChat( cams, exteriorShipView );
-			this.GetCam02_Dungeon( cams, dungeonView );
-			this.GetCam03_ExteriorAttack( cams, dungeonView, extShipViewScrollY );
-			this.GetCam04_InteriorChat( cams, interiorShipView );
+			this.BeginShot00_Title();
+			
+			this.GetCam00_Title( cams, this.BeginShot01_ExteriorChat );
+			this.GetCam01_ExteriorChat( cams, null, exteriorShipView );
+			this.GetCam02_Dungeon( cams, this.BeginShot03_ExteriorAttack, dungeonView );
+			this.GetCam03_ExteriorAttack( cams, this.BeginShot04_InteriorChat, dungeonView, extShipViewScrollY );
+			this.GetCam04_InteriorChat( cams, null, interiorShipView );
 
 			CameraMover.Current = cams[0];
 		}

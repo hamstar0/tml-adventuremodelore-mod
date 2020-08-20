@@ -6,8 +6,8 @@ using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
+using HamstarHelpers.Helpers.DotNET.Extensions;
 using AdventureModeLore.Definitions;
-using AdventureModeLore.ExampleCutscenes.Intro;
 
 
 namespace AdventureModeLore.Logic {
@@ -18,24 +18,20 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		public IReadOnlyDictionary<CutsceneID, Cutscene> Cutscenes { get; }
+		public IReadOnlyDictionary<int, Cutscene> CutscenePerPlayer { get; }
 
 
 		////////////////
 
-		private IDictionary<CutsceneID, Cutscene> _Cutscenes;
+		private IDictionary<int, Cutscene> _CutscenePerPlayer;
 
 
 
 		////////////////
 
 		internal CutsceneManager() {
-			Cutscene exampleAmIntro = IntroCutscene.Create( "Opening" );
-
-			this._Cutscenes = new Dictionary<CutsceneID, Cutscene> {
-				{ exampleAmIntro.UniqueId, exampleAmIntro }
-			};
-			this.Cutscenes = new ReadOnlyDictionary<CutsceneID, Cutscene>( this._Cutscenes );
+			this._CutscenePerPlayer = new Dictionary<int, Cutscene>();
+			this.CutscenePerPlayer = new ReadOnlyDictionary<int, Cutscene>( this._CutscenePerPlayer );
 		}
 
 		void ILoadable.OnModsLoad() {
@@ -52,9 +48,7 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		public void ResetCutscenes() {
-			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				cutscene.Reset();
-			}
+			this._CutscenePerPlayer.Clear();
 		}
 
 
@@ -73,31 +67,21 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		public T GetCutscene<T>() where T : Cutscene {
-			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				if( typeof(T) == cutscene.GetType() ) {
-					return (T)cutscene;
-				}
-			}
-			return null;
+		public IEnumerable<T> GetCutscenes<T>() where T : Cutscene {
+			return this._CutscenePerPlayer.Values
+				.Where( c => c.GetType() == typeof(T) )
+				.Select( c => c as T );
 		}
 
 
 		////////////////
 
 		public Cutscene GetCurrentCutscene_Player( Player player ) {
-			foreach( Cutscene cutscene in this.Cutscenes.Values ) {
-				if( cutscene.IsPlayingFor(player.whoAmI) ) {
-					return cutscene;
-				}
-			}
-			return null;
+			return this._CutscenePerPlayer.GetOrDefault( player.whoAmI );
 		}
 
 		public IEnumerable<Cutscene> GetActiveCutscenes_World() {
-			return this.Cutscenes
-				.Select( kv => kv.Value )
-				.Where( c => c.IsPlaying() );
+			return this._CutscenePerPlayer.Values;
 		}
 	}
 }

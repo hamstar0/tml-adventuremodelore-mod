@@ -57,7 +57,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 		
-		public override AMLCutsceneNetData GetPacketPayload( Player playsFor, int sceneIdx ) {
+		public override AMLCutsceneNetData CreatePacketPayload( Player playsFor, int sceneIdx ) {
 			return new IntroCutsceneNetData( this, playsFor, sceneIdx );
 		}
 

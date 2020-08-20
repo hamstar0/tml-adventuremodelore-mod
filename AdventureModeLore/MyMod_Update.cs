@@ -12,10 +12,8 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore {
 	public partial class AMLMod : Mod {
 		public override void PostUpdateEverything() {
-			if( Main.netMode != NetmodeID.MultiplayerClient ) {
-				if( !Main.gameMenu ) {
-					this.UpdateCutscenes_Internal();
-				}
+			if( !Main.gameMenu ) {
+				this.UpdateCutscenes_Internal();
 			}
 		}
 
@@ -26,7 +24,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			CutsceneManager.Instance.Update_Host_Internal();
+			CutsceneManager.Instance.Update_Internal();
 		}
 
 

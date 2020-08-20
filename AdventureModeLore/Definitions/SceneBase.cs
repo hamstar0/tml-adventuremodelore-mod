@@ -1,6 +1,5 @@
 ﻿using System;
 using Terraria;
-using Terraria.ID;
 using HamstarHelpers.Classes.Errors;
 
 

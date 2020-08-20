@@ -9,7 +9,18 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
-		private void GetCam03_ExteriorAttack( IList<CameraMover> cams, Vector2 exteriorShipView, float extShipViewY ) {
+		private void BeginShot03_ExteriorAttack() {
+
+		}
+
+
+		////////////////
+
+		private void GetCam03_ExteriorAttack(
+					IList<CameraMover> cams,
+					Action onCamStop,
+					Vector2 exteriorShipView,
+					float extShipViewY ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
 				name: "AdventureModeIntro",
@@ -20,7 +31,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0,
-				onStop: () => CameraMover.Current = cams[next + 1]
+				onStop: () => {
+					onCamStop?.Invoke();
+					CameraMover.Current = cams[next + 1];
+				}
 			);
 
 			cams.Add( cam );

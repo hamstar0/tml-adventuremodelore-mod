@@ -36,7 +36,7 @@ namespace AdventureModeLore.Logic {
 			int i = 0;
 			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDs_World ) {
 				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
-				tag["TriggeredCutsceneName_" + i] = uid.Name;
+				tag["TriggeredCutsceneName_" + i] = uid.ClassName;
 				i++;
 			}
 		}
@@ -48,7 +48,7 @@ namespace AdventureModeLore.Logic {
 
 			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDs_World ) {
 				writer.Write( uid.ModName );
-				writer.Write( uid.Name );
+				writer.Write( uid.ClassName );
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace AdventureModeLore.Logic {
 			int i = 0;
 			foreach( CutsceneID uid in myplayer.TriggeredCutsceneIDs_Player ) {
 				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
-				tag["TriggeredCutsceneName_" + i] = uid.Name;
+				tag["TriggeredCutsceneName_" + i] = uid.ClassName;
 				i++;
 			}
 		}
