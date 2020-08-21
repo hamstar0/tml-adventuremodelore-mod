@@ -12,22 +12,22 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Net {
 	[Serializable]
 	public abstract class AMLCutsceneNetData : NetIOBroadcastPayload {
-		public static void Broadcast( Cutscene cutscene, int sceneIdx ) {
+		public static void Broadcast( Cutscene cutscene, SceneID sceneId ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				throw new ModHelpersException("Not server");
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneIdx );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneId );
 
 			NetIO.Broadcast( protocol );
 		}
 
-		public static void SendToClients( Cutscene cutscene, int sceneIdx, int ignoreWho ) {
+		public static void SendToClients( Cutscene cutscene, SceneID sceneId, int ignoreWho ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				throw new ModHelpersException( "Not client" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneIdx );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneId );
 
 			NetIO.SendToClients(
 				data: protocol,
@@ -35,12 +35,12 @@ namespace AdventureModeLore.Net {
 			);
 		}
 
-		public static void SendToClient( Cutscene cutscene, int sceneIdx, int toWho ) {
+		public static void SendToClient( Cutscene cutscene, SceneID sceneId, int toWho ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				throw new ModHelpersException( "Not client" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneIdx );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneId );
 
 			NetIO.SendToClient(
 				data: protocol,
@@ -53,8 +53,10 @@ namespace AdventureModeLore.Net {
 		////////////////
 
 		public int PlaysForWho;
-		public string ModName;
-		public string Name;
+		public string CutsceneModName;
+		public string CutsceneClassName;
+		public string SceneModName;
+		public string SceneClassName;
 		public int SceneIdx;
 
 
@@ -63,11 +65,12 @@ namespace AdventureModeLore.Net {
 
 		protected AMLCutsceneNetData() { }
 
-		protected AMLCutsceneNetData( Cutscene cutscene, Player playsFor, int sceneIdx ) {
-			this.PlaysForWho = playsFor.whoAmI;
-			this.ModName = cutscene.UniqueId.ModName;
-			this.Name = cutscene.UniqueId.ClassName;
-			this.SceneIdx = sceneIdx;
+		protected AMLCutsceneNetData( Cutscene cutscene, SceneID sceneId ) {
+			this.PlaysForWho = cutscene.PlaysForWhom;
+			this.CutsceneModName = cutscene.UniqueId.ModName;
+			this.CutsceneClassName = cutscene.UniqueId.ClassName;
+			this.SceneModName = sceneId?.ModName ?? "";
+			this.SceneClassName = sceneId?.ClassName ?? "";
 		}
 
 
@@ -86,7 +89,7 @@ namespace AdventureModeLore.Net {
 
 		private void Receive() {
 			var mngr = CutsceneManager.Instance;
-			var uid = new CutsceneID( this.ModName, this.Name );
+			var uid = new CutsceneID( this.CutsceneModName, this.CutsceneClassName );
 			Player playsFor = Main.player[ this.PlaysForWho ];
 			if( playsFor?.active != true ) {
 				LogHelpers.Warn( "Missing player #"+this.PlaysForWho );
@@ -97,13 +100,18 @@ namespace AdventureModeLore.Net {
 				return;
 			}
 
+			SceneID sceneId = null;
+			if( !string.IsNullOrEmpty(this.SceneModName) ) {
+				sceneId = new SceneID( this.SceneModName, this.SceneClassName );
+			}
+
 			if( this.SceneIdx == 0 ) {
 				string result;
-				mngr.TryBeginCutscene( uid, playsFor, this.SceneIdx, false, out result );
+				mngr.TryBeginCutscene( uid, playsFor, sceneId, false, out result );
 
 				LogHelpers.Log( "Beginning cutscene "+uid+" result for client: " + result );
 			} else if( this.SceneIdx > 0 ) {
-				mngr.SetCutsceneScene( uid, playsFor, this.SceneIdx, false );
+				mngr.SetCutsceneScene( uid, playsFor, sceneId, false );
 			} else {
 				mngr.EndCutscene( uid, playsFor, false );
 			}

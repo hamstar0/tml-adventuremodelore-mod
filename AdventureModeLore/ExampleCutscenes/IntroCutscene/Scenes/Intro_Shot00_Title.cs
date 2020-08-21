@@ -15,8 +15,6 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 				return;
 			}
 
-			cutscene.GetData()
-
 			cutscene.AddActor( NPCID.Guide, )
 		}
 

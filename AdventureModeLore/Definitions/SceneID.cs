@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Reflection;
-using System.Runtime.Remoting;
-using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
+using Terraria;
+using System.Reflection;
+using System.Runtime.Remoting;
 
 
 namespace AdventureModeLore.Definitions {
-	public class CutsceneID {
+	public class SceneID {
 		public string ModName { get; }
 		public string ClassName { get; }
 
@@ -15,14 +15,14 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		public CutsceneID( Mod mod, string name ) {
+		public SceneID( Mod mod, Type classType ) {
 			this.ModName = mod.Name;
-			this.ClassName = name;
+			this.ClassName = classType.Name;
 		}
 
-		public CutsceneID( string modName, string name ) {
+		public SceneID( string modName, string className ) {
 			this.ModName = modName;
-			this.ClassName = name;
+			this.ClassName = className;
 		}
 
 		////
@@ -47,7 +47,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal Cutscene Create( Player playsFor, params object[] args ) {
+		internal Scene Create( Player playsFor, params object[] args ) {
 			var newArgs = new object[args.Length + 1];
 			newArgs[0] = playsFor;
 			args.CopyTo( newArgs, 1 );
@@ -62,7 +62,7 @@ namespace AdventureModeLore.Definitions {
 				culture: null,
 				activationAttributes: new object[] { }
 			);
-			return objHand.Unwrap() as Cutscene;
+			return objHand.Unwrap() as Scene;
 		}
 	}
 }

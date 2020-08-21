@@ -9,15 +9,27 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
+		public override SceneID UniqueId { get; } = new SceneID( AMLMod.Instance.Name, typeof(IntroCutsceneScene_00).Name );
+
+
+		////////////////
+
 		public IntroCutsceneScene_00()  : base( false, false ) { }
 
 
 		////////////////
 
-		protected override void OnBegin( IntroCutscene parent, Player playsFor ) {
+		public override SceneID GetNextSceneId() {
+			return null;
+		}
+
+
+		////////////////
+
+		protected override void OnBegin( IntroCutscene parent ) {
 			var cams = new List<CameraMover>();
 
-			parent.GetData( playsFor, out Vector2 exteriorShipView, out Vector2 interiorShipView );
+			parent.GetData( out Vector2 exteriorShipView, out Vector2 interiorShipView );
 
 			bool isShipOnLeft = (int)exteriorShipView.X < ((16 * Main.maxTilesX) / 2);
 
@@ -28,7 +40,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 			int extShipViewScrollY = (int)exteriorShipView.Y - (6 * 16);
 			interiorShipView.Y = interiorShipView.Y - (12f * 16f);
 
-			this.BeginShot00_Title();
+			this.BeginShot00_Title( parent );
 			
 			this.GetCam00_Title( cams, this.BeginShot01_ExteriorChat );
 			this.GetCam01_ExteriorChat( cams, null, exteriorShipView );
@@ -42,7 +54,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		////////////////
 
-		protected override bool Update( IntroCutscene parent, Player playsFor ) {
+		protected override bool Update( IntroCutscene parent ) {
 			var animCam = CameraMover.Current;
 			if( animCam == null || !animCam.Name.StartsWith("AdventureModeIntro") || !animCam.IsAnimating() ) {
 				return true;

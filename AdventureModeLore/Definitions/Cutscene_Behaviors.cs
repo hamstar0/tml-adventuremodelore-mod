@@ -35,8 +35,7 @@ namespace AdventureModeLore.Definitions {
 		////////////////
 
 		internal void DrawInterface() {
-			Scene currScene = this.GetCurrentScene( Main.LocalPlayer );
-			currScene?.DrawInterface();
+			this.CurrentScene?.DrawInterface();
 		}
 	}
 }

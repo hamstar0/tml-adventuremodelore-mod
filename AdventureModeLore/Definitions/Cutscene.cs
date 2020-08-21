@@ -6,31 +6,15 @@ using AdventureModeLore.Net;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		internal static T Create<T>( Player playsFor ) where T : Cutscene {
-			return Activator.CreateInstance( typeof(T), new object[] { playsFor } ) as T;
-		}
-
-
-
-		////////////////
-
-		protected int CurrentSceneIdx = 0;
-
-		////
-
 		public int PlaysForWhom { get; }
 
 		////
 
 		public abstract CutsceneID UniqueId { get; }
 
-		protected Scene[] Scenes { get; }
-
 		////
 
-		public Scene CurrentScene => this.CurrentSceneIdx < this.Scenes.Length
-			? this.Scenes[ this.CurrentSceneIdx ]
-			: null;
+		public Scene CurrentScene { get; protected set; }
 
 
 
@@ -38,16 +22,32 @@ namespace AdventureModeLore.Definitions {
 
 		protected Cutscene( Player playsFor ) {
 			this.PlaysForWhom = playsFor.whoAmI;
-			this.Scenes = this.LoadScenes();
-
-			this.CurrentScene.Begin_Internal( this, playsFor );
 		}
 
-		protected abstract Scene[] LoadScenes();
+		protected abstract Scene CreateInitialScene();
+
+		protected abstract Scene CreateScene( SceneID sceneId );
 
 		////
 
-		public abstract AMLCutsceneNetData CreatePacketPayload( int sceneIdx );
+		public abstract AMLCutsceneNetData CreatePacketPayload( SceneID sceneId );
+
+
+		////////////////
+
+		public abstract bool CanBegin();
+
+		////////////////
+
+		internal void Begin_Internal() {
+			this.CurrentScene = this.CreateInitialScene();
+			this.CurrentScene.Begin_Internal( this );
+			this.OnBegin();
+		}
+
+		////
+
+		protected virtual void OnBegin() { }
 
 
 		////////////////

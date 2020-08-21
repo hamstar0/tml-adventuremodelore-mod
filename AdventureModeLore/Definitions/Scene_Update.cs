@@ -6,11 +6,11 @@ namespace AdventureModeLore.Definitions {
 	public abstract partial class Scene<T> : Scene where T : Cutscene {
 		/// <summary></summary>
 		/// <returns>`true` signifies scene has ended.</returns>
-		internal sealed override bool Update_Internal( Cutscene parent, Player playsFor ) {
-			if( base.Update_Internal( parent, playsFor ) ) {
+		internal sealed override bool Update_Internal( Cutscene parent ) {
+			if( base.Update_Internal( parent ) ) {
 				return true;
 			}
-			return this.Update( (T)parent, playsFor );
+			return this.Update( (T)parent );
 		}
 
 
@@ -18,6 +18,6 @@ namespace AdventureModeLore.Definitions {
 
 		/// <summary></summary>
 		/// <returns>`true` signifies scene has ended.</returns>
-		protected abstract bool Update( T parent, Player playsFor );
+		protected abstract bool Update( T parent );
 	}
 }

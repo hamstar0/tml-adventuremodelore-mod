@@ -13,9 +13,12 @@ namespace AdventureModeLore.Logic {
 		internal void Update_Internal() {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
 				this.UpdateActivations_Host_Internal();
-			}
 
-			foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
+				foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
+					cutscene.Update_Internal();
+				}
+			} else {
+				Cutscene cutscene = this.GetCurrentCutscene_Player( Main.LocalPlayer );
 				cutscene.Update_Internal();
 			}
 		}
@@ -30,7 +33,7 @@ namespace AdventureModeLore.Logic {
 						continue;
 					}
 
-					if( !this.TryBeginCutscene(cutscene.UniqueId, plr, 0, true, out string result) ) {
+					if( !this.TryBeginCutscene(cutscene.UniqueId, plr, null, true, out string result) ) {
 						LogHelpers.LogOnce( "Tried to begin cutscene: "+result );
 					}
 

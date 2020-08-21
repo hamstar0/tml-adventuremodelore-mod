@@ -46,25 +46,30 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
+		public abstract SceneID GetNextSceneId();
+
+
+		////////////////
+
 		/// <summary></summary>
 		/// <returns>`true` signifies scene has ended.</returns>
-		internal virtual bool Update_Internal( Cutscene parent, Player playsFor ) {
+		internal virtual bool Update_Internal( Cutscene parent ) {
 			return false;
 		}
 
 
 		////////////////
 		
-		internal virtual void Begin_Internal( Cutscene parent, Player playsFor ) {
-			if( playsFor.whoAmI == Main.myPlayer ) {
+		internal virtual void Begin_Internal( Cutscene parent ) {
+			if( parent.PlaysForWhom == Main.myPlayer ) {
 				this.Dialogue?.ShowDialogue();
 			}
 		}
 
 		////////////////
 		
-		internal virtual void End_Internal( Cutscene parent, Player playsFor ) {
-			if( playsFor.whoAmI == Main.myPlayer ) {
+		internal virtual void End_Internal( Cutscene parent ) {
+			if( parent.PlaysForWhom == Main.myPlayer ) {
 				this.Dialogue?.HideDialogue();
 			}
 		}

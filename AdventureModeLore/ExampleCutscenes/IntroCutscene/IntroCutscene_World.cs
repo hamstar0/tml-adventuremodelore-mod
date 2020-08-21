@@ -40,7 +40,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		protected override ActiveCutscene Begin( Player playsFor, int sceneIdx ) {
+		protected override void OnBegin() {
 			char d = Path.DirectorySeparatorChar;
 			TileStructure shipInterior = TileStructure.Load(
 				AMLMod.Instance,
@@ -78,8 +78,6 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			Vector2 interiorShipPos = new Vector2( left * 16, top * 16 );
 			interiorShipPos.X += shipInterior.Bounds.Width * 8;    // (wid*16) / 2
 			interiorShipPos.Y += 16 * 16;
-
-			return new IntroActiveCutscene( this, playsFor, sceneIdx, exteriorShipPos, interiorShipPos );
 		}
 	}
 }

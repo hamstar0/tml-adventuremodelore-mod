@@ -13,17 +13,25 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		public bool CanBeginCutscene( CutsceneID cutsceneId, Player playsFor ) {
+			return this.CanBeginCutscene( cutsceneId, playsFor, out Cutscene _ );
+		}
+
+		private bool CanBeginCutscene( CutsceneID cutsceneId, Player playsFor, out Cutscene cutscene ) {
 			if( this.GetCurrentCutscene_Player( playsFor ) != null ) {
+				cutscene = null;
 				return false;
 			}
 			if( this.HasCutscenePlayed_World( cutsceneId ) ) {
+				cutscene = null;
 				return false;
 			}
 			if( this.HasCutscenePlayed_Player( cutsceneId, playsFor ) ) {
+				cutscene = null;
 				return false;
 			}
 
-			return true;
+			cutscene = cutsceneId.Create( playsFor );
+			return cutscene.CanBegin();
 		}
 
 
@@ -32,7 +40,7 @@ namespace AdventureModeLore.Logic {
 		public bool TryBeginCutscene(
 					CutsceneID cutsceneId,
 					Player playsFor,
-					int sceneIdx,
+					SceneID sceneId,
 					bool sync, 
 					out string result ) {
 			if( this.GetCurrentCutscene_Player(playsFor) != null ) {
@@ -40,12 +48,10 @@ namespace AdventureModeLore.Logic {
 				return false;
 			}
 
-			if( !this.CanBeginCutscene(cutsceneId, playsFor) ) {
+			if( !this.CanBeginCutscene( cutsceneId, playsFor, out Cutscene cutscene) ) {
 				result = "Cannot play cutscene " + cutsceneId;
 				return false;
 			}
-
-			Cutscene cutscene = null;f
 
 			this._CutscenePerPlayer[ playsFor.whoAmI ] = cutscene;
 
@@ -57,9 +63,9 @@ namespace AdventureModeLore.Logic {
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
-					AMLCutsceneNetData.SendToClient( cutscene, playsFor, sceneIdx, -1 );
+					AMLCutsceneNetData.SendToClient( cutscene: cutscene, sceneId: sceneId, toWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					AMLCutsceneNetData.Broadcast( cutscene, playsFor, sceneIdx );
+					AMLCutsceneNetData.Broadcast( cutscene: cutscene, sceneId: sceneId );
 				}
 			}
 
@@ -70,7 +76,7 @@ namespace AdventureModeLore.Logic {
 
 		////////////////
 
-		public bool SetCutsceneScene( CutsceneID cutsceneId, Player playsFor, int sceneIdx, bool sync ) {
+		public bool SetCutsceneScene( CutsceneID cutsceneId, Player playsFor, SceneID sceneId, bool sync ) {
 			Cutscene cutscene = this._CutscenePerPlayer.GetOrDefault( playsFor.whoAmI );
 			if( cutscene == null ) {
 				return false;
@@ -79,13 +85,13 @@ namespace AdventureModeLore.Logic {
 				return false;
 			}
 
-			cutscene.SetCurrentScene_NoSync( sceneIdx );
+			cutscene.SetCurrentScene_NoSync( sceneId );
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
-					AMLCutsceneNetData.SendToClients( cutscene, playsFor, sceneIdx, - 1 );
+					AMLCutsceneNetData.SendToClients( cutscene: cutscene, sceneId: sceneId, ignoreWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					AMLCutsceneNetData.Broadcast( cutscene, playsFor, sceneIdx );
+					AMLCutsceneNetData.Broadcast( cutscene: cutscene, sceneId: sceneId );
 				}
 			}
 			return true;
@@ -107,9 +113,9 @@ namespace AdventureModeLore.Logic {
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
-					AMLCutsceneNetData.SendToClients( cutscene: cutscene, playsFor: playsFor, sceneIdx: -1, ignoreWho: -1 );
+					AMLCutsceneNetData.SendToClients( cutscene: cutscene, sceneId: null, ignoreWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					AMLCutsceneNetData.Broadcast( cutscene, playsFor, -1 );
+					AMLCutsceneNetData.Broadcast( cutscene: cutscene, sceneId: null );
 				}
 			}
 			return true;

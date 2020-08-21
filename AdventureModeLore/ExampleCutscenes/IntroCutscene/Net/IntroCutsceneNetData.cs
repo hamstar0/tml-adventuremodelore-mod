@@ -4,9 +4,11 @@ using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Net;
 using AdventureModeLore.Logic;
+using AdventureModeLore.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
+
 	[Serializable]
 	class IntroCutsceneNetData : AMLCutsceneNetData {
 		public Vector2 InteriorShipViewPosition;
@@ -18,9 +20,8 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 
 		private IntroCutsceneNetData() : base() { }
 		
-		public IntroCutsceneNetData( IntroCutscene cutscene, Player playsFor, int sceneIdx )
-					: base( cutscene, playsFor, sceneIdx ) {
-			cutscene.GetData( playsFor, out Vector2 exteriorShipPos, out Vector2 interiorShipPos );
+		public IntroCutsceneNetData( IntroCutscene cutscene, SceneID sceneId ) : base( cutscene, sceneId ) {
+			cutscene.GetData( out Vector2 exteriorShipPos, out Vector2 interiorShipPos );
 
 			this.ExteriorShipViewPosition = exteriorShipPos;
 			this.InteriorShipViewPosition = interiorShipPos;
@@ -30,9 +31,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 		////////////////
 
 		protected override bool PreReceive() {
-			var cutscene = CutsceneManager.Instance.GetCutscene<IntroCutscene>();
+			Player playsFor = Main.player[ this.PlaysForWho ];
+			IntroCutscene cutscene = CutsceneManager.Instance.GetCurrentCutscene_Player( playsFor ) as IntroCutscene;
 
-			cutscene.SetData( Main.player[this.PlaysForWho], this.ExteriorShipViewPosition, this.InteriorShipViewPosition );
+			cutscene.SetData( this.ExteriorShipViewPosition, this.InteriorShipViewPosition );
 			return true;
 		}
 	}
