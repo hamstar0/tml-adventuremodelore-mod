@@ -7,8 +7,8 @@ using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
-	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
+namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
+	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet> {
 		private void BeginShot03_ExteriorAttack() {
 
 		}

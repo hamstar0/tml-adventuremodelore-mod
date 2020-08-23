@@ -35,7 +35,7 @@ namespace AdventureModeLore.Definitions {
 				return false;
 			}
 
-			Type genSceneType = typeof( Scene<> );
+			Type genSceneType = typeof( Scene<,> );
 			if( parentType.IsGenericType && parentType.GetGenericTypeDefinition() == genSceneType ) {
 				return true;
 			}

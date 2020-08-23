@@ -33,12 +33,12 @@ namespace AdventureModeLore {
 			if( nowCutscene == null ) {
 				return base.PreAI( npc );
 			}
-
+			
 			if( !nowCutscene.AllowNPC(npc) ) {
 				npc.active = false;
 				npc.life = 0;
 			}
-
+			
 			return base.PreAI( npc );
 		}
 	}

@@ -2,15 +2,13 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
-using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.TileStructure;
-using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.ExampleCutscenes.Intro {
-	partial class IntroCutscene : Cutscene {
+namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
+	class IntroMovieSet : MovieSet {
 		public static void GetSceneCoordinates( int width, out int boatLeft, out int boatTop, out bool isFlipped ) {
 			//isFlipped = Main.spawnTileX > ( Main.maxTilesX / 2 );
 			isFlipped = false;
@@ -40,7 +38,14 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		protected override void OnBegin() {
+		public Vector2 ExteriorShipPos;
+		public Vector2 InteriorShipPos;
+
+
+
+		////////////////
+
+		public IntroMovieSet() {
 			char d = Path.DirectorySeparatorChar;
 			TileStructure shipInterior = TileStructure.Load(
 				AMLMod.Instance,
@@ -53,7 +58,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 			int left, top;
 			bool isFlipped;
 
-			IntroCutscene.GetSceneCoordinates( shipExterior.Bounds.Width, out left, out top, out isFlipped );
+			IntroMovieSet.GetSceneCoordinates( shipExterior.Bounds.Width, out left, out top, out isFlipped );
 			shipExterior.PaintToWorld(
 				leftTileX: left,
 				topTileY: top,
@@ -62,10 +67,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 				flipHorizontally: isFlipped,
 				flipVertically: false );
 
-			Vector2 exteriorShipPos = new Vector2( left * 16, top * 16 );
-			exteriorShipPos.X += shipExterior.Bounds.Width * 8;    // (wid*16) / 2
+			this.ExteriorShipPos = new Vector2( left * 16, top * 16 );
+			this.ExteriorShipPos.X += shipExterior.Bounds.Width * 8;    // (wid*16) / 2
 
-			IntroCutscene.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
+			IntroMovieSet.GetSceneCoordinates( shipInterior.Bounds.Width, out left, out top, out isFlipped );
 			top = Math.Max( top - 160, 40 );
 			shipInterior.PaintToWorld(
 				leftTileX: left,
@@ -74,10 +79,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 				respectLiquids: true,
 				flipHorizontally: isFlipped,
 				flipVertically: false );
-			
-			Vector2 interiorShipPos = new Vector2( left * 16, top * 16 );
-			interiorShipPos.X += shipInterior.Bounds.Width * 8;    // (wid*16) / 2
-			interiorShipPos.Y += 16 * 16;
+
+			this.InteriorShipPos = new Vector2( left * 16, top * 16 );
+			this.InteriorShipPos.X += shipInterior.Bounds.Width * 8;    // (wid*16) / 2
+			this.InteriorShipPos.Y += 16 * 16;
 		}
 	}
 }

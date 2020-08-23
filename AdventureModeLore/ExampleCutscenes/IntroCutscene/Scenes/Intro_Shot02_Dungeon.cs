@@ -7,8 +7,8 @@ using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
-	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
+namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
+	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet> {
 		private void GetCam02_Dungeon( IList<CameraMover> cams, Action onCamStop, Vector2 dungeonView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(

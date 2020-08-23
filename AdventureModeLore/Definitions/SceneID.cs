@@ -19,8 +19,10 @@ namespace AdventureModeLore.Definitions {
 		public SceneID( Mod mod, Scene instance ) : this( mod, instance.GetType() ) { }
 
 		public SceneID( Mod mod, Type sceneType ) : this( mod.Code.GetName().Name, sceneType.FullName ) {
-			if( sceneType.IsSubclassOf(typeof(Scene)) ) {
-				throw new ModHelpersException( sceneType.Name + " is not a `Scene`." );
+			for( Type baseType= sceneType.BaseType; baseType!=typeof(Scene); baseType = sceneType.BaseType ) {
+				if( baseType == typeof(object) ) {
+					throw new ModHelpersException( sceneType.Name + " is not a `Scene`." );
+				}
 			}
 		}
 

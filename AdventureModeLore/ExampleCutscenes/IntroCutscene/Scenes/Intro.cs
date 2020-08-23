@@ -7,14 +7,15 @@ using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
-	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
+namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
+	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet> {
 		public override SceneID UniqueId { get; } = new SceneID( AMLMod.Instance, typeof(IntroCutsceneScene_00) );
+
 
 
 		////////////////
 
-		public IntroCutsceneScene_00()  : base( false, false ) { }
+		public IntroCutsceneScene_00( IntroMovieSet set )  : base( false, false, set ) { }
 
 
 		////////////////
@@ -26,10 +27,23 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 
 		////////////////
 
+		internal void GetData( out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
+			exteriorShipViewPos = this.Set.ExteriorShipPos;
+			interiorShipViewPos = this.Set.InteriorShipPos;
+		}
+
+		internal void SetData( Vector2 exteriorShipViewPos, Vector2 interiorShipViewPos ) {
+			this.Set.ExteriorShipPos = exteriorShipViewPos;
+			this.Set.InteriorShipPos = interiorShipViewPos;
+		}
+
+
+		////////////////
+
 		protected override void OnBegin( IntroCutscene parent ) {
 			var cams = new List<CameraMover>();
 
-			parent.GetData( out Vector2 exteriorShipView, out Vector2 interiorShipView );
+			this.GetData( out Vector2 exteriorShipView, out Vector2 interiorShipView );
 
 			bool isShipOnLeft = (int)exteriorShipView.X < ((16 * Main.maxTilesX) / 2);
 

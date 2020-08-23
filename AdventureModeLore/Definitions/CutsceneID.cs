@@ -19,8 +19,10 @@ namespace AdventureModeLore.Definitions {
 		public CutsceneID( Mod mod, Cutscene instance ) : this( mod, instance.GetType() ) { }
 		
 		public CutsceneID( Mod mod, Type cutsceneType ) : this( mod.Code.GetName().Name, cutsceneType.FullName ) {
-			if( cutsceneType.IsSubclassOf(typeof(Cutscene)) ) {
-				throw new ModHelpersException( cutsceneType.Name + " is not a `Cutscene`." );
+			for( Type baseType=cutsceneType.BaseType; baseType!=typeof(Cutscene); baseType = cutsceneType.BaseType ) {
+				if( baseType == typeof(object) ) {
+					throw new ModHelpersException( cutsceneType.Name + " is not a `Cutscene`." );
+				}
 			}
 		}
 

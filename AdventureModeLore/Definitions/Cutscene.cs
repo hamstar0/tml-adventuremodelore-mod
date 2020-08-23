@@ -6,11 +6,11 @@ using AdventureModeLore.Net;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		public int PlaysForWhom { get; private set; } = -1;
+		public abstract CutsceneID UniqueId { get; }
 
 		////
 
-		public abstract CutsceneID UniqueId { get; }
+		public int PlaysForWhom { get; private set; } = -1;
 
 		////
 
@@ -24,6 +24,8 @@ namespace AdventureModeLore.Definitions {
 			this.PlaysForWhom = playsFor?.whoAmI ?? -1;
 		}
 
+		////
+
 		protected abstract Scene CreateInitialScene();
 
 		protected abstract Scene CreateScene( SceneID sceneId );
@@ -34,7 +36,7 @@ namespace AdventureModeLore.Definitions {
 
 
 		////////////////
-
+		
 		public abstract bool CanBegin();
 
 		////////////////
@@ -42,12 +44,7 @@ namespace AdventureModeLore.Definitions {
 		internal void Begin_Internal() {
 			this.CurrentScene = this.CreateInitialScene();
 			this.CurrentScene.Begin_Internal( this );
-			this.OnBegin();
 		}
-
-		////
-
-		protected virtual void OnBegin() { }
 
 
 		////////////////

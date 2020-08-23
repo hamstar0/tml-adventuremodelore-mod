@@ -1,23 +1,16 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Info;
 using AdventureModeLore.Definitions;
 using AdventureModeLore.Net;
-using AdventureModeLore.ExampleCutscenes.Intro.Scenes;
-using AdventureModeLore.ExampleCutscenes.Intro.Net;
+using AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes;
+using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
 
 
-namespace AdventureModeLore.ExampleCutscenes.Intro {
+namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 	partial class IntroCutscene : Cutscene {
-		public Vector2 ExteriorShipPos;
-		public Vector2 InteriorShipPos;
-
-
-		////////////////
-
 		public override CutsceneID UniqueId { get; } = new CutsceneID(
 			mod: AMLMod.Instance,
 			cutsceneType: typeof(IntroCutscene)
@@ -31,31 +24,27 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 		
 		private IntroCutscene( Player playsFor ) : base( playsFor ) { }
 
-		////////////////
+		////
 
 		protected override Scene CreateInitialScene() {
-			return new IntroCutsceneScene_00();
+			return this.CreateScene(
+				new SceneID(AMLMod.Instance, typeof(IntroCutsceneScene_00))
+			);
 		}
 
 		protected override Scene CreateScene( SceneID sceneId ) {
 			if( sceneId == new SceneID(AMLMod.Instance, typeof(IntroCutsceneScene_00)) ) {
-				return new IntroCutsceneScene_00();
+				var set = new IntroMovieSet();
+				return new IntroCutsceneScene_00( set );
 			}
 
 			return null;
 		}
 
+		////
 
-		////////////////
-
-		internal void GetData( out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
-			exteriorShipViewPos = this.ExteriorShipPos;
-			interiorShipViewPos = this.InteriorShipPos;
-		}
-
-		internal void SetData( Vector2 exteriorShipViewPos, Vector2 interiorShipViewPos ) {
-			this.ExteriorShipPos = exteriorShipViewPos;
-			this.InteriorShipPos = interiorShipViewPos;
+		internal IntroCutsceneScene_00 GetIntroScene() {
+			return this.CurrentScene as IntroCutsceneScene_00;
 		}
 
 

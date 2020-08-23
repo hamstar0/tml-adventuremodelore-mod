@@ -3,15 +3,22 @@ using Terraria;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class Scene<T> : Scene where T : Cutscene {
+	public abstract partial class Scene<T, U>
+				: Scene where T : Cutscene where U : MovieSet {
 		public abstract SceneID UniqueId { get; }
+
+		////
+
+		protected U Set;
 
 
 
 		////////////////
 
-		protected Scene( bool worldControlsSyncOnly, bool defersToHostForSync )
-			: base( worldControlsSyncOnly, defersToHostForSync ) { }
+		protected Scene( bool worldControlsSyncOnly, bool defersToHostForSync, U set )
+					: base( worldControlsSyncOnly, defersToHostForSync ) {
+			this.Set = set;
+		}
 
 
 		////////////////

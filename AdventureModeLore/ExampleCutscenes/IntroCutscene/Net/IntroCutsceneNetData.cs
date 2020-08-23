@@ -7,12 +7,11 @@ using AdventureModeLore.Logic;
 using AdventureModeLore.Definitions;
 
 
-namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
-
+namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Net {
 	[Serializable]
 	class IntroCutsceneNetData : AMLCutsceneNetData {
-		public Vector2 InteriorShipViewPosition;
-		public Vector2 ExteriorShipViewPosition;
+		public Vector2 InteriorShipView;
+		public Vector2 ExteriorShipView;
 
 
 
@@ -21,10 +20,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 		private IntroCutsceneNetData() : base() { }
 		
 		public IntroCutsceneNetData( IntroCutscene cutscene, SceneID sceneId ) : base( cutscene, sceneId ) {
-			cutscene.GetData( out Vector2 exteriorShipPos, out Vector2 interiorShipPos );
-
-			this.ExteriorShipViewPosition = exteriorShipPos;
-			this.InteriorShipViewPosition = interiorShipPos;
+			cutscene.GetIntroScene().GetData( out this.ExteriorShipView, out this.InteriorShipView );
 		}
 
 
@@ -34,7 +30,7 @@ namespace AdventureModeLore.ExampleCutscenes.Intro.Net {
 			Player playsFor = Main.player[ this.PlaysForWho ];
 			IntroCutscene cutscene = CutsceneManager.Instance.GetCurrentCutscene_Player( playsFor ) as IntroCutscene;
 
-			cutscene.SetData( this.ExteriorShipViewPosition, this.InteriorShipViewPosition );
+			cutscene.GetIntroScene().SetData( this.ExteriorShipView, this.InteriorShipView );
 			return true;
 		}
 	}
