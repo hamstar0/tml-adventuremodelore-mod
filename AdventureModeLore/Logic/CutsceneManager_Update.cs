@@ -26,14 +26,14 @@ namespace AdventureModeLore.Logic {
 		private void UpdateActivations_Host_Internal() {
 			int playerCount = Main.player.Length;
 
-			foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
+			foreach( CutsceneID cutsceneId in this.CutsceneIDs ) {
 				for( int i=0; i<playerCount; i++ ) {
 					Player plr = Main.player[i];
 					if( plr?.active != true ) {
 						continue;
 					}
 
-					if( !this.TryBeginCutscene(cutscene.UniqueId, plr, null, true, out string result) ) {
+					if( !this.TryBeginCutscene(cutsceneId, plr, null, true, out string result) ) {
 						LogHelpers.LogOnce( "Tried to begin cutscene: "+result );
 					}
 

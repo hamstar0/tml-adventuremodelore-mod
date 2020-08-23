@@ -54,19 +54,19 @@ namespace AdventureModeLore.Net {
 			this.IsAdventureModePlayer = myplayer.IsAdventureModePlayer;
 
 			this.CurrentCutsceneModNames_World = activeCutscenes
-				.Select( c=>c.UniqueId.ModName ).ToArray();
+				.Select( c=>c.UniqueId.ModAssemblyName ).ToArray();
 			this.CurrentCutsceneNames_World = activeCutscenes
-				.Select( c=>c.UniqueId.ClassName ).ToArray();
+				.Select( c=>c.UniqueId.FullClassName ).ToArray();
 
 			this.ActivatedCutsceneModNames_World = myworld.TriggeredCutsceneIDs_World
-				.Select( c=>c.ModName ).ToArray();
+				.Select( c=>c.ModAssemblyName ).ToArray();
 			this.ActivatedCutsceneNames_World = myworld.TriggeredCutsceneIDs_World
-				.Select( c=>c.ClassName ).ToArray();
+				.Select( c=>c.FullClassName ).ToArray();
 
 			this.ActivatedCutsceneModNames_Player = myplayer.TriggeredCutsceneIDs_Player
-				.Select( c=>c.ModName ).ToArray();
+				.Select( c=>c.ModAssemblyName ).ToArray();
 			this.ActivatedCutsceneNames_Player = myplayer.TriggeredCutsceneIDs_Player
-				.Select( c=>c.ClassName ).ToArray();
+				.Select( c=>c.FullClassName ).ToArray();
 		}
 
 

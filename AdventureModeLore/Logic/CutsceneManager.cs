@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Terraria;
@@ -7,6 +8,7 @@ using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.DotNET.Extensions;
+using HamstarHelpers.Helpers.DotNET.Reflection;
 using AdventureModeLore.Definitions;
 
 
@@ -17,6 +19,8 @@ namespace AdventureModeLore.Logic {
 
 
 		////////////////
+
+		public IReadOnlyList<CutsceneID> CutsceneIDs { get; protected set; }
 
 		public IReadOnlyDictionary<int, Cutscene> CutscenePerPlayer { get; }
 
@@ -30,6 +34,21 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		internal CutsceneManager() {
+			IEnumerable<Type> cutsceneTypes = ReflectionHelpers.GetAllAvailableSubTypesFromMods( typeof(Cutscene) );
+			var cutsceneIDs = new List<CutsceneID>( cutsceneTypes.Count() );
+
+			foreach( Type cutsceneType in cutsceneTypes ) {
+				Cutscene cutscene = Activator.CreateInstance(
+					type: cutsceneType,
+					bindingAttr: BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+					binder: null,
+					args: new object[] { null },
+					culture: null
+				) as Cutscene;
+				cutsceneIDs.Add( cutscene.UniqueId );
+			}
+
+			this.CutsceneIDs = cutsceneIDs.AsReadOnly();
 			this._CutscenePerPlayer = new Dictionary<int, Cutscene>();
 			this.CutscenePerPlayer = new ReadOnlyDictionary<int, Cutscene>( this._CutscenePerPlayer );
 		}

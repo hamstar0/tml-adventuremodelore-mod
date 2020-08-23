@@ -4,44 +4,48 @@ using System.Runtime.Remoting;
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Classes.Errors;
 
 
 namespace AdventureModeLore.Definitions {
 	public class CutsceneID {
-		public string ModName { get; }
-		public string ClassName { get; }
+		public string ModAssemblyName { get; }
+		public string FullClassName { get; }
 
 
 
 		////////////////
 
-		public CutsceneID( Mod mod, string name ) {
-			this.ModName = mod.Name;
-			this.ClassName = name;
+		public CutsceneID( Mod mod, Cutscene instance ) : this( mod, instance.GetType() ) { }
+		
+		public CutsceneID( Mod mod, Type cutsceneType ) : this( mod.Code.GetName().Name, cutsceneType.FullName ) {
+			if( cutsceneType.IsSubclassOf(typeof(Cutscene)) ) {
+				throw new ModHelpersException( cutsceneType.Name + " is not a `Cutscene`." );
+			}
 		}
 
-		public CutsceneID( string modName, string name ) {
-			this.ModName = modName;
-			this.ClassName = name;
+		internal CutsceneID( string modAssemblyName, string fullClassName ) {
+			this.ModAssemblyName = modAssemblyName;
+			this.FullClassName = fullClassName;
 		}
 
 		////
 
 		public override int GetHashCode() {
-			return this.ModName.GetHashCode() ^ this.ClassName.GetHashCode();
+			return this.ModAssemblyName.GetHashCode() ^ this.FullClassName.GetHashCode();
 		}
 
 		public override bool Equals( object obj ) {
 			var comp = obj as CutsceneID;
 			if( comp == null ) { return false; }
 
-			return comp.ModName == this.ModName && comp.ClassName == this.ClassName;
+			return comp.ModAssemblyName == this.ModAssemblyName && comp.FullClassName == this.FullClassName;
 		}
 
 		////
 
 		public override string ToString() {
-			return this.ModName+":"+this.ClassName;
+			return this.ModAssemblyName+":"+this.FullClassName;
 		}
 
 
@@ -53,8 +57,8 @@ namespace AdventureModeLore.Definitions {
 			args.CopyTo( newArgs, 1 );
 
 			ObjectHandle objHand = Activator.CreateInstance(
-				assemblyName: this.ModName,
-				typeName: this.ClassName,
+				assemblyName: this.ModAssemblyName,
+				typeName: this.FullClassName,
 				ignoreCase: false,
 				bindingAttr: BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
 				binder: null,

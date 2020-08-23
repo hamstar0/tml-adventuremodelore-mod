@@ -1,47 +1,51 @@
 ﻿using System;
-using Terraria.ModLoader;
-using HamstarHelpers.Helpers.Debug;
-using Terraria;
 using System.Reflection;
 using System.Runtime.Remoting;
+using Terraria.ModLoader;
+using Terraria;
+using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace AdventureModeLore.Definitions {
 	public class SceneID {
-		public string ModName { get; }
-		public string ClassName { get; }
+		public string ModAssemblyName { get; }
+		public string FullClassName { get; }
 
 
 
 		////////////////
 
-		public SceneID( Mod mod, Type classType ) {
-			this.ModName = mod.Name;
-			this.ClassName = classType.Name;
+		public SceneID( Mod mod, Scene instance ) : this( mod, instance.GetType() ) { }
+
+		public SceneID( Mod mod, Type sceneType ) : this( mod.Code.GetName().Name, sceneType.FullName ) {
+			if( sceneType.IsSubclassOf(typeof(Scene)) ) {
+				throw new ModHelpersException( sceneType.Name + " is not a `Scene`." );
+			}
 		}
 
-		public SceneID( string modName, string className ) {
-			this.ModName = modName;
-			this.ClassName = className;
+		internal SceneID( string modAssemblyName, string fullClassName ) {
+			this.ModAssemblyName = modAssemblyName;
+			this.FullClassName = fullClassName;
 		}
 
 		////
 
 		public override int GetHashCode() {
-			return this.ModName.GetHashCode() ^ this.ClassName.GetHashCode();
+			return this.ModAssemblyName.GetHashCode() ^ this.FullClassName.GetHashCode();
 		}
 
 		public override bool Equals( object obj ) {
 			var comp = obj as CutsceneID;
 			if( comp == null ) { return false; }
 
-			return comp.ModName == this.ModName && comp.ClassName == this.ClassName;
+			return comp.ModAssemblyName == this.ModAssemblyName && comp.FullClassName == this.FullClassName;
 		}
 
 		////
 
 		public override string ToString() {
-			return this.ModName+":"+this.ClassName;
+			return this.ModAssemblyName+":"+this.FullClassName;
 		}
 
 
@@ -53,8 +57,8 @@ namespace AdventureModeLore.Definitions {
 			args.CopyTo( newArgs, 1 );
 
 			ObjectHandle objHand = Activator.CreateInstance(
-				assemblyName: this.ModName,
-				typeName: this.ClassName,
+				assemblyName: this.ModAssemblyName,
+				typeName: this.FullClassName,
 				ignoreCase: false,
 				bindingAttr: BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
 				binder: null,

@@ -47,7 +47,6 @@ namespace AdventureModeLore.Logic {
 				result = playsFor.name+" ("+playsFor.whoAmI+") already playing cutscene "+cutsceneId;
 				return false;
 			}
-
 			if( !this.CanBeginCutscene( cutsceneId, playsFor, out Cutscene cutscene) ) {
 				result = "Cannot play cutscene " + cutsceneId;
 				return false;
@@ -60,6 +59,8 @@ namespace AdventureModeLore.Logic {
 
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			myworld.TriggeredCutsceneIDs_World.Add( cutsceneId );
+			
+			cutscene.Begin_Internal();
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {

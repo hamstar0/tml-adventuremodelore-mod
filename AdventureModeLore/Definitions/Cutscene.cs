@@ -6,7 +6,7 @@ using AdventureModeLore.Net;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		public int PlaysForWhom { get; }
+		public int PlaysForWhom { get; private set; } = -1;
 
 		////
 
@@ -14,14 +14,14 @@ namespace AdventureModeLore.Definitions {
 
 		////
 
-		public Scene CurrentScene { get; protected set; }
+		public Scene CurrentScene { get; protected set; } = null;
 
 
 
 		////////////////
 
 		protected Cutscene( Player playsFor ) {
-			this.PlaysForWhom = playsFor.whoAmI;
+			this.PlaysForWhom = playsFor?.whoAmI ?? -1;
 		}
 
 		protected abstract Scene CreateInitialScene();

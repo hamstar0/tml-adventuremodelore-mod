@@ -53,10 +53,10 @@ namespace AdventureModeLore.Net {
 		////////////////
 
 		public int PlaysForWho;
-		public string CutsceneModName;
-		public string CutsceneClassName;
-		public string SceneModName;
-		public string SceneClassName;
+		public string CutsceneModAssemblyName;
+		public string CutsceneClassFullName;
+		public string SceneModAssemblyName;
+		public string SceneClassFullName;
 		public int SceneIdx;
 
 
@@ -67,10 +67,10 @@ namespace AdventureModeLore.Net {
 
 		protected AMLCutsceneNetData( Cutscene cutscene, SceneID sceneId ) {
 			this.PlaysForWho = cutscene.PlaysForWhom;
-			this.CutsceneModName = cutscene.UniqueId.ModName;
-			this.CutsceneClassName = cutscene.UniqueId.ClassName;
-			this.SceneModName = sceneId?.ModName ?? "";
-			this.SceneClassName = sceneId?.ClassName ?? "";
+			this.CutsceneModAssemblyName = cutscene.UniqueId.ModAssemblyName;
+			this.CutsceneClassFullName = cutscene.UniqueId.FullClassName;
+			this.SceneModAssemblyName = sceneId?.ModAssemblyName ?? "";
+			this.SceneClassFullName = sceneId?.FullClassName ?? "";
 		}
 
 
@@ -89,7 +89,7 @@ namespace AdventureModeLore.Net {
 
 		private void Receive() {
 			var mngr = CutsceneManager.Instance;
-			var uid = new CutsceneID( this.CutsceneModName, this.CutsceneClassName );
+			var uid = new CutsceneID( this.CutsceneModAssemblyName, this.CutsceneClassFullName );
 			Player playsFor = Main.player[ this.PlaysForWho ];
 			if( playsFor?.active != true ) {
 				LogHelpers.Warn( "Missing player #"+this.PlaysForWho );
@@ -101,8 +101,8 @@ namespace AdventureModeLore.Net {
 			}
 
 			SceneID sceneId = null;
-			if( !string.IsNullOrEmpty(this.SceneModName) ) {
-				sceneId = new SceneID( this.SceneModName, this.SceneClassName );
+			if( !string.IsNullOrEmpty(this.SceneModAssemblyName) ) {
+				sceneId = new SceneID( this.SceneModAssemblyName, this.SceneClassFullName );
 			}
 
 			if( this.SceneIdx == 0 ) {

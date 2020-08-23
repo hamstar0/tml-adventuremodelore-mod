@@ -18,7 +18,10 @@ namespace AdventureModeLore.ExampleCutscenes.Intro {
 
 		////////////////
 
-		public override CutsceneID UniqueId { get; } = new CutsceneID( AMLMod.Instance.Name, typeof(IntroCutscene).Name );
+		public override CutsceneID UniqueId { get; } = new CutsceneID(
+			mod: AMLMod.Instance,
+			cutsceneType: typeof(IntroCutscene)
+		);
 
 		public override bool IsSiezingControls() => true;
 

@@ -9,7 +9,7 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.Intro.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene> {
-		public override SceneID UniqueId { get; } = new SceneID( AMLMod.Instance.Name, typeof(IntroCutsceneScene_00).Name );
+		public override SceneID UniqueId { get; } = new SceneID( AMLMod.Instance, typeof(IntroCutsceneScene_00) );
 
 
 		////////////////
