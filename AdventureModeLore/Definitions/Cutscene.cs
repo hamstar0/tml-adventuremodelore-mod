@@ -41,15 +41,15 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal void Begin_Internal() {
+		internal void BeginCutscene_Internal() {
 			this.CurrentScene = this.CreateInitialScene();
-			this.CurrentScene.Begin_Internal( this );
+			this.CurrentScene.BeginScene_Internal( this );
 		}
 
 
 		////////////////
 
-		internal void End_Internal() {
+		internal void EndCutscene_Internal() {
 			this.OnEnd();
 		}
 

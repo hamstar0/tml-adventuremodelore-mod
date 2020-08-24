@@ -16,6 +16,14 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 			cutsceneType: typeof(IntroCutscene)
 		);
 
+		public SceneID IntroSceneId { get; } = new SceneID(
+			mod: AMLMod.Instance,
+			sceneType: typeof(IntroCutsceneScene_00)
+		);
+
+
+		////
+
 		public override bool IsSiezingControls() => true;
 
 
@@ -27,13 +35,11 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 		////
 
 		protected override Scene CreateInitialScene() {
-			return this.CreateScene(
-				new SceneID(AMLMod.Instance, typeof(IntroCutsceneScene_00))
-			);
+			return this.CreateScene( this.IntroSceneId );
 		}
 
 		protected override Scene CreateScene( SceneID sceneId ) {
-			if( sceneId == new SceneID(AMLMod.Instance, typeof(IntroCutsceneScene_00)) ) {
+			if( sceneId.Equals(this.IntroSceneId) ) {
 				var set = new IntroMovieSet();
 				return new IntroCutsceneScene_00( set );
 			}
@@ -71,7 +77,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 		////////////////
 
 		protected override bool Update() {
-			return true;
+			return false;
 		}
 	}
 }

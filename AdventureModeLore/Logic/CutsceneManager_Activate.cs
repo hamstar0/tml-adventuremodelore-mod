@@ -51,6 +51,8 @@ namespace AdventureModeLore.Logic {
 				result = "Cannot play cutscene " + cutsceneId;
 				return false;
 			}
+			
+			cutscene.BeginCutscene_Internal();
 
 			this._CutscenePerPlayer[ playsFor.whoAmI ] = cutscene;
 
@@ -59,8 +61,6 @@ namespace AdventureModeLore.Logic {
 
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			myworld.TriggeredCutsceneIDs_World.Add( cutsceneId );
-			
-			cutscene.Begin_Internal();
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
@@ -110,7 +110,9 @@ namespace AdventureModeLore.Logic {
 				return false;
 			}
 
-			cutscene.End_Internal();
+			cutscene.EndCutscene_Internal();
+
+			this._CutscenePerPlayer.Remove( playsFor.whoAmI );
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {

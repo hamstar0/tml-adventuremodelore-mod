@@ -7,8 +7,8 @@ namespace AdventureModeLore.Definitions {
 				: Scene where T : Cutscene where U : MovieSet {
 		/// <summary></summary>
 		/// <returns>`true` signifies scene has ended.</returns>
-		internal sealed override bool Update_Internal( Cutscene parent ) {
-			if( base.Update_Internal( parent ) ) {
+		internal sealed override bool UpdateScene_Internal( Cutscene parent ) {
+			if( base.UpdateScene_Internal( parent ) ) {
 				return true;
 			}
 			return this.Update( (T)parent );

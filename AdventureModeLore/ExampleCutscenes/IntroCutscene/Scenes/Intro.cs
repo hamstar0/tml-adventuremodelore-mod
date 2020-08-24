@@ -9,7 +9,10 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet> {
-		public override SceneID UniqueId { get; } = new SceneID( AMLMod.Instance, typeof(IntroCutsceneScene_00) );
+		public override SceneID UniqueId { get; } = new SceneID(
+			mod: AMLMod.Instance,
+			sceneType: typeof(IntroCutsceneScene_00)
+		);
 
 
 
@@ -28,13 +31,13 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 		////////////////
 
 		internal void GetData( out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
-			exteriorShipViewPos = this.Set.ExteriorShipPos;
-			interiorShipViewPos = this.Set.InteriorShipPos;
+			exteriorShipViewPos = this.Set.ExteriorShipView;
+			interiorShipViewPos = this.Set.InteriorShipView;
 		}
 
 		internal void SetData( Vector2 exteriorShipViewPos, Vector2 interiorShipViewPos ) {
-			this.Set.ExteriorShipPos = exteriorShipViewPos;
-			this.Set.InteriorShipPos = interiorShipViewPos;
+			this.Set.ExteriorShipView = exteriorShipViewPos;
+			this.Set.InteriorShipView = interiorShipViewPos;
 		}
 
 
@@ -42,8 +45,8 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 
 		protected override void OnBegin( IntroCutscene parent ) {
 			var cams = new List<CameraMover>();
-
-			this.GetData( out Vector2 exteriorShipView, out Vector2 interiorShipView );
+			Vector2 exteriorShipView = this.Set.ExteriorShipView;
+			Vector2 interiorShipView = this.Set.InteriorShipView;
 
 			bool isShipOnLeft = (int)exteriorShipView.X < ((16 * Main.maxTilesX) / 2);
 
@@ -59,7 +62,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 			this.GetCam00_Title( cams, this.BeginShot01_ExteriorChat );
 			this.GetCam01_ExteriorChat( cams, null, exteriorShipView );
 			this.GetCam02_Dungeon( cams, this.BeginShot03_ExteriorAttack, dungeonView );
-			this.GetCam03_ExteriorAttack( cams, this.BeginShot04_InteriorChat, dungeonView, extShipViewScrollY );
+			this.GetCam03_ExteriorAttack( cams, this.BeginShot04_InteriorChat, exteriorShipView );
 			this.GetCam04_InteriorChat( cams, null, interiorShipView );
 
 			CameraMover.Current = cams[0];

@@ -15,11 +15,11 @@ namespace AdventureModeLore.Logic {
 				this.UpdateActivations_Host_Internal();
 
 				foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
-					cutscene.Update_Internal();
+					cutscene.UpdateCutscene_Internal();
 				}
 			} else {
 				Cutscene cutscene = this.GetCurrentCutscene_Player( Main.LocalPlayer );
-				cutscene.Update_Internal();
+				cutscene.UpdateCutscene_Internal();
 			}
 		}
 

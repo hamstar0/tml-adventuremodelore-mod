@@ -27,6 +27,11 @@ v1
 				-	Captain walks up to survivors
 			8	Player and guide moved to raft, pirates celebrate on deck
 			9	Cleanup
+	-	Silence music during cutscene
+	-	Fixes
+		-	Cutscene mode doesnt terminate
+		-	Ship exterior view is weird
+		-	Ship interior is offset lots
 	-	Implement cutscene sync for players
 	-	Implement scene sequence + camera
 		-	Implement sequence

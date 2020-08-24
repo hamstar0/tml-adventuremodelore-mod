@@ -22,6 +22,9 @@ namespace AdventureModeLore {
 				if( layer.Name.Equals("Adventure Mode Lore: Titles") ) {
 					continue;
 				}
+				if( layer.Name.StartsWith("ModHelpers:") && !layer.Name.Equals("ModHelpers: HUD UI") ) {
+					continue;
+				}
 				if( nowCutscene.AllowInterfaceLayer(layer) ) {
 					continue;
 				}

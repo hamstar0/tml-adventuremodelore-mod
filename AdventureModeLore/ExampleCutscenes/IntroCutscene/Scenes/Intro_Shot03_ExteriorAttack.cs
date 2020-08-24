@@ -19,15 +19,14 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 		private void GetCam03_ExteriorAttack(
 					IList<CameraMover> cams,
 					Action onCamStop,
-					Vector2 exteriorShipView,
-					float extShipViewY ) {
+					Vector2 exteriorShipView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
 				name: "AdventureModeIntro",
 				moveXFrom: (int)exteriorShipView.X,
-				moveYFrom: (int)extShipViewY,
+				moveYFrom: (int)exteriorShipView.Y,
 				moveXTo: (int)exteriorShipView.X,
-				moveYTo: (int)extShipViewY,
+				moveYTo: (int)exteriorShipView.Y,
 				toDuration: 0,
 				lingerDuration: 60 * 5,
 				froDuration: 0,

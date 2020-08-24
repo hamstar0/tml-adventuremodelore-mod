@@ -23,8 +23,8 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal override void Begin_Internal( Cutscene parent ) {
-			base.Begin_Internal( parent );
+		internal override void BeginScene_Internal( Cutscene parent ) {
+			base.BeginScene_Internal( parent );
 			this.OnBegin( (T)parent );
 		}
 
@@ -35,13 +35,13 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal sealed override void End_Internal( Cutscene parent ) {
-			base.End_Internal( parent );
-			this.OnEnd_Any( (T)parent );
+		internal sealed override void EndScene_Internal( Cutscene parent ) {
+			base.EndScene_Internal( parent );
+			this.OnEnd( (T)parent );
 		}
 
 		////
 
-		protected virtual void OnEnd_Any( T parent ) { }
+		protected virtual void OnEnd( T parent ) { }
 	}
 }

@@ -16,7 +16,10 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 
 		////////////////
 
-		private void GetCam01_ExteriorChat( IList<CameraMover> cams, Action onCamStop, Vector2 exteriorShipView ) {
+		private void GetCam01_ExteriorChat(
+					IList<CameraMover> cams,
+					Action onCamStop,
+					Vector2 exteriorShipView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
 				name: "AdventureModeIntro",

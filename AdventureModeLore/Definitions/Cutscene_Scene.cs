@@ -10,21 +10,21 @@ namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
 		public bool CanAdvanceCurrentScene() {
 			return ( this.CurrentScene.DefersToHostForSync && Main.netMode == NetmodeID.Server )
-				|| ( !this.CurrentScene.DefersToHostForSync && Main.netMode == NetmodeID.MultiplayerClient );
+				|| ( !this.CurrentScene.DefersToHostForSync && Main.netMode != NetmodeID.Server );
 		}
 
 
 		////////////////
 
 		internal void SetCurrentScene_NoSync( SceneID uid ) {
-			this.CurrentScene.End_Internal( this );
+			this.CurrentScene.EndScene_Internal( this );
 			this.CurrentScene = this.CreateScene( uid );
-			this.CurrentScene.Begin_Internal( this );
+			this.CurrentScene.BeginScene_Internal( this );
 		}
 
 		////
 
-		public bool AdvanceScene( bool sync ) {
+		public void AdvanceScene( bool sync ) {
 			SceneID nextUid = this.CurrentScene.GetNextSceneId();
 
 			if( nextUid != null ) {
@@ -40,8 +40,6 @@ namespace AdventureModeLore.Definitions {
 			} else {
 				CutsceneManager.Instance.EndCutscene( this.UniqueId, Main.player[this.PlaysForWhom], sync );
 			}
-
-			return true;
 		}
 	}
 }

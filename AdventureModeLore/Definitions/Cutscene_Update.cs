@@ -6,18 +6,17 @@ using HamstarHelpers.Helpers.Debug;
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
-		internal void Update_Internal() {
+		internal void UpdateCutscene_Internal() {
 			// If the cutscene says so, continue to next scene
-			if( !this.Update() ) {
-				if( !this.CanAdvanceCurrentScene() ) {
+			if( this.Update() ) {
+				if( this.CanAdvanceCurrentScene() ) {
 					this.AdvanceScene( true );
 				}
-				return;
 			}
 
 			// If the current scene has ended, continue to next scene
-			if( this.CurrentScene.Update_Internal(this) ) {
-				if( !this.CanAdvanceCurrentScene() ) {
+			if( this.CurrentScene.UpdateScene_Internal(this) ) {
+				if( this.CanAdvanceCurrentScene() ) {
 					this.AdvanceScene( true );
 				}
 			}
@@ -26,8 +25,8 @@ namespace AdventureModeLore.Definitions {
 
 		////
 
-		/// <summary>`false` ends the current scene, thus triggering the next (or else ending the cutscene).</summary>
-		/// <returns></returns>
+		/// <summary></summary>
+		/// <returns>`true` signifies current scene has ended, and should advance.</returns>
 		protected abstract bool Update();
 	}
 }

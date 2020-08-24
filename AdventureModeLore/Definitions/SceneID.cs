@@ -19,7 +19,7 @@ namespace AdventureModeLore.Definitions {
 		public SceneID( Mod mod, Scene instance ) : this( mod, instance.GetType() ) { }
 
 		public SceneID( Mod mod, Type sceneType ) : this( mod.Code.GetName().Name, sceneType.FullName ) {
-			for( Type baseType= sceneType.BaseType; baseType!=typeof(Scene); baseType = sceneType.BaseType ) {
+			for( Type baseType= sceneType.BaseType; baseType!=typeof(Scene); baseType = baseType.BaseType ) {
 				if( baseType == typeof(object) ) {
 					throw new ModHelpersException( sceneType.Name + " is not a `Scene`." );
 				}
@@ -38,7 +38,7 @@ namespace AdventureModeLore.Definitions {
 		}
 
 		public override bool Equals( object obj ) {
-			var comp = obj as CutsceneID;
+			var comp = obj as SceneID;
 			if( comp == null ) { return false; }
 
 			return comp.ModAssemblyName == this.ModAssemblyName && comp.FullClassName == this.FullClassName;
