@@ -16,7 +16,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 			cutsceneType: typeof(IntroCutscene)
 		);
 
-		public SceneID IntroSceneId { get; } = new SceneID(
+		public override SceneID FirstSceneId { get; } = new SceneID(
 			mod: AMLMod.Instance,
 			sceneType: typeof(IntroCutsceneScene_00)
 		);
@@ -34,17 +34,21 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 
 		////
 
-		protected override Scene CreateInitialScene() {
-			return this.CreateScene( this.IntroSceneId );
-		}
-
 		protected override Scene CreateScene( SceneID sceneId ) {
-			if( sceneId.Equals(this.IntroSceneId) ) {
+			if( sceneId.Equals(this.FirstSceneId) ) {
+				if( !IntroMovieSet.GetSceneCoordinates(1, out int _, out int __, out bool ___) ) {
+					return null;
+				}
+
 				var set = new IntroMovieSet();
 				return new IntroCutsceneScene_00( set );
 			}
 
 			return null;
+		}
+
+		protected override Scene CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data ) {
+			return this.CreateScene( sceneId );
 		}
 
 		////
@@ -60,7 +64,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 			if( GameInfoHelpers.GetVanillaProgressList().Count > 0 ) {
 				return false;
 			}
-			if( NPC.AnyNPCs( NPCID.Merchant ) ) {
+			if( NPC.AnyNPCs(NPCID.Merchant) ) {
 				return false;
 			}
 			return true;

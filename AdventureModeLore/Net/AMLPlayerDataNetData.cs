@@ -53,20 +53,33 @@ namespace AdventureModeLore.Net {
 			this.FromWho = myplayer.player.whoAmI;
 			this.IsAdventureModePlayer = myplayer.IsAdventureModePlayer;
 
-			this.CurrentCutsceneModNames_World = activeCutscenes
-				.Select( c=>c.UniqueId.ModAssemblyName ).ToArray();
-			this.CurrentCutsceneNames_World = activeCutscenes
-				.Select( c=>c.UniqueId.FullClassName ).ToArray();
+			this.CurrentCutsceneModNames_World = new string[ activeCutscenes.Count() ];
+			this.CurrentCutsceneNames_World = new string[ activeCutscenes.Count() ];
+			this.ActivatedCutsceneModNames_World = new string[ myworld.TriggeredCutsceneIDs_World.Count() ];
+			this.ActivatedCutsceneNames_World = new string[ myworld.TriggeredCutsceneIDs_World.Count() ];
+			this.ActivatedCutsceneModNames_Player = new string[ myplayer.TriggeredCutsceneIDs_Player.Count() ];
+			this.ActivatedCutsceneNames_Player = new string[ myplayer.TriggeredCutsceneIDs_Player.Count() ];
 
-			this.ActivatedCutsceneModNames_World = myworld.TriggeredCutsceneIDs_World
-				.Select( c=>c.ModAssemblyName ).ToArray();
-			this.ActivatedCutsceneNames_World = myworld.TriggeredCutsceneIDs_World
-				.Select( c=>c.FullClassName ).ToArray();
+			int i = 0;
+			foreach( Cutscene c in activeCutscenes ) {
+				this.CurrentCutsceneModNames_World[i] = c.UniqueId.ModName;
+				this.CurrentCutsceneNames_World[i] = c.UniqueId.FullClassName;
+				i++;
+			}
 
-			this.ActivatedCutsceneModNames_Player = myplayer.TriggeredCutsceneIDs_Player
-				.Select( c=>c.ModAssemblyName ).ToArray();
-			this.ActivatedCutsceneNames_Player = myplayer.TriggeredCutsceneIDs_Player
-				.Select( c=>c.FullClassName ).ToArray();
+			i = 0;
+			foreach( CutsceneID cid in myworld.TriggeredCutsceneIDs_World ) {
+				this.ActivatedCutsceneModNames_World[i] = cid.ModName;
+				this.ActivatedCutsceneNames_World[i] = cid.FullClassName;
+				i++;
+			}
+
+			i = 0;
+			foreach( CutsceneID cid in myplayer.TriggeredCutsceneIDs_Player ) {
+				this.ActivatedCutsceneModNames_Player[i] = cid.ModName;
+				this.ActivatedCutsceneNames_Player[i] = cid.FullClassName;
+				i++;
+			}
 		}
 
 

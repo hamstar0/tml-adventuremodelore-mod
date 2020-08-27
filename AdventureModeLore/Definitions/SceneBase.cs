@@ -10,20 +10,17 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		public bool WorldControlsScenesOnly { get; }
-
 		public bool DefersToHostForSync { get; }
 
 
 
 		////////////////
 
-		protected Scene( bool worldControlsSyncOnly, bool defersToHostForSync ) {
+		protected Scene( bool defersToHostForSync ) {
 			if( !this.ValidateSceneType(this.GetType()) ) {
 				throw new ModHelpersException( "Invalid Scene type "+this.GetType().Name );
 			}
 
-			this.WorldControlsScenesOnly = worldControlsSyncOnly;
 			this.DefersToHostForSync = defersToHostForSync;
 		}
 
@@ -35,7 +32,7 @@ namespace AdventureModeLore.Definitions {
 				return false;
 			}
 
-			Type genSceneType = typeof( Scene<,> );
+			Type genSceneType = typeof( Scene<,,> );
 			if( parentType.IsGenericType && parentType.GetGenericTypeDefinition() == genSceneType ) {
 				return true;
 			}

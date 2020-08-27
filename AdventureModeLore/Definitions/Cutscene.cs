@@ -1,12 +1,15 @@
 ﻿using System;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Services.Timers;
 using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Definitions {
 	public abstract partial class Cutscene {
 		public abstract CutsceneID UniqueId { get; }
+
+		public abstract SceneID FirstSceneId { get; }
 
 		////
 
@@ -26,9 +29,9 @@ namespace AdventureModeLore.Definitions {
 
 		////
 
-		protected abstract Scene CreateInitialScene();
-
 		protected abstract Scene CreateScene( SceneID sceneId );
+
+		protected abstract Scene CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data );
 
 		////
 
@@ -41,9 +44,35 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal void BeginCutscene_Internal() {
-			this.CurrentScene = this.CreateInitialScene();
+		internal void BeginCutscene_Internal( SceneID sceneId ) {
+			this.CurrentScene = this.CreateScene( sceneId );
 			this.CurrentScene.BeginScene_Internal( this );
+		}
+
+		internal void BeginCutsceneFromNetwork_Internal( SceneID sceneId, AMLCutsceneNetData data ) {
+			this.CurrentScene = this.CreateSceneFromNetwork( sceneId, data );
+
+			if( this.CurrentScene != null ) {
+				this.CurrentScene.BeginScene_Internal( this );
+				return;
+			}
+
+			int retries = 0;
+			Timers.SetTimer( 2, true, () => {
+				this.CurrentScene = this.CreateSceneFromNetwork( sceneId, data );
+
+				if( this.CurrentScene == null ) {
+					if( retries++ < 1000 ) {
+						return true;
+					} else {
+						LogHelpers.Log( "Could not begin cutscene "+this.UniqueId+" (scene "+sceneId+")" );
+						return false;
+					}
+				}
+
+				this.CurrentScene.BeginScene_Internal( this );
+				return false;
+			} );
 		}
 
 

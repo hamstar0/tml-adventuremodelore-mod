@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.Graphics.Capture;
@@ -14,18 +15,19 @@ namespace AdventureModeLore.Logic {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
 				this.UpdateActivations_Host_Internal();
 
-				foreach( Cutscene cutscene in this.CutscenePerPlayer.Values ) {
+				foreach( Cutscene cutscene in this.CutscenePerPlayer.Values.ToArray() ) {
 					cutscene.UpdateCutscene_Internal();
 				}
 			} else {
 				Cutscene cutscene = this.GetCurrentCutscene_Player( Main.LocalPlayer );
-				cutscene.UpdateCutscene_Internal();
+				cutscene?.UpdateCutscene_Internal();
 			}
 		}
 
 		private void UpdateActivations_Host_Internal() {
 			int playerCount = Main.player.Length;
-
+			
+LogHelpers.LogOnce("1");
 			foreach( CutsceneID cutsceneId in this.CutsceneIDs ) {
 				for( int i=0; i<playerCount; i++ ) {
 					Player plr = Main.player[i];
@@ -33,7 +35,8 @@ namespace AdventureModeLore.Logic {
 						continue;
 					}
 
-					if( !this.TryBeginCutscene(cutsceneId, plr, null, true, out string result) ) {
+LogHelpers.LogOnce("2 "+ cutsceneId + ", "+i);
+					if( !this.TryBeginCutscene(cutsceneId, plr, true, out string result) ) {
 						LogHelpers.LogOnce( "Tried to begin cutscene: "+result );
 					}
 

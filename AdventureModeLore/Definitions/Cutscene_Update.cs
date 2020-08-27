@@ -15,7 +15,7 @@ namespace AdventureModeLore.Definitions {
 			}
 
 			// If the current scene has ended, continue to next scene
-			if( this.CurrentScene.UpdateScene_Internal(this) ) {
+			if( this.CurrentScene?.UpdateScene_Internal(this) ?? false ) {
 				if( this.CanAdvanceCurrentScene() ) {
 					this.AdvanceScene( true );
 				}

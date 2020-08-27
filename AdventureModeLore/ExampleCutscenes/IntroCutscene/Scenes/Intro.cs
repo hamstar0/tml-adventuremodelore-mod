@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
+using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
-	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet> {
+	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet, IntroCutsceneNetData> {
 		public override SceneID UniqueId { get; } = new SceneID(
 			mod: AMLMod.Instance,
 			sceneType: typeof(IntroCutsceneScene_00)
@@ -18,26 +20,13 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 
 		////////////////
 
-		public IntroCutsceneScene_00( IntroMovieSet set )  : base( false, false, set ) { }
+		public IntroCutsceneScene_00( IntroMovieSet set )  : base( false, set ) { }
 
 
 		////////////////
 
 		public override SceneID GetNextSceneId() {
 			return null;
-		}
-
-
-		////////////////
-
-		internal void GetData( out Vector2 exteriorShipViewPos, out Vector2 interiorShipViewPos ) {
-			exteriorShipViewPos = this.Set.ExteriorShipView;
-			interiorShipViewPos = this.Set.InteriorShipView;
-		}
-
-		internal void SetData( Vector2 exteriorShipViewPos, Vector2 interiorShipViewPos ) {
-			this.Set.ExteriorShipView = exteriorShipViewPos;
-			this.Set.InteriorShipView = interiorShipViewPos;
 		}
 
 
@@ -72,6 +61,11 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 		////////////////
 
 		protected override bool Update( IntroCutscene parent ) {
+LogHelpers.LogOnce("SHOULDNT BE RUNNING ON SERVER?");
+			if( Main.netMode == NetmodeID.Server ) {
+				return false;
+			}
+
 			var animCam = CameraMover.Current;
 			if( animCam == null || !animCam.Name.StartsWith("AdventureModeIntro") || !animCam.IsAnimating() ) {
 				return true;

@@ -21,9 +21,9 @@ namespace AdventureModeLore.Logic {
 			int count = tag.GetInt( "TriggeredCutscenesCount" );
 
 			for( int i = 0; i < count; i++ ) {
-				string modAssName = tag.GetString( "TriggeredCutsceneMod_"+i );
+				string modName = tag.GetString( "TriggeredCutsceneMod_"+i );
 				string className = tag.GetString( "TriggeredCutsceneName_"+i );
-				var uid = new CutsceneID( modAssName, className );
+				var uid = new CutsceneID( modName, className );
 
 				myworld.TriggeredCutsceneIDs_World.Add( uid );
 			}
@@ -35,7 +35,7 @@ namespace AdventureModeLore.Logic {
 
 			int i = 0;
 			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDs_World ) {
-				tag["TriggeredCutsceneMod_" + i] = uid.ModAssemblyName;
+				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
 				tag["TriggeredCutsceneName_" + i] = uid.FullClassName;
 				i++;
 			}
@@ -47,7 +47,7 @@ namespace AdventureModeLore.Logic {
 			writer.Write( (int)myworld.TriggeredCutsceneIDs_World.Count );
 
 			foreach( CutsceneID uid in myworld.TriggeredCutsceneIDs_World ) {
-				writer.Write( uid.ModAssemblyName );
+				writer.Write( uid.ModName );
 				writer.Write( uid.FullClassName );
 			}
 		}
@@ -58,9 +58,9 @@ namespace AdventureModeLore.Logic {
 			int count = reader.ReadInt32();
 
 			for( int i=0; i<count; i++ ) {
-				string modAssName = reader.ReadString();
+				string modName = reader.ReadString();
 				string className = reader.ReadString();
-				var uid = new CutsceneID( modAssName, className );
+				var uid = new CutsceneID( modName, className );
 
 				myworld.TriggeredCutsceneIDs_World.Add( uid );
 			}
@@ -78,9 +78,9 @@ namespace AdventureModeLore.Logic {
 			int count = tag.GetInt( "TriggeredCutscenesCount" );
 
 			for( int i=0; i<count; i++ ) {
-				string modAssName = tag.GetString( "TriggeredCutsceneMod_" + i );
+				string modName = tag.GetString( "TriggeredCutsceneMod_" + i );
 				string className = tag.GetString( "TriggeredCutsceneName_" + i );
-				var uid = new CutsceneID( modAssName, className );
+				var uid = new CutsceneID( modName, className );
 
 				myplayer.TriggeredCutsceneIDs_Player.Add( uid );
 			}
@@ -92,7 +92,7 @@ namespace AdventureModeLore.Logic {
 
 			int i = 0;
 			foreach( CutsceneID uid in myplayer.TriggeredCutsceneIDs_Player ) {
-				tag["TriggeredCutsceneMod_" + i] = uid.ModAssemblyName;
+				tag["TriggeredCutsceneMod_" + i] = uid.ModName;
 				tag["TriggeredCutsceneName_" + i] = uid.FullClassName;
 				i++;
 			}

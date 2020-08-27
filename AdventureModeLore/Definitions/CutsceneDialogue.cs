@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Classes.UI.Elements;
@@ -53,10 +55,12 @@ namespace AdventureModeLore.Definitions {
 		void ILoadable.OnModsLoad() { }
 
 		void ILoadable.OnPostModsLoad() {
-			this.DialogueDisplay = new UIThemedTextPanel( UITheme.Vanilla, false, "" );
-			this.DialogueDisplay.Hide();
+			if( Main.netMode != NetmodeID.Server ) {
+				this.DialogueDisplay = new UIThemedTextPanel( UITheme.Vanilla, false, "" );
+				this.DialogueDisplay.Hide();
 
-			FreeHUD.AddElement( "CutsceneDialogue", this.DialogueDisplay );
+				FreeHUD.AddElement( "CutsceneDialogue", this.DialogueDisplay );
+			}
 		}
 
 		void ILoadable.OnModsUnload() { }

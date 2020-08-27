@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
 using Terraria;
@@ -9,7 +10,7 @@ using HamstarHelpers.Classes.Errors;
 
 namespace AdventureModeLore.Definitions {
 	public class CutsceneID {
-		public string ModAssemblyName { get; }
+		public string ModName { get; }
 		public string FullClassName { get; }
 
 
@@ -18,7 +19,7 @@ namespace AdventureModeLore.Definitions {
 
 		public CutsceneID( Mod mod, Cutscene instance ) : this( mod, instance.GetType() ) { }
 		
-		public CutsceneID( Mod mod, Type cutsceneType ) : this( mod.Code.GetName().Name, cutsceneType.FullName ) {
+		public CutsceneID( Mod mod, Type cutsceneType ) : this( mod.Name, cutsceneType.FullName ) {
 			for( Type baseType=cutsceneType.BaseType; baseType!=typeof(Cutscene); baseType = baseType.BaseType ) {
 				if( baseType == typeof(object) ) {
 					throw new ModHelpersException( cutsceneType.Name + " is not a `Cutscene`." );
@@ -26,28 +27,28 @@ namespace AdventureModeLore.Definitions {
 			}
 		}
 
-		internal CutsceneID( string modAssemblyName, string fullClassName ) {
-			this.ModAssemblyName = modAssemblyName;
+		internal CutsceneID( string modName, string fullClassName ) {
+			this.ModName = modName;
 			this.FullClassName = fullClassName;
 		}
 
 		////
 
 		public override int GetHashCode() {
-			return this.ModAssemblyName.GetHashCode() ^ this.FullClassName.GetHashCode();
+			return this.ModName.GetHashCode() ^ this.FullClassName.GetHashCode();
 		}
 
 		public override bool Equals( object obj ) {
 			var comp = obj as CutsceneID;
 			if( comp == null ) { return false; }
 
-			return comp.ModAssemblyName == this.ModAssemblyName && comp.FullClassName == this.FullClassName;
+			return comp.ModName == this.ModName && comp.FullClassName == this.FullClassName;
 		}
 
 		////
 
 		public override string ToString() {
-			return this.ModAssemblyName+":"+this.FullClassName;
+			return this.ModName+":"+this.FullClassName.Split('.').Last();
 		}
 
 
@@ -58,8 +59,10 @@ namespace AdventureModeLore.Definitions {
 			newArgs[0] = playsFor;
 			args.CopyTo( newArgs, 1 );
 
+			Mod mod = ModLoader.GetMod( this.ModName );
+
 			ObjectHandle objHand = Activator.CreateInstance(
-				assemblyName: this.ModAssemblyName,
+				assemblyName: mod.Code.GetName().Name,
 				typeName: this.FullClassName,
 				ignoreCase: false,
 				bindingAttr: BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,

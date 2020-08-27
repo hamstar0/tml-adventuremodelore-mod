@@ -83,10 +83,10 @@ namespace AdventureModeLore {
 
 			int len = payload.ActivatedCutsceneModNames_Player.Length;
 			for( int i=0; i<len; i++ ) {
-				string modAssName = payload.ActivatedCutsceneModNames_Player[i];
+				string modName = payload.ActivatedCutsceneModNames_Player[i];
 				string className = payload.ActivatedCutsceneNames_Player[i];
 
-				this.TriggeredCutsceneIDs_Player.Add( new CutsceneID(modAssName, className) );
+				this.TriggeredCutsceneIDs_Player.Add( new CutsceneID(modName, className) );
 			}
 		}
 

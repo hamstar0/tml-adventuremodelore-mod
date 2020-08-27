@@ -5,10 +5,11 @@ using Terraria;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Definitions;
+using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
-	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet> {
+	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet, IntroCutsceneNetData> {
 		private void GetCam02_Dungeon( IList<CameraMover> cams, Action onCamStop, Vector2 dungeonView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(

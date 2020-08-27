@@ -52,12 +52,11 @@ namespace AdventureModeLore.Net {
 
 		////////////////
 
-		public int PlaysForWho;
-		public string CutsceneModAssemblyName;
-		public string CutsceneClassFullName;
-		public string SceneModAssemblyName;
-		public string SceneClassFullName;
-		public int SceneIdx;
+		public int PlaysForWho = -1;
+		public string CutsceneModName = null;
+		public string CutsceneClassFullName = null;
+		public string SceneModName = null;
+		public string SceneClassFullName = null;
 
 
 
@@ -67,10 +66,16 @@ namespace AdventureModeLore.Net {
 
 		protected AMLCutsceneNetData( Cutscene cutscene, SceneID sceneId ) {
 			this.PlaysForWho = cutscene.PlaysForWhom;
-			this.CutsceneModAssemblyName = cutscene.UniqueId.ModAssemblyName;
+			this.CutsceneModName = cutscene.UniqueId.ModName;
 			this.CutsceneClassFullName = cutscene.UniqueId.FullClassName;
-			this.SceneModAssemblyName = sceneId?.ModAssemblyName ?? "";
-			this.SceneClassFullName = sceneId?.FullClassName ?? "";
+			this.SceneModName = sceneId.ModName;
+			this.SceneClassFullName = sceneId.FullClassName;
+/*LogHelpers.Log( "SEND "
+	+"PlaysForWho:"+this.PlaysForWho
+	+ ", CutsceneModName:" + this.CutsceneModName
+	+ ", CutsceneClassFullName:" + this.CutsceneClassFullName
+	+ ", SceneModName:" + this.SceneModName
+	+ ", SceneClassFullName:" + this.SceneClassFullName );*/
 		}
 
 
@@ -88,8 +93,15 @@ namespace AdventureModeLore.Net {
 		////
 
 		private void Receive() {
+/*LogHelpers.Log( "RECEIVE "
+	+"PlaysForWho:"+this.PlaysForWho
+	+ ", CutsceneModName:" + this.CutsceneModName
+	+ ", CutsceneClassFullName:" + this.CutsceneClassFullName
+	+ ", SceneModName:" + this.SceneModName
+	+ ", SceneClassFullName:" + this.SceneClassFullName );*/
 			var mngr = CutsceneManager.Instance;
-			var uid = new CutsceneID( this.CutsceneModAssemblyName, this.CutsceneClassFullName );
+			var cutsceneId = new CutsceneID( this.CutsceneModName, this.CutsceneClassFullName );
+
 			Player playsFor = Main.player[ this.PlaysForWho ];
 			if( playsFor?.active != true ) {
 				LogHelpers.Warn( "Missing player #"+this.PlaysForWho );
@@ -100,20 +112,28 @@ namespace AdventureModeLore.Net {
 				return;
 			}
 
-			SceneID sceneId = null;
-			if( !string.IsNullOrEmpty(this.SceneModAssemblyName) ) {
-				sceneId = new SceneID( this.SceneModAssemblyName, this.SceneClassFullName );
+			if( !mngr.CanBeginCutscene(cutsceneId, playsFor) ) {
+				LogHelpers.Warn( "Cannot play cutscene " + cutsceneId );
+				return;
 			}
 
-			if( this.SceneIdx == 0 ) {
-				string result;
-				mngr.TryBeginCutscene( uid, playsFor, sceneId, false, out result );
+			SceneID sceneId = null;
+			if( !string.IsNullOrEmpty(this.SceneModName) ) {
+				sceneId = new SceneID( this.SceneModName, this.SceneClassFullName );
+			}
 
-				LogHelpers.Log( "Beginning cutscene "+uid+" result for client: " + result );
-			} else if( this.SceneIdx > 0 ) {
-				mngr.SetCutsceneScene( uid, playsFor, sceneId, false );
+			if( sceneId != null ) {
+				if( mngr.TryBeginCutsceneFromNetwork(cutsceneId, sceneId, playsFor, this, out string result) ) {
+					LogHelpers.Log( "Beginning cutscene "+cutsceneId+" result for client: "+result );
+				} else if( sceneId != null ) {
+					if( !mngr.SetCutsceneScene(cutsceneId, playsFor, sceneId, false) ) {
+						LogHelpers.Warn( "Cannot play cutscene "+cutsceneId+": "+result );
+					}
+				}
 			} else {
-				mngr.EndCutscene( uid, playsFor, false );
+				if( mngr.EndCutscene(cutsceneId, playsFor, false) ) {
+					LogHelpers.Warn( "Cannot end cutscene "+cutsceneId+"." );
+				}
 			}
 		}
 

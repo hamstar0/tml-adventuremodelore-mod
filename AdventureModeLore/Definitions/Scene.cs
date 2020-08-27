@@ -1,10 +1,13 @@
 ﻿using System;
 using Terraria;
+using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class Scene<T, U>
-				: Scene where T : Cutscene where U : MovieSet {
+	public abstract partial class Scene<T, U, V> : Scene
+				where T : Cutscene
+				where U : MovieSet
+				where V : AMLCutsceneNetData {
 		public abstract SceneID UniqueId { get; }
 
 		////
@@ -15,8 +18,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		protected Scene( bool worldControlsSyncOnly, bool defersToHostForSync, U set )
-					: base( worldControlsSyncOnly, defersToHostForSync ) {
+		protected Scene( bool defersToHostForSync, U set ) : base( defersToHostForSync ) {
 			this.Set = set;
 		}
 

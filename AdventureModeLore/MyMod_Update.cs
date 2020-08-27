@@ -12,7 +12,7 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore {
 	public partial class AMLMod : Mod {
 		public override void PostUpdateEverything() {
-			if( !Main.gameMenu ) {
+			if( !Main.gameMenu || Main.netMode == NetmodeID.Server ) {
 				this.UpdateCutscenes_Internal();
 			}
 		}
