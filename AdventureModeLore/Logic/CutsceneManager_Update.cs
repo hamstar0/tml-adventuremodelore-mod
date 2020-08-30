@@ -12,15 +12,22 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
 		internal void Update_Internal() {
-			if( Main.netMode != NetmodeID.MultiplayerClient ) {
-				this.UpdateActivations_Host_Internal();
-
-				foreach( Cutscene cutscene in this.CutscenePerPlayer.Values.ToArray() ) {
-					cutscene.UpdateCutscene_Internal();
+			// Cleanup unclaimed cutscenes
+			foreach( int plrWho in this._CutscenePerPlayer.Keys.ToArray() ) {
+				if( Main.player[plrWho]?.active != true ) {
+					this.EndCutscene( this._CutscenePerPlayer[plrWho].UniqueId, plrWho, false );
 				}
-			} else {
+			}
+
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				Cutscene cutscene = this.GetCurrentCutscene_Player( Main.LocalPlayer );
 				cutscene?.UpdateCutscene_Internal();
+			} else {
+				this.UpdateActivations_Host_Internal();
+
+				foreach( Cutscene cutscene in this._CutscenePerPlayer.Values.ToArray() ) {
+					cutscene.UpdateCutscene_Internal();
+				}
 			}
 		}
 

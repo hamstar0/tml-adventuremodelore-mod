@@ -25,7 +25,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal override void BeginScene_Internal( Cutscene parent ) {
+		internal sealed override void BeginScene_Internal( Cutscene parent ) {
 			base.BeginScene_Internal( parent );
 			this.OnBegin( (T)parent );
 		}

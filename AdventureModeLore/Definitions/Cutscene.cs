@@ -40,7 +40,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 		
-		public abstract bool CanBegin();
+		public abstract bool CanBegin( out string result );
 
 		////////////////
 
@@ -49,11 +49,16 @@ namespace AdventureModeLore.Definitions {
 			this.CurrentScene.BeginScene_Internal( this );
 		}
 
-		internal void BeginCutsceneFromNetwork_Internal( SceneID sceneId, AMLCutsceneNetData data ) {
+		internal void BeginCutsceneFromNetwork_Internal(
+					SceneID sceneId,
+					AMLCutsceneNetData data,
+					Action<string> onSuccess,
+					Action<string> onFail ) {
 			this.CurrentScene = this.CreateSceneFromNetwork( sceneId, data );
 
 			if( this.CurrentScene != null ) {
 				this.CurrentScene.BeginScene_Internal( this );
+				onSuccess( "Success." );
 				return;
 			}
 
@@ -65,12 +70,14 @@ namespace AdventureModeLore.Definitions {
 					if( retries++ < 1000 ) {
 						return true;
 					} else {
-						LogHelpers.Log( "Could not begin cutscene "+this.UniqueId+" (scene "+sceneId+")" );
+						onFail( "Timed out." );
 						return false;
 					}
 				}
 
 				this.CurrentScene.BeginScene_Internal( this );
+
+				onSuccess( "Success." );
 				return false;
 			} );
 		}

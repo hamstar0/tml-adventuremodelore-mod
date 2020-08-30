@@ -17,6 +17,10 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Net {
 		////////////////
 
 		protected override bool PreReceive() {
+			if( this.PlaysForWho != Main.myPlayer ) {
+				return true;
+			}
+
 			return true;
 		}
 	}

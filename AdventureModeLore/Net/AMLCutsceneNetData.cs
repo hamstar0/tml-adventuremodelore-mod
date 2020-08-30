@@ -112,8 +112,8 @@ namespace AdventureModeLore.Net {
 				return;
 			}
 
-			if( !mngr.CanBeginCutscene(cutsceneId, playsFor) ) {
-				LogHelpers.Warn( "Cannot play cutscene " + cutsceneId );
+			if( !mngr.CanBeginCutscene(cutsceneId, playsFor, out string result) ) {
+				LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": "+result );
 				return;
 			}
 
@@ -123,15 +123,18 @@ namespace AdventureModeLore.Net {
 			}
 
 			if( sceneId != null ) {
-				if( mngr.TryBeginCutsceneFromNetwork(cutsceneId, sceneId, playsFor, this, out string result) ) {
-					LogHelpers.Log( "Beginning cutscene "+cutsceneId+" result for client: "+result );
-				} else if( sceneId != null ) {
-					if( !mngr.SetCutsceneScene(cutsceneId, playsFor, sceneId, false) ) {
-						LogHelpers.Warn( "Cannot play cutscene "+cutsceneId+": "+result );
+				void onSuccess( string myResult ) {
+					LogHelpers.Log( "Beginning cutscene " + cutsceneId + " result for client: " + myResult );
+				}
+				void onFail( string myResult ) {
+					if( !mngr.SetCutsceneScene( cutsceneId, playsFor, sceneId, false ) ) {
+						LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": " + myResult );
 					}
 				}
+
+				mngr.TryBeginCutsceneFromNetwork( cutsceneId, sceneId, playsFor, this, onSuccess, onFail );
 			} else {
-				if( mngr.EndCutscene(cutsceneId, playsFor, false) ) {
+				if( mngr.EndCutscene(cutsceneId, this.PlaysForWho, false) ) {
 					LogHelpers.Warn( "Cannot end cutscene "+cutsceneId+"." );
 				}
 			}

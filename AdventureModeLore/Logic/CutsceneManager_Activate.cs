@@ -12,26 +12,31 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Logic {
 	public partial class CutsceneManager : ILoadable {
-		public bool CanBeginCutscene( CutsceneID cutsceneId, Player playsFor ) {
-			return this.CanBeginCutscene( cutsceneId, playsFor, out Cutscene _ );
+		public bool CanBeginCutscene( CutsceneID cutsceneId, Player playsFor, out string result ) {
+			return this.CanBeginCutscene( cutsceneId, playsFor, out Cutscene _, out result );
 		}
 
-		private bool CanBeginCutscene( CutsceneID cutsceneId, Player playsFor, out Cutscene cutscene ) {
+		////
+
+		private bool CanBeginCutscene( CutsceneID cutsceneId, Player playsFor, out Cutscene cutscene, out string result ) {
 			if( this.GetCurrentCutscene_Player( playsFor ) != null ) {
 				cutscene = null;
+				result = "Player "+playsFor.name+" ("+playsFor.whoAmI+") is already playing "+cutsceneId;
 				return false;
 			}
 			if( this.HasCutscenePlayed_World( cutsceneId ) ) {
 				cutscene = null;
+				result = "World has already played "+playsFor.name+" ("+playsFor.whoAmI+")'s cutscene "+cutsceneId;
 				return false;
 			}
 			if( this.HasCutscenePlayed_Player( cutsceneId, playsFor ) ) {
 				cutscene = null;
+				result = "Player has already played "+playsFor.name+" ("+playsFor.whoAmI+")'s cutscene "+cutsceneId;
 				return false;
 			}
 
 			cutscene = cutsceneId.Create( playsFor );
-			return cutscene.CanBegin();
+			return cutscene.CanBegin( out result );
 		}
 
 
@@ -42,25 +47,25 @@ namespace AdventureModeLore.Logic {
 					Player playsFor,
 					bool sync,
 					out string result ) {
-			if( !this.CanBeginCutscene(cutsceneId, playsFor, out Cutscene cutscene) ) {
-				result = "Cannot play cutscene " + cutsceneId;
+			if( !this.CanBeginCutscene(cutsceneId, playsFor, out Cutscene cutscene, out result) ) {
+				result = "Cannot play cutscene "+cutsceneId+": "+result;
 				return false;
 			}
 			return this.TryBeginCutscene( cutscene, cutscene.FirstSceneId, playsFor, sync, out result );
 		}
 		
-		public bool TryBeginCutscene(
+		/*public bool TryBeginCutscene(
 					CutsceneID cutsceneId,
 					SceneID sceneId,
 					Player playsFor,
 					bool sync,
 					out string result ) {
-			if( !this.CanBeginCutscene(cutsceneId, playsFor, out Cutscene cutscene) ) {
-				result = "Cannot play cutscene " + cutsceneId;
+			if( !this.CanBeginCutscene(cutsceneId, playsFor, out Cutscene cutscene, out result) ) {
+				result = "Cannot play cutscene " + cutsceneId + ": " + result;
 				return false;
 			}
 			return this.TryBeginCutscene( cutscene, sceneId, playsFor, sync, out result );
-		}
+		}*/
 
 		////
 
@@ -103,35 +108,39 @@ LogHelpers.LogOnce("5b A");
 
 		////
 
-		public bool TryBeginCutsceneFromNetwork(
+		public void TryBeginCutsceneFromNetwork(
 					CutsceneID cutsceneId,
 					SceneID sceneId,
 					Player playsFor,
 					AMLCutsceneNetData data,
-					out string result ) {
-			if( this.GetCurrentCutscene_Player(playsFor) != null ) {
-				result = playsFor.name+" ("+playsFor.whoAmI+") already playing cutscene "+cutsceneId;
-				return false;
+					Action<string> onSuccess,
+					Action<string> onFail ) {
+			if( !this.CanBeginCutscene(cutsceneId, playsFor, out Cutscene cutscene, out string result) ) {
+				onFail( "Cannot play cutscene " + cutsceneId + ": " + result );
+				return;
 			}
-			if( !this.CanBeginCutscene( cutsceneId, playsFor, out Cutscene cutscene) ) {
-				result = "Cannot play cutscene " + cutsceneId;
-				return false;
+
+			if( this.CutsceneInWaitingPerClient.ContainsKey(playsFor.whoAmI) ) {
+				cutscene = this.CutsceneInWaitingPerClient[ playsFor.whoAmI ];
 			}
+			this.CutsceneInWaitingPerClient[ playsFor.whoAmI ] = cutscene;
 LogHelpers.LogOnce("3 B");
-			
-			cutscene.BeginCutsceneFromNetwork_Internal( sceneId, data );
 
-			this._CutscenePerPlayer[ playsFor.whoAmI ] = cutscene;
+			void onMySuccess( string myResult ) {
+				this._CutscenePerPlayer[ playsFor.whoAmI ] = cutscene;
+				this.CutsceneInWaitingPerClient.Remove( playsFor.whoAmI );	// just in case
 
-			var myplayer = playsFor.GetModPlayer<AMLPlayer>();
-			myplayer.TriggeredCutsceneIDs_Player.Add( cutsceneId );
+				var myplayer = playsFor.GetModPlayer<AMLPlayer>();
+				myplayer.TriggeredCutsceneIDs_Player.Add( cutsceneId );
 
-			var myworld = ModContent.GetInstance<AMLWorld>();
-			myworld.TriggeredCutsceneIDs_World.Add( cutsceneId );
-LogHelpers.LogOnce("4 B");
+				var myworld = ModContent.GetInstance<AMLWorld>();
+				myworld.TriggeredCutsceneIDs_World.Add( cutsceneId );
+LogHelpers.LogOnce( "4 B" );
 
-			result = "Success.";
-			return true;
+				onSuccess( myResult );
+			}
+
+			cutscene.BeginCutsceneFromNetwork_Internal( sceneId, data, onMySuccess, onFail );
 		}
 
 
@@ -161,8 +170,8 @@ LogHelpers.LogOnce("4 B");
 
 		////////////////
 
-		public bool EndCutscene( CutsceneID cutsceneId, Player playsFor, bool sync ) {
-			Cutscene cutscene = this._CutscenePerPlayer.GetOrDefault( playsFor.whoAmI );
+		public bool EndCutscene( CutsceneID cutsceneId, int playsForWhom, bool sync ) {
+			Cutscene cutscene = this._CutscenePerPlayer.GetOrDefault( playsForWhom );
 			if( cutscene == null ) {
 				return false;
 			}
@@ -172,7 +181,8 @@ LogHelpers.LogOnce("4 B");
 
 			cutscene.EndCutscene_Internal();
 
-			this._CutscenePerPlayer.Remove( playsFor.whoAmI );
+			this._CutscenePerPlayer.Remove( playsForWhom );
+			this.CutsceneInWaitingPerClient.Remove( playsForWhom );
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {

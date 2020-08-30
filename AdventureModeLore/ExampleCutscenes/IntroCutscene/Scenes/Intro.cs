@@ -39,7 +39,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 
 			bool isShipOnLeft = (int)exteriorShipView.X < ((16 * Main.maxTilesX) / 2);
 
-			Vector2 dungeonView = new Vector2( Main.dungeonX * 16, Main.dungeonY * 16 );
+			var dungeonView = new Vector2( Main.dungeonX * 16, Main.dungeonY * 16 );
 			dungeonView.X += isShipOnLeft ? (-32 * 16) : (32 * 16);
 			dungeonView.Y += -32 * 16;
 
@@ -61,7 +61,6 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 		////////////////
 
 		protected override bool Update( IntroCutscene parent ) {
-LogHelpers.LogOnce("SHOULDNT BE RUNNING ON SERVER?");
 			if( Main.netMode == NetmodeID.Server ) {
 				return false;
 			}

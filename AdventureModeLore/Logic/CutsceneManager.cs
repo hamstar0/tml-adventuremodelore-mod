@@ -29,6 +29,8 @@ namespace AdventureModeLore.Logic {
 
 		private IDictionary<int, Cutscene> _CutscenePerPlayer;
 
+		private IDictionary<int, Cutscene> CutsceneInWaitingPerClient = new Dictionary<int, Cutscene>();
+
 
 
 		////////////////

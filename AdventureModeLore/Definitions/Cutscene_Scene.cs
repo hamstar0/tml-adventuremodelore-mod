@@ -38,7 +38,7 @@ namespace AdventureModeLore.Definitions {
 					}
 				}
 			} else {
-				CutsceneManager.Instance.EndCutscene( this.UniqueId, Main.player[this.PlaysForWhom], sync );
+				CutsceneManager.Instance.EndCutscene( this.UniqueId, this.PlaysForWhom, sync );
 			}
 		}
 	}
