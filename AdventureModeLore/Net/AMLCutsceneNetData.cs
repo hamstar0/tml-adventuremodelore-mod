@@ -111,9 +111,8 @@ namespace AdventureModeLore.Net {
 				LogHelpers.Log( "Beginning cutscene " + cutsceneId + " result for client: " + myResult );
 			}
 			void onFail( string myResult ) {
-				if( !mngr.SetCutsceneScene( cutsceneId, playsFor, sceneId, false ) ) {
-					LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": " + myResult );
-				}
+				LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": " + myResult );
+				//if( !mngr.SetCutsceneScene( cutsceneId, playsFor, sceneId, false ) ) { }
 			}
 
 			//
