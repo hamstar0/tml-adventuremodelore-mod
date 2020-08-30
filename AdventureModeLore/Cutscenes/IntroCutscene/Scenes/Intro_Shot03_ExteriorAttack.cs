@@ -4,32 +4,32 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
+using CutsceneLib.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet, IntroCutsceneNetData> {
-		private void BeginShot01_ExteriorChat() {
+		private void BeginShot03_ExteriorAttack() {
 
 		}
 
 
 		////////////////
 
-		private void GetCam01_ExteriorChat(
+		private void GetCam03_ExteriorAttack(
 					IList<CameraMover> cams,
 					Action onCamStop,
 					Vector2 exteriorShipView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
-				name: "AdventureModeIntro",
+				name: "CutsceneLibIntro",
 				moveXFrom: (int)exteriorShipView.X,
 				moveYFrom: (int)exteriorShipView.Y,
 				moveXTo: (int)exteriorShipView.X,
-				moveYTo: (int)exteriorShipView.Y - ( 12 * 16 ),
-				toDuration: 60 * 3,
-				lingerDuration: 60 * 3,
+				moveYTo: (int)exteriorShipView.Y,
+				toDuration: 0,
+				lingerDuration: 60 * 5,
 				froDuration: 0,
 				onStop: () => {
 					onCamStop?.Invoke();

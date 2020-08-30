@@ -5,8 +5,8 @@ using Terraria;
 using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
-using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
+using CutsceneLib.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
@@ -20,11 +20,11 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 				char d = Path.DirectorySeparatorChar;
 				shipExterior = TileStructure.Load(
 					mod: AMLMod.Instance,
-					pathOfModFile: "ExampleCutscenes" + d + "IntroCutscene" + d + "Ship Exterior.dat"
+					pathOfModFile: "Cutscenes" + d + "IntroCutscene" + d + "Ship Exterior.dat"
 				);
 				shipInterior = TileStructure.Load(
 					mod: AMLMod.Instance,
-					pathOfModFile: "ExampleCutscenes" + d + "IntroCutscene" + d + "Ship Interior.dat"
+					pathOfModFile: "Cutscenes" + d + "IntroCutscene" + d + "Ship Interior.dat"
 				);
 				//LogHelpers.Log( "interior: "+ shipInterior.Bounds.ToString()+" ("+shipInterior.TileCount+")"
 				//	+", exterior: "+shipExterior.Bounds.ToString()+" ("+shipExterior.TileCount+")");

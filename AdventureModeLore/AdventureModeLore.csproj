@@ -12,6 +12,9 @@
   </Target>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+    <Reference Include="CutsceneLib">
+      <HintPath>..\..\..\Cutscene Lib\Project\CutsceneLib\bin\Release\net452\CutsceneLib.dll</HintPath>
+    </Reference>
     <Reference Include="HamstarHelpers">
       <HintPath>..\..\..\Mod Helpers\Project\HamstarHelpers\bin\Release\net452\HamstarHelpers.dll</HintPath>
     </Reference>

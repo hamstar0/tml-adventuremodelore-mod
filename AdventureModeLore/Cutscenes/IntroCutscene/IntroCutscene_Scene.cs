@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Tiles;
-using AdventureModeLore.Definitions;
-using AdventureModeLore.Net;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
+using CutsceneLib.Definitions;
+using CutsceneLib.Net;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
@@ -21,7 +21,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 
 		////
 
-		protected override SceneBase CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetStart data ) {
+		protected override SceneBase CreateSceneFromNetwork( SceneID sceneId, CutsceneNetStart data ) {
 			if( sceneId.Equals(this.FirstSceneId) ) {
 				return this.CreateIntroSceneFromNetwork( data );
 			}
@@ -43,7 +43,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 
 		////
 
-		private SceneBase CreateIntroSceneFromNetwork( AMLCutsceneNetStart data ) {
+		private SceneBase CreateIntroSceneFromNetwork( CutsceneNetStart data ) {
 			IntroMovieSet set = IntroMovieSet.Create(
 				ref this._ShipExterior,
 				ref this._ShipInterior,

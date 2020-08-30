@@ -29,15 +29,20 @@ v1
 			9	Cleanup
 	-	Silence music during cutscene
 	-	Add debug mode to enable map view during cutscene
+	-	MP: Implement cutscene non-primary viewers (receive movie set from network)
+	-	Set chat command to activate cutscene
+	-	Rename mod to Cutscene Lib
+
 	-	Fixes
-		-	Cleanup data for exited players
 		-	Adjust for resolution
+		-	Fix camera position on ship interior
 		-	Control clothier AI
 		-	Report location of dungeon to clients
 
 		-	Ensure MP (ensure chunks are loaded)
 			-	Allow client to abort cutscene for all players and server (if allowed)
 			-	After set load, server conveys vectors for set; skip loading set for client
+		-	Cleanup data for exited players
 -	Can generic params be forced to be non-abstract?
 		-	Cutscene mode doesnt terminate
 		-	Ship exterior view is weird

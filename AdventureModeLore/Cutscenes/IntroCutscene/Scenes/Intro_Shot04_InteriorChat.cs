@@ -4,37 +4,34 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
+using CutsceneLib.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 	partial class IntroCutsceneScene_00 : Scene<IntroCutscene, IntroMovieSet, IntroCutsceneNetData> {
-		private void BeginShot03_ExteriorAttack() {
+		private void BeginShot04_InteriorChat() {
 
 		}
 
 
 		////////////////
 
-		private void GetCam03_ExteriorAttack(
-					IList<CameraMover> cams,
-					Action onCamStop,
-					Vector2 exteriorShipView ) {
+		private void GetCam04_InteriorChat( IList<CameraMover> cams, Action onCamStop, Vector2 interiorShipView ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
-				name: "AdventureModeIntro",
-				moveXFrom: (int)exteriorShipView.X,
-				moveYFrom: (int)exteriorShipView.Y,
-				moveXTo: (int)exteriorShipView.X,
-				moveYTo: (int)exteriorShipView.Y,
+				name: "CutsceneLibIntro",
+				moveXFrom: (int)interiorShipView.X,
+				moveYFrom: (int)interiorShipView.Y,
+				moveXTo: (int)interiorShipView.X,
+				moveYTo: (int)interiorShipView.Y,
 				toDuration: 0,
 				lingerDuration: 60 * 5,
-				froDuration: 0,
-				onStop: () => {
+				froDuration: 0
+				/*onStop: () => {
 					onCamStop?.Invoke();
 					CameraMover.Current = cams[next + 1];
-				}
+				}*/
 			);
 
 			cams.Add( cam );

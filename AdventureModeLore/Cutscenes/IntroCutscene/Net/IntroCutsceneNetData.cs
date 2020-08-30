@@ -2,12 +2,12 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Net;
+using CutsceneLib.Net;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Net {
 	[Serializable]
-	class IntroCutsceneNetData : AMLCutsceneNetStart {
+	class IntroCutsceneNetData : CutsceneNetStart {
 		public Vector2 ExteriorShipView;
 		public Vector2 InteriorShipView;
 

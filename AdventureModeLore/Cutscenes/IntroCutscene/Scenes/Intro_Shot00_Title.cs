@@ -5,8 +5,8 @@ using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
+using CutsceneLib.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
@@ -25,7 +25,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 		private void GetCam00_Title( IList<CameraMover> cams, Action onCamStop ) {
 			int next = cams.Count;
 			var cam = new CameraMover(
-				name: "AdventureModeIntro_Title",
+				name: "CutsceneLibIntro_Title",
 				moveXFrom: (Main.maxTilesX - 40) - (Main.screenWidth / 16),
 				moveYFrom: 40,
 				moveXTo: (Main.maxTilesX - 40) - (Main.screenWidth / 16),

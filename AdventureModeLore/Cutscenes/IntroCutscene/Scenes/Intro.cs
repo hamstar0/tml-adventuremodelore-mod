@@ -5,8 +5,8 @@ using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.CameraAnimation;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Definitions;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
+using CutsceneLib.Definitions;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
@@ -73,7 +73,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 			}
 
 			var animCam = CameraMover.Current;
-			if( animCam == null || !animCam.Name.StartsWith("AdventureModeIntro") || !animCam.IsAnimating() ) {
+			if( animCam == null || !animCam.Name.StartsWith("CutsceneLibIntro") || !animCam.IsAnimating() ) {
 				return true;
 			}
 
@@ -85,7 +85,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes {
 
 		public override void DrawInterface() {
 			switch( CameraMover.Current.Name ) {
-			case "AdventureModeIntro_Title":
+			case "CutsceneLibIntro_Title":
 				this.DrawInterface00_Title();
 				break;
 			}
