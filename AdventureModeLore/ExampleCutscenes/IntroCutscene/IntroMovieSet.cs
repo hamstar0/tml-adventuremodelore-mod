@@ -6,6 +6,7 @@ using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using AdventureModeLore.Definitions;
+using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
@@ -50,6 +51,11 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 
 			chunkRange = default( Rectangle );
 			return new IntroMovieSet( shipExterior, shipInterior, extLeft, extTop, intLeft, intTop, isFlipped );
+		}
+
+
+		internal static IntroMovieSet Create( IntroCutsceneNetData data ) {
+			return new IntroMovieSet( data );
 		}
 
 
@@ -106,11 +112,11 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 			if( isOcean ) {
 				result = "Success.";
 			} else {
-LogHelpers.LogOnce( "x:"+left+", y: "+oceanTop
+/*LogHelpers.LogOnce( "x:"+left+", y: "+oceanTop
 	+", isn't null? " + (tile != null)
 	+", has liquid? "+(tile?.liquid != 0)
 	+", isn't active? "+(tile == null || !tile.active())
-	+", above ground? "+(oceanTop < WorldHelpers.SurfaceLayerBottomTileY) );
+	+", above ground? "+(oceanTop < WorldHelpers.SurfaceLayerBottomTileY) );*/
 				if( tile == null ) {
 					result = "Found null tile.";
 				} else if( tile.active() ) {
@@ -136,6 +142,27 @@ LogHelpers.LogOnce( "x:"+left+", y: "+oceanTop
 
 		////////////////
 
+		private IntroMovieSet( IntroCutsceneNetData data ) {
+			this.ExteriorShipView = data.ExteriorShipView;
+			this.InteriorShipView = data.InteriorShipView;
+		}
+
+		private IntroMovieSet(
+					int extWid,
+					int extLeft,
+					int extTop,
+					int intWid,
+					int intLeft,
+					int intTop ) {
+			this.ExteriorShipView = new Vector2( extLeft * 16, extTop * 16 );
+			this.ExteriorShipView.X += extWid * 8;    // (wid*16) / 2
+			this.ExteriorShipView.Y += -8 * 16;
+
+			this.InteriorShipView = new Vector2( intLeft * 16, intTop * 16 );
+			this.InteriorShipView.X += intWid * 8;    // (wid*16) / 2
+			this.InteriorShipView.Y += 32 * 16;
+		}
+
 		private IntroMovieSet(
 					TileStructure shipExterior,
 					TileStructure shipInterior,
@@ -143,15 +170,13 @@ LogHelpers.LogOnce( "x:"+left+", y: "+oceanTop
 					int extTop,
 					int intLeft,
 					int intTop,
-					bool isFlipped ) {
-			this.ExteriorShipView = new Vector2( extLeft * 16, extTop * 16 );
-			this.ExteriorShipView.X += shipExterior.Bounds.Width * 8;    // (wid*16) / 2
-			this.ExteriorShipView.Y += -8 * 16;
-
-			this.InteriorShipView = new Vector2( intLeft * 16, intTop * 16 );
-			this.InteriorShipView.X += shipInterior.Bounds.Width * 8;    // (wid*16) / 2
-			this.InteriorShipView.Y += 32 * 16;
-
+					bool isFlipped ) : this(
+						shipExterior.Bounds.Width,
+						extLeft,
+						extTop,
+						shipInterior.Bounds.Width,
+						intLeft,
+						intTop ) {
 			shipExterior.PaintToWorld(
 				leftTileX: extLeft,
 				topTileY: extTop,

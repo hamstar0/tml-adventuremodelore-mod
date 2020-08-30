@@ -17,10 +17,10 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		public SceneID( Mod mod, Scene instance ) : this( mod, instance.GetType() ) { }
+		public SceneID( Mod mod, SceneBase instance ) : this( mod, instance.GetType() ) { }
 
 		public SceneID( Mod mod, Type sceneType ) : this( mod.Name, sceneType.FullName ) {
-			for( Type baseType= sceneType.BaseType; baseType!=typeof(Scene); baseType = baseType.BaseType ) {
+			for( Type baseType= sceneType.BaseType; baseType!=typeof(SceneBase); baseType = baseType.BaseType ) {
 				if( baseType == typeof(object) ) {
 					throw new ModHelpersException( sceneType.Name + " is not a `Scene`." );
 				}
@@ -54,7 +54,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal Scene Create( Player playsFor, params object[] args ) {
+		internal SceneBase Create( Player playsFor, params object[] args ) {
 			var newArgs = new object[ args.Length + 1 ];
 			newArgs[0] = playsFor;
 			args.CopyTo( newArgs, 1 );
@@ -71,7 +71,7 @@ namespace AdventureModeLore.Definitions {
 				culture: null,
 				activationAttributes: new object[] { }
 			);
-			return objHand.Unwrap() as Scene;
+			return objHand.Unwrap() as SceneBase;
 		}
 	}
 }

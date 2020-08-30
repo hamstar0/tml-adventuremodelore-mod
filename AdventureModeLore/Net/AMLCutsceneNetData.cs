@@ -12,39 +12,26 @@ using AdventureModeLore.Definitions;
 namespace AdventureModeLore.Net {
 	[Serializable]
 	public abstract class AMLCutsceneNetData : NetIOBroadcastPayload {
-		public static void Broadcast( Cutscene cutscene, SceneID sceneId ) {
-			if( Main.netMode != NetmodeID.Server ) {
-				throw new ModHelpersException("Not server");
+		public static void Broadcast( Cutscene cutscene ) {
+			if( Main.netMode != NetmodeID.MultiplayerClient ) {
+				throw new ModHelpersException( "Not client" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneId );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload();
 
 			NetIO.Broadcast( protocol );
 		}
 
-		public static void SendToClients( Cutscene cutscene, SceneID sceneId, int ignoreWho ) {
+		public static void SendToClients( Cutscene cutscene, int ignoreWho ) {
 			if( Main.netMode != NetmodeID.Server ) {
-				throw new ModHelpersException( "Not client" );
+				throw new ModHelpersException( "Not server" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneId );
+			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload();
 
 			NetIO.SendToClients(
 				data: protocol,
 				ignoreWho: ignoreWho
-			);
-		}
-
-		public static void SendToClient( Cutscene cutscene, SceneID sceneId, int toWho ) {
-			if( Main.netMode != NetmodeID.Server ) {
-				throw new ModHelpersException( "Not client" );
-			}
-
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload( sceneId );
-
-			NetIO.SendToClient(
-				data: protocol,
-				toWho: toWho
 			);
 		}
 
@@ -64,12 +51,12 @@ namespace AdventureModeLore.Net {
 
 		protected AMLCutsceneNetData() { }
 
-		protected AMLCutsceneNetData( Cutscene cutscene, SceneID sceneId ) {
+		protected AMLCutsceneNetData( Cutscene cutscene ) {
 			this.PlaysForWho = cutscene.PlaysForWhom;
 			this.CutsceneModName = cutscene.UniqueId.ModName;
 			this.CutsceneClassFullName = cutscene.UniqueId.FullClassName;
-			this.SceneModName = sceneId.ModName;
-			this.SceneClassFullName = sceneId.FullClassName;
+			this.SceneModName = cutscene.CurrentScene.UniqueId.ModName;
+			this.SceneClassFullName = cutscene.CurrentScene.UniqueId.FullClassName;
 /*LogHelpers.Log( "SEND "
 	+"PlaysForWho:"+this.PlaysForWho
 	+ ", CutsceneModName:" + this.CutsceneModName
@@ -108,41 +95,42 @@ namespace AdventureModeLore.Net {
 				return;
 			}
 
-			if( !this.PreReceive() ) {
-				return;
-			}
-
 			if( !mngr.CanBeginCutscene(cutsceneId, playsFor, out string result) ) {
 				LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": "+result );
 				return;
 			}
 
-			SceneID sceneId = null;
-			if( !string.IsNullOrEmpty(this.SceneModName) ) {
-				sceneId = new SceneID( this.SceneModName, this.SceneClassFullName );
+			SceneID sceneId = new SceneID( this.SceneModName, this.SceneClassFullName );
+			if( !this.PreReceive(cutsceneId, sceneId) ) {
+				return;
 			}
 
-			if( sceneId != null ) {
-				void onSuccess( string myResult ) {
-					LogHelpers.Log( "Beginning cutscene " + cutsceneId + " result for client: " + myResult );
-				}
-				void onFail( string myResult ) {
-					if( !mngr.SetCutsceneScene( cutsceneId, playsFor, sceneId, false ) ) {
-						LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": " + myResult );
-					}
-				}
+			//
 
-				mngr.TryBeginCutsceneFromNetwork( cutsceneId, sceneId, playsFor, this, onSuccess, onFail );
-			} else {
-				if( mngr.EndCutscene(cutsceneId, this.PlaysForWho, false) ) {
-					LogHelpers.Warn( "Cannot end cutscene "+cutsceneId+"." );
+			void onSuccess( string myResult ) {
+				LogHelpers.Log( "Beginning cutscene " + cutsceneId + " result for client: " + myResult );
+			}
+			void onFail( string myResult ) {
+				if( !mngr.SetCutsceneScene( cutsceneId, playsFor, sceneId, false ) ) {
+					LogHelpers.Warn( "Cannot play cutscene " + cutsceneId + ": " + myResult );
 				}
 			}
+
+			//
+
+			mngr.TryBeginCutsceneFromNetwork( cutsceneId, sceneId, playsFor, this, onSuccess, onFail );
+
+			this.PostReceive();
 		}
 
 
 		////
 
-		protected abstract bool PreReceive();
+		protected virtual bool PreReceive( CutsceneID cutsceneId, SceneID sceneId ) {
+			return true;
+		}
+
+		protected virtual void PostReceive() {
+		}
 	}
 }

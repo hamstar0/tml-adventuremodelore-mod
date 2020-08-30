@@ -1,15 +1,11 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.TileStructure;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Info;
-using HamstarHelpers.Helpers.Tiles;
 using AdventureModeLore.Definitions;
-using AdventureModeLore.Net;
 using AdventureModeLore.ExampleCutscenes.IntroCutscene.Scenes;
-using AdventureModeLore.ExampleCutscenes.IntroCutscene.Net;
 
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
@@ -42,36 +38,6 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 		
 		private IntroCutscene( Player playsFor ) : base( playsFor ) { }
 
-		////
-
-		protected override Scene CreateScene( SceneID sceneId ) {
-			if( sceneId.Equals(this.FirstSceneId) ) {
-				var set = IntroMovieSet.Create( ref this._ShipExterior, ref this._ShipInterior, out _, out string __ );
-				if( set != null ) {
-					return new IntroCutsceneScene_00( set );
-				}
-			}
-
-			return null;
-		}
-
-		protected override Scene CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data ) {
-			if( sceneId.Equals(this.FirstSceneId) ) {
-				var set = IntroMovieSet.Create( ref this._ShipExterior, ref this._ShipInterior, out Rectangle chunkRange, out _ );
-				if( set != null ) {
-					return new IntroCutsceneScene_00( set );
-				}
-
-				if( this._MovieSetChunksRequestRetryTimer-- == 0 ) {
-					this._MovieSetChunksRequestRetryTimer = 60 * 2;
-					LogHelpers.Log("Requesting chunks from range "+chunkRange);
-					TileWorldHelpers.RequestChunksFromServer( chunkRange );
-				}
-			}
-
-			return null;
-		}
-
 
 		////////////////
 
@@ -86,13 +52,6 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 			}
 			result = "Success.";
 			return true;
-		}
-
-
-		////////////////
-
-		public override AMLCutsceneNetData CreatePacketPayload( SceneID sceneId ) {
-			return new IntroCutsceneNetData( this, sceneId );
 		}
 
 

@@ -1,17 +1,14 @@
 ﻿using System;
 using Terraria;
+using HamstarHelpers.Classes.Errors;
 using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class Scene<T, U, V> : Scene
+	public abstract partial class Scene<T, U, V> : SceneBase
 				where T : Cutscene
 				where U : MovieSet
 				where V : AMLCutsceneNetData {
-		public abstract SceneID UniqueId { get; }
-
-		////
-
 		protected U Set;
 
 
@@ -21,6 +18,17 @@ namespace AdventureModeLore.Definitions {
 		protected Scene( bool defersToHostForSync, U set ) : base( defersToHostForSync ) {
 			this.Set = set;
 		}
+
+
+		////////////////
+
+		internal sealed override AMLCutsceneNetData CreatePacketPayload_Internal( Cutscene cutscene ) {
+			return this.CreatePacketPayload( (T)cutscene );
+		}
+
+		////
+
+		protected abstract V CreatePacketPayload( T cutscene );
 
 
 		////////////////

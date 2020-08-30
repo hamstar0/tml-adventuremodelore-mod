@@ -1,22 +1,28 @@
 ﻿using System;
 using Terraria;
 using HamstarHelpers.Classes.Errors;
+using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class Scene {
-		protected CutsceneDialogue Dialogue = null;
+	public abstract partial class SceneBase {
+		public abstract SceneID UniqueId { get; }
 
 
-		////////////////
+		////
 
 		public bool DefersToHostForSync { get; }
 
 
-
 		////////////////
 
-		protected Scene( bool defersToHostForSync ) {
+		protected CutsceneDialogue Dialogue = null;
+
+
+
+		////////////////
+		
+		protected SceneBase( bool defersToHostForSync ) {
 			if( !this.ValidateSceneType(this.GetType()) ) {
 				throw new ModHelpersException( "Invalid Scene type "+this.GetType().Name );
 			}
@@ -44,6 +50,11 @@ namespace AdventureModeLore.Definitions {
 		////////////////
 
 		public abstract SceneID GetNextSceneId();
+
+
+		////////////////
+
+		internal abstract AMLCutsceneNetData CreatePacketPayload_Internal( Cutscene cutscene );
 
 
 		////////////////

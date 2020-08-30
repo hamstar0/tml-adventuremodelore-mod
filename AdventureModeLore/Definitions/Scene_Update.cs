@@ -4,7 +4,7 @@ using AdventureModeLore.Net;
 
 
 namespace AdventureModeLore.Definitions {
-	public abstract partial class Scene<T, U, V> : Scene
+	public abstract partial class Scene<T, U, V> : SceneBase
 				where T : Cutscene
 				where U : MovieSet
 				where V : AMLCutsceneNetData {

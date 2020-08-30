@@ -95,10 +95,10 @@ LogHelpers.LogOnce("4 A");
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
 LogHelpers.LogOnce("5a A");
-					AMLCutsceneNetData.SendToClients( cutscene: cutscene, sceneId: sceneId, ignoreWho: -1 );
+					AMLCutsceneNetData.SendToClients( cutscene: cutscene, ignoreWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
 LogHelpers.LogOnce("5b A");
-					AMLCutsceneNetData.Broadcast( cutscene: cutscene, sceneId: sceneId );
+					AMLCutsceneNetData.Broadcast( cutscene: cutscene );
 				}
 			}
 
@@ -155,15 +155,7 @@ LogHelpers.LogOnce( "4 B" );
 				return false;
 			}
 
-			cutscene.SetCurrentScene_NoSync( sceneId );
-
-			if( sync ) {
-				if( Main.netMode == NetmodeID.Server ) {
-					AMLCutsceneNetData.SendToClients( cutscene: cutscene, sceneId: sceneId, ignoreWho: -1 );
-				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					AMLCutsceneNetData.Broadcast( cutscene: cutscene, sceneId: sceneId );
-				}
-			}
+			cutscene.SetCurrentScene( sceneId, sync );
 			return true;
 		}
 
@@ -186,9 +178,9 @@ LogHelpers.LogOnce( "4 B" );
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
-					AMLCutsceneNetData.SendToClients( cutscene: cutscene, sceneId: null, ignoreWho: -1 );
+					AMLCutsceneNetEnd.SendToClients( cutscene: cutscene, ignoreWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					AMLCutsceneNetData.Broadcast( cutscene: cutscene, sceneId: null );
+					AMLCutsceneNetEnd.Broadcast( cutscene: cutscene );
 				}
 			}
 			return true;

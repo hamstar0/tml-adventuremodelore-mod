@@ -1,4 +1,5 @@
 v1
+-	@MH: Set PingProtocol to be "verbose" (attribute?)
 -	Add debug info
 -	Finish implementing cutscene mechanics
 	-	Cleanup loaded set after all scenes traversed
@@ -32,10 +33,12 @@ v1
 		-	Cleanup data for exited players
 		-	Adjust for resolution
 		-	Control clothier AI
-		-	Allow client to abort cutscene for all players
+		-	Report location of dungeon to clients
+		-	Rename Cutscene to Movie
 		-	Ensure MP (ensure chunks are loaded)
-			-	After set load, server conveys vectors for set; skip loading set for client
+			-	Allow client to abort cutscene for all players and server (if allowed)
 
+			-	After set load, server conveys vectors for set; skip loading set for client
 -	Can generic params be forced to be non-abstract?
 		-	Cutscene mode doesnt terminate
 		-	Ship exterior view is weird

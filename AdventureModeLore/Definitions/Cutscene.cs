@@ -17,7 +17,7 @@ namespace AdventureModeLore.Definitions {
 
 		////
 
-		public Scene CurrentScene { get; protected set; } = null;
+		public SceneBase CurrentScene { get; protected set; } = null;
 
 
 
@@ -29,17 +29,20 @@ namespace AdventureModeLore.Definitions {
 
 		////
 
-		protected abstract Scene CreateScene( SceneID sceneId );
+		protected abstract SceneBase CreateScene( SceneID sceneId );
 
-		protected abstract Scene CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data );
-
-		////
-
-		public abstract AMLCutsceneNetData CreatePacketPayload( SceneID sceneId );
+		protected abstract SceneBase CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data );
 
 
 		////////////////
-		
+
+		internal AMLCutsceneNetData CreatePacketPayload() {
+			return this.CurrentScene.CreatePacketPayload_Internal( this );
+		}
+
+
+		////////////////
+
 		public abstract bool CanBegin( out string result );
 
 		////////////////

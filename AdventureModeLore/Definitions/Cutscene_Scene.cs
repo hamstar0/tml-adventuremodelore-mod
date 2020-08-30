@@ -16,10 +16,18 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal void SetCurrentScene_NoSync( SceneID uid ) {
+		internal void SetCurrentScene( SceneID uid, bool sync ) {
 			this.CurrentScene.EndScene_Internal( this );
 			this.CurrentScene = this.CreateScene( uid );
 			this.CurrentScene.BeginScene_Internal( this );
+
+			if( sync ) {
+				if( Main.netMode == NetmodeID.Server ) {
+					AMLCutsceneNetData.SendToClients( cutscene: this, ignoreWho: -1 );
+				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
+					AMLCutsceneNetData.Broadcast( cutscene: this );
+				}
+			}
 		}
 
 		////
@@ -32,9 +40,9 @@ namespace AdventureModeLore.Definitions {
 
 				if( sync ) {
 					if( Main.netMode == NetmodeID.MultiplayerClient ) {
-						AMLCutsceneNetData.Broadcast( this, nextUid );
+						AMLCutsceneNetData.Broadcast( cutscene: this );
 					} else if( Main.netMode == NetmodeID.Server ) {
-						AMLCutsceneNetData.SendToClients( this, nextUid, -1 );
+						AMLCutsceneNetData.SendToClients( cutscene: this, -1 );
 					}
 				}
 			} else {
