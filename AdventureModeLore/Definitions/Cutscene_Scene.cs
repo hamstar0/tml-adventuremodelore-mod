@@ -23,9 +23,9 @@ namespace AdventureModeLore.Definitions {
 
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
-					AMLCutsceneNetData.SendToClients( cutscene: this, ignoreWho: -1 );
+					AMLCutsceneNetStart.SendToClients( cutscene: this, ignoreWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					AMLCutsceneNetData.Broadcast( cutscene: this );
+					AMLCutsceneNetStart.Broadcast( cutscene: this );
 				}
 			}
 		}
@@ -40,9 +40,9 @@ namespace AdventureModeLore.Definitions {
 
 				if( sync ) {
 					if( Main.netMode == NetmodeID.MultiplayerClient ) {
-						AMLCutsceneNetData.Broadcast( cutscene: this );
+						AMLCutsceneNetStart.Broadcast( cutscene: this );
 					} else if( Main.netMode == NetmodeID.Server ) {
-						AMLCutsceneNetData.SendToClients( cutscene: this, -1 );
+						AMLCutsceneNetStart.SendToClients( cutscene: this, -1 );
 					}
 				}
 			} else {

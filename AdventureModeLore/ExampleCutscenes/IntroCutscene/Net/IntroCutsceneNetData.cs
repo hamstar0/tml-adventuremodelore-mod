@@ -7,7 +7,7 @@ using AdventureModeLore.Net;
 
 namespace AdventureModeLore.ExampleCutscenes.IntroCutscene.Net {
 	[Serializable]
-	class IntroCutsceneNetData : AMLCutsceneNetData {
+	class IntroCutsceneNetData : AMLCutsceneNetStart {
 		public Vector2 ExteriorShipView;
 		public Vector2 InteriorShipView;
 

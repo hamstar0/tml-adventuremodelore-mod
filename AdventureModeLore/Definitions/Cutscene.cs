@@ -31,12 +31,12 @@ namespace AdventureModeLore.Definitions {
 
 		protected abstract SceneBase CreateScene( SceneID sceneId );
 
-		protected abstract SceneBase CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data );
+		protected abstract SceneBase CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetStart data );
 
 
 		////////////////
 
-		internal AMLCutsceneNetData CreatePacketPayload() {
+		internal AMLCutsceneNetStart CreatePacketPayload() {
 			return this.CurrentScene.CreatePacketPayload_Internal( this );
 		}
 
@@ -54,7 +54,7 @@ namespace AdventureModeLore.Definitions {
 
 		internal void BeginCutsceneFromNetwork_Internal(
 					SceneID sceneId,
-					AMLCutsceneNetData data,
+					AMLCutsceneNetStart data,
 					Action<string> onSuccess,
 					Action<string> onFail ) {
 			this.CurrentScene = this.CreateSceneFromNetwork( sceneId, data );

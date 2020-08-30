@@ -21,7 +21,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 
 		////
 
-		protected override SceneBase CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetData data ) {
+		protected override SceneBase CreateSceneFromNetwork( SceneID sceneId, AMLCutsceneNetStart data ) {
 			if( sceneId.Equals(this.FirstSceneId) ) {
 				return this.CreateIntroSceneFromNetwork( data );
 			}
@@ -43,7 +43,7 @@ namespace AdventureModeLore.ExampleCutscenes.IntroCutscene {
 
 		////
 
-		private SceneBase CreateIntroSceneFromNetwork( AMLCutsceneNetData data ) {
+		private SceneBase CreateIntroSceneFromNetwork( AMLCutsceneNetStart data ) {
 			IntroMovieSet set = IntroMovieSet.Create(
 				ref this._ShipExterior,
 				ref this._ShipInterior,

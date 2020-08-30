@@ -8,7 +8,7 @@ namespace AdventureModeLore.Definitions {
 	public abstract partial class Scene<T, U, V> : SceneBase
 				where T : Cutscene
 				where U : MovieSet
-				where V : AMLCutsceneNetData {
+				where V : AMLCutsceneNetStart {
 		protected U Set;
 
 
@@ -22,7 +22,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal sealed override AMLCutsceneNetData CreatePacketPayload_Internal( Cutscene cutscene ) {
+		internal sealed override AMLCutsceneNetStart CreatePacketPayload_Internal( Cutscene cutscene ) {
 			return this.CreatePacketPayload( (T)cutscene );
 		}
 

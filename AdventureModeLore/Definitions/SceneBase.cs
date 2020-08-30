@@ -54,7 +54,7 @@ namespace AdventureModeLore.Definitions {
 
 		////////////////
 
-		internal abstract AMLCutsceneNetData CreatePacketPayload_Internal( Cutscene cutscene );
+		internal abstract AMLCutsceneNetStart CreatePacketPayload_Internal( Cutscene cutscene );
 
 
 		////////////////

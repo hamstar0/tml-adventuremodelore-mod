@@ -11,13 +11,13 @@ using AdventureModeLore.Definitions;
 
 namespace AdventureModeLore.Net {
 	[Serializable]
-	public abstract class AMLCutsceneNetData : NetIOBroadcastPayload {
+	public abstract class AMLCutsceneNetStart : NetIOBroadcastPayload {
 		public static void Broadcast( Cutscene cutscene ) {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
 				throw new ModHelpersException( "Not client" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload();
+			AMLCutsceneNetStart protocol = cutscene.CreatePacketPayload();
 
 			NetIO.Broadcast( protocol );
 		}
@@ -27,7 +27,7 @@ namespace AdventureModeLore.Net {
 				throw new ModHelpersException( "Not server" );
 			}
 
-			AMLCutsceneNetData protocol = cutscene.CreatePacketPayload();
+			AMLCutsceneNetStart protocol = cutscene.CreatePacketPayload();
 
 			NetIO.SendToClients(
 				data: protocol,
@@ -49,9 +49,9 @@ namespace AdventureModeLore.Net {
 
 		////////////////
 
-		protected AMLCutsceneNetData() { }
+		protected AMLCutsceneNetStart() { }
 
-		protected AMLCutsceneNetData( Cutscene cutscene ) {
+		protected AMLCutsceneNetStart( Cutscene cutscene ) {
 			this.PlaysForWho = cutscene.PlaysForWhom;
 			this.CutsceneModName = cutscene.UniqueId.ModName;
 			this.CutsceneClassFullName = cutscene.UniqueId.FullClassName;

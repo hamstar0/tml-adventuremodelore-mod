@@ -95,10 +95,10 @@ LogHelpers.LogOnce("4 A");
 			if( sync ) {
 				if( Main.netMode == NetmodeID.Server ) {
 LogHelpers.LogOnce("5a A");
-					AMLCutsceneNetData.SendToClients( cutscene: cutscene, ignoreWho: -1 );
+					AMLCutsceneNetStart.SendToClients( cutscene: cutscene, ignoreWho: -1 );
 				} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
 LogHelpers.LogOnce("5b A");
-					AMLCutsceneNetData.Broadcast( cutscene: cutscene );
+					AMLCutsceneNetStart.Broadcast( cutscene: cutscene );
 				}
 			}
 
@@ -112,7 +112,7 @@ LogHelpers.LogOnce("5b A");
 					CutsceneID cutsceneId,
 					SceneID sceneId,
 					Player playsFor,
-					AMLCutsceneNetData data,
+					AMLCutsceneNetStart data,
 					Action<string> onSuccess,
 					Action<string> onFail ) {
 			if( !this.CanBeginCutscene(cutsceneId, playsFor, out Cutscene cutscene, out string result) ) {
@@ -125,6 +125,8 @@ LogHelpers.LogOnce("5b A");
 			}
 			this.CutsceneInWaitingPerClient[ playsFor.whoAmI ] = cutscene;
 LogHelpers.LogOnce("3 B");
+
+			//
 
 			void onMySuccess( string myResult ) {
 				this._CutscenePerPlayer[ playsFor.whoAmI ] = cutscene;
@@ -140,7 +142,15 @@ LogHelpers.LogOnce( "4 B" );
 				onSuccess( myResult );
 			}
 
-			cutscene.BeginCutsceneFromNetwork_Internal( sceneId, data, onMySuccess, onFail );
+			void onMyFail( string myResult ) {
+				this.EndCutscene( cutscene, playsFor.whoAmI, false );
+
+				onFail( myResult );
+			}
+
+			//
+
+			cutscene.BeginCutsceneFromNetwork_Internal( sceneId, data, onMySuccess, onMyFail );
 		}
 
 
@@ -171,6 +181,10 @@ LogHelpers.LogOnce( "4 B" );
 				return false;
 			}
 
+			return this.EndCutscene( cutscene, playsForWhom, sync );
+		}
+
+		private bool EndCutscene( Cutscene cutscene, int playsForWhom, bool sync ) {
 			cutscene.EndCutscene_Internal();
 
 			this._CutscenePerPlayer.Remove( playsForWhom );

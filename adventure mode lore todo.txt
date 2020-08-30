@@ -34,10 +34,9 @@ v1
 		-	Adjust for resolution
 		-	Control clothier AI
 		-	Report location of dungeon to clients
-		-	Rename Cutscene to Movie
+
 		-	Ensure MP (ensure chunks are loaded)
 			-	Allow client to abort cutscene for all players and server (if allowed)
-
 			-	After set load, server conveys vectors for set; skip loading set for client
 -	Can generic params be forced to be non-abstract?
 		-	Cutscene mode doesnt terminate
