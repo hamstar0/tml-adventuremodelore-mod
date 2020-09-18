@@ -2,6 +2,13 @@ v1
 -	Import cutscene from Cutscene Lib
 -	Implement custom dialogues to go with custom objectives
 -	Implement custom objectives
+	-	7 (summon WoF)
+	-	6 (Kill queen bee/find witch doctor)
+	-	6 (mechanic)
+	-	5 (Reach underworld)
+	-	5 (Kill EoW/BoC)
+	-	4 (Find goblin)
+	-	3 (Find orbs)
 	-	2 (Build housing)
 	-	2 (Find lighthouse)
 
@@ -14,16 +21,15 @@ v1
 			-	Build housing for other inhabitants
 		-	3: Merchant (after #2)
 			-	Find orbs
-			-	Build mirror network widely
 		-	4: Guide (after player has minimum 200 HP)
 			-	Find Goblin Tinkerer (marked on map at bottom of underground desert)
 		-	5: Dryad
 			-	Stop corruption entities building strength (kill EoW/BoC)
 			-	Plague coming from underworld, but don't know how
-		-	7: Goblin
+		-	6: Goblin
 			-	A genius mechanic builds machines that harness spiritual energy (mechanic)
 			-	A mysterious lizard-man sorcerer may know secret to plague's source
-		-	8: Witch Doctor (after reaching underworld)
+		-	7: Witch Doctor (after reaching underworld)
 			-	A companion (Guide) is keeper of a seal upon amassed spiritual energy in underworld (use Voodoo)
 -	Import Objectives
 -	Setup player and guide at raft spawn

@@ -29,24 +29,7 @@ namespace AdventureModeLore {
 
 		private void LoadInitialObjective() {
 			ObjectivesAPI.AddObjective(
-				objective: new FlatObjective(
-					title: "Investigate Dungeon",
-					description: "There appears to be a large, ominous structure with a suspicious old man wandering around it's entrance. Recommend an investigation.",
-					condition: ( obj ) => {
-						return Main.player.Any( plr => {
-							if( plr?.active != true ) {
-								return false;
-							}
-
-							NPC oldMan = Main.npc.FirstOrDefault( n => n.type == NPCID.OldMan );
-							if( oldMan?.active != true ) {
-								return false;
-							}
-
-							return ( plr.position - oldMan.position ).LengthSquared() < ( 256f * 256f );
-						} );
-					}
-				),
+				objective: ObjectiveDefinitions.InvestigateDungeon(),
 				order: -1,
 				alertPlayer: true,
 				out string _
