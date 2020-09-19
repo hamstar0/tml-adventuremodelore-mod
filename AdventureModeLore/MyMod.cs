@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
 
@@ -35,6 +36,10 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PostUpdateEverything() {
+			if( Main.gameMenu && Main.netMode != NetmodeID.Server ) {
+				return;
+			}
+
 			if( this._CheckTimer-- <= 0 ) {
 				this._CheckTimer = 60;
 			} else {
