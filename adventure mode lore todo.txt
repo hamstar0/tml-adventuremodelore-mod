@@ -1,6 +1,8 @@
 v1
 -	Import cutscene from Cutscene Lib
 -	Implement custom dialogues to go with custom objectives
+
+-	Import dialogues from AM
 -	Implement custom objectives
 	-	7 (summon WoF)
 	-	6 (Kill queen bee/find witch doctor)
@@ -10,14 +12,13 @@ v1
 	-	4 (Find goblin)
 	-	3 (Find orbs)
 	-	2 (Get merchant)
-
 	-	2 (Find jungle; encounter warning sign)
 	-	1 (Guide)
 	-	@Objectives
 		-	1: Guide
 			-	Examine dungeon entrance
 		-	2: Old Man
-			-	Find Celestial Lighthouse
+			-	Find Jungle
 			-	Get merchant
 		-	3: Merchant (after #2)
 			-	Find orbs

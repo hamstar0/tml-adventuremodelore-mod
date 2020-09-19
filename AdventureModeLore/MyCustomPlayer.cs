@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using HamstarHelpers.Classes.PlayerData;
 using HamstarHelpers.Services.Timers;
 using Objectives;
-using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	class AMLPlayer : CustomPlayerData {
+	class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
 			if( isCurrentPlayer ) {
 				Timers.SetTimer( 1, false, () => {
@@ -22,7 +19,7 @@ namespace AdventureModeLore {
 
 		private void PostOnEnter() {
 			var amMod = ModLoader.GetMod( "AdventureMode" );
-			if( (bool)amMod.Call("IsContextAuthentic") ) {
+			if( (bool)amMod.Call("IsCurrentPlayerAndWorldValid") ) {
 				this.LoadInitialObjective();
 			}
 		}

@@ -37,11 +37,11 @@ namespace AdventureModeLore {
 
 		////
 
-		public static string FindLighthouseTitle => "Find Jungle";
+		public static string ReachJungleTitle => "Find Jungle";
 
-		public static Objective FindLighthouse() {
+		public static Objective ReachJungle() {
 			return new FlatObjective(
-				title: ObjectiveDefinitions.FindLighthouseTitle,
+				title: ObjectiveDefinitions.ReachJungleTitle,
 				description: "The old man says there's something suspicious in the jungle. Maybe take a look?.",
 				condition: ( obj ) => {
 					return Main.LocalPlayer.ZoneJungle;
@@ -100,7 +100,7 @@ namespace AdventureModeLore {
 		public static Objective FindGoblin() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindGoblinTitle,
-				description: "It would seem there are native(?) inhabitants in this land, if you'd call them that. Try to make contact.",
+				description: "It would seem there are natives in this land, if you'd call them that. Try to make contact.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.GoblinTinkerer );
 				}
