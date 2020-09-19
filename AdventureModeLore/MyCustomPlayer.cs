@@ -1,6 +1,5 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 using HamstarHelpers.Classes.PlayerData;
 using HamstarHelpers.Services.Timers;
 using Objectives;
@@ -18,10 +17,10 @@ namespace AdventureModeLore {
 		}
 
 		private void PostOnEnter() {
-			var amMod = ModLoader.GetMod( "AdventureMode" );
-			if( (bool)amMod.Call("IsCurrentPlayerAndWorldValid") ) {
-				this.LoadInitialObjective();
-			}
+			//var amMod = ModLoader.GetMod( "AdventureMode" );
+			//if( (bool)amMod.Call("IsCurrentPlayerAndWorldValid") ) {
+			this.LoadInitialObjective();
+			//}
 		}
 
 		private void LoadInitialObjective() {

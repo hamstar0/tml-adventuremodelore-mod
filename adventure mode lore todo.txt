@@ -1,6 +1,13 @@
 v1
 -	Import cutscene from Cutscene Lib
 -	Implement custom dialogues to go with custom objectives
+	-	Witch Doctor: Guide seals spiritual energy
+	-	Goblin: Liberate mechanic, find witch doctor (knows plague source)
+	-	Dryad: Corrupting entities, plague from underworld (but don't know how)
+	-	Guide: Find Goblin Tinkerer
+	-	Merchant: Find orbs
+	-	Old Man: Find Jungle, find merchants
+	-	Guide: Examine dungeon entrance
 
 -	Import dialogues from AM
 -	Implement custom objectives
@@ -23,7 +30,7 @@ v1
 		-	3: Merchant (after #2)
 			-	Find orbs
 		-	4: Guide (after player has minimum 200 HP)
-			-	Find Goblin Tinkerer (marked on map at bottom of underground desert)
+			-	Find Goblin Tinkerer
 		-	5: Dryad
 			-	Stop corruption entities building strength (kill EoW/BoC)
 			-	Plague coming from underworld, but don't know how

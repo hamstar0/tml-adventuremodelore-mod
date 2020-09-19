@@ -33,7 +33,6 @@ namespace AdventureModeLore {
 							"We'll need to create settlements to progress our journey. Use House Furnishing Kits to convert closed areas into livable spaces.",
 						},
 						Blocked: new string[] {
-							//"Press Esc to access your crafting menu",
 							"You can use your pickaxe to dig through dirt",
 							"If you want to survive",
 							"When you have enough wood, create a workbench",
@@ -53,15 +52,9 @@ namespace AdventureModeLore {
 					NPCID.Dryad, (
 						Greetings: new string[] {
 							"Ever encounter that annoying Trickster? I hear it likes to reward those who think they can outwit it with quick thinking. I think it's up to something...",
-							//"My Geo-Resonant Orbs are a powerful new addition to my stock. If only I wasn't relegated to simplying trying to sell them. These can be used to get around almost anywhere in the world, with the right know-how. Very powerful.",
-							//"You can use my Geo-Resonant Orbs to create other types of Orbs, and also a powerful item called the Staff of Gaia. Think carefully about what you use it on, though. It's truly one of the most powerful weapons born of this world, but its use comes at a cost...",
-							//"As powerful as the Staff of Gaia is, I think some things of value might be lost from those it's used upon. Conversely, it also returns back a portion of what it takes, but in a different form."
 						},
 						Added: new string[] {
 							"Ever encounter that annoying Trickster? I hear it likes to reward those who think they can outwit it with quick thinking. I think it's up to something...",
-							//"My Geo-Resonant Orbs are a powerful new addition to my stock. If only I wasn't relegated to simplying trying to sell them. These can be used to get around almost anywhere in the world, with the right know-how. Very powerful.",
-							//"You can use my Geo-Resonant Orbs to create other types of Orbs, and also a powerful item called the Staff of Gaia. Think carefully about what you use it on, though. It's truly one of the most powerful weapons born of this world, but its use comes at a cost...",
-							//"As powerful as the Staff of Gaia is, I think some things of value might be lost from those it's used upon. Conversely, it also returns back a portion of what it takes, but in a different form."
 						},
 						Blocked: new string[] {
 						}

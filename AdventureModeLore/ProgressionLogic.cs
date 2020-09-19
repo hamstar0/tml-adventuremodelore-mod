@@ -6,7 +6,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	class ObjectiveLogic {
+	class ProgressionLogic {
 		public static void Run() {
 			// 00 - Investigate Dungeon
 			Objective objInvesDung = ObjectivesAPI.GetObjective( ObjectiveDefinitions.InvestigateDungeonTitle );
@@ -14,22 +14,22 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			if( !ObjectiveLogic.Run01() ) {
+			if( !ProgressionLogic.Run01() ) {
 				return;
 			}
-			if( !ObjectiveLogic.Run02() ) {
+			if( !ProgressionLogic.Run02() ) {
 				return;
 			}
-			if( !ObjectiveLogic.Run03() ) {
+			if( !ProgressionLogic.Run03() ) {
 				return;
 			}
-			if( !ObjectiveLogic.Run04() ) {
+			if( !ProgressionLogic.Run04() ) {
 				return;
 			}
-			if( !ObjectiveLogic.Run05() ) {
+			if( !ProgressionLogic.Run05() ) {
 				return;
 			}
-			if( !ObjectiveLogic.Run06() ) {
+			if( !ProgressionLogic.Run06() ) {
 				return;
 			}
 		}

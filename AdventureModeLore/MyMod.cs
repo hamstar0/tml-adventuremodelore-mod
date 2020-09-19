@@ -41,7 +41,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			ObjectiveLogic.Run();
+			ProgressionLogic.Run();
 		}
 	}
 }
