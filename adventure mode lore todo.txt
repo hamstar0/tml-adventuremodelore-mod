@@ -9,16 +9,16 @@ v1
 	-	5 (Kill EoW/BoC)
 	-	4 (Find goblin)
 	-	3 (Find orbs)
-	-	2 (Build housing)
-	-	2 (Find lighthouse)
+	-	2 (Get merchant)
 
+	-	2 (Find jungle; encounter warning sign)
 	-	1 (Guide)
 	-	@Objectives
 		-	1: Guide
 			-	Examine dungeon entrance
 		-	2: Old Man
 			-	Find Celestial Lighthouse
-			-	Build housing for other inhabitants
+			-	Get merchant
 		-	3: Merchant (after #2)
 			-	Find orbs
 		-	4: Guide (after player has minimum 200 HP)

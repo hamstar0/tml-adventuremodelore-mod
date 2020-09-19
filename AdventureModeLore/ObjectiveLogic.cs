@@ -48,11 +48,11 @@ namespace AdventureModeLore {
 			}
 			
 			// 01b - Build house
-			Objective objBuildHouse = ObjectivesAPI.GetObjective( ObjectiveDefinitions.BuildHousingTitle );
+			Objective objBuildHouse = ObjectivesAPI.GetObjective( ObjectiveDefinitions.FindMerchantTitle );
 			bool buildHouseDone = objBuildHouse?.IsComplete() == true;
 			if( !buildHouseDone ) {
 				if( objBuildHouse == null ) {
-					ObjectivesAPI.AddObjective( ObjectiveDefinitions.BuildHousing(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( ObjectiveDefinitions.FindMerchant(), 0, true, out _ );
 				}
 			}
 
@@ -61,7 +61,7 @@ namespace AdventureModeLore {
 
 		private static bool Run02() {
 			Objective objReachLight = ObjectivesAPI.GetObjective( ObjectiveDefinitions.FindLighthouseTitle );
-			Objective objBuildHouse = ObjectivesAPI.GetObjective( ObjectiveDefinitions.BuildHousingTitle );
+			Objective objBuildHouse = ObjectivesAPI.GetObjective( ObjectiveDefinitions.FindMerchantTitle );
 			
 			// 02 - Find an Orb
 			Objective objFindOrb = ObjectivesAPI.GetObjective( ObjectiveDefinitions.FindOrbTitle );
