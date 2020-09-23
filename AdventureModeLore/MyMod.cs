@@ -39,6 +39,9 @@ namespace AdventureModeLore {
 			if( Main.gameMenu && Main.netMode != NetmodeID.Server ) {
 				return;
 			}
+			if( Main.netMode == NetmodeID.Server ) {
+				return;
+			}
 
 			if( this._CheckTimer-- <= 0 ) {
 				this._CheckTimer = 60;

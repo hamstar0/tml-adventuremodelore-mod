@@ -7,8 +7,10 @@ v1
 	-	Guide: Find Goblin Tinkerer
 	-	Merchant: Find orbs
 	-	Old Man: Find Jungle, find merchants
-	-	Guide: Examine dungeon entrance
 
+	-	Guide: Examine dungeon entrance
+-	Implement saving completed objective states with the player
+-	@Fix objectives being marked as complete prematurely
 -	Import dialogues from AM
 -	Implement custom objectives
 	-	7 (summon WoF)

@@ -17,7 +17,8 @@ namespace AdventureModeLore {
 		public static Objective InvestigateDungeon() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.InvestigateDungeonTitle,
-				description: "There appears to be a large, ominous structure with a suspicious old man wandering around it's entrance. Recommend an investigation.",
+				description: "There appears to be a large, ominous structure with a suspicious old man"
+					+"\n"+"wandering around it's entrance. Recommend an investigation.",
 				condition: ( obj ) => {
 					return Main.player.Any( plr => {
 						if( plr?.active != true ) {
@@ -42,7 +43,7 @@ namespace AdventureModeLore {
 		public static Objective ReachJungle() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.ReachJungleTitle,
-				description: "The old man says there's something suspicious in the jungle. Maybe take a look?.",
+				description: "The old man says there's something suspicious in the jungle. Maybe take a look?",
 				condition: ( obj ) => {
 					return Main.LocalPlayer.ZoneJungle;
 				}
@@ -56,7 +57,8 @@ namespace AdventureModeLore {
 		public static Objective FindMerchant() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindMerchantTitle,
-				description: "Other inhabitants exist in this land, some less enslaved than others. Build a house for the merchant to settle in.",
+				description: "Other inhabitants exist in this land, some less enslaved than others. Build a"
+					+ "\n"+"house for the merchant to settle in.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.Merchant );
 				}
@@ -70,7 +72,8 @@ namespace AdventureModeLore {
 		public static Objective FindOrb() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindOrbTitle,
-				description: "It seems the land itself is enchanted. Sacred orbs appear to resonate with terrain. Maybe this will be of help?",
+				description: "It seems the land itself is enchanted. Sacred orbs appear to resonate with"
+					+ "\n"+"terrain. Maybe this will be of help?",
 				condition: ( obj ) => {
 					var orbsMod = ModLoader.GetMod( "Orbs" );
 
@@ -100,7 +103,8 @@ namespace AdventureModeLore {
 		public static Objective FindGoblin() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindGoblinTitle,
-				description: "It would seem there are natives in this land, if you'd call them that. Try to make contact.",
+				description: "It would seem there are natives in this land, if you'd call them that. Try to"
+					+ "\n"+"make contact.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.GoblinTinkerer );
 				}
@@ -114,7 +118,8 @@ namespace AdventureModeLore {
 		public static Objective KillCorruptionBoss() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.KillCorruptionBossTitle,
-				description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will need to be stopped, or else the plague will spread.",
+				description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+ ". It will need to be stopped, or else the plague"
+					+ "\n"+"will spread.",
 				condition: ( obj ) => {
 					return NPC.killCount[ NPCBannerHelpers.GetBannerItemTypeOfNpcType(NPCID.EaterofWorldsHead) ] > 0
 						|| NPC.killCount[ NPCBannerHelpers.GetBannerItemTypeOfNpcType(NPCID.BrainofCthulhu) ] > 0;
@@ -143,7 +148,8 @@ namespace AdventureModeLore {
 		public static Objective FindMechanic() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindMechanicTitle,
-				description: "Rumors exist of a plan to empower technology with the dungeon's spiritual energies. This could be disasterous. Liberate the engineer.",
+				description: "Rumors exist of a plan to empower technology with the dungeon's spiritual"
+					+ "\n"+"energies. This could be disasterous. Liberate the engineer.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.Mechanic );
 				}
@@ -157,7 +163,8 @@ namespace AdventureModeLore {
 		public static Objective FindWitchDoctor() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindWitchDoctorTitle,
-				description: "A mysterious lizard-man sorcerer may know the plague's secret. Something powerful in the jungle has put him into hiding, though.",
+				description: "A mysterious lizard-man sorcerer may know the plague's secret. Something"
+					+ "\n" + "powerful in the jungle has put him into hiding, though.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.WitchDoctor );
 				}
@@ -171,7 +178,9 @@ namespace AdventureModeLore {
 		public static Objective SummonWoF() {
 			return new FlatObjective(
 				title: ObjectiveDefinitions.FindWitchDoctorTitle,
-				description: "The witch doctor describes a ritual to destroy the spiritual energy confluence; the source of the plague. It involves a voodoo sacrifice of one of its makers near its source: The underworld.",
+				description: "The witch doctor describes a ritual to destroy the spiritual energy"
+					+"\n"+"confluence; the source of the plague. It involves a voodoo sacrifice"
+					+"\n"+"of one of its makers near its source: The underworld.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.WallofFlesh );
 				}
