@@ -2,12 +2,12 @@ v1
 -	Import cutscene from Cutscene Lib
 -	Implement custom dialogues to go with custom objectives
 	-	Witch Doctor: Guide seals spiritual energy
+
 	-	Goblin: Liberate mechanic, find witch doctor (knows plague source)
 	-	Dryad: Corrupting entities, plague from underworld (but don't know how)
 	-	Guide: Find Goblin Tinkerer
 	-	Merchant: Find orbs
 	-	Old Man: Find Jungle, find merchants
-
 	-	Guide: Examine dungeon entrance
 -	Implement saving completed objective states with the player
 -	@Fix objectives being marked as complete prematurely
