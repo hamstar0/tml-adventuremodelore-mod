@@ -11,14 +11,12 @@ using HamstarHelpers.Services.NPCChat;
 
 namespace AdventureModeLore {
 	public class NPCDialogueDefinitions {
-		public string[] Greetings { get; }
 		public string[] Added { get; }
 		public string[] Blocked { get; }
 
 
 
-		public NPCDialogueDefinitions( string[] greetings, string[] added, string[] blocked ) {
-			this.Greetings = greetings;
+		public NPCDialogueDefinitions( string[] added, string[] blocked ) {
 			this.Added = added;
 			this.Blocked = blocked;
 		}
@@ -31,9 +29,6 @@ namespace AdventureModeLore {
 		public readonly IDictionary<int, NPCDialogueDefinitions> NPCDialogues = new Dictionary<int, NPCDialogueDefinitions> {
 			{
 				NPCID.Guide, new NPCDialogueDefinitions(
-					greetings: new string[] {
-						"Looks like your adventure is just beginning. Please take stock of your surroundings and inventory. These may be important later. Talk with me if you need any further assistance.",
-					},
 					added: new string[] {
 						"Good thing the dungeon is sealed. I hear it's blighted with an undeath curse and filled with deadly fumes!",
 						"The people who lived here once discovered ways to wield artifacts of power, and hid their secrets around this land.",
@@ -66,9 +61,6 @@ namespace AdventureModeLore {
 			},
 			{
 				NPCID.Dryad, new NPCDialogueDefinitions(
-					greetings: new string[] {
-						"Ever encounter that annoying Trickster? I hear it likes to reward those who think they can outwit it with quick thinking. I think it's up to something...",
-					},
 					added: new string[] {
 						"Ever encounter that annoying Trickster? I hear it likes to reward those who think they can outwit it with quick thinking. I think it's up to something...",
 					},
@@ -86,12 +78,6 @@ namespace AdventureModeLore {
 
 		public void OnPostModsLoad() {
 			foreach( (int npcType, NPCDialogueDefinitions chats) in this.NPCDialogues ) {
-				ProcessMessage greetingFunc = this.GetGreetingFunc( npcType, chats.Greetings );
-
-				if( greetingFunc != null ) {
-					NPCChat.SetPriorityChat( npcType, greetingFunc );
-				}
-
 				foreach( string addedChat in chats.Added ) {
 					NPCChat.AddChatForNPC( npcType, addedChat, 0.1f );
 				}
