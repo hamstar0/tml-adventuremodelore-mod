@@ -61,6 +61,9 @@ namespace AdventureModeLore {
 			// Dialogues
 			NPCChat.SetPriorityChat( NPCID.Dryad, ( string msg, out bool alert ) => {
 				alert = conveyance1 || conveyance2;
+				if( alert && string.IsNullOrEmpty(msg) ) {
+					return msg;
+				}
 
 				if( conveyance1 ) {
 					// 04a - Kill EoW/BoC

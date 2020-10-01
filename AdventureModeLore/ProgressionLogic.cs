@@ -4,6 +4,8 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Loadable;
+using HamstarHelpers.Helpers.Debug;
+using Objectives;
 
 
 namespace AdventureModeLore {
@@ -25,6 +27,10 @@ namespace AdventureModeLore {
 		////
 
 		public static void Run() {
+			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
+				return;
+			}
+
 			var logic = ModContent.GetInstance<ProgressionLogic>();
 
 			foreach( Func<bool> myevent in logic.Events.ToArray() ) {

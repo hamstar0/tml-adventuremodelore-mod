@@ -66,6 +66,9 @@ namespace AdventureModeLore {
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.Merchant, ( string msg, out bool alert ) => {
 				alert = conveyance;
+				if( alert && string.IsNullOrEmpty(msg) ) {
+					return msg;
+				}
 
 				if( conveyance ) {
 					// 02 - Find an Orb

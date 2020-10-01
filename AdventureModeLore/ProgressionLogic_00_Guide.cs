@@ -2,6 +2,7 @@
 using System.Linq;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.NPCChat;
 using Objectives;
 using Objectives.Definitions;
@@ -27,7 +28,7 @@ namespace AdventureModeLore {
 							return false;
 						}
 
-						return ( plr.position - oldMan.position ).LengthSquared() < ( 256f * 256f );
+						return (plr.position - oldMan.position).LengthSquared() < (256f * 256f);
 					} );
 				}
 			);
@@ -41,9 +42,8 @@ namespace AdventureModeLore {
 			/**** Conditions:	****/
 			/***********************/
 
-			Objective objInvesDung = ObjectivesAPI.GetObjective( ProgressionLogic.InvestigateDungeonTitle );
-			if( objInvesDung != null ) {
-				return true;
+			if( ObjectivesAPI.HasObjective(ProgressionLogic.InvestigateDungeonTitle) ) {
+				return false;
 			}
 
 			/***********************/
@@ -54,8 +54,11 @@ namespace AdventureModeLore {
 			bool conveyAlert = true;
 
 			// Dialogue
-			NPCChat.SetPriorityChat( NPCID.Guide, (string msg, out bool alert ) => {
+			NPCChat.SetPriorityChat( NPCID.Guide, (string msg, out bool alert) => {
 				alert = conveyAlert;
+				if( alert && string.IsNullOrEmpty(msg) ) {
+					return msg;
+				}
 
 				if( conveyAlert ) {
 					// 00 Objective: Investigate Dungeon

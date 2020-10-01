@@ -60,6 +60,9 @@ namespace AdventureModeLore {
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.GoblinTinkerer, ( string msg, out bool alert ) => {
 				alert = conveyance1 || conveyance2 || conveyance3;
+				if( alert && string.IsNullOrEmpty(msg) ) {
+					return msg;
+				}
 
 				if( conveyance1 ) {
 					conveyance1 = false;

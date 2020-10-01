@@ -59,6 +59,9 @@ namespace AdventureModeLore {
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.OldMan, ( string msg, out bool alert ) => {
 				alert = conveyance1 || conveyance2;
+				if( alert && string.IsNullOrEmpty(msg) ) {
+					return msg;
+				}
 
 				if( conveyance1 ) {
 					// 01a Objective: Reach Jungle

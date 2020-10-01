@@ -43,6 +43,9 @@ namespace AdventureModeLore {
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.Guide, ( string msg, out bool alert ) => {
 				alert = conveyance;
+				if( alert && string.IsNullOrEmpty(msg) ) {
+					return msg;
+				}
 
 				if( conveyance ) {
 					// 03 - Find goblin tinkerer
