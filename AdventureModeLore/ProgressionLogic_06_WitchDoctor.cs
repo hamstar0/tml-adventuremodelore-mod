@@ -7,10 +7,10 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	partial class ProgressionLogic {
+	public partial class ProgressionLogic {
 		public static string SummonWoFTitle => "Sacrifice Voodoo Doll";
 
-		public static Objective SummonWoF() {
+		internal static Objective SummonWoF() {
 			return new FlatObjective(
 				title: ProgressionLogic.FindWitchDoctorTitle,
 				description: "The witch doctor describes a ritual to destroy the spiritual energy"
@@ -26,12 +26,24 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run06_WitchDoctor() {
+			Objective objSummonWoF = ObjectivesAPI.GetObjective( ProgressionLogic.SummonWoFTitle );
+
 			/***********************/
 			/**** Conditions:	****/
 			/***********************/
 
+			// Not ready yet?
 			if( !NPC.AnyNPCs( NPCID.WitchDoctor ) ) {
 				return true;
+			}
+
+			// Already done?
+			bool isWofFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.SummonWoFTitle );
+			if( isWofFinished ) {
+				if( objSummonWoF == null ) {   // Be sure objective is also declared
+					ObjectivesAPI.AddObjective( ProgressionLogic.SummonWoF(), 0, true, out _ );
+				}
+				return false;
 			}
 
 			/***********************/
@@ -43,6 +55,12 @@ namespace AdventureModeLore {
 
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.WitchDoctor, ( string msg, out bool alert ) => {
+				// Only show NPC alert icon
+				if( conveyance <= 3 && string.IsNullOrEmpty(msg) ) {
+					alert = true;
+					return msg;
+				}
+
 				switch( conveyance++ ) {
 				case 0:
 					alert = true;
@@ -64,14 +82,11 @@ namespace AdventureModeLore {
 						+ " you may not like what you will hear next.";
 				case 3:
 					// 06 - Summon WoF
-					Objective objSummonWoF = ObjectivesAPI.GetObjective( ProgressionLogic.SummonWoFTitle );
-					if( objSummonWoF?.IsComplete != true ) {
-						if( objSummonWoF == null ) {
-							ObjectivesAPI.AddObjective( ProgressionLogic.SummonWoF(), 0, true, out _ );
-						}
+					if( objSummonWoF == null ) {
+						ObjectivesAPI.AddObjective( ProgressionLogic.SummonWoF(), 0, true, out _ );
 					}
 
-					alert = true;
+					alert = false;
 					return "You must find a living descendant of the ones responsible for placing the fateful seal upon"
 						+ " the dead, and sacrifice their soul to these spirits. I will show you the ritual. Alas, a"
 						+ " person of whom I speak resides among you as a trusted companion. One who has been with you"
@@ -79,6 +94,8 @@ namespace AdventureModeLore {
 						+ " soul.";
 				default:
 					alert = false;
+
+					NPCChat.SetPriorityChat( NPCID.WitchDoctor, func );
 					return func?.Invoke( msg, out alert ) ?? msg;
 				}
 			} );

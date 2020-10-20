@@ -7,10 +7,10 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	partial class ProgressionLogic {
+	public partial class ProgressionLogic {
 		public static string FindGoblinTitle => "Talk To A Goblin";
 
-		public static Objective FindGoblin() {
+		internal static Objective FindGoblin() {
 			return new FlatObjective(
 				title: ProgressionLogic.FindGoblinTitle,
 				description: "It would seem there are natives in this land, if you'd call them that. Try to"
@@ -25,12 +25,23 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run03_200hp() {
+			Objective objFindGoblin = ObjectivesAPI.GetObjective( ProgressionLogic.FindGoblinTitle );
+
 			/***********************/
 			/**** Conditions:	****/
 			/***********************/
 
+			// Not ready yet?
 			if( Main.LocalPlayer.statLifeMax < 200 ) {
 				return true;
+			}
+
+			// Already done?
+			if( ObjectivesAPI.IsFinishedObjective(ProgressionLogic.FindGoblinTitle) ) {
+				if( objFindGoblin == null ) {   // Be sure objective is also declared
+					ObjectivesAPI.AddObjective( ProgressionLogic.FindGoblin(), 0, true, out _ );
+				}
+				return false;
 			}
 
 			/***********************/
@@ -42,6 +53,7 @@ namespace AdventureModeLore {
 
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.Guide, ( string msg, out bool alert ) => {
+				// Only show NPC alert icon
 				alert = conveyance;
 				if( alert && string.IsNullOrEmpty(msg) ) {
 					return msg;
@@ -49,11 +61,8 @@ namespace AdventureModeLore {
 
 				if( conveyance ) {
 					// 03 - Find goblin tinkerer
-					Objective objFindGoblin = ObjectivesAPI.GetObjective( ProgressionLogic.FindGoblinTitle );
-					if( objFindGoblin?.IsComplete != true ) {
-						if( objFindGoblin == null ) {
-							ObjectivesAPI.AddObjective( ProgressionLogic.FindGoblin(), 0, true, out _ );
-						}
+					if( objFindGoblin == null ) {
+						ObjectivesAPI.AddObjective( ProgressionLogic.FindGoblin(), 0, true, out _ );
 					}
 
 					conveyance = false;
@@ -62,6 +71,7 @@ namespace AdventureModeLore {
 						+" We must find a way to communicate with them directly."
 						+" I fear our presence here might be taken the wrong way!";
 				} else {
+					NPCChat.SetPriorityChat( NPCID.Guide, func );
 					return func?.Invoke( msg, out alert ) ?? msg;
 				}
 			} );

@@ -9,10 +9,10 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	partial class ProgressionLogic {
+	public partial class ProgressionLogic {
 		public static string KillCorruptionBossTitle => "Defeat The "+(WorldGen.crimson?"Crimson":"Corruption")+"'s Guardian";
 
-		public static Objective KillCorruptionBoss() {
+		internal static Objective KillCorruptionBoss() {
 			return new FlatObjective(
 				title: ProgressionLogic.KillCorruptionBossTitle,
 				description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will need to be stopped, or else the plague"
@@ -28,7 +28,7 @@ namespace AdventureModeLore {
 
 		public static string ReachUnderworldTitle => "Reach Underworld";
 
-		public static Objective ReachUnderworld() {
+		internal static Objective ReachUnderworld() {
 			return new FlatObjective(
 				title: ProgressionLogic.ReachUnderworldTitle,
 				description: "It would seem the source of the plague is deep underground. You must find it.",
@@ -42,12 +42,29 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run04_Dryad() {
+			Objective objKillCorrBoss = ObjectivesAPI.GetObjective( ProgressionLogic.KillCorruptionBossTitle );
+			Objective objReachUnderworld = ObjectivesAPI.GetObjective( ProgressionLogic.ReachUnderworldTitle );
+
 			/***********************/
 			/**** Conditions:	****/
 			/***********************/
 
+			// Not ready yet?
 			if( !NPC.AnyNPCs(NPCID.Dryad) ) {
 				return true;
+			}
+
+			// Already done?
+			bool isCorrFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.KillCorruptionBossTitle );
+			bool isUnderFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.ReachUnderworldTitle );
+			if( isCorrFinished || isUnderFinished ) {
+				if( objKillCorrBoss == null ) {   // Be sure objective is also declared
+					ObjectivesAPI.AddObjective( ProgressionLogic.KillCorruptionBoss(), 0, true, out _ );
+				}
+				if( objReachUnderworld == null ) {   // Be sure objective is also declared
+					ObjectivesAPI.AddObjective( ProgressionLogic.ReachUnderworld(), 0, true, out _ );
+				}
+				return false;
 			}
 
 			/***********************/
@@ -55,43 +72,41 @@ namespace AdventureModeLore {
 			/***********************/
 
 			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Dryad );
-			bool conveyance1 = true;
-			bool conveyance2 = true;
+			int conveyance = 0;
 
 			// Dialogues
 			NPCChat.SetPriorityChat( NPCID.Dryad, ( string msg, out bool alert ) => {
-				alert = conveyance1 || conveyance2;
-				if( alert && string.IsNullOrEmpty(msg) ) {
+				// Only show NPC alert icon
+				if( conveyance <= 1 && string.IsNullOrEmpty(msg) ) {
+					alert = true;
 					return msg;
 				}
 
-				if( conveyance1 ) {
+				switch( conveyance++ ) {
+				case 0:
 					// 04a - Kill EoW/BoC
-					Objective objKillCorrBoss = ObjectivesAPI.GetObjective( ProgressionLogic.KillCorruptionBossTitle );
-					if( objKillCorrBoss?.IsComplete != true ) {
-						if( objKillCorrBoss == null ) {
-							ObjectivesAPI.AddObjective( ProgressionLogic.KillCorruptionBoss(), 0, true, out _ );
-						}
+					if( objKillCorrBoss == null ) {
+						ObjectivesAPI.AddObjective( ProgressionLogic.KillCorruptionBoss(), 0, true, out _ );
 					}
 
-					conveyance1 = false;
+					alert = true;
 					return "I see you are here to stop the undeath plague. Might I suggest you first start with the "
 						+(WorldGen.crimson?"crimson":"corruption")+" areas that have begun appearing in this land."
 						+" If these aren't stopped soon, evil essence will spread far and wide, and the plague along with it.";
-				} else if( conveyance2 ) {
+				case 1:
 					// 04b - Reach underworld
-					Objective objReachUnderworld = ObjectivesAPI.GetObjective( ProgressionLogic.ReachUnderworldTitle );
-					if( objReachUnderworld?.IsComplete != true ) {
-						if( objReachUnderworld == null ) {
-							ObjectivesAPI.AddObjective( ProgressionLogic.ReachUnderworld(), 0, true, out _ );
-						}
+					if( objReachUnderworld == null ) {
+						ObjectivesAPI.AddObjective( ProgressionLogic.ReachUnderworld(), 0, true, out _ );
 					}
 
-					conveyance2 = false;
+					alert = false;
 					return "There are many contributing factors, but the main source of your so-called \"plague\" is from"
 						+" the furthest depths of the world itself. It will an endeavor just to make it there. May the"
 						+" blessings of nature be with you!";
-				} else {
+				default:
+					alert = false;
+
+					NPCChat.SetPriorityChat( NPCID.Dryad, func );
 					return func?.Invoke( msg, out alert ) ?? msg;
 				}
 			} );

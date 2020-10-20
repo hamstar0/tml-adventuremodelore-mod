@@ -9,10 +9,10 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	partial class ProgressionLogic {
+	public partial class ProgressionLogic {
 		public static string InvestigateDungeonTitle => "Investigate Dungeon";
 
-		public static Objective InvestigateDungeon() {
+		internal static Objective InvestigateDungeon() {
 			return new FlatObjective(
 				title: ProgressionLogic.InvestigateDungeonTitle,
 				description: "There appears to be a large, ominous structure with a suspicious old man"
@@ -28,7 +28,7 @@ namespace AdventureModeLore {
 							return false;
 						}
 
-						return (plr.position - oldMan.position).LengthSquared() < (256f * 256f);
+						return ( plr.position - oldMan.position ).LengthSquared() < ( 256f * 256f );
 					} );
 				}
 			);
@@ -38,30 +38,30 @@ namespace AdventureModeLore {
 		////////////////
 
 		internal static bool Run00_Guide() {
-			/***********************/
-			/**** Conditions:	****/
-			/***********************/
-
-			if( ObjectivesAPI.HasObjective(ProgressionLogic.InvestigateDungeonTitle) ) {
-				return false;
+			if( ObjectivesAPI.IsFinishedObjective( ProgressionLogic.InvestigateDungeonTitle ) ) {
+				ProgressionLogic.Run00_Guide_Actions_ObjectiveFinished();
+			} else {
+				ProgressionLogic.Run00_Guide_Actions_ObjectiveUnfinished();
 			}
 
-			/***********************/
-			/**** Actions:		****/
-			/***********************/
+			return false;
+		}
 
+		////
+
+		private static void Run00_Guide_Actions_ObjectiveUnfinished() {
 			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Guide );
-			bool conveyAlert = true;
+			bool conveyance = true;
 
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.Guide, (string msg, out bool alert) => {
-				alert = conveyAlert;
+				// Only show NPC alert icon
+				alert = conveyance;
 				if( alert && string.IsNullOrEmpty(msg) ) {
 					return msg;
 				}
 
-				if( conveyAlert ) {
-					// 00 Objective: Investigate Dungeon
+				if( conveyance ) {
 					ObjectivesAPI.AddObjective(
 						objective: ProgressionLogic.InvestigateDungeon(),
 						order: -1,
@@ -69,15 +69,23 @@ namespace AdventureModeLore {
 						out string _
 					);
 
-					conveyAlert = false;
+					conveyance = false;
 					return "Before the attack, reports came in of a large brick structure on the island a bit inland."
 						+" Perhaps we should check it out?";
 				} else {
+					NPCChat.SetPriorityChat( NPCID.Guide, func );
 					return func?.Invoke( msg, out alert ) ?? msg;
 				}
 			} );
+		}
 
-			return false;
+		private static void Run00_Guide_Actions_ObjectiveFinished() {
+			ObjectivesAPI.AddObjective(
+				objective: ProgressionLogic.InvestigateDungeon(),
+				order: -1,
+				alertPlayer: true,
+				out string _
+			);
 		}
 	}
 }

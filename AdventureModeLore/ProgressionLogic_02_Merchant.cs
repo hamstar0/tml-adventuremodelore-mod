@@ -10,10 +10,10 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	partial class ProgressionLogic {
+	public partial class ProgressionLogic {
 		public static string FindOrbTitle => "Find an Orb";
 
-		public static Objective FindOrb() {
+		internal static Objective FindOrb() {
 			return new FlatObjective(
 				title: ProgressionLogic.FindOrbTitle,
 				description: "It seems the land itself is enchanted. Sacred orbs appear to resonate with"
@@ -44,27 +44,38 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run02_Merchant() {
+			Objective objFindMerch = ObjectivesAPI.GetObjective( ProgressionLogic.FindMerchantTitle );
+			Objective objReachJungle = ObjectivesAPI.GetObjective( ProgressionLogic.ReachJungleTitle );
+
+			Objective objFindOrb = ObjectivesAPI.GetObjective( ProgressionLogic.FindOrbTitle );
+
 			/***********************/
 			/**** Conditions:	****/
 			/***********************/
 
-			Objective objFindMerch = ObjectivesAPI.GetObjective( ProgressionLogic.FindMerchantTitle );
+			// Not ready yet?
 			if( objFindMerch?.IsComplete != true ) {
 				return true;
+			}
+
+			// Already done?
+			if( ObjectivesAPI.IsFinishedObjective(ProgressionLogic.FindOrbTitle) ) {
+				if( objFindOrb == null ) {	// Be sure objective is also declared
+					ObjectivesAPI.AddObjective( ProgressionLogic.FindOrb(), 0, true, out _ );
+				}
+				return false;
 			}
 
 			/***********************/
 			/**** Actions:		****/
 			/***********************/
 
-			Objective objReachJungle = ObjectivesAPI.GetObjective( ProgressionLogic.ReachJungleTitle );
-			Objective objBuildHouse = ObjectivesAPI.GetObjective( ProgressionLogic.FindMerchantTitle );
-			
 			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Merchant );
 			bool conveyance = true;
 
 			// Dialogue
 			NPCChat.SetPriorityChat( NPCID.Merchant, ( string msg, out bool alert ) => {
+				// Only show NPC alert icon
 				alert = conveyance;
 				if( alert && string.IsNullOrEmpty(msg) ) {
 					return msg;
@@ -72,13 +83,8 @@ namespace AdventureModeLore {
 
 				if( conveyance ) {
 					// 02 - Find an Orb
-					Objective objFindOrb = ObjectivesAPI.GetObjective( ProgressionLogic.FindOrbTitle );
-					if( objFindOrb?.IsComplete != true ) {
-						if( objFindOrb == null ) {
-							if( objReachJungle?.IsComplete == true && objBuildHouse?.IsComplete == true ) {
-								ObjectivesAPI.AddObjective( ProgressionLogic.FindOrb(), 0, true, out _ );
-							}
-						}
+					if( objFindOrb == null ) {
+						ObjectivesAPI.AddObjective( ProgressionLogic.FindOrb(), 0, true, out _ );
 					}
 
 					conveyance = false;
@@ -86,6 +92,7 @@ namespace AdventureModeLore {
 						+" This land is enchanted, and most areas can be accessed by using sacred magic orbs."
 						+" These can often be found accompanying other treasures. Strange, huh?";
 				} else {
+					NPCChat.SetPriorityChat( NPCID.Merchant, func );
 					return func?.Invoke( msg, out alert ) ?? msg;
 				}
 			} );
