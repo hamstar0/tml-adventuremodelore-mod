@@ -81,7 +81,7 @@ namespace AdventureModeLore {
 					return msg;
 				}
 				
-				switch( conveyance ) {
+				switch( conveyance++ ) {
 				case 0:
 					// 01b Objective: Find Merchant
 					if( objFindMerch == null ) {

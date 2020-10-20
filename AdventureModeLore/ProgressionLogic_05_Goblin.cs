@@ -80,7 +80,7 @@ namespace AdventureModeLore {
 					return msg;
 				}
 
-				switch( conveyance ) {
+				switch( conveyance++ ) {
 				case 0:
 					alert = true;
 					return "Sorry, I cannot be of much assistance in diplomacy with my former tribe. I doubt they would have"
