@@ -9,7 +9,7 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore {
+namespace AdventureModeLore.Logic {
 	public partial class AMLLogic : ILoadable {
 		public static string KillCorruptionBossTitle => "Defeat The "+(WorldGen.crimson?"Crimson":"Corruption")+"'s Guardian";
 

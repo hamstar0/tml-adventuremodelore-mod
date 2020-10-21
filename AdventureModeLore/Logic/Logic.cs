@@ -8,7 +8,7 @@ using HamstarHelpers.Helpers.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore {
+namespace AdventureModeLore.Logic {
 	public partial class AMLLogic : ILoadable {
 		public static void Initialize() {
 			var logic = ModContent.GetInstance<AMLLogic>();

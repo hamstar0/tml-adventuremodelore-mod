@@ -10,7 +10,7 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore {
+namespace AdventureModeLore.Logic {
 	public partial class AMLLogic : ILoadable {
 		public static string FindOrbTitle => "Find an Orb";
 

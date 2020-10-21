@@ -2,6 +2,7 @@
 using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Classes.PlayerData;
+using AdventureModeLore.Logic;
 
 
 namespace AdventureModeLore {
