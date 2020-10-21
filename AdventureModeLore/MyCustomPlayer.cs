@@ -7,7 +7,7 @@ using HamstarHelpers.Classes.PlayerData;
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
-			ProgressionLogic.Initialize();
+			AMLLogic.Initialize();
 		}
 	}
 }

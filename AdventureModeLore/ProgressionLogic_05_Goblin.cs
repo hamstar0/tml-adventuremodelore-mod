@@ -1,18 +1,19 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Services.NPCChat;
 using Objectives;
 using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	public partial class ProgressionLogic {
+	public partial class AMLLogic : ILoadable {
 		public static string FindMechanicTitle => "Find Nechanic";
 
 		internal static Objective FindMechanic() {
 			return new FlatObjective(
-				title: ProgressionLogic.FindMechanicTitle,
+				title: AMLLogic.FindMechanicTitle,
 				description: "Rumors exist of a plan to empower technology with the dungeon's spiritual"
 					+ "\n" + "energies. This could be disasterous. Liberate the engineer.",
 				condition: ( obj ) => {
@@ -27,7 +28,7 @@ namespace AdventureModeLore {
 
 		internal static Objective FindWitchDoctor() {
 			return new FlatObjective(
-				title: ProgressionLogic.FindWitchDoctorTitle,
+				title: AMLLogic.FindWitchDoctorTitle,
 				description: "A mysterious lizard-man sorcerer may know the plague's secret. Some"
 					+ "\n" + "powerful monster in the jungle has put him into hiding, though.",
 				condition: ( obj ) => {
@@ -40,8 +41,8 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run05_Goblin() {
-			Objective objFindMechanicBoss = ObjectivesAPI.GetObjective( ProgressionLogic.FindMechanicTitle );
-			Objective objFindWitchDoctor = ObjectivesAPI.GetObjective( ProgressionLogic.FindWitchDoctorTitle );
+			Objective objFindMechanicBoss = ObjectivesAPI.GetObjective( AMLLogic.FindMechanicTitle );
+			Objective objFindWitchDoctor = ObjectivesAPI.GetObjective( AMLLogic.FindWitchDoctorTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -53,14 +54,14 @@ namespace AdventureModeLore {
 			}
 
 			// Already done?
-			bool isMechFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.FindMechanicTitle );
-			bool isWitchinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.FindWitchDoctorTitle );
+			bool isMechFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindMechanicTitle );
+			bool isWitchinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindWitchDoctorTitle );
 			if( isMechFinished || isWitchinished ) {
 				if( objFindMechanicBoss == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.FindMechanic(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
 				}
 				if( objFindWitchDoctor == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.FindWitchDoctor(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.FindWitchDoctor(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -88,7 +89,7 @@ namespace AdventureModeLore {
 				case 1:
 					// 05a - Find mechanic
 					if( objFindMechanicBoss == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.FindMechanic(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
 					}
 
 					alert = true;
@@ -99,7 +100,7 @@ namespace AdventureModeLore {
 				case 2:
 					// 05b - Find Witch Doctor
 					if( objFindWitchDoctor == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.FindWitchDoctor(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.FindWitchDoctor(), 0, true, out _ );
 					}
 
 					alert = false;

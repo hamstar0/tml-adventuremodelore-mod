@@ -1,18 +1,19 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Services.NPCChat;
 using Objectives;
 using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	public partial class ProgressionLogic {
+	public partial class AMLLogic : ILoadable {
 		public static string SummonWoFTitle => "Sacrifice Voodoo Doll";
 
 		internal static Objective SummonWoF() {
 			return new FlatObjective(
-				title: ProgressionLogic.FindWitchDoctorTitle,
+				title: AMLLogic.FindWitchDoctorTitle,
 				description: "The witch doctor describes a ritual to destroy the spiritual energy"
 					+ "\n" + "confluence; the source of the plague. It involves a voodoo sacrifice"
 					+ "\n" + "of one of its makers near its source: The underworld.",
@@ -26,7 +27,7 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run06_WitchDoctor() {
-			Objective objSummonWoF = ObjectivesAPI.GetObjective( ProgressionLogic.SummonWoFTitle );
+			Objective objSummonWoF = ObjectivesAPI.GetObjective( AMLLogic.SummonWoFTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -38,10 +39,10 @@ namespace AdventureModeLore {
 			}
 
 			// Already done?
-			bool isWofFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.SummonWoFTitle );
+			bool isWofFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.SummonWoFTitle );
 			if( isWofFinished ) {
 				if( objSummonWoF == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.SummonWoF(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.SummonWoF(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -83,7 +84,7 @@ namespace AdventureModeLore {
 				case 3:
 					// 06 - Summon WoF
 					if( objSummonWoF == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.SummonWoF(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.SummonWoF(), 0, true, out _ );
 					}
 
 					alert = false;

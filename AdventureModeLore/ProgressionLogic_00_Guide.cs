@@ -2,6 +2,7 @@
 using System.Linq;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.NPCChat;
 using Objectives;
@@ -9,12 +10,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	public partial class ProgressionLogic {
+	public partial class AMLLogic : ILoadable {
 		public static string InvestigateDungeonTitle => "Investigate Dungeon";
 
 		internal static Objective InvestigateDungeon() {
 			return new FlatObjective(
-				title: ProgressionLogic.InvestigateDungeonTitle,
+				title: AMLLogic.InvestigateDungeonTitle,
 				description: "There appears to be a large, ominous structure with a suspicious old man"
 					+ "\n" + "wandering around it's entrance. Recommend an investigation.",
 				condition: ( obj ) => {
@@ -38,10 +39,10 @@ namespace AdventureModeLore {
 		////////////////
 
 		internal static bool Run00_Guide() {
-			if( ObjectivesAPI.IsFinishedObjective( ProgressionLogic.InvestigateDungeonTitle ) ) {
-				ProgressionLogic.Run00_Guide_Actions_ObjectiveFinished();
+			if( ObjectivesAPI.IsFinishedObjective( AMLLogic.InvestigateDungeonTitle ) ) {
+				AMLLogic.Run00_Guide_Actions_ObjectiveFinished();
 			} else {
-				ProgressionLogic.Run00_Guide_Actions_ObjectiveUnfinished();
+				AMLLogic.Run00_Guide_Actions_ObjectiveUnfinished();
 			}
 
 			return false;
@@ -63,7 +64,7 @@ namespace AdventureModeLore {
 
 				if( conveyance ) {
 					ObjectivesAPI.AddObjective(
-						objective: ProgressionLogic.InvestigateDungeon(),
+						objective: AMLLogic.InvestigateDungeon(),
 						order: -1,
 						alertPlayer: true,
 						out string _
@@ -81,7 +82,7 @@ namespace AdventureModeLore {
 
 		private static void Run00_Guide_Actions_ObjectiveFinished() {
 			ObjectivesAPI.AddObjective(
-				objective: ProgressionLogic.InvestigateDungeon(),
+				objective: AMLLogic.InvestigateDungeon(),
 				order: -1,
 				alertPlayer: true,
 				out string _

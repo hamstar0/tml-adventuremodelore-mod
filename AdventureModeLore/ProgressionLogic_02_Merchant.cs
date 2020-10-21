@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Players;
 using HamstarHelpers.Services.NPCChat;
 using Objectives;
@@ -10,12 +11,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	public partial class ProgressionLogic {
+	public partial class AMLLogic : ILoadable {
 		public static string FindOrbTitle => "Find an Orb";
 
 		internal static Objective FindOrb() {
 			return new FlatObjective(
-				title: ProgressionLogic.FindOrbTitle,
+				title: AMLLogic.FindOrbTitle,
 				description: "It seems the land itself is enchanted. Sacred orbs appear to resonate with"
 					+ "\n" + "terrain. Maybe this will be of help?",
 				condition: ( obj ) => {
@@ -44,10 +45,10 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run02_Merchant() {
-			Objective objFindMerch = ObjectivesAPI.GetObjective( ProgressionLogic.FindMerchantTitle );
-			Objective objReachJungle = ObjectivesAPI.GetObjective( ProgressionLogic.ReachJungleTitle );
+			Objective objFindMerch = ObjectivesAPI.GetObjective( AMLLogic.FindMerchantTitle );
+			Objective objReachJungle = ObjectivesAPI.GetObjective( AMLLogic.ReachJungleTitle );
 
-			Objective objFindOrb = ObjectivesAPI.GetObjective( ProgressionLogic.FindOrbTitle );
+			Objective objFindOrb = ObjectivesAPI.GetObjective( AMLLogic.FindOrbTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -59,9 +60,9 @@ namespace AdventureModeLore {
 			}
 
 			// Already done?
-			if( ObjectivesAPI.IsFinishedObjective(ProgressionLogic.FindOrbTitle) ) {
+			if( ObjectivesAPI.IsFinishedObjective(AMLLogic.FindOrbTitle) ) {
 				if( objFindOrb == null ) {	// Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.FindOrb(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.FindOrb(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -84,7 +85,7 @@ namespace AdventureModeLore {
 				if( conveyance ) {
 					// 02 - Find an Orb
 					if( objFindOrb == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.FindOrb(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.FindOrb(), 0, true, out _ );
 					}
 
 					conveyance = false;

@@ -49,7 +49,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			ProgressionLogic.Run();
+			AMLLogic.Run();
 		}
 	}
 }

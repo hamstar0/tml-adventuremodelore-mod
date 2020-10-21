@@ -1,18 +1,19 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Services.NPCChat;
 using Objectives;
 using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	public partial class ProgressionLogic {
+	public partial class AMLLogic : ILoadable {
 		public static string FindMerchantTitle => "Find The Merchant";
 
 		internal static Objective FindMerchant() {
 			return new FlatObjective(
-				title: ProgressionLogic.FindMerchantTitle,
+				title: AMLLogic.FindMerchantTitle,
 				description: "Other inhabitants exist in this land, some less enslaved than others. Build a"
 					+ "\n" + "house for the merchant to settle in.",
 				condition: ( obj ) => {
@@ -27,7 +28,7 @@ namespace AdventureModeLore {
 
 		internal static Objective ReachJungle() {
 			return new FlatObjective(
-				title: ProgressionLogic.ReachJungleTitle,
+				title: AMLLogic.ReachJungleTitle,
 				description: "The old man says there's something suspicious in the jungle. Maybe take a look?",
 				condition: ( obj ) => {
 					return Main.LocalPlayer.ZoneJungle;
@@ -39,10 +40,10 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run01_OldMan() {
-			Objective objInvesDung = ObjectivesAPI.GetObjective( ProgressionLogic.InvestigateDungeonTitle );
+			Objective objInvesDung = ObjectivesAPI.GetObjective( AMLLogic.InvestigateDungeonTitle );
 
-			Objective objReachJungle = ObjectivesAPI.GetObjective( ProgressionLogic.ReachJungleTitle );
-			Objective objFindMerch = ObjectivesAPI.GetObjective( ProgressionLogic.FindMerchantTitle );
+			Objective objReachJungle = ObjectivesAPI.GetObjective( AMLLogic.ReachJungleTitle );
+			Objective objFindMerch = ObjectivesAPI.GetObjective( AMLLogic.FindMerchantTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -54,14 +55,14 @@ namespace AdventureModeLore {
 			}
 
 			// Already done?
-			bool isJungFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.ReachJungleTitle );
-			bool isMerchFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.FindMerchantTitle );
+			bool isJungFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.ReachJungleTitle );
+			bool isMerchFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindMerchantTitle );
 			if( isJungFinished || isMerchFinished ) {
 				if( objReachJungle == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.ReachJungle(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.ReachJungle(), 0, true, out _ );
 				}
 				if( objFindMerch == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.FindMerchant(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.FindMerchant(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -85,7 +86,7 @@ namespace AdventureModeLore {
 				case 0:
 					// 01b Objective: Find Merchant
 					if( objFindMerch == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.FindMerchant(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.FindMerchant(), 0, true, out _ );
 					}
 
 					alert = true;
@@ -95,7 +96,7 @@ namespace AdventureModeLore {
 				case 1:
 					// 01a Objective: Reach Jungle
 					if( objReachJungle == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.ReachJungle(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.ReachJungle(), 0, true, out _ );
 					}
 
 					alert = false;

@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.NPCs;
 using HamstarHelpers.Helpers.World;
 using HamstarHelpers.Services.NPCChat;
@@ -9,12 +10,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore {
-	public partial class ProgressionLogic {
+	public partial class AMLLogic : ILoadable {
 		public static string KillCorruptionBossTitle => "Defeat The "+(WorldGen.crimson?"Crimson":"Corruption")+"'s Guardian";
 
 		internal static Objective KillCorruptionBoss() {
 			return new FlatObjective(
-				title: ProgressionLogic.KillCorruptionBossTitle,
+				title: AMLLogic.KillCorruptionBossTitle,
 				description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will need to be stopped, or else the plague"
 					+ "\n" + "will spread.",
 				condition: ( obj ) => {
@@ -30,7 +31,7 @@ namespace AdventureModeLore {
 
 		internal static Objective ReachUnderworld() {
 			return new FlatObjective(
-				title: ProgressionLogic.ReachUnderworldTitle,
+				title: AMLLogic.ReachUnderworldTitle,
 				description: "It would seem the source of the plague is deep underground. You must find it.",
 				condition: ( obj ) => {
 					return Main.LocalPlayer.position.Y >= ( WorldHelpers.UnderworldLayerTopTileY * 16 );
@@ -42,8 +43,8 @@ namespace AdventureModeLore {
 		////////////////
 
 		private static bool Run04_Dryad() {
-			Objective objKillCorrBoss = ObjectivesAPI.GetObjective( ProgressionLogic.KillCorruptionBossTitle );
-			Objective objReachUnderworld = ObjectivesAPI.GetObjective( ProgressionLogic.ReachUnderworldTitle );
+			Objective objKillCorrBoss = ObjectivesAPI.GetObjective( AMLLogic.KillCorruptionBossTitle );
+			Objective objReachUnderworld = ObjectivesAPI.GetObjective( AMLLogic.ReachUnderworldTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -55,14 +56,14 @@ namespace AdventureModeLore {
 			}
 
 			// Already done?
-			bool isCorrFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.KillCorruptionBossTitle );
-			bool isUnderFinished = ObjectivesAPI.IsFinishedObjective( ProgressionLogic.ReachUnderworldTitle );
+			bool isCorrFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.KillCorruptionBossTitle );
+			bool isUnderFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.ReachUnderworldTitle );
 			if( isCorrFinished || isUnderFinished ) {
 				if( objKillCorrBoss == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.KillCorruptionBoss(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.KillCorruptionBoss(), 0, true, out _ );
 				}
 				if( objReachUnderworld == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( ProgressionLogic.ReachUnderworld(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( AMLLogic.ReachUnderworld(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -86,7 +87,7 @@ namespace AdventureModeLore {
 				case 0:
 					// 04a - Kill EoW/BoC
 					if( objKillCorrBoss == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.KillCorruptionBoss(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.KillCorruptionBoss(), 0, true, out _ );
 					}
 
 					alert = true;
@@ -96,7 +97,7 @@ namespace AdventureModeLore {
 				case 1:
 					// 04b - Reach underworld
 					if( objReachUnderworld == null ) {
-						ObjectivesAPI.AddObjective( ProgressionLogic.ReachUnderworld(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( AMLLogic.ReachUnderworld(), 0, true, out _ );
 					}
 
 					alert = false;
