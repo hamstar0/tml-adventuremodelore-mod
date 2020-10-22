@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Players;
-using HamstarHelpers.Services.NPCChat;
+using HamstarHelpers.Services.Dialogue;
 using Objectives;
 using Objectives.Definitions;
 
@@ -71,32 +71,32 @@ namespace AdventureModeLore.Logic {
 			/**** Actions:		****/
 			/***********************/
 
-			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Merchant );
+			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.Merchant );
 			bool conveyance = true;
 
 			// Dialogue
-			NPCChat.SetPriorityChat( NPCID.Merchant, ( string msg, out bool alert ) => {
-				// Only show NPC alert icon
-				alert = conveyance;
-				if( alert && string.IsNullOrEmpty(msg) ) {
-					return msg;
-				}
+			DialogueEditor.SetDynamicDialogueHandler( NPCID.Merchant, new DynamicDialogueHandler(
+				getDialogue: ( msg ) => {
+					if( !conveyance ) {
+						return msg;
+					}
+					conveyance = false;
 
-				if( conveyance ) {
 					// 02 - Find an Orb
 					if( objFindOrb == null ) {
 						ObjectivesAPI.AddObjective( AMLLogic.FindOrb(), 0, true, out _ );
 					}
 
-					conveyance = false;
+					if( oldHandler != null ) {
+						DialogueEditor.SetDynamicDialogueHandler( NPCID.Merchant, oldHandler );
+					}
+
 					return "I go where the money is. If you're looking for some, you'll need to find treasures."
 						+" This land is enchanted, and most areas can be accessed by using sacred magic orbs."
 						+" These can often be found accompanying other treasures. Strange, huh?";
-				} else {
-					NPCChat.SetPriorityChat( NPCID.Merchant, func );
-					return func?.Invoke( msg, out alert ) ?? msg;
-				}
-			} );
+				},
+				isShowingAlert: () => true
+			) );
 
 			return false;
 		}

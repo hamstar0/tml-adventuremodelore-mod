@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Services.NPCChat;
+using HamstarHelpers.Services.Dialogue;
 using Objectives;
 using Objectives.Definitions;
 
@@ -65,55 +65,49 @@ namespace AdventureModeLore.Logic {
 				}
 				return false;
 			}
-			
+
 			/***********************/
 			/**** Actions:		****/
 			/***********************/
 
-			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.GoblinTinkerer );
+			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.GoblinTinkerer );
 			int conveyance = 0;
 
 			// Dialogue
-			NPCChat.SetPriorityChat( NPCID.GoblinTinkerer, ( string msg, out bool alert ) => {
-				// Only show NPC alert icon
-				if( conveyance <= 2 && string.IsNullOrEmpty( msg ) ) {
-					alert = true;
+			DialogueEditor.SetDynamicDialogueHandler( NPCID.GoblinTinkerer, new DynamicDialogueHandler(
+				getDialogue: ( msg ) => {
+					switch( conveyance++ ) {
+					case 0:
+						return "Sorry, I cannot be of much assistance in diplomacy with my former tribe. I doubt they would have"
+							+" an open mind, anyhow.";
+					case 1:
+						// 05a - Find mechanic
+						if( objFindMechanicBoss == null ) {
+							ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
+						}
+
+						return "I have urgent information for you: An unknown faction basing within the dungeon is attempting"
+							+" to infuse spiritual energy into advanced machinery. The undeath plague will be"
+							+" nothing compared to the devestation this will unleash! They must be receiving outside help."
+							+" Find their engineer!";
+					case 2:
+						// 05b - Find Witch Doctor
+						if( objFindWitchDoctor == null ) {
+							ObjectivesAPI.AddObjective( AMLLogic.FindWitchDoctor(), 0, true, out _ );
+						}
+
+						if( oldHandler != null ) {
+							DialogueEditor.SetDynamicDialogueHandler( NPCID.GoblinTinkerer, oldHandler );
+						}
+
+						return "I know little about the undeath plague, but I do know of another inhabitant of these lands who"
+							+" may: A lone witch doctor residing in the jungle. Unfortunately, he has gone into hiding on"
+							+" on account of powerful monsters now residing in the jungle.";
+					}
 					return msg;
-				}
-
-				switch( conveyance++ ) {
-				case 0:
-					alert = true;
-					return "Sorry, I cannot be of much assistance in diplomacy with my former tribe. I doubt they would have"
-						+" an open mind, anyhow.";
-				case 1:
-					// 05a - Find mechanic
-					if( objFindMechanicBoss == null ) {
-						ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
-					}
-
-					alert = true;
-					return "I have urgent information for you: An unknown faction basing within the dungeon is attempting"
-						+" to infuse spiritual energy into advanced machinery. The undeath plague will be"
-						+" nothing compared to the devestation this will unleash! They must be receiving outside help."
-						+" Find their engineer!";
-				case 2:
-					// 05b - Find Witch Doctor
-					if( objFindWitchDoctor == null ) {
-						ObjectivesAPI.AddObjective( AMLLogic.FindWitchDoctor(), 0, true, out _ );
-					}
-
-					alert = false;
-					return "I know little about the undeath plague, but I do know of another inhabitant of these lands who"
-						+" may: A lone witch doctor residing in the jungle. Unfortunately, he has gone into hiding on"
-						+" on account of powerful monsters now residing in the jungle.";
-				default:
-					alert = false;
-
-					NPCChat.SetPriorityChat( NPCID.GoblinTinkerer, func );
-					return func?.Invoke( msg, out alert ) ?? msg;
-				}
-			} );
+				},
+				isShowingAlert: () => true
+			) );
 
 			return false;
 		}

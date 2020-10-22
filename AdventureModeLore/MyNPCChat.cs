@@ -6,7 +6,7 @@ using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.DotNET.Extensions;
 using HamstarHelpers.Helpers.TModLoader;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.NPCChat;
+using HamstarHelpers.Services.Dialogue;
 
 
 namespace AdventureModeLore {
@@ -79,10 +79,10 @@ namespace AdventureModeLore {
 		public void OnPostModsLoad() {
 			foreach( (int npcType, NPCDialogueDefinitions chats) in this.NPCDialogues ) {
 				foreach( string addedChat in chats.Added ) {
-					NPCChat.AddChatForNPC( npcType, addedChat, 0.1f );
+					DialogueEditor.AddChatForNPC( npcType, addedChat, 0.1f );
 				}
 				foreach( string blockedChat in chats.Blocked ) {
-					NPCChat.AddChatRemoveFlatPatternForNPC( npcType, blockedChat );
+					DialogueEditor.AddChatRemoveFlatPatternForNPC( npcType, blockedChat );
 				}
 			}
 		}
@@ -92,38 +92,32 @@ namespace AdventureModeLore {
 
 		////////////////
 
-		private ProcessMessage GetGreetingFunc( int npcType, string[] consumableGreetings ) {
+		private DynamicDialogueHandler GetGreetingFunc( int npcType, string[] consumableGreetings ) {
 			if( consumableGreetings.Length == 0 ) {
 				return null;
 			}
 
 			int i = 0;
-			
-			return ( string currentChat, out bool alert ) => {
-				string npcKey = NPCID.GetUniqueKey( npcType );
-				var myplayer = TmlHelpers.SafelyGetModPlayer<AMLPlayer>( Main.LocalPlayer );
+			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( npcType );
 
-				if( i >= consumableGreetings.Length ) {
+			return new DynamicDialogueHandler(
+				getDialogue: ( msg ) => {
+					if( i < consumableGreetings.Length ) {
+						return consumableGreetings[i++];
+					}
+
+					string npcKey = NPCID.GetUniqueKey( npcType );
+					var myplayer = TmlHelpers.SafelyGetModPlayer<AMLPlayer>( Main.LocalPlayer );
+
 					myplayer.AlreadyIntroducedNpcs.Add( npcKey );
-					alert = false;
-					return currentChat;
-				}
 
-				if( myplayer.AlreadyIntroducedNpcs.Contains(npcKey) ) {
-					alert = false;
-					return currentChat;
-				}
-
-				string greeting = consumableGreetings[i];
-
-				// Is not merely peeking to see if new chats?
-				if( currentChat != null ) {
-					i++;
-				}
-
-				alert = true;
-				return greeting;
-			};
+					if( oldHandler != null ) {
+						DialogueEditor.SetDynamicDialogueHandler( npcType, oldHandler );
+					}
+					return msg;
+				},
+				isShowingAlert: () => i < consumableGreetings.Length
+			);
 		}
 	}
 }

@@ -4,7 +4,7 @@ using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.NPCs;
 using HamstarHelpers.Helpers.World;
-using HamstarHelpers.Services.NPCChat;
+using HamstarHelpers.Services.Dialogue;
 using Objectives;
 using Objectives.Definitions;
 
@@ -72,45 +72,41 @@ namespace AdventureModeLore.Logic {
 			/**** Actions:		****/
 			/***********************/
 
-			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Dryad );
+			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.Dryad );
 			int conveyance = 0;
 
 			// Dialogues
-			NPCChat.SetPriorityChat( NPCID.Dryad, ( string msg, out bool alert ) => {
-				// Only show NPC alert icon
-				if( conveyance <= 1 && string.IsNullOrEmpty(msg) ) {
-					alert = true;
+			DialogueEditor.SetDynamicDialogueHandler( NPCID.Dryad, new DynamicDialogueHandler(
+				getDialogue: ( msg ) => {
+					switch( conveyance++ ) {
+					case 0:
+						// 04a - Kill EoW/BoC
+						if( objKillCorrBoss == null ) {
+							ObjectivesAPI.AddObjective( AMLLogic.KillCorruptionBoss(), 0, true, out _ );
+						}
+
+						return "I see you are here to stop the undeath plague. Might I suggest you first start with the "
+							+(WorldGen.crimson?"crimson":"corruption")+" areas that have begun appearing in this land."
+							+" If these aren't stopped soon, evil essence will spread far and wide, and the plague along with it.";
+					case 1:
+						// 04b - Reach underworld
+						if( objReachUnderworld == null ) {
+							ObjectivesAPI.AddObjective( AMLLogic.ReachUnderworld(), 0, true, out _ );
+						}
+
+						if( oldHandler != null ) {
+							DialogueEditor.SetDynamicDialogueHandler( NPCID.Dryad, oldHandler );
+						}
+
+						return "There are many contributing factors, but the main source of your so-called \"plague\" is from"
+							+" the furthest depths of the world itself. It will an endeavor just to make it there. May the"
+							+" blessings of nature be with you!";
+					}
+
 					return msg;
-				}
-
-				switch( conveyance++ ) {
-				case 0:
-					// 04a - Kill EoW/BoC
-					if( objKillCorrBoss == null ) {
-						ObjectivesAPI.AddObjective( AMLLogic.KillCorruptionBoss(), 0, true, out _ );
-					}
-
-					alert = true;
-					return "I see you are here to stop the undeath plague. Might I suggest you first start with the "
-						+(WorldGen.crimson?"crimson":"corruption")+" areas that have begun appearing in this land."
-						+" If these aren't stopped soon, evil essence will spread far and wide, and the plague along with it.";
-				case 1:
-					// 04b - Reach underworld
-					if( objReachUnderworld == null ) {
-						ObjectivesAPI.AddObjective( AMLLogic.ReachUnderworld(), 0, true, out _ );
-					}
-
-					alert = false;
-					return "There are many contributing factors, but the main source of your so-called \"plague\" is from"
-						+" the furthest depths of the world itself. It will an endeavor just to make it there. May the"
-						+" blessings of nature be with you!";
-				default:
-					alert = false;
-
-					NPCChat.SetPriorityChat( NPCID.Dryad, func );
-					return func?.Invoke( msg, out alert ) ?? msg;
-				}
-			} );
+				},
+				isShowingAlert: () => true
+			) );
 
 			return false;
 		}

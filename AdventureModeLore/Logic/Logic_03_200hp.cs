@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Services.NPCChat;
+using HamstarHelpers.Services.Dialogue;
 using Objectives;
 using Objectives.Definitions;
 
@@ -49,33 +49,33 @@ namespace AdventureModeLore.Logic {
 			/**** Actions:		****/
 			/***********************/
 
-			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Guide );
+			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.Guide );
 			bool conveyance = true;
 
 			// Dialogue
-			NPCChat.SetPriorityChat( NPCID.Guide, ( string msg, out bool alert ) => {
-				// Only show NPC alert icon
-				alert = conveyance;
-				if( alert && string.IsNullOrEmpty(msg) ) {
-					return msg;
-				}
+			DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, new DynamicDialogueHandler(
+				getDialogue: ( msg ) => {
+					if( !conveyance ) {
+						return msg;
+					}
+					conveyance = false;
 
-				if( conveyance ) {
 					// 03 - Find goblin tinkerer
 					if( objFindGoblin == null ) {
 						ObjectivesAPI.AddObjective( AMLLogic.FindGoblin(), 0, true, out _ );
 					}
 
-					conveyance = false;
+					if( oldHandler != null ) {
+						DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, oldHandler );
+					}
+
 					return "I have to tell you something. There are natives on this island!"
 						+" Not mere scattered survivors or profiteers, but a full blown army of goblins!"
 						+" We must find a way to communicate with them directly."
 						+" I fear our presence here might be taken the wrong way!";
-				} else {
-					NPCChat.SetPriorityChat( NPCID.Guide, func );
-					return func?.Invoke( msg, out alert ) ?? msg;
-				}
-			} );
+				},
+				isShowingAlert: () => true
+			) );
 
 			return false;
 		}

@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.NPCChat;
+using HamstarHelpers.Services.Dialogue;
 using Objectives;
 using Objectives.Definitions;
 
@@ -51,18 +51,17 @@ namespace AdventureModeLore.Logic {
 		////
 
 		private static void Run00_Guide_Actions_ObjectiveUnfinished() {
-			ProcessMessage func = NPCChat.GetPriorityChat( NPCID.Guide );
+			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.Guide );
 			bool conveyance = true;
 
 			// Dialogue
-			NPCChat.SetPriorityChat( NPCID.Guide, (string msg, out bool alert) => {
-				// Only show NPC alert icon
-				alert = conveyance;
-				if( alert && string.IsNullOrEmpty(msg) ) {
-					return msg;
-				}
+			DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, new DynamicDialogueHandler(
+				getDialogue: ( msg ) => {
+					if( !conveyance ) {
+						return msg;
+					}
+					conveyance = false;
 
-				if( conveyance ) {
 					ObjectivesAPI.AddObjective(
 						objective: AMLLogic.InvestigateDungeon(),
 						order: -1,
@@ -70,14 +69,15 @@ namespace AdventureModeLore.Logic {
 						out string _
 					);
 
-					conveyance = false;
+					if( oldHandler != null ) {
+						DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, oldHandler );
+					}
+
 					return "Before the attack, reports came in of a large brick structure on the island a bit inland."
-						+" Perhaps we should check it out?";
-				} else {
-					NPCChat.SetPriorityChat( NPCID.Guide, func );
-					return func?.Invoke( msg, out alert ) ?? msg;
-				}
-			} );
+						+ " Perhaps we should check it out?";
+				},
+				isShowingAlert: () => true
+			) );
 		}
 
 		private static void Run00_Guide_Actions_ObjectiveFinished() {
