@@ -55,8 +55,8 @@ namespace AdventureModeLore.Logic {
 
 			// Already done?
 			bool isMechFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindMechanicTitle );
-			bool isWitchinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindWitchDoctorTitle );
-			if( isMechFinished || isWitchinished ) {
+			bool isWitchFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindWitchDoctorTitle );
+			if( isMechFinished || isWitchFinished ) {
 				if( objFindMechanicBoss == null ) {   // Be sure objective is also declared
 					ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
 				}
