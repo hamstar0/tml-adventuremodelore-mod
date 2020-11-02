@@ -67,6 +67,8 @@ namespace AdventureModeLore.Logic {
 
 					if( oldHandler != null ) {
 						DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, oldHandler );
+					} else {
+						DialogueEditor.RemoveDynamicDialogueHandler( NPCID.Guide );
 					}
 
 					return "I have to tell you something. There are natives on this island!"

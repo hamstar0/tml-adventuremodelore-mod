@@ -89,6 +89,8 @@ namespace AdventureModeLore.Logic {
 
 					if( oldHandler != null ) {
 						DialogueEditor.SetDynamicDialogueHandler( NPCID.Merchant, oldHandler );
+					} else {
+						DialogueEditor.RemoveDynamicDialogueHandler( NPCID.Merchant );
 					}
 
 					return "I go where the money is. If you're looking for some, you'll need to find treasures."

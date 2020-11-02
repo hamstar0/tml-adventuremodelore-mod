@@ -81,6 +81,8 @@ namespace AdventureModeLore.Logic {
 
 						if( oldHandler != null ) {
 							DialogueEditor.SetDynamicDialogueHandler( NPCID.WitchDoctor, oldHandler );
+						} else {
+							DialogueEditor.RemoveDynamicDialogueHandler( NPCID.WitchDoctor );
 						}
 
 						return "You must find a living descendant of the ones responsible for placing the fateful seal upon"

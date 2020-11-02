@@ -96,6 +96,8 @@ namespace AdventureModeLore.Logic {
 
 						if( oldHandler != null ) {
 							DialogueEditor.SetDynamicDialogueHandler( NPCID.Dryad, oldHandler );
+						} else {
+							DialogueEditor.RemoveDynamicDialogueHandler( NPCID.Dryad );
 						}
 
 						return "There are many contributing factors, but the main source of your so-called \"plague\" is from"

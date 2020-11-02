@@ -95,6 +95,8 @@ namespace AdventureModeLore.Logic {
 
 						if( oldHandler != null ) {
 							DialogueEditor.SetDynamicDialogueHandler( NPCID.OldMan, oldHandler );
+						} else {
+							DialogueEditor.RemoveDynamicDialogueHandler( NPCID.OldMan );
 						}
 
 						return "The plague? I know nothing of this. All I know is I made a pact long ago to keep this place sealed."

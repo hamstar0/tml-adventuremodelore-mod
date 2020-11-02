@@ -71,6 +71,8 @@ namespace AdventureModeLore.Logic {
 
 					if( oldHandler != null ) {
 						DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, oldHandler );
+					} else {
+						DialogueEditor.RemoveDynamicDialogueHandler( NPCID.Guide );
 					}
 
 					return "Before the attack, reports came in of a large brick structure on the island a bit inland."

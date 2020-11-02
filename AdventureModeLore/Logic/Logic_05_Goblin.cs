@@ -98,6 +98,8 @@ namespace AdventureModeLore.Logic {
 
 						if( oldHandler != null ) {
 							DialogueEditor.SetDynamicDialogueHandler( NPCID.GoblinTinkerer, oldHandler );
+						} else {
+							DialogueEditor.RemoveDynamicDialogueHandler( NPCID.GoblinTinkerer );
 						}
 
 						return "I know little about the undeath plague, but I do know of another inhabitant of these lands who"
