@@ -18,5 +18,11 @@
     <Reference Include="Objectives">
       <HintPath>..\..\..\Objectives\Project\Objectives\bin\Release\net452\Objectives.dll</HintPath>
     </Reference>
+    <Reference Include="ReadableBooks">
+      <HintPath>..\..\..\Readable Books\Project\ReadableBooks\bin\Release\net452\ReadableBooks.dll</HintPath>
+    </Reference>
+    <Reference Include="TheMadRanger">
+      <HintPath>..\..\..\The Mad Ranger\Project\TheMadRanger\bin\Release\net452\TheMadRanger.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

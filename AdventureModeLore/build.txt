@@ -1,6 +1,7 @@
 displayName = Adventure Mode Lore
 author = hamstar
-version = 0.3.1.4
-modReferences = HamstarHelpers@5.9.6, Objectives@0.4.0
+version = 0.3.2
+modReferences = HamstarHelpers@5.9.6, Objectives@0.4.0, ReadableBooks@1.1.1
+weakReferences = TheMadRanger@1.4.1
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://forums.terraria.org/index.php?threads/adventure-mode.85140/

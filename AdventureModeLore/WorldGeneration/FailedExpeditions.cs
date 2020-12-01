@@ -1,4 +1,6 @@
 ﻿using System;
+using Terraria;
+using Terraria.ID;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
@@ -13,6 +15,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		public override void Apply( GenerationProgress progress ) {
 			int count = 14;
+			int campWidth = 8;
 
 			switch( WorldHelpers.GetSize() ) {
 			case WorldSize.SubSmall:
@@ -32,33 +35,26 @@ namespace AdventureModeLore.WorldGeneration {
 				break;
 			}
 
+			int paveTileType = TileID.Dirt;
+
 			for( int expedNum=0; expedNum<count; expedNum++ ) {
 				(int x, int y)? expedPoint = null;
 
-				for( int loop=0; loop<1000; loop++ ) {
-					expedPoint = this.FindExpeditionLocation();
-					if( !expedPoint.HasValue ) {
-						continue;
+				for( int loop=0; loop<2000; loop++ ) {
+					expedPoint = this.FindExpeditionLocation( campWidth, out paveTileType );
+					if( expedPoint.HasValue ) {
+						break;
 					}
-
-					this.GenerateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y );
-					break;
 				}
-
 				if( !expedPoint.HasValue ) {
 					LogHelpers.Log( "Could not finish generating all failed expeiditions ("+expedNum+" of "+count+")" );
 					break;
 				}
 
+				this.GenerateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+
 				progress.Value = (float)expedNum / (float)count;
 			}
-		}
-
-
-		////////////////
-
-		private void GenerateExpeditionAt( int tileX, int tileY ) {
-			f
 		}
 	}
 }
