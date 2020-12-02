@@ -8,12 +8,20 @@ using HamstarHelpers.Helpers.World;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
+		private int CurrentLoreNote = 0;
+
+
+
+		////////////////
+
 		public FailedExpeditionsGen() : base( "Failed Expeditions", 1f ) { }
 
 		
 		////
 
 		public override void Apply( GenerationProgress progress ) {
+			this.CurrentLoreNote = 0;
+
 			int count = 14;
 			int campWidth = 8;
 

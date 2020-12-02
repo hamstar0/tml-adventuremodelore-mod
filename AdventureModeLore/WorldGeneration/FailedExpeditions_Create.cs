@@ -10,17 +10,15 @@ using HamstarHelpers.Helpers.Tiles;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
-		private static Item CreateLoreNoteItem() {
+		private static Item CreateLoreNoteItem( int currentNodeIdx ) {
 			var item = new Item();
 			if( ModLoader.GetMod( "ReadableBooks" ) == null ) {
 				return item;
 			}
-
+			
 			item = ReadableBooks.Items.ReadableBook.ReadableBookItem.CreateBook(
-				"test title",
-				new string[] {
-					"test page"
-				}
+				FailedExpeditionsGen.LoreNotes[ currentNodeIdx ].title,
+				FailedExpeditionsGen.LoreNotes[ currentNodeIdx ].pages
 			);
 
 			return item;
@@ -62,8 +60,10 @@ namespace AdventureModeLore.WorldGeneration {
 			// Barrel
 			int chestIdx = WorldGen.PlaceChest( tileX + 5, tileY, TileID.Containers, false, 5 );
 			if( chestIdx != -1 ) {
-				Main.chest[chestIdx].item[0] = FailedExpeditionsGen.CreateLoreNoteItem();
+				Main.chest[chestIdx].item[0] = FailedExpeditionsGen.CreateLoreNoteItem( this.CurrentLoreNote );
 				Main.chest[chestIdx].item[1] = FailedExpeditionsGen.CreateSpeedloaderItem();
+
+				this.CurrentLoreNote = (this.CurrentLoreNote + 1) % FailedExpeditionsGen.LoreNotes.Length;
 			}
 		}
 
