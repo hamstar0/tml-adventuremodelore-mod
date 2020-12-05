@@ -8,15 +8,21 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <Target Name="BuildMod" AfterTargets="Build">
-    <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define &quot;$(DefineConstants)&quot; -unsafe $(AllowUnsafeBlocks)" />
+    <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -unsafe $(AllowUnsafeBlocks)" />
   </Target>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
     <Reference Include="HamstarHelpers">
       <HintPath>..\..\..\Mod Helpers\Project\HamstarHelpers\bin\Release\net452\HamstarHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="Necrotis">
+      <HintPath>..\..\..\Necrotis\Project\Necrotis\bin\Release\net452\Necrotis.dll</HintPath>
+    </Reference>
     <Reference Include="Objectives">
       <HintPath>..\..\..\Objectives\Project\Objectives\bin\Release\net452\Objectives.dll</HintPath>
+    </Reference>
+    <Reference Include="Orbs">
+      <HintPath>..\..\..\Orbs\Project\Orbs\bin\Release\net452\Orbs.dll</HintPath>
     </Reference>
     <Reference Include="ReadableBooks">
       <HintPath>..\..\..\Readable Books\Project\ReadableBooks\bin\Release\net452\ReadableBooks.dll</HintPath>
