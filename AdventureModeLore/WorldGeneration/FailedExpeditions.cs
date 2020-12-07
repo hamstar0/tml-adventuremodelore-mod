@@ -16,7 +16,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		public FailedExpeditionsGen() : base( "Failed Expeditions", 1f ) { }
 
-		
+
 		////
 
 		public override void Apply( GenerationProgress progress ) {
@@ -43,24 +43,54 @@ namespace AdventureModeLore.WorldGeneration {
 				break;
 			}
 
+			this.CreateExpeditions( progress, count, campWidth );
+		}
+
+
+		////
+
+		private void CreateExpeditions( GenerationProgress progress, int count, int campWidth ) {
 			int paveTileType = TileID.Dirt;
 
-			for( int expedNum=0; expedNum<count; expedNum++ ) {
-				(int x, int y)? expedPoint = null;
+			(int x, int y)? expedPoint = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
+			if( !expedPoint.HasValue ) {
+				LogHelpers.Log( "Could not generate first failed expedition" );
+				return;
+			}
 
-				for( int loop=0; loop<2000; loop++ ) {
-					expedPoint = this.FindExpeditionLocation( campWidth, out paveTileType );
-					if( expedPoint.HasValue ) {
-						break;
-					}
-				}
+			int chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+			this.FillExpeditionBarrel(
+				tileX: expedPoint.Value.x,
+				tileY: expedPoint.Value.y,
+				chestIdx: chestIdx,
+				hasLoreNote: false,
+				speedloaderCount: 0,
+				orbCount: 0,
+				canopicJarCount: 0,
+				hasPKEMeter: true
+			);
+			
+			//
+
+			for( int expedNum=1; expedNum<count; expedNum++ ) {
+				expedPoint = this.FindRandomExpeditionLocation( campWidth, out paveTileType );
 				if( !expedPoint.HasValue ) {
-					LogHelpers.Log( "Could not finish generating all failed expeiditions ("+expedNum+" of "+count+")" );
+					LogHelpers.Log( "Could not finish generating all failed expeditions ("+expedNum+" of "+count+")" );
 					break;
 				}
 
-				this.GenerateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
-
+				chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+				this.FillExpeditionBarrel(
+					tileX: expedPoint.Value.x,
+					tileY: expedPoint.Value.y,
+					chestIdx: chestIdx,
+					hasLoreNote: true,
+					speedloaderCount: WorldGen.genRand.NextFloat() < (2f / 3f) ? 1 : 0,
+					orbCount: WorldGen.genRand.Next( 1, 3 ),
+					canopicJarCount: WorldGen.genRand.Next( 0, 2 ),
+					hasPKEMeter: false
+				);
+				
 				progress.Value = (float)expedNum / (float)count;
 			}
 		}

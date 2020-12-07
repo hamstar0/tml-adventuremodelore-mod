@@ -24,6 +24,9 @@
     <Reference Include="Orbs">
       <HintPath>..\..\..\Orbs\Project\Orbs\bin\Release\net452\Orbs.dll</HintPath>
     </Reference>
+    <Reference Include="PKEMeter">
+      <HintPath>..\..\..\PKE Meter\Project\PKEMeter\bin\Release\net452\PKEMeter.dll</HintPath>
+    </Reference>
     <Reference Include="ReadableBooks">
       <HintPath>..\..\..\Readable Books\Project\ReadableBooks\bin\Release\net452\ReadableBooks.dll</HintPath>
     </Reference>
