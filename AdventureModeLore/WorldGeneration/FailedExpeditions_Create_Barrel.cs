@@ -146,29 +146,28 @@ namespace AdventureModeLore.WorldGeneration {
 			}
 
 			Item[] chest = Main.chest[chestIdx].item;
-			Item newItem = null;
 			int itemIdx = 0;
 
 			if( hasLoreNote ) {
-				newItem = FailedExpeditionsGen.CreateLoreNoteItem( this.CurrentLoreNote );
+				Item newItem = FailedExpeditionsGen.CreateLoreNoteItem( this.CurrentLoreNote );
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<speedloaderCount; i++ ) {
-				newItem = FailedExpeditionsGen.CreateSpeedloaderItem();
+				Item newItem = FailedExpeditionsGen.CreateSpeedloaderItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<orbCount; i++ ) {
-				newItem = FailedExpeditionsGen.CreateOrbItem();
+				Item newItem = FailedExpeditionsGen.CreateOrbItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<canopicJarCount; i++ ) {
-				newItem = FailedExpeditionsGen.CreateCanopicJarItem();
+				Item newItem = FailedExpeditionsGen.CreateCanopicJarItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}

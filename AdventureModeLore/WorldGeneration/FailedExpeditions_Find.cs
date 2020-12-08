@@ -10,10 +10,10 @@ namespace AdventureModeLore.WorldGeneration {
 		private (int x, int y)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
 			int max = Main.maxTilesX / 2;
+			int tileY = WorldHelpers.SurfaceLayerTopTileY;
 
 			for( int i = 0; i < max; i++ ) {
 				int tileX = max + i;
-				int tileY = WorldHelpers.SurfaceLayerTopTileY;
 
 				scanPos = this.ValidateExpeditionAt( tileX, tileY, campWidth, out mostCommonTileType );
 				if( scanPos != null ) {
@@ -22,6 +22,34 @@ namespace AdventureModeLore.WorldGeneration {
 
 				tileX = max - i;
 				scanPos = this.ValidateExpeditionAt( tileX, tileY, campWidth, out mostCommonTileType );
+				if( scanPos != null ) {
+					return scanPos;
+				}
+			}
+
+			mostCommonTileType = -1;
+			return null;
+		}
+
+		
+		private (int x, int y)? FindJungleSideBeachExpeditionLocation( int campWidth, out int mostCommonTileType ) {
+			(int, int)? scanPos;
+			int tileX = 1;
+			int tileY = WorldHelpers.SurfaceLayerTopTileY;
+			int dir = 0;
+
+			if( Main.dungeonX > (Main.maxTilesX / 2) ) {
+				tileX = 40;
+				dir = 1;
+			} else {
+				tileX = Main.maxTilesX - 40;
+				dir = -1;
+			}
+
+			for( int i=0; i<1000; i++ ) {
+				int x = tileX + (i * dir);
+
+				scanPos = this.ValidateExpeditionAt( x, tileY, campWidth, out mostCommonTileType );
 				if( scanPos != null ) {
 					return scanPos;
 				}

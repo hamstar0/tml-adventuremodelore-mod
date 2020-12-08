@@ -50,15 +50,19 @@ namespace AdventureModeLore.WorldGeneration {
 		////
 
 		private void CreateExpeditions( GenerationProgress progress, int count, int campWidth ) {
+			(int x, int y)? expedPoint;
 			int paveTileType = TileID.Dirt;
+			int chestIdx;
 
-			(int x, int y)? expedPoint = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
+			// Middle-map PKE meter camp
+
+			expedPoint = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPoint.HasValue ) {
 				LogHelpers.Log( "Could not generate first failed expedition" );
 				return;
 			}
 
-			int chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
 			this.FillExpeditionBarrel(
 				tileX: expedPoint.Value.x,
 				tileY: expedPoint.Value.y,
@@ -69,8 +73,30 @@ namespace AdventureModeLore.WorldGeneration {
 				canopicJarCount: 0,
 				hasPKEMeter: true
 			);
-			
-			//
+
+			// Jungle ocean camp
+
+			expedPoint = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
+			if( !expedPoint.HasValue ) {
+				LogHelpers.Log( "Could not generate jungle failed expedition" );
+				return;
+			}
+
+			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+			this.FillExpeditionBarrel(
+				tileX: expedPoint.Value.x,
+				tileY: expedPoint.Value.y,
+				chestIdx: chestIdx,
+				hasLoreNote: true,
+				speedloaderCount: WorldGen.genRand.NextFloat() < (2f / 3f) ? 1 : 0,
+				orbCount: WorldGen.genRand.Next( 1, 3 ),
+				canopicJarCount: WorldGen.genRand.Next( 0, 2 ),
+				hasPKEMeter: false
+			);
+
+			progress.Value = 1f / (float)count;
+
+			// Underground camps
 
 			for( int expedNum=1; expedNum<count; expedNum++ ) {
 				expedPoint = this.FindRandomExpeditionLocation( campWidth, out paveTileType );
