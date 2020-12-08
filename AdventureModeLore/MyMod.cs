@@ -29,7 +29,18 @@ namespace AdventureModeLore {
 			AMLMod.Instance = this;
 		}
 
+		public override void Load() {
+			AMLConfig.Instance = ModContent.GetInstance<AMLConfig>();
+		}
+
+		public override void PostSetupContent() {
+			if( ModLoader.GetMod( "PKE Meter" ) != null ) {
+				AMLMod.InitializePKE();
+			}
+		}
+
 		public override void Unload() {
+			AMLConfig.Instance = null;
 			AMLMod.Instance = null;
 		}
 

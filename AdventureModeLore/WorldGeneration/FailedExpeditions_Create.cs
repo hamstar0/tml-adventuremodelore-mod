@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Tiles;
@@ -9,7 +10,7 @@ using HamstarHelpers.Helpers.Tiles;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
-		private int CreateExpeditionAt( int tileX, int tileY, int campWidth, int paveTileType ) {
+		private int CreateExpeditionAt( int tileX, int tileY, int campWidth, int paveTileType, bool rememberLocation ) {
 			int toTileX = tileX + campWidth;
 
 			for( int i = tileX; i < toTileX; i++ ) {
@@ -26,8 +27,15 @@ namespace AdventureModeLore.WorldGeneration {
 			Main.tile[tileX + 4, tileY - 1].frameY = 288;     // this is dumb
 			Main.tile[tileX + 4, tileY].frameY = 288 + 18;    // this is dumb
 
+			int chestTileX = tileX + 5;
+
+			if( rememberLocation ) {
+				var myworld = ModContent.GetInstance<AMLWorld>();
+				myworld.FailedExpeditions.Add( (tileX, tileY) );
+			}
+
 			// Barrel
-			return WorldGen.PlaceChest( tileX + 5, tileY, TileID.Containers, false, 5 );
+			return WorldGen.PlaceChest( chestTileX, tileY, TileID.Containers, false, 5 );
 		}
 
 		////

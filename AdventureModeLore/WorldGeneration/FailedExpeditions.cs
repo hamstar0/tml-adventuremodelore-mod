@@ -62,7 +62,7 @@ namespace AdventureModeLore.WorldGeneration {
 				return;
 			}
 
-			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType, false );
 			this.FillExpeditionBarrel(
 				tileX: expedPoint.Value.x,
 				tileY: expedPoint.Value.y,
@@ -82,7 +82,7 @@ namespace AdventureModeLore.WorldGeneration {
 				return;
 			}
 
-			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType, true );
 			this.FillExpeditionBarrel(
 				tileX: expedPoint.Value.x,
 				tileY: expedPoint.Value.y,
@@ -105,7 +105,7 @@ namespace AdventureModeLore.WorldGeneration {
 					break;
 				}
 
-				chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType );
+				chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType, true );
 				this.FillExpeditionBarrel(
 					tileX: expedPoint.Value.x,
 					tileY: expedPoint.Value.y,

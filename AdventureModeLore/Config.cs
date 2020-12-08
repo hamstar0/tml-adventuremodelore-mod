@@ -1,11 +1,11 @@
 ﻿using System;
-using Terraria.ModLoader;
+using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 
 namespace AdventureModeLore {
-	class AMLConfig : ModConfig {
-		public static AMLConfig Instance => ModContent.GetInstance<AMLConfig>();
+	public partial class AMLConfig : ModConfig {
+		public static AMLConfig Instance { get; internal set; }
 
 
 
@@ -17,5 +17,11 @@ namespace AdventureModeLore {
 		////////////////
 
 		public bool DebugModeInfo { get; set; } = false;
+
+		////
+
+		[Range(-1, 4048)]
+		[DefaultValue( 256 )]
+		public int FailedExpeditionPKEDetectionTileRangeMax { get; set; } = 256;
 	}
 }
