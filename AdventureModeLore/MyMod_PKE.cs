@@ -14,11 +14,12 @@ namespace AdventureModeLore {
 		////////////////
 
 		public static void InitializePKE() {
-			PKEMeter.Logic.PKEGauge gauge = PKEMeter.PKEMeterAPI.GetGauge();
+			PKEMeter.Logic.PKEText meterTextFunc = PKEMeter.PKEMeterAPI.GetMeterText();
+			PKEMeter.Logic.PKEGauge gaugeFunc = PKEMeter.PKEMeterAPI.GetGauge();
 			int timer = 0;
 
 			PKEMeter.PKEMeterAPI.SetGauge( ( plr, pos ) => {
-				(float b, float g, float y, float r) existingGauge = gauge?.Invoke( plr, pos )
+				(float b, float g, float y, float r) existingGauge = gaugeFunc?.Invoke( plr, pos )
 					?? (0f, 0f, 0f, 0f);
 
 				if( timer-- <= 0 ) {
@@ -29,6 +30,40 @@ namespace AdventureModeLore {
 				existingGauge.g = AMLMod.LastGaugedExpeditionPercent;	// Green channel
 
 				return existingGauge;
+			} );
+
+			PKEMeter.PKEMeterAPI.SetMeterText( ( plr, pos, gauges ) => {
+				(string text, Color color) oldText = meterTextFunc?.Invoke( plr, pos, gauges )
+					?? ("", Color.Transparent);
+
+				if( !string.IsNullOrEmpty(oldText.text) ) {
+					return oldText;
+				}
+
+				Color color = Color.Transparent;
+				string myText = "";
+
+				if( gauges.r > 0.75f ) {
+					color = Color.Red;
+					myText = "WARNING - CLASS V+ PKE-EMITTING ENTITIES AT LARGE";
+				} else if( gauges.y > 0.75f ) {
+					color = Color.Yellow;
+					if( Main.rand.NextFloat() < 0.95f ) {
+						myText = "CLASS VI TRANSDIM ELEVATED ORGANIC";
+					} else {
+						myText = "CLASS IX ULDTRADIM POST-MORTAL DEITY";
+					}
+				} else if( gauges.g > 0.75f ) {
+					color = Color.Lime;
+					myText = "CLASS III ECTOPLASM AGGREGATE VESSEL";
+				} else if( gauges.b > 0.75f ) {
+					color = Color.Blue;
+					myText = "CLASS II ETHEREAL GEOFORM";
+				}
+
+				color = color * (0.5f + (Main.rand.NextFloat() * 0.5f));
+
+				return (myText, color);
 			} );
 		}
 
