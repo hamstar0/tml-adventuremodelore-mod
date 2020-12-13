@@ -39,6 +39,8 @@ namespace AdventureModeLore {
 			}
 		}
 
+		////
+
 		public override void Unload() {
 			AMLConfig.Instance = null;
 			AMLMod.Instance = null;
