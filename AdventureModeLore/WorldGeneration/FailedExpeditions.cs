@@ -23,7 +23,7 @@ namespace AdventureModeLore.WorldGeneration {
 			this.CurrentLoreNote = 0;
 
 			int count = 14;
-			int campWidth = 8;
+			int campWidth = 11;
 
 			switch( WorldHelpers.GetSize() ) {
 			case WorldSize.SubSmall:

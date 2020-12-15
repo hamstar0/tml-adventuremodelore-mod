@@ -9,13 +9,13 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Logic {
 	public partial class AMLLogic : ILoadable {
-		public static string FindMerchantTitle => "Find The Merchant";
+		public static string FindMerchantTitle => "Find A Merchant";
 
 		internal static Objective FindMerchant() {
 			return new FlatObjective(
 				title: AMLLogic.FindMerchantTitle,
 				description: "Other inhabitants exist in this land, some less enslaved than others. Build a"
-					+ "\n" + "house for the merchant to settle in.",
+					+ "\n" + "house for a merchant to settle in.",
 				condition: ( obj ) => {
 					return NPC.AnyNPCs( NPCID.Merchant );
 				}

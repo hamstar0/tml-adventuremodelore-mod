@@ -18,16 +18,16 @@ namespace AdventureModeLore.WorldGeneration {
 			}
 
 			// Tent
-			TilePlacementHelpers.TryPrecisePlace( tileX, tileY, TileID.LargePiles2, 26 );
+			TilePlacementHelpers.TryPrecisePlace( tileX + 1, tileY, TileID.LargePiles2, 26 );
 
 			// Campfire
-			TilePlacementHelpers.TryPrecisePlace( tileX + 3, tileY, TileID.Campfire );
-			Main.tile[tileX + 3, tileY - 1].frameY = 288;       // this is dumb
-			Main.tile[tileX + 3, tileY].frameY = 288 + 18;    // this is dumb
-			Main.tile[tileX + 4, tileY - 1].frameY = 288;     // this is dumb
-			Main.tile[tileX + 4, tileY].frameY = 288 + 18;    // this is dumb
+			TilePlacementHelpers.TryPrecisePlace( tileX + 5, tileY, TileID.Campfire );
+			Main.tile[tileX + 5, tileY - 1].frameY = 288;       // this is dumb
+			Main.tile[tileX + 5, tileY].frameY = 288 + 18;    // this is dumb
+			Main.tile[tileX + 6, tileY - 1].frameY = 288;     // this is dumb
+			Main.tile[tileX + 6, tileY].frameY = 288 + 18;    // this is dumb
 
-			int chestTileX = tileX + 5;
+			int chestTileX = tileX + 9;
 
 			if( rememberLocation ) {
 				var myworld = ModContent.GetInstance<AMLWorld>();

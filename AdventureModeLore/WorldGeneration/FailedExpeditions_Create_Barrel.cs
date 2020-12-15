@@ -140,8 +140,8 @@ namespace AdventureModeLore.WorldGeneration {
 					int orbCount,
 					int canopicJarCount,
 					bool hasPKEMeter ) {
-			if( chestIdx != -1 ) {
-				LogHelpers.Log( "Could not fill 'failed expedition' barrel at "+tileX+", "+tileY+"." );
+			if( chestIdx == -1 ) {
+				LogHelpers.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+tileY+"." );
 				return;
 			}
 
