@@ -16,7 +16,7 @@ namespace AdventureModeLore {
 
 		////////////////
 
-		public bool DebugModeInfo { get; set; } = false;
+		public bool DebugModeFailedExpeditionsReveal { get; set; } = false;
 
 		////
 

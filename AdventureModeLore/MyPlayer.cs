@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Services.Maps;
 
 
 namespace AdventureModeLore {
@@ -49,6 +51,24 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PreUpdate() {
+			if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
+				var myworld = ModContent.GetInstance<AMLWorld>();
+
+				int i = 0;
+				foreach( (int x, int y) exped in myworld.FailedExpeditions ) {
+					(int x, int y, MapMarker marker) marker;
+					if( MapMarkers.TryGetFullScreenMapMarker("AMLExpedition_" + i, out marker) ) {
+						continue;
+					}
+
+					MapMarkers.AddFullScreenMapMarker(
+						tileX: exped.x,
+						tileY: exped.y,
+						label: "AMLExpedition_" + i,
+						icon: Main.itemTexture[ ItemID.Skull ]
+					);
+				}
+			}
 		}
 	}
 }
