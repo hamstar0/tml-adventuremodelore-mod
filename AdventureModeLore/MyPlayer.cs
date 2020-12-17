@@ -56,8 +56,7 @@ namespace AdventureModeLore {
 
 				int i = 0;
 				foreach( (int x, int y) exped in myworld.FailedExpeditions ) {
-					(int x, int y, MapMarker marker) marker;
-					if( MapMarkers.TryGetFullScreenMapMarker("AMLExpedition_" + i, out marker) ) {
+					if( MapMarkers.TryGetFullScreenMapMarker("AMLExpedition_" + i, out _) ) {
 						continue;
 					}
 
@@ -65,7 +64,8 @@ namespace AdventureModeLore {
 						tileX: exped.x,
 						tileY: exped.y,
 						label: "AMLExpedition_" + i,
-						icon: Main.itemTexture[ ItemID.Skull ]
+						icon: Main.itemTexture[ ItemID.Skull ],
+						scale: 1f
 					);
 				}
 			}
