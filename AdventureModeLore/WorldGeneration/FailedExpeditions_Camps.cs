@@ -78,9 +78,9 @@ namespace AdventureModeLore.WorldGeneration {
 				nearFloorTileY: expedPointRaw.Value.nearFloorY,
 				chestIdx: chestIdx,
 				hasLoreNote: true,
-				speedloaderCount: WorldGen.genRand.NextFloat() < ( 2f / 3f ) ? 1 : 0,
+				speedloaderCount: WorldGen.genRand.NextFloat() < (2f/3f) ? 1 : 0,
 				orbCount: WorldGen.genRand.Next( 1, 3 ),
-				canopicJarCount: WorldGen.genRand.Next( 0, 2 ),
+				canopicJarCount: WorldGen.genRand.Next( 1, 2 ),
 				hasPKEMeter: false
 			);
 		}
@@ -111,9 +111,9 @@ namespace AdventureModeLore.WorldGeneration {
 					nearFloorTileY: expedPointRaw.Value.nearFloorY,
 					chestIdx: chestIdx,
 					hasLoreNote: true,
-					speedloaderCount: WorldGen.genRand.NextFloat() < (2f / 3f) ? 1 : 0,
+					speedloaderCount: WorldGen.genRand.NextFloat() < (2f/3f) ? 1 : 0,
 					orbCount: WorldGen.genRand.Next( 1, 3 ),
-					canopicJarCount: WorldGen.genRand.Next( 0, 2 ),
+					canopicJarCount: WorldGen.genRand.Next( 1, 2 ),
 					hasPKEMeter: false
 				);
 				

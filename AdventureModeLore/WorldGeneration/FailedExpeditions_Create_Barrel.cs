@@ -64,7 +64,7 @@ namespace AdventureModeLore.WorldGeneration {
 		}
 
 		private static Item CreateCanopicJarItem() {
-			if( ModLoader.GetMod( "Necrotis" ) == null ) {
+			if( ModLoader.GetMod("Necrotis") == null ) {
 				return null;
 			}
 
@@ -85,42 +85,45 @@ namespace AdventureModeLore.WorldGeneration {
 			Item missionItem = ReadableBookItem.CreateBook(
 				"Mission Briefing",
 				new string[] {
-					"As you know, the island has become a PKE hotbed in recent months. Readings are on the rise, and it has "
-					+ "become unsafe to send in live agents.",
-					"Due to previous failed expeditions, we have since sent in agents Fender, Sigma, and Omicron, but they too "
-					+ "have ceased signal contact. We can only hope it's due to interference, but we've no time for search "
-					+ "and recovery.",
-					"Before contact dropped, Sigma gave us a conclusive report that the Specimen has indeed found its way to "
-					+ "the island. It MUST be captured ALIVE at all costs!",
-					"You've been outfitted with special detection equipment calibrated specifically for locating the Specimen, "
-					+ "though due to its nature, even this may be inadequate. The damn thing gets smarter by the minute!",
-					"Reports are coming in of other parties taking interest in the island and its recent activities. Avoid any "
-					+ "encounters with the locals or any other parties. You are well equipped to handle threats, so your only "
-					+ "concern is the mission.",
-					"Should you find any information on the whereabouts of the missing expeditions or agents, report to "
-					+ "command when convenient, but above all: Find that specimen!"
+					"As you know, the island has become a PKE hotbed in recent months. Readings are on the"
+					+ "\nrise, and it has become unsafe to send in live agents.",
+					"Due to previous failed expeditions, we have since sent in agents Fender, Sigma, and"
+					+ "\nOmicron, but they too have ceased signal contact. We can only hope it's due to"
+					+ "\ninterference, but we've no time for search and recovery.",
+					"Before contact dropped, Sigma gave us a conclusive report that the Specimen has indeed"
+					+ "\nfound its way to the island. It MUST be captured ALIVE at all costs!",
+					"You've been outfitted with special detection equipment calibrated specifically for"
+					+ "\nlocating the Specimen, though due to its nature, even this may be inadequate. The"
+					+ "\ndamn thing gets smarter by the minute!",
+					"Reports are coming in of other parties taking interest in the island and its recent"
+					+ "\nactivities. Avoid any encounters with the locals or any other parties. You are well"
+					+ "\nequipped to handle threats, so your only concern is the mission.",
+					"Should you find any information on the whereabouts of the missing expeditions or"
+					+ "\nagents, report to command when convenient, but above all: Find that specimen!"
 				}
 			);
 
 			Item manualItem = ReadableBookItem.CreateBook(
 				"PKE Meter",
 				new string[] {
-					"Your PKE Detector Mk. VII comes now with separate sensors calibrated specifically for your mission.",
-					"Due to conditions on the island, the most important reading is the background PKE, indicated by the red "
-					+ "bar. When this reading reaches critical, you must retreat to minimal safe distance off the island, "
-					+ "and await further instructions",
-					"Safety aside, your mission remains of vital importance. Your mark should be detected on the yellow "
-					+ "channel, though precise calibration remains difficult. Do your best.",
-					"Other phenomena on the island may warrant separate consideration. It is not in your mission "
-					+ "specification, but we would like it if you could track the remains of the other failed expeditions, "
-					+ "and also your fellow agents, if possible.",
-					"As the expeditions prior were primarily recon, you may be able to locate them by readings from any "
-					+ "gathered artifacts from their time on the island. The green channel should be attuned accordingly.",
-					"Finally, we have reason to believe a threat may exist on the island other than the usual suspects. "
-					+ "They may even be responsible for our missing crews and agents!",
-					"We have no leads, but previous agent reports indicate a strange PKE valence not recorded on the "
-					+ "usual channels. We've attuned the blue channel to the latest readings. Investigate at your "
-					+ "discretion."
+					"Your PKE Detector Mk. VII comes now with separate sensors calibrated specifically"
+					+ "\nfor your mission.",
+					"Due to conditions on the island, the most important reading is the background PKE,"
+					+ "\nindicated by the red bar. When this reading reaches critical, you must retreat to"
+					+ "\nminimal safe distance off the island, and await further instructions",
+					"Safety aside, your mission remains of vital importance. Your mark should be detected"
+					+ "\non the yellow channel, though precise calibration remains difficult. Do your best.",
+					"Other phenomena on the island may warrant separate consideration. It is not in your"
+					+ "\nmission specification, but we would like it if you could track the remains of the"
+					+ "\nother failed expeditions, and also your fellow agents, if possible.",
+					"As the expeditions prior were primarily recon, you may be able to locate them by"
+					+ "\nreadings from any gathered artifacts from their time on the island. The green"
+					+ "\nchannel should be attuned accordingly.",
+					"Finally, we have reason to believe a threat may exist on the island other than the"
+					+ "\nusual suspects. They may even be responsible for our missing crews and agents!",
+					"We have no leads, but previous agent reports indicate a strange PKE valence not"
+					+ "\nrecorded on the usual channels. We've attuned the blue channel to the latest"
+					+ "\nreadings. Investigate at your discretion."
 				}
 			);
 
