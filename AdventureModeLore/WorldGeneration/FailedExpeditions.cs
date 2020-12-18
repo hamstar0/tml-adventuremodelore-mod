@@ -43,20 +43,28 @@ namespace AdventureModeLore.WorldGeneration {
 				break;
 			}
 
-			this.CreateExpeditions( progress, count, campWidth );
+			this.CreateCamps( progress, count, campWidth );
 		}
 
 
 		////
 
-		private void CreateExpeditions( GenerationProgress progress, int count, int campWidth ) {
+		private void CreateCamps( GenerationProgress progress, int count, int campWidth ) {
+			this.CreateMidMapPKECamp( campWidth );
+			progress.Value = 1f / ((float)count + 2f);
+
+			this.CreateJungleOceanCamp( campWidth );
+			progress.Value = 1f / ((float)count + 2f);
+
+			this.CreateUndergroundCamps( progress, count, campWidth );
+		}
+
+		private void CreateMidMapPKECamp( int campWidth ) {
 			(int x, int nearFloorY)? expedPointRaw;
 			int x, nearFloorY;
 			int paveTileType = TileID.Dirt;
 			int chestIdx;
 			string err;
-
-			// Middle-map PKE meter camp
 
 			expedPointRaw = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
@@ -81,8 +89,14 @@ namespace AdventureModeLore.WorldGeneration {
 				canopicJarCount: 0,
 				hasPKEMeter: true
 			);
+		}
 
-			// Jungle ocean camp
+		private void CreateJungleOceanCamp( int campWidth ) {
+			(int x, int nearFloorY)? expedPointRaw;
+			int x, nearFloorY;
+			int paveTileType = TileID.Dirt;
+			int chestIdx;
+			string err;
 
 			expedPointRaw = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
@@ -102,15 +116,19 @@ namespace AdventureModeLore.WorldGeneration {
 				nearFloorTileY: expedPointRaw.Value.nearFloorY,
 				chestIdx: chestIdx,
 				hasLoreNote: true,
-				speedloaderCount: WorldGen.genRand.NextFloat() < (2f / 3f) ? 1 : 0,
+				speedloaderCount: WorldGen.genRand.NextFloat() < ( 2f / 3f ) ? 1 : 0,
 				orbCount: WorldGen.genRand.Next( 1, 3 ),
 				canopicJarCount: WorldGen.genRand.Next( 0, 2 ),
 				hasPKEMeter: false
 			);
+		}
 
-			progress.Value = 1f / (float)count;
-
-			// Underground camps
+		private void CreateUndergroundCamps( GenerationProgress progress, int count, int campWidth ) {
+			(int x, int nearFloorY)? expedPointRaw;
+			int x, nearFloorY;
+			int paveTileType = TileID.Dirt;
+			int chestIdx;
+			string err;
 
 			for( int expedNum=1; expedNum<count; expedNum++ ) {
 				expedPointRaw = this.FindRandomExpeditionLocation( campWidth, out paveTileType );
@@ -137,7 +155,7 @@ namespace AdventureModeLore.WorldGeneration {
 					hasPKEMeter: false
 				);
 				
-				progress.Value = (float)expedNum / (float)count;
+				progress.Value = (float)expedNum / ((float)count + 2f);
 			}
 		}
 	}

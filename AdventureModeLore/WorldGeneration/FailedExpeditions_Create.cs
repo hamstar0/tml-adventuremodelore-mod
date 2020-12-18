@@ -67,27 +67,34 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
-		private void PaveCampAt( int tileX, int tileY, int tileType ) {
+		private void PaveCampAt( int tileX, int nearFloorTileY, int tileType ) {
 			var needsFill = new List<(int, int)>();
-			Tile tile = Main.tile[tileX, tileY];
-			int depth = 0;
 
-			while( tile?.active() != true || !Main.tileSolid[tile.type] ) {
+			// Clear space above camp
+			int aboveY = nearFloorTileY;
+			for( Tile tile = Main.tile[ tileX, aboveY ];
+						aboveY > (nearFloorTileY - 3);
+						tile = Main.tile[ tileX, --aboveY] ) {
 				if( tile?.active() == true ) {
-					WorldGen.KillTile( tileX, tileY );
-				}
-
-				needsFill.Add( (tileX, tileY) );
-
-				tile = Main.tile[tileX, ++tileY];
-
-				if( depth++ >= 6 ) {
-					break;
+					WorldGen.KillTile( tileX, aboveY );
 				}
 			}
 
-			Main.tile[tileX, tileY]?.slope( 0 );
+			// Clear space below and find 'floor'
+			int belowY = nearFloorTileY + 1;
+			for( Tile tile = Main.tile[ tileX, belowY];
+						belowY < (nearFloorTileY + 7) && !this.IsValidFloorTile(tile);
+						tile = Main.tile[ tileX, ++belowY] ) {
+				if( tile?.active() == true ) {
+					WorldGen.KillTile( tileX, belowY );
+				}
 
+				needsFill.Add( (tileX, belowY) );
+			}
+
+			Main.tile[ tileX, nearFloorTileY+1 ]?.slope( 0 );
+
+			// Raise floor to camp's level
 			for( int i=needsFill.Count-1; i>=0; i-- ) {
 				(int x, int y) fillAt = needsFill[i];
 

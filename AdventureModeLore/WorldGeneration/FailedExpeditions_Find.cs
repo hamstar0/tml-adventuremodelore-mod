@@ -9,7 +9,7 @@ namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
 		private (int x, int nearFloorY)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
-			int max = Main.maxTilesX / 2;
+			int max = (Main.maxTilesX / 2) - 1;
 			int tileY = WorldHelpers.SurfaceLayerTopTileY;
 
 			for( int i = 0; i < max; i++ ) {
