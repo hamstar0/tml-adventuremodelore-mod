@@ -4,38 +4,65 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.World.Generation;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Tiles;
 
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
-		private int CreateExpeditionAt( int tileX, int tileY, int campWidth, int paveTileType, bool rememberLocation ) {
-			int toTileX = tileX + campWidth;
+		private bool CreateExpeditionAt(
+					int leftTileX,
+					int nearFloorTileY,
+					int campWidth,
+					int paveTileType,
+					bool rememberLocation,
+					out int chestIdx,
+					out string result ) {
+			int toTileX = leftTileX + campWidth;
 
-			for( int i = tileX; i < toTileX; i++ ) {
-				this.PaveCampAt( tileX, tileY, paveTileType );
+			for( int i = leftTileX; i < toTileX; i++ ) {
+				this.PaveCampAt( leftTileX, nearFloorTileY, paveTileType );
 			}
 
 			// Tent
-			TilePlacementHelpers.TryPrecisePlace( tileX + 1, tileY, TileID.LargePiles2, 26 );
+			int tentTileX = leftTileX + 1;
+
+			if( !TilePlacementHelpers.TryPrecisePlace(tentTileX, nearFloorTileY, TileID.LargePiles2, 26) ) {
+				chestIdx = -1;
+				result = "Could not place tent at "+tentTileX+","+nearFloorTileY;
+				return false;
+			}
 
 			// Campfire
-			TilePlacementHelpers.TryPrecisePlace( tileX + 5, tileY, TileID.Campfire );
-			Main.tile[tileX + 5, tileY - 1].frameY = 288;       // this is dumb
-			Main.tile[tileX + 5, tileY].frameY = 288 + 18;    // this is dumb
-			Main.tile[tileX + 6, tileY - 1].frameY = 288;     // this is dumb
-			Main.tile[tileX + 6, tileY].frameY = 288 + 18;    // this is dumb
+			int fireTileX = leftTileX + 4;
 
-			int chestTileX = tileX + 9;
+			if( !TilePlacementHelpers.TryPrecisePlace(fireTileX, nearFloorTileY, TileID.Campfire) ) {
+				chestIdx = -1;
+				result = "Could not place campfire at "+fireTileX+","+nearFloorTileY;
+				return false;
+			}
+			Main.tile[fireTileX, nearFloorTileY - 1].frameY += 36;//= 288;   // this is dumb
+			Main.tile[fireTileX, nearFloorTileY].frameY += 36;//288 + 18;    // this is dumb
+			Main.tile[fireTileX+1, nearFloorTileY - 1].frameY += 36;//288;     // this is dumb
+			Main.tile[fireTileX+1, nearFloorTileY].frameY += 36;//288 + 18;    // this is dumb
+
+			// Barrel
+			int chestTileX = leftTileX + 8;
+
+			chestIdx = WorldGen.PlaceChest( chestTileX, nearFloorTileY, TileID.Containers, false, 5 );
+			if( chestIdx == -1 ) {
+				result = "Could not place barrel at "+chestTileX+","+nearFloorTileY;
+				return false;
+			}
 
 			if( rememberLocation ) {
 				var myworld = ModContent.GetInstance<AMLWorld>();
-				myworld.FailedExpeditions.Add( (tileX, tileY) );
+				myworld.FailedExpeditions.Add( (chestTileX, nearFloorTileY) );
 			}
 
-			// Barrel
-			return WorldGen.PlaceChest( chestTileX, tileY, TileID.Containers, false, 5 );
+			result = "Success.";
+			return true;
 		}
 
 		////

@@ -133,7 +133,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		private void FillExpeditionBarrel(
 					int tileX,
-					int tileY,
+					int nearFloorTileY,
 					int chestIdx,
 					bool hasLoreNote,
 					int speedloaderCount,
@@ -141,7 +141,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int canopicJarCount,
 					bool hasPKEMeter ) {
 			if( chestIdx == -1 ) {
-				LogHelpers.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+tileY+"." );
+				LogHelpers.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
 				return;
 			}
 

@@ -7,7 +7,7 @@ using HamstarHelpers.Helpers.World;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
-		private (int x, int y)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
+		private (int x, int nearFloorY)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
 			int max = Main.maxTilesX / 2;
 			int tileY = WorldHelpers.SurfaceLayerTopTileY;
@@ -78,8 +78,8 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////////////////
 
-		private (int x, int y)? ValidateExpeditionAt( int tileX, int tileY, int campWidth, out int mostCommonTileType ) {
-			if( this.IsTileValid(tileX, tileY, WorldHelpers.RockLayerBottomTileY, out tileY) ) {
+		private (int x, int nearFloorY)? ValidateExpeditionAt( int tileX, int tileY, int campWidth, out int mostCommonTileType ) {
+			if( this.FindValidNearFloorTileAt(tileX, tileY, WorldHelpers.RockLayerBottomTileY, out tileY) ) {
 				if( this.ScanFromTile(tileX, tileY, campWidth, out (int, int) scanPos, out mostCommonTileType) ) {
 					return scanPos;
 				}

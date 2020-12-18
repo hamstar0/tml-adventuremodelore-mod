@@ -27,7 +27,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			switch( WorldHelpers.GetSize() ) {
 			case WorldSize.SubSmall:
-				count = 7;
+				count = 11;
 				break;
 			case WorldSize.Small:
 				count = 14;
@@ -50,22 +50,30 @@ namespace AdventureModeLore.WorldGeneration {
 		////
 
 		private void CreateExpeditions( GenerationProgress progress, int count, int campWidth ) {
-			(int x, int y)? expedPoint;
+			(int x, int nearFloorY)? expedPointRaw;
+			int x, nearFloorY;
 			int paveTileType = TileID.Dirt;
 			int chestIdx;
+			string err;
 
 			// Middle-map PKE meter camp
 
-			expedPoint = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
-			if( !expedPoint.HasValue ) {
-				LogHelpers.Log( "Could not generate first failed expedition" );
+			expedPointRaw = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
+			if( !expedPointRaw.HasValue ) {
+				LogHelpers.Log( "Could not find a place to generate first 'failed expedition'" );
 				return;
 			}
 
-			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType, false );
+			x = expedPointRaw.Value.x;
+			nearFloorY = expedPointRaw.Value.nearFloorY;
+			if( !this.CreateExpeditionAt(x, nearFloorY, campWidth, paveTileType, false, out chestIdx, out err) ) {
+				LogHelpers.Log( "Could not generate first 'failed expedition': "+err );
+				return;
+			}
+
 			this.FillExpeditionBarrel(
-				tileX: expedPoint.Value.x,
-				tileY: expedPoint.Value.y,
+				tileX: expedPointRaw.Value.x,
+				nearFloorTileY: expedPointRaw.Value.nearFloorY,
 				chestIdx: chestIdx,
 				hasLoreNote: false,
 				speedloaderCount: 0,
@@ -76,16 +84,22 @@ namespace AdventureModeLore.WorldGeneration {
 
 			// Jungle ocean camp
 
-			expedPoint = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
-			if( !expedPoint.HasValue ) {
-				LogHelpers.Log( "Could not generate jungle failed expedition" );
+			expedPointRaw = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
+			if( !expedPointRaw.HasValue ) {
+				LogHelpers.Log( "Could not find a place to generate jungle 'failed expedition'" );
 				return;
 			}
 
-			chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType, true );
+			x = expedPointRaw.Value.x;
+			nearFloorY = expedPointRaw.Value.nearFloorY;
+			if( !this.CreateExpeditionAt(x, nearFloorY, campWidth, paveTileType, true, out chestIdx, out err) ) {
+				LogHelpers.Log( "Could not generate jungle 'failed expedition': "+err );
+				return;
+			}
+
 			this.FillExpeditionBarrel(
-				tileX: expedPoint.Value.x,
-				tileY: expedPoint.Value.y,
+				tileX: expedPointRaw.Value.x,
+				nearFloorTileY: expedPointRaw.Value.nearFloorY,
 				chestIdx: chestIdx,
 				hasLoreNote: true,
 				speedloaderCount: WorldGen.genRand.NextFloat() < (2f / 3f) ? 1 : 0,
@@ -99,16 +113,22 @@ namespace AdventureModeLore.WorldGeneration {
 			// Underground camps
 
 			for( int expedNum=1; expedNum<count; expedNum++ ) {
-				expedPoint = this.FindRandomExpeditionLocation( campWidth, out paveTileType );
-				if( !expedPoint.HasValue ) {
-					LogHelpers.Log( "Could not finish generating all failed expeditions ("+expedNum+" of "+count+")" );
+				expedPointRaw = this.FindRandomExpeditionLocation( campWidth, out paveTileType );
+				if( !expedPointRaw.HasValue ) {
+					LogHelpers.Log( "Could not finish finding places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
 					break;
 				}
 
-				chestIdx = this.CreateExpeditionAt( expedPoint.Value.x, expedPoint.Value.y, campWidth, paveTileType, true );
+				x = expedPointRaw.Value.x;
+				nearFloorY = expedPointRaw.Value.nearFloorY;
+				if( !this.CreateExpeditionAt(x, nearFloorY, campWidth, paveTileType, true, out chestIdx, out err) ) {
+					LogHelpers.Log( "Could not finish generating all 'failed expeditions' ("+expedNum+" of "+count+"): "+err );
+					break;
+				}
+
 				this.FillExpeditionBarrel(
-					tileX: expedPoint.Value.x,
-					tileY: expedPoint.Value.y,
+					tileX: expedPointRaw.Value.x,
+					nearFloorTileY: expedPointRaw.Value.nearFloorY,
 					chestIdx: chestIdx,
 					hasLoreNote: true,
 					speedloaderCount: WorldGen.genRand.NextFloat() < (2f / 3f) ? 1 : 0,

@@ -14,11 +14,11 @@ namespace AdventureModeLore.WorldGeneration {
 					int tileX,
 					int tileY,
 					int campWidth,
-					out (int x, int y) campStartPos,
+					out (int x, int nearFloorY) campStartPos,
 					out int mostCommonTileType ) {
 			var tileTypes = new Dictionary<ushort, int>();
 
-			int floorY = 0;
+			int nearFloorY = 0;
 			int width = 0;
 			int checkLeftX = tileX - 1;
 			int checkRightX = tileX + 1;
@@ -28,15 +28,17 @@ namespace AdventureModeLore.WorldGeneration {
 			do {
 				isChecked = false;
 
-				if( this.IsTileValid(checkLeftX, tileY, bot, out floorY) ) {
-					tileTypes.AddOrSet( Main.tile[checkLeftX, floorY+1].type, 1 );
+				if( this.FindValidNearFloorTileAt(checkLeftX, tileY, bot, out nearFloorY) ) {
+					Tile floorTile = Main.tile[ checkLeftX, nearFloorY + 1 ];
+					tileTypes.AddOrSet( floorTile.type, 1 );
 
 					isChecked = true;
 					width++;
 					checkLeftX--;
 				}
-				if( this.IsTileValid(checkRightX, tileY, bot, out floorY) ) {
-					tileTypes.AddOrSet( Main.tile[checkRightX, floorY+1].type, 1 );
+				if( this.FindValidNearFloorTileAt(checkRightX, tileY, bot, out nearFloorY) ) {
+					Tile floorTile = Main.tile[ checkRightX, nearFloorY + 1 ];
+					tileTypes.AddOrSet( floorTile.type, 1 );
 
 					isChecked = true;
 					width++;
@@ -44,10 +46,14 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 			} while( isChecked && width < campWidth );
 
+			if( !this.FindValidNearFloorTileAt(checkLeftX, tileY, bot, out _) ) {
+				checkLeftX++;
+			}
+
 			campStartPos = (checkLeftX, tileY);
 
 			if( tileTypes.Count > 0 ) {
-				mostCommonTileType = tileTypes.Aggregate( ( kv1, kv2 ) => kv1.Value > kv2.Value ? kv1 : kv2 ).Key;
+				mostCommonTileType = tileTypes.Aggregate( (kv1, kv2) => kv1.Value > kv2.Value ? kv1 : kv2 ).Key;
 			} else {
 				mostCommonTileType = -1;
 			}
@@ -58,80 +64,90 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////////////////
 
-		private bool IsTileValid( int tileX, int tileY, int bottom, out int floorY ) {
+		private bool FindValidNearFloorTileAt( int tileX, int tileY, int maxY, out int nearFloorY ) {
 			if( tileX < 0 || tileX >= Main.maxTilesX || tileY < 0 || tileY >= Main.maxTilesY ) {
-				floorY = tileY;
+				nearFloorY = tileY;
 				return false;
 			}
 
-			//
+			nearFloorY = tileY;
 
-			bool isValid( Tile mytile ) {
-				if( (mytile?.liquid ?? 0) > 0 ) {
+			bool hasEmptySpace = false;
+			for( Tile tile = Main.tile[ tileX, nearFloorY ];
+						nearFloorY < maxY && this.IsValidEmptyTile(tile);
+						tile = Main.tile[tileX, ++nearFloorY] ) {
+				hasEmptySpace = true;
+			}
+
+			Tile floorTile = Main.tile[ tileX, nearFloorY-- ];
+			if( !hasEmptySpace || !this.IsValidFloorTile(floorTile) ) {
+				return false;
+			}
+
+			nearFloorY--;
+
+			for( int i=0; i<3; i++ ) {
+				if( (nearFloorY - i) < 0 ) {
 					return false;
 				}
 
-				if( mytile?.active() == true ) {
-					int type = mytile.type;
-					if( type != TileID.Stalactite && (type < 179 || type > 187) ) {
-						return false;
-					}
-				}
-
-				switch( mytile?.wall ?? 0 ) {
-				case WallID.BlueDungeonSlabUnsafe:
-				case WallID.BlueDungeonTileUnsafe:
-				case WallID.BlueDungeonUnsafe:
-				case WallID.GreenDungeonSlabUnsafe:
-				case WallID.GreenDungeonTileUnsafe:
-				case WallID.GreenDungeonUnsafe:
-				case WallID.PinkDungeonSlabUnsafe:
-				case WallID.PinkDungeonTileUnsafe:
-				case WallID.PinkDungeonUnsafe:
-				case WallID.LihzahrdBrickUnsafe:
-				case WallID.CorruptionUnsafe1:
-				case WallID.CorruptionUnsafe2:
-				case WallID.CorruptionUnsafe3:
-				case WallID.CorruptionUnsafe4:
-				case WallID.CrimsonUnsafe1:
-				case WallID.CrimsonUnsafe2:
-				case WallID.CrimsonUnsafe3:
-				case WallID.CrimsonUnsafe4:
-				case WallID.CrimstoneUnsafe:
-				case WallID.EbonstoneUnsafe:
-				case WallID.HiveUnsafe:
-				case WallID.SpiderUnsafe:
+				Tile tile = Main.tile[ tileX, nearFloorY - i ];
+				if( !this.IsValidEmptyTile(tile) ) {
 					return false;
 				}
-
-				return true;
 			}
 
-			bool isValidFloor( Tile mytile ) {
-				return mytile?.active() == true
-					&& Main.tileSolid[mytile.type]
-					&& !Main.tileSolidTop[mytile.type];
+			return true;
+		}
+
+
+		////////////////
+
+		private bool IsValidEmptyTile( Tile mytile ) {
+			if( ( mytile?.liquid ?? 0 ) > 0 ) {
+				return false;
 			}
 
-			//
-
-			bool found = false;
-			floorY = tileY;
-
-			for( Tile tile = Main.tile[tileX, tileY]; isValid(tile); tile = Main.tile[tileX, floorY] ) {
-				found = true;
-				floorY++;
-
-				if( floorY >= bottom ) {
-					break;
+			if( mytile?.active() == true ) {
+				int type = mytile.type;
+				if( type != TileID.Stalactite && ( type < 179 || type > 187 ) ) {
+					return false;
 				}
 			}
 
-			if( found ) {
-				floorY--;
+			switch( mytile?.wall ?? 0 ) {
+			case WallID.BlueDungeonSlabUnsafe:
+			case WallID.BlueDungeonTileUnsafe:
+			case WallID.BlueDungeonUnsafe:
+			case WallID.GreenDungeonSlabUnsafe:
+			case WallID.GreenDungeonTileUnsafe:
+			case WallID.GreenDungeonUnsafe:
+			case WallID.PinkDungeonSlabUnsafe:
+			case WallID.PinkDungeonTileUnsafe:
+			case WallID.PinkDungeonUnsafe:
+			case WallID.LihzahrdBrickUnsafe:
+			case WallID.CorruptionUnsafe1:
+			case WallID.CorruptionUnsafe2:
+			case WallID.CorruptionUnsafe3:
+			case WallID.CorruptionUnsafe4:
+			case WallID.CrimsonUnsafe1:
+			case WallID.CrimsonUnsafe2:
+			case WallID.CrimsonUnsafe3:
+			case WallID.CrimsonUnsafe4:
+			case WallID.CrimstoneUnsafe:
+			case WallID.EbonstoneUnsafe:
+			case WallID.HiveUnsafe:
+			case WallID.SpiderUnsafe:
+				return false;
 			}
 
-			return found && isValidFloor( Main.tile[tileX, floorY+1] );
+			return true;
+		}
+
+		private bool IsValidFloorTile( Tile mytile ) {
+			return mytile?.active() == true
+				&& Main.tileSolid[mytile.type]
+				&& !Main.tileSolidTop[mytile.type];
 		}
 	}
 }
