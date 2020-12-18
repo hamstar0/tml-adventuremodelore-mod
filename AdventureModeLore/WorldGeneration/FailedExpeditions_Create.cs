@@ -22,7 +22,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int toTileX = leftTileX + campWidth;
 
 			for( int i = leftTileX; i < toTileX; i++ ) {
-				this.PaveCampAt( leftTileX, nearFloorTileY, paveTileType );
+				this.PaveCampAt( i, nearFloorTileY, paveTileType );
 			}
 
 			// Tent
@@ -53,6 +53,15 @@ namespace AdventureModeLore.WorldGeneration {
 			chestIdx = WorldGen.PlaceChest( chestTileX, nearFloorTileY, TileID.Containers, false, 5 );
 			if( chestIdx == -1 ) {
 				result = "Could not place barrel at "+chestTileX+","+nearFloorTileY;
+				/*	+"\n"+Main.tile[chestTileX-1, nearFloorTileY-1].ToString()
+					+"\n"+Main.tile[chestTileX, nearFloorTileY-1].ToString()
+					+"\n"+Main.tile[chestTileX+1, nearFloorTileY-1].ToString()
+					+"\n"+Main.tile[chestTileX-1, nearFloorTileY].ToString()
+					+"\n"+Main.tile[chestTileX, nearFloorTileY].ToString()
+					+"\n"+Main.tile[chestTileX+1, nearFloorTileY].ToString()
+					+"\n"+Main.tile[chestTileX-1, nearFloorTileY+1].ToString()
+					+"\n"+Main.tile[chestTileX, nearFloorTileY+1].ToString()
+					+"\n"+Main.tile[chestTileX+1, nearFloorTileY+1].ToString();*/
 				return false;
 			}
 
@@ -65,40 +74,52 @@ namespace AdventureModeLore.WorldGeneration {
 			return true;
 		}
 
-		////
+		////////////////
 
 		private void PaveCampAt( int tileX, int nearFloorTileY, int tileType ) {
 			var needsFill = new List<(int, int)>();
 
 			// Clear space above camp
 			int aboveY = nearFloorTileY;
-			for( Tile tile = Main.tile[ tileX, aboveY ];
+			for( Tile tile = Framing.GetTileSafely(tileX, aboveY);
 						aboveY > (nearFloorTileY - 3);
-						tile = Main.tile[ tileX, --aboveY] ) {
-				if( tile?.active() == true ) {
-					WorldGen.KillTile( tileX, aboveY );
+						tile = Framing.GetTileSafely(tileX, --aboveY) ) {
+				if( tile.active() ) {
+					tile.ClearEverything();
+					tile.active( false );
 				}
 			}
 
 			// Clear space below and find 'floor'
 			int belowY = nearFloorTileY + 1;
-			for( Tile tile = Main.tile[ tileX, belowY];
+			for( Tile tile = Framing.GetTileSafely(tileX, belowY);
 						belowY < (nearFloorTileY + 7) && !this.IsValidFloorTile(tile);
-						tile = Main.tile[ tileX, ++belowY] ) {
-				if( tile?.active() == true ) {
-					WorldGen.KillTile( tileX, belowY );
+						tile = Framing.GetTileSafely(tileX, ++belowY) ) {
+				if( tile.active() ) {
+					tile.ClearEverything();
+					tile.active( false );
 				}
 
 				needsFill.Add( (tileX, belowY) );
 			}
 
-			Main.tile[ tileX, nearFloorTileY+1 ]?.slope( 0 );
+			Main.tile[ tileX, belowY ]?.slope( 0 );
+			Main.tile[ tileX, belowY ]?.halfBrick( false );
 
 			// Raise floor to camp's level
 			for( int i=needsFill.Count-1; i>=0; i-- ) {
 				(int x, int y) fillAt = needsFill[i];
 
-				WorldGen.PlaceTile( fillAt.x, fillAt.y, tileType );
+				Tile tile = Main.tile[fillAt.x, fillAt.y];
+
+				WorldGen.PlaceTile( fillAt.x, fillAt.y, tileType, false, true );
+
+				if( !tile.active() ) {
+					tile.ClearEverything();
+					tile.active( true );
+					tile.type = (ushort)tileType;
+					WorldGen.SquareTileFrame( fillAt.x, fillAt.y );
+				}
 			}
 		}
 	}
