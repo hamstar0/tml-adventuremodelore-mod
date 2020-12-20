@@ -46,6 +46,8 @@ namespace AdventureModeLore.WorldGeneration {
 			Main.tile[fireTileX, nearFloorTileY].frameY += 36;//288 + 18;    // this is dumb
 			Main.tile[fireTileX+1, nearFloorTileY - 1].frameY += 36;//288;     // this is dumb
 			Main.tile[fireTileX+1, nearFloorTileY].frameY += 36;//288 + 18;    // this is dumb
+			Main.tile[fireTileX+2, nearFloorTileY - 1].frameY += 36;//288;     // this is dumb
+			Main.tile[fireTileX+2, nearFloorTileY].frameY += 36;//288 + 18;    // this is dumb
 
 			// Barrel
 			int chestTileX = leftTileX + 8;

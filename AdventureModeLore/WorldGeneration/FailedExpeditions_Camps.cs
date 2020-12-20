@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
