@@ -52,12 +52,12 @@ namespace AdventureModeLore.Logic {
 			/***********************/
 
 			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.WitchDoctor );
-			int conveyance = 0;
+			int conveyances = 0;
 
 			// Dialogue
 			DialogueEditor.SetDynamicDialogueHandler( NPCID.WitchDoctor, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					switch( conveyance++ ) {
+					switch( conveyances++ ) {
 					case 0:
 						return "What you call a plague is the disruption of the souls of the dead in their journey back into the"
 							+ " land. Their anger can be felt by the living and dead alike, causing all of the troubles you now"

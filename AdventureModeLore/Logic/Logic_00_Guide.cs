@@ -52,22 +52,27 @@ namespace AdventureModeLore.Logic {
 
 		private static void Run00_Guide_Actions_ObjectiveUnfinished() {
 			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.Guide );
-			bool conveyance = true;
+			int conveyances = 0;
 
 			// Dialogue
 			DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					if( !conveyance ) {
-						return msg;
-					}
-					conveyance = false;
+					switch( conveyances++ ) {
+					case 0:
+						ObjectivesAPI.AddObjective(
+							objective: AMLLogic.InvestigateDungeon(),
+							order: -1,
+							alertPlayer: true,
+							out string _
+						);
 
-					ObjectivesAPI.AddObjective(
-						objective: AMLLogic.InvestigateDungeon(),
-						order: -1,
-						alertPlayer: true,
-						out string _
-					);
+						return "Before the attack, reports came in of a large brick structure on the island a bit inland."
+							+ " Perhaps we should check it out?";
+					case 1:
+						return "If you're having trouble getting access to areas, be sure to use your ropes, platforms, "
+							+"framing planks, and track deployment kits. Grab them from the barrel on the raft. You can also "
+							+"craft or else buy these, if you can get the needed materials or money.";
+					}
 
 					if( oldHandler != null ) {
 						DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, oldHandler );
@@ -75,8 +80,7 @@ namespace AdventureModeLore.Logic {
 						DialogueEditor.RemoveDynamicDialogueHandler( NPCID.Guide );
 					}
 
-					return "Before the attack, reports came in of a large brick structure on the island a bit inland."
-						+ " Perhaps we should check it out?";
+					return msg;
 				},
 				isShowingAlert: () => true
 			) );
