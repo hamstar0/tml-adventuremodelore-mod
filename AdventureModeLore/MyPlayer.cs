@@ -63,7 +63,7 @@ namespace AdventureModeLore {
 					MapMarkers.AddFullScreenMapMarker(
 						tileX: exped.x,
 						tileY: exped.y,
-						label: "AMLExpedition_" + i,
+						id: "AMLExpedition_" + i,
 						icon: Main.itemTexture[ ItemID.Skull ],
 						scale: 1f
 					);
