@@ -33,6 +33,9 @@ namespace AdventureModeLore {
 			PKEMeter.PKEMeterAPI.SetMeterText( ( plr, pos, gauges ) => {
 				(string text, Color color) currText = meterTextFunc?.Invoke( plr, pos, gauges )
 					?? ("", Color.Transparent);
+
+				textTimer--;
+
 				if( textTimer <= 0 && currText.text != "" ) {   // yield
 					return currText;
 				}
@@ -42,14 +45,9 @@ namespace AdventureModeLore {
 				}
 
 				if( textTimer > 0 ) {
-					gaugeTimer = 10;
-
-					currText.color = Color.Lime;
-					currText.color = currText.color * ( 0.5f + ( Main.rand.NextFloat() * 0.5f ) );
+					currText.color = Color.Lime * ( 0.5f + ( Main.rand.NextFloat() * 0.5f ) );
 					currText.text = "CLASS III ECTOPLASM AGGREGATE VESSEL";
 				}
-
-				textTimer--;
 
 				return currText;
 			} );
