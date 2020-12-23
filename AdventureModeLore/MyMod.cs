@@ -34,7 +34,7 @@ namespace AdventureModeLore {
 		}
 
 		public override void PostSetupContent() {
-			if( ModLoader.GetMod( "PKE Meter" ) != null ) {
+			if( ModLoader.GetMod( "PKEMeter" ) != null ) {
 				AMLMod.InitializePKE();
 			}
 		}

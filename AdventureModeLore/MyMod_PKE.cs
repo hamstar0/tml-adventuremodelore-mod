@@ -7,27 +7,25 @@ using HamstarHelpers.Helpers.Debug;
 
 namespace AdventureModeLore {
 	public partial class AMLMod : Mod {
-		private static float LastGaugedExpeditionPercent = 0f;
-
-
-
-		////////////////
-
 		public static void InitializePKE() {
 			PKEMeter.Logic.PKEText meterTextFunc = PKEMeter.PKEMeterAPI.GetMeterText();
 			PKEMeter.Logic.PKEGauge gaugeFunc = PKEMeter.PKEMeterAPI.GetGauge();
-			int timer = 0;
+
+			float lastGaugedExpeditionPercent = 0;
+
+			int gaugeTimer = 0;
+			int textTimer = 0;
 
 			PKEMeter.PKEMeterAPI.SetGauge( ( plr, pos ) => {
 				(float b, float g, float y, float r) existingGauge = gaugeFunc?.Invoke( plr, pos )
 					?? (0f, 0f, 0f, 0f);
 
-				if( timer-- <= 0 ) {
-					timer = 10;
-					AMLMod.LastGaugedExpeditionPercent = AMLMod.GaugeExpeditionsNear( pos ) ?? 0f;
+				if( gaugeTimer-- <= 0 ) {
+					gaugeTimer = 10;
+					lastGaugedExpeditionPercent = AMLMod.GaugeExpeditionsNear( pos ) ?? 0f;
 				}
 
-				existingGauge.g = AMLMod.LastGaugedExpeditionPercent;	// Green channel
+				existingGauge.g = lastGaugedExpeditionPercent;	// Green channel
 
 				return existingGauge;
 			} );
@@ -35,15 +33,23 @@ namespace AdventureModeLore {
 			PKEMeter.PKEMeterAPI.SetMeterText( ( plr, pos, gauges ) => {
 				(string text, Color color) currText = meterTextFunc?.Invoke( plr, pos, gauges )
 					?? ("", Color.Transparent);
+				if( textTimer <= 0 && currText.text != "" ) {   // yield
+					return currText;
+				}
 
-				if( gauges.r > 0.75f ) {
-				} else if( gauges.y > 0.75f ) {
-				} else if( gauges.g > 0.75f ) {
+				if( gauges.g > 0.75f ) {
+					textTimer = 60;
+				}
+
+				if( textTimer > 0 ) {
+					gaugeTimer = 10;
+
 					currText.color = Color.Lime;
+					currText.color = currText.color * ( 0.5f + ( Main.rand.NextFloat() * 0.5f ) );
 					currText.text = "CLASS III ECTOPLASM AGGREGATE VESSEL";
 				}
 
-				currText.color = currText.color * ( 0.5f + ( Main.rand.NextFloat() * 0.5f ) );
+				textTimer--;
 
 				return currText;
 			} );
