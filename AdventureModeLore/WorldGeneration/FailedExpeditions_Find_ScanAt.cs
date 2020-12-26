@@ -16,7 +16,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int campWidth,
 					out (int x, int nearFloorY) campStartPos,
 					out int mostCommonTileType ) {
-			var tileTypes = new Dictionary<ushort, int>();
+			var floorTileTypes = new Dictionary<ushort, int>();
 
 			int nearFloorY = 0;
 			int width = 0;
@@ -30,7 +30,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 				if( this.FindValidNearFloorTileAt(checkLeftX, tileY, bot, out nearFloorY) ) {
 					Tile floorTile = Main.tile[ checkLeftX, nearFloorY + 1 ];
-					tileTypes.AddOrSet( floorTile.type, 1 );
+					floorTileTypes.AddOrSet( floorTile.type, 1 );
 
 					isChecked = true;
 					width++;
@@ -38,7 +38,7 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 				if( this.FindValidNearFloorTileAt(checkRightX, tileY, bot, out nearFloorY) ) {
 					Tile floorTile = Main.tile[ checkRightX, nearFloorY + 1 ];
-					tileTypes.AddOrSet( floorTile.type, 1 );
+					floorTileTypes.AddOrSet( floorTile.type, 1 );
 
 					isChecked = true;
 					width++;
@@ -52,8 +52,8 @@ namespace AdventureModeLore.WorldGeneration {
 
 			campStartPos = (checkLeftX, tileY);
 
-			if( tileTypes.Count > 0 ) {
-				mostCommonTileType = tileTypes.Aggregate( (kv1, kv2) => kv1.Value > kv2.Value ? kv1 : kv2 ).Key;
+			if( floorTileTypes.Count > 0 ) {
+				mostCommonTileType = floorTileTypes.Aggregate( (kv1, kv2) => kv1.Value > kv2.Value ? kv1 : kv2 ).Key;
 			} else {
 				mostCommonTileType = -1;
 			}
@@ -70,22 +70,25 @@ namespace AdventureModeLore.WorldGeneration {
 				return false;
 			}
 
-			nearFloorY = tileY;
+			int findFloorY = tileY;
 
+			// Find floor
 			bool hasEmptySpace = false;
-			for( Tile tile = Main.tile[ tileX, nearFloorY ];
-						nearFloorY < maxY && this.IsValidEmptyTile(tile);
-						tile = Main.tile[tileX, ++nearFloorY] ) {
+			for( Tile tile = Main.tile[ tileX, findFloorY ];
+						findFloorY < maxY && this.IsValidEmptyTile(tile);
+						tile = Main.tile[tileX, ++findFloorY] ) {
 				hasEmptySpace = true;
 			}
+			
+			nearFloorY = findFloorY - 1;
 
-			Tile floorTile = Main.tile[ tileX, nearFloorY-- ];
+			// Confirm floor
+			Tile floorTile = Main.tile[ tileX, findFloorY ];
 			if( !hasEmptySpace || !this.IsValidFloorTile(floorTile) ) {
 				return false;
 			}
 
-			nearFloorY--;
-
+			// Verify if valid "empty" space above floor
 			for( int i=0; i<3; i++ ) {
 				if( (nearFloorY - i) < 0 ) {
 					return false;
@@ -104,13 +107,31 @@ namespace AdventureModeLore.WorldGeneration {
 		////////////////
 
 		private bool IsValidEmptyTile( Tile mytile ) {
-			if( ( mytile?.liquid ?? 0 ) > 0 ) {
+			if( (mytile?.liquid ?? 0) > 0 ) {
 				return false;
 			}
 
 			if( mytile?.active() == true ) {
-				int type = mytile.type;
-				if( type != TileID.Stalactite && ( type < 179 || type > 187 ) ) {
+				switch( mytile.type ) {
+				case TileID.Stalactite:
+				case TileID.GreenMoss:
+				case TileID.BrownMoss:
+				case TileID.RedMoss:
+				case TileID.BlueMoss:
+				case TileID.PurpleMoss:
+				case TileID.LongMoss:
+				case TileID.SmallPiles:
+				case TileID.LargePiles:
+				case TileID.LargePiles2:
+				case TileID.LavaMoss:
+				case TileID.Grass:
+				case TileID.CorruptGrass:
+				case TileID.FleshGrass:
+				case TileID.HallowedGrass:
+				case TileID.JungleGrass:
+				case TileID.MushroomGrass:
+					break;
+				default:
 					return false;
 				}
 			}
@@ -145,9 +166,7 @@ namespace AdventureModeLore.WorldGeneration {
 		}
 
 		private bool IsValidFloorTile( Tile mytile ) {
-			return mytile?.active() == true
-				&& Main.tileSolid[mytile.type]
-				&& !Main.tileSolidTop[mytile.type];
+			return WorldGen.SolidTile3( mytile );
 		}
 	}
 }

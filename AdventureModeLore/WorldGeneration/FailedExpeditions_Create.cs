@@ -55,7 +55,7 @@ namespace AdventureModeLore.WorldGeneration {
 			chestIdx = WorldGen.PlaceChest( chestTileX, nearFloorTileY, TileID.Containers, false, 5 );
 			if( chestIdx == -1 ) {
 				result = "Could not place barrel at "+chestTileX+","+nearFloorTileY;
-				/*	+"\n"+Main.tile[chestTileX-1, nearFloorTileY-1].ToString()
+					/*+"\n"+Main.tile[chestTileX-1, nearFloorTileY-1].ToString()
 					+"\n"+Main.tile[chestTileX, nearFloorTileY-1].ToString()
 					+"\n"+Main.tile[chestTileX+1, nearFloorTileY-1].ToString()
 					+"\n"+Main.tile[chestTileX-1, nearFloorTileY].ToString()
@@ -86,9 +86,14 @@ namespace AdventureModeLore.WorldGeneration {
 			for( Tile tile = Framing.GetTileSafely(tileX, aboveY);
 						aboveY > (nearFloorTileY - 3);
 						tile = Framing.GetTileSafely(tileX, --aboveY) ) {
+				try {
+					if( tile.active() ) {
+						WorldGen.KillTile( tileX, aboveY );
+					}
+				} catch { }
+
 				if( tile.active() ) {
 					tile.ClearEverything();
-					tile.active( false );
 				}
 			}
 
@@ -97,9 +102,14 @@ namespace AdventureModeLore.WorldGeneration {
 			for( Tile tile = Framing.GetTileSafely(tileX, belowY);
 						belowY < (nearFloorTileY + 7) && !this.IsValidFloorTile(tile);
 						tile = Framing.GetTileSafely(tileX, ++belowY) ) {
+				try {
+					if( tile.active() ) {
+						WorldGen.KillTile( tileX, belowY );
+					}
+				} catch { }
+
 				if( tile.active() ) {
 					tile.ClearEverything();
-					tile.active( false );
 				}
 
 				needsFill.Add( (tileX, belowY) );
@@ -112,15 +122,22 @@ namespace AdventureModeLore.WorldGeneration {
 			for( int i=needsFill.Count-1; i>=0; i-- ) {
 				(int x, int y) fillAt = needsFill[i];
 
-				Tile tile = Main.tile[fillAt.x, fillAt.y];
+				try {
+					WorldGen.PlaceTile( fillAt.x, fillAt.y, tileType, false, true );
+				} catch { }
 
-				WorldGen.PlaceTile( fillAt.x, fillAt.y, tileType, false, true );
+				Tile tile = Framing.GetTileSafely( fillAt.x, fillAt.y );
 
-				if( !tile.active() ) {
+				if( !this.IsValidFloorTile(tile) ) {
 					tile.ClearEverything();
+
 					tile.active( true );
 					tile.type = (ushort)tileType;
 					WorldGen.SquareTileFrame( fillAt.x, fillAt.y );
+
+					if( !this.IsValidFloorTile( tile ) ) {
+						LogHelpers.Log( "Could not fill camp floor tile (type: "+tileType+") at "+fillAt.x+", "+fillAt.y+": "+tile.ToString() );
+					}
 				}
 			}
 		}
