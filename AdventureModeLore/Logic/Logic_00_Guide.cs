@@ -69,9 +69,9 @@ namespace AdventureModeLore.Logic {
 						return "Before the attack, reports came in of a large brick structure on the island a bit inland."
 							+ " Perhaps we should check it out?";
 					case 1:
-						msg = "If you're having trouble getting around, you can use ropes, platforms, framing planks, and "
-							+"track deployment kits. Grab them from the barrel on the raft. If you need more, some of these "
-							+"can be crafted or bought, if you have the needed materials or money.";
+						msg = "If you're having trouble getting to a place, use your ropes, platforms, framing planks, and "
+							+"track deployment kits. There should be some in the barrel on the raft. If you need more, some "
+							+"of these can be crafted or bought, if you have the needed materials or money.";
 						break;
 					}
 
