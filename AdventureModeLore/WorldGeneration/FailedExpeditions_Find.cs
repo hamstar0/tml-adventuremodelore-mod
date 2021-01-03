@@ -16,13 +16,13 @@ namespace AdventureModeLore.WorldGeneration {
 			for( int i = 0; i < max; i++ ) {
 				int tileX = max + i;
 
-				scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, out mostCommonTileType );
+				scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, 7, out mostCommonTileType );
 				if( scanPos != null ) {
 					return scanPos;
 				}
 
 				tileX = max - i;
-				scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, out mostCommonTileType );
+				scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, 7, out mostCommonTileType );
 				if( scanPos != null ) {
 					return scanPos;
 				}
@@ -48,10 +48,11 @@ namespace AdventureModeLore.WorldGeneration {
 				dir = -1;
 			}
 
-			for( int i=0; i<1000; i++ ) {
+			int maxCheck = Main.maxTilesX / 2;
+			for( int i=0; i<maxCheck; i++ ) {
 				int x = tileX + (i * dir);
 
-				scanPos = this.FindExpeditionFutureFloorArea( x, minTileY, maxTileY, campWidth, out mostCommonTileType );
+				scanPos = this.FindExpeditionFutureFloorArea( x, minTileY, maxTileY, campWidth, 8, out mostCommonTileType );
 				if( scanPos != null ) {
 					return scanPos;
 				}
@@ -69,7 +70,14 @@ namespace AdventureModeLore.WorldGeneration {
 				int tileX = WorldGen.genRand.Next( WorldHelpers.BeachWestTileX, WorldHelpers.BeachEastTileX );
 				int tileY = WorldGen.genRand.Next( WorldHelpers.DirtLayerTopTileY, maxTileY );
 
-				(int, int)? scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, out mostCommonTileType );
+				(int, int)? scanPos = this.FindExpeditionFutureFloorArea(
+					tileX,
+					tileY,
+					maxTileY,
+					campWidth,
+					6,
+					out mostCommonTileType
+				);
 				if( scanPos != null ) {
 					return scanPos;
 				}
@@ -87,9 +95,10 @@ namespace AdventureModeLore.WorldGeneration {
 					int tileY,
 					int maxTileY,
 					int campWidth,
+					int floorPavingDepth,
 					out int mostCommonTileType ) {
 			if( this.FindValidNearFloorTileAt(tileX, tileY, maxTileY, out tileY) ) {
-				if( this.ScanFromTile(tileX, tileY, campWidth, out (int, int) scanPos, out mostCommonTileType) ) {
+				if( this.ScanFromTile(tileX, tileY, campWidth, floorPavingDepth, out( int, int) scanPos, out mostCommonTileType) ) {
 					return scanPos;
 				}
 			}

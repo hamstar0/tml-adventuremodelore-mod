@@ -14,6 +14,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int tileX,
 					int tileY,
 					int campWidth,
+					int floorPavingThickness,
 					out (int x, int nearFloorY) campStartPos,
 					out int mostCommonTileType ) {
 			var floorTileTypes = new Dictionary<ushort, int>();
@@ -22,7 +23,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int width = 0;
 			int checkLeftX = tileX - 1;
 			int checkRightX = tileX + 1;
-			int bot = tileY + 6;
+			int bot = tileY + floorPavingThickness;
 
 			bool isChecked;
 			do {
