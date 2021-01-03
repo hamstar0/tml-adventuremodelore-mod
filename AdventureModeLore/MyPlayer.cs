@@ -46,29 +46,5 @@ namespace AdventureModeLore {
 
 			return tag;
 		}
-
-
-		////////////////
-
-		public override void PreUpdate() {
-			if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
-				var myworld = ModContent.GetInstance<AMLWorld>();
-
-				int i = 0;
-				foreach( (int x, int y) exped in myworld.FailedExpeditions ) {
-					if( MapMarkers.TryGetFullScreenMapMarker("AMLExpedition_" + i, out _) ) {
-						continue;
-					}
-
-					MapMarkers.AddFullScreenMapMarker(
-						tileX: exped.x,
-						tileY: exped.y,
-						id: "AMLExpedition_" + i,
-						icon: Main.itemTexture[ ItemID.Skull ],
-						scale: 1f
-					);
-				}
-			}
-		}
 	}
 }
