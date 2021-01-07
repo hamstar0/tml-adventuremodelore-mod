@@ -93,15 +93,16 @@ namespace AdventureModeLore.Logic {
 							ObjectivesAPI.AddObjective( AMLLogic.ReachJungle(), 0, true, out _ );
 						}
 
-						if( oldHandler != null ) {
-							DialogueEditor.SetDynamicDialogueHandler( NPCID.OldMan, oldHandler );
-						} else {
-							DialogueEditor.RemoveDynamicDialogueHandler( NPCID.OldMan );
-						}
-
-						return "The plague? I know nothing of this. All I know is I made a pact long ago to keep this place sealed."
+						msg = "The plague? I know nothing of this. All I know is I made a pact long ago to keep this place sealed."
 							+ " I don't even remember why. This dungeon has its secrets, but I want nothing to do with it!"
 							+ "\nYou might instead try investigating the jungle. I hear it too has its secrets. And dangers.";
+						break;
+					}
+
+					if( oldHandler != null ) {
+						DialogueEditor.SetDynamicDialogueHandler( NPCID.OldMan, oldHandler );
+					} else {
+						DialogueEditor.RemoveDynamicDialogueHandler( NPCID.OldMan );
 					}
 
 					return msg;

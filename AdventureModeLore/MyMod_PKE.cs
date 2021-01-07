@@ -8,13 +8,10 @@ using HamstarHelpers.Helpers.Debug;
 namespace AdventureModeLore {
 	public partial class AMLMod : Mod {
 		public static void InitializePKE() {
-			PKEMeter.Logic.PKEText meterTextFunc = PKEMeter.PKEMeterAPI.GetMeterText();
 			PKEMeter.Logic.PKEGauge gaugeFunc = PKEMeter.PKEMeterAPI.GetGauge();
 
 			float lastGaugedExpeditionPercent = 0;
-
 			int gaugeTimer = 0;
-			int textTimer = 0;
 
 			PKEMeter.PKEMeterAPI.SetGauge( ( plr, pos ) => {
 				(float b, float g, float y, float r) existingGauge = gaugeFunc?.Invoke( plr, pos )
@@ -30,26 +27,12 @@ namespace AdventureModeLore {
 				return existingGauge;
 			} );
 
-			PKEMeter.PKEMeterAPI.SetMeterText( ( plr, pos, gauges ) => {
-				(string text, Color color) currText = meterTextFunc?.Invoke( plr, pos, gauges )
-					?? ("", Color.Transparent);
-
-				textTimer--;
-
-				if( textTimer <= 0 && currText.text != "" ) {   // yield
-					return currText;
-				}
-
-				if( gauges.g > 0.75f ) {
-					textTimer = 60;
-				}
-
-				if( textTimer > 0 ) {
-					currText.color = Color.Lime * ( 0.5f + ( Main.rand.NextFloat() * 0.5f ) );
-					currText.text = "CLASS III ECTOPLASM AGGREGATE VESSEL";
-				}
-
-				return currText;
+			PKEMeter.PKEMeterAPI.SetMeterText( "AMLoreFailedExpeditions", ( plr, pos, gauges ) => {
+				return new PKEMeter.Logic.PKETextMessage(
+					message: "CLASS III ECTOPLASM AGGREGATE VESSEL",
+					color: Color.Lime * ( 0.5f + ( Main.rand.NextFloat() * 0.5f ) ),
+					priority: gauges.g
+				);
 			} );
 		}
 
