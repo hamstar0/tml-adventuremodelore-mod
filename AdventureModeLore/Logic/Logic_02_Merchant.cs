@@ -17,8 +17,8 @@ namespace AdventureModeLore.Logic {
 		internal static Objective FindOrb() {
 			return new FlatObjective(
 				title: AMLLogic.FindOrbTitle,
-				description: "It seems the land itself is enchanted. Sacred orbs appear to resonate with"
-					+ "\n" + "terrain. Maybe this will be of help?",
+				description: "It seems the land itself is enchanted. Special orbs can be found that appear"
+					+ "\n" + "to resonate with the terrain. Maybe this will be of help?",
 				condition: ( obj ) => {
 					var orbsMod = ModLoader.GetMod( "Orbs" );
 
@@ -94,8 +94,9 @@ namespace AdventureModeLore.Logic {
 					}
 
 					return "I go where the money is. If you're looking for some, you'll need to find treasures."
-						+" This land is enchanted, and most areas can be accessed by using sacred magic orbs."
-						+" These can often be found accompanying other treasures. Strange, huh?";
+						+" This land itself is enchanted, and most areas can be accessed by using those special"
+						+" magic orbs found here and there. They'll often be accompanying said other treasures."
+						+" Strange, huh?";
 				},
 				isShowingAlert: () => true
 			) );

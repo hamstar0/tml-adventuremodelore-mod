@@ -54,44 +54,47 @@ namespace AdventureModeLore.WorldGeneration {
 			( "The Lunatic Cult", new string[] {
 				"One of the few natives of the land of Terraria, this group acts as \"agents of ancient"
 				+ "\ncosmic powers seeking to create a new home for their elder god masters\", allegedly.",
-				"Witness accounts exist of their gatherings associated with all manner of sorcery, which"
-				+ "\nthey claim is enabled by the use and presence of a substance called \"ectoplasm\".",
+				"Witnesses say their gatherings are associated with all manner of sorcery, which they"
+				+ "\nclaim is fueled by a substance called \"ectoplasm\".",
 				"They claim to have build the large dungeon-like structure on the island, but they do"
-				+ "\nnot appear to reside there at present.",
-				"They also claim this structure is tied to the source of their sorcery, and by extension,"
-				+ "\nsupply of \"ectoplasm\".",
-				"According to rumors, this substance is sourced from the \"spiritual essence of the dead\","
-				+ "\nwhich would strongly suggest this massive dungeon is rather a place of human sacrifice,"
-				+ "\nrather than incarceration.",
+				+ "\nnot presently appear to reside there.",
+				"They also claim this structure is tied to the their sorcery, and by extension, their supply"
+				+ "\nof \"ectoplasm\".",
+				"They say this substance is produced from the spirits of the dead, which would strongly"
+				+ "\nsuggest this massive dungeon is rather a place of human sacrifice, rather than mere"
+				+ "\nincarceration.",
 				"Cultist gatherings and recruitments seem to be on the rise of late, as are ever more"
 				+ "\nexotic and disturbing tales of their acts of sorcery all across the island.",
 				"Could this have any bearing on the rise of the undeath plague in recent years?"
 			} ),
 			( "The 'Lihzarhd' Tribe", new string[] {
-				"A hardy, humanoid tribe of survivors of the great war. They hid away as best they could"
-				+ "\nto excape the Curse, but it still took its toll on them.",
+				"Another of the natives of the land, these are a hardy, humanoid tribe of survivors of"
+				+ "\nthe great war. They hid away as best they could to excape the Curse, but it still"
+				+ "\ntook its toll.",
 				"Rather than succumbing to madness (or worse) like most others, these people lost their"
-				+ "\nhumanity, becoming lizard-like beasts of only questionably-sapient nature.",
+				+ "\nhuman forms, becoming lizard-like beasts of questionable-sapience.",
 				"They appear to reside deep within the island's jungle, hidden away in deep, uncharted"
-				+ "\nplaces.",
-				"Rumor has it they seek some sort of revenge, but none have been found of late to verify"
-				+ "\nthis intent.",
-				"Though less have been seen away from their jungle home of late, no indication exists"
-				+ "\nthat their numbers have reduced.",
-				"Despite their appearance and behavior, they do seem to be quite intelligent, and are"
-				+ "\noften noted for creating elaborate traps far and wide and even wielding"
-				+ "\ncuriously-advanced technologies.",
+				+ "\nrefuges.",
+				"Rumor has it they seek some sort of revenge, but until proper contact can be made, this"
+				+ "\nclaim has yet to be verified.",
+				"Despite there being less sightings of them away from their jungle home lately, no"
+				+ "\nindication exists that their numbers have reduced.",
+				"Ignoring their appearance and behavior, they do seem to be quite intelligent, as they"
+				+ "\nare noted for creating elaborate traps all around the island, and even wielding"
+				+ "\nsurprisingly advanced technologies.",
 				"Rumors also exist that they may even be practicing sorcery in recent years, seemingly"
 				+ "\nobsessed with \"apocalyptic magics\" in particular."
 			} ),
 			( "The Goblin Army", new string[] {
-				"The other survivors of the Great War. They dwell in the shadows and far corners of the"
-				+ "\nisland. Also afflicted by the curse, similar to Lihzarhds. They are always warring"
-				+ "\namong themselves and their neighbors.",
-				"It is not clear if they retain full sapience since their transformation, as their"
-				+ "\nwarlike temperament suggests a distinctly primal behaviorial shift.",
-				"Contact with them has proven unfruitful, as even their scouts frequently become hostile"
-				+ "\nto outsiders. If any signs of intelligence is to be found, it is well hidden."
+				"Yet more survivors of the Great War. They dwell in the shadows and far corners of the"
+				+ "\nisland. Also afflicted by the curse, similar to the \"lihzarhds\", they too have"
+				+ "\nmutated from their original human forms.",
+				"Though they are always warring among themselves and their neighbors, it appears some"
+				+ "\nsemblance of society exists among them. They are known to be adept magicians, and"
+				+ "do not shy away from contact.",
+				"Direct communication, however, has proven unfruitful, as even their scouts frequently"
+				+ "\nbecome hostile to outsiders. One wonders if they've indeed retained their own"
+				+ "\nintelligence, or else if some master's hand guides them..."
 			} ),
 			( "The Great War", new string[] {
 				"Where once a great civilization once dwelt on the island, now only utter ruin and"
