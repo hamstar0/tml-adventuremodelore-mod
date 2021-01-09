@@ -9,13 +9,13 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Logic {
-	public partial class LoreLogic : ILoadable {
+namespace AdventureModeLore.Lore {
+	public partial class LoreEvents : ILoadable {
 		public static string KillCorruptionBossTitle => "Defeat The "+(WorldGen.crimson?"Crimson":"Corruption")+"'s Guardian";
 
 		internal static Objective KillCorruptionBoss() {
 			return new FlatObjective(
-				title: LoreLogic.KillCorruptionBossTitle,
+				title: LoreEvents.KillCorruptionBossTitle,
 				description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will need to be stopped, or else the plague"
 					+ "\n" + "will spread.",
 				condition: ( obj ) => {
@@ -31,7 +31,7 @@ namespace AdventureModeLore.Logic {
 
 		internal static Objective ReachUnderworld() {
 			return new FlatObjective(
-				title: LoreLogic.ReachUnderworldTitle,
+				title: LoreEvents.ReachUnderworldTitle,
 				description: "It would seem the source of the plague is deep underground. You must find it.",
 				condition: ( obj ) => {
 					return Main.LocalPlayer.position.Y >= ( WorldHelpers.UnderworldLayerTopTileY * 16 );
@@ -43,8 +43,8 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run04_Dryad() {
-			Objective objKillCorrBoss = ObjectivesAPI.GetObjective( LoreLogic.KillCorruptionBossTitle );
-			Objective objReachUnderworld = ObjectivesAPI.GetObjective( LoreLogic.ReachUnderworldTitle );
+			Objective objKillCorrBoss = ObjectivesAPI.GetObjective( LoreEvents.KillCorruptionBossTitle );
+			Objective objReachUnderworld = ObjectivesAPI.GetObjective( LoreEvents.ReachUnderworldTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -56,14 +56,14 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			bool isCorrFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.KillCorruptionBossTitle );
-			bool isUnderFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.ReachUnderworldTitle );
+			bool isCorrFinished = ObjectivesAPI.IsFinishedObjective( LoreEvents.KillCorruptionBossTitle );
+			bool isUnderFinished = ObjectivesAPI.IsFinishedObjective( LoreEvents.ReachUnderworldTitle );
 			if( isCorrFinished || isUnderFinished ) {
 				if( objKillCorrBoss == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( LoreLogic.KillCorruptionBoss(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreEvents.KillCorruptionBoss(), 0, true, out _ );
 				}
 				if( objReachUnderworld == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( LoreLogic.ReachUnderworld(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreEvents.ReachUnderworld(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -82,7 +82,7 @@ namespace AdventureModeLore.Logic {
 					case 0:
 						// 04a - Kill EoW/BoC
 						if( objKillCorrBoss == null ) {
-							ObjectivesAPI.AddObjective( LoreLogic.KillCorruptionBoss(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreEvents.KillCorruptionBoss(), 0, true, out _ );
 						}
 
 						return "I see you are here to stop the undeath plague. Might I suggest you first start with the "
@@ -91,7 +91,7 @@ namespace AdventureModeLore.Logic {
 					case 1:
 						// 04b - Reach underworld
 						if( objReachUnderworld == null ) {
-							ObjectivesAPI.AddObjective( LoreLogic.ReachUnderworld(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreEvents.ReachUnderworld(), 0, true, out _ );
 						}
 
 						if( oldHandler != null ) {

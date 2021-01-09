@@ -4,7 +4,7 @@ using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
 
 
-namespace AdventureModeLore.Logic {
+namespace AdventureModeLore.Lore {
 	public partial class NPCLoreStage {
 		public string[] PrerequisiteObjectives { get; private set; }
 

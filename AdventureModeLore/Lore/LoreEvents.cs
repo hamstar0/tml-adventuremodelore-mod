@@ -8,19 +8,19 @@ using HamstarHelpers.Helpers.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Logic {
-	public partial class LoreLogic : ILoadable {
+namespace AdventureModeLore.Lore {
+	public partial class LoreEvents : ILoadable {
 		public static void Initialize() {
-			var logic = ModContent.GetInstance<LoreLogic>();
+			var logic = ModContent.GetInstance<LoreEvents>();
 
 			logic.Events.Clear();
-			logic.Events.Add( LoreLogic.LoreDefs00_Guide );
-			logic.Events.Add( LoreLogic.LoreDefs01_OldMan );
-			logic.Events.Add( LoreLogic.Run02_Merchant );
-			logic.Events.Add( LoreLogic.Run03_200hp );
-			logic.Events.Add( LoreLogic.Run04_Dryad );
-			logic.Events.Add( LoreLogic.Run05_Goblin );
-			logic.Events.Add( LoreLogic.Run06_WitchDoctor );
+			logic.Events.Add( LoreEvents.LoreDefs00_Guide );
+			logic.Events.Add( LoreEvents.LoreDefs01_OldMan );
+			logic.Events.Add( LoreEvents.Run02_Merchant );
+			logic.Events.Add( LoreEvents.Run03_200hp );
+			logic.Events.Add( LoreEvents.Run04_Dryad );
+			logic.Events.Add( LoreEvents.Run05_Goblin );
+			logic.Events.Add( LoreEvents.Run06_WitchDoctor );
 		}
 
 
@@ -31,7 +31,7 @@ namespace AdventureModeLore.Logic {
 				return;
 			}
 
-			var logic = ModContent.GetInstance<LoreLogic>();
+			var logic = ModContent.GetInstance<LoreEvents>();
 
 			foreach( NPCLoreStage stage in logic.Events.ToArray() ) {
 				if( stage.Begin() ) {

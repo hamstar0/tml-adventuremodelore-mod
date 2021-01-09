@@ -7,7 +7,7 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Logic {
+namespace AdventureModeLore.Lore {
 	public partial class NPCLoreStage {
 		public bool Begin() {
 			foreach( string prereq in this.PrerequisiteObjectives ) {

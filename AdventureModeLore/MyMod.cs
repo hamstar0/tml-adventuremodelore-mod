@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
-using AdventureModeLore.Logic;
+using AdventureModeLore.Lore;
 
 
 namespace AdventureModeLore {
@@ -63,7 +63,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			LoreLogic.Run();
+			LoreEvents.Run();
 		}
 	}
 }

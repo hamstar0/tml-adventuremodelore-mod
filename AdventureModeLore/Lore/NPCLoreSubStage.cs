@@ -4,7 +4,7 @@ using HamstarHelpers.Helpers.Debug;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Logic {
+namespace AdventureModeLore.Lore {
 	public partial class NPCLoreSubStage {
 		public Func<string> Dialogue { get; private set; }
 

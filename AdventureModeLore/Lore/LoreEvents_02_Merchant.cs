@@ -10,13 +10,13 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Logic {
-	public partial class LoreLogic : ILoadable {
+namespace AdventureModeLore.Lore {
+	public partial class LoreEvents : ILoadable {
 		public static string FindOrbTitle => "Find an Orb";
 
 		internal static Objective FindOrb() {
 			return new FlatObjective(
-				title: LoreLogic.FindOrbTitle,
+				title: LoreEvents.FindOrbTitle,
 				description: "It seems the land itself is enchanted. Special orbs can be found that appear"
 					+ "\n" + "to resonate with the terrain. Maybe this will be of help?",
 				condition: ( obj ) => {
@@ -45,10 +45,10 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run02_Merchant() {
-			Objective objFindMerch = ObjectivesAPI.GetObjective( LoreLogic.FindMerchantTitle );
-			Objective objReachJungle = ObjectivesAPI.GetObjective( LoreLogic.ReachJungleTitle );
+			Objective objFindMerch = ObjectivesAPI.GetObjective( LoreEvents.FindMerchantTitle );
+			Objective objReachJungle = ObjectivesAPI.GetObjective( LoreEvents.ReachJungleTitle );
 
-			Objective objFindOrb = ObjectivesAPI.GetObjective( LoreLogic.FindOrbTitle );
+			Objective objFindOrb = ObjectivesAPI.GetObjective( LoreEvents.FindOrbTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -60,9 +60,9 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			if( ObjectivesAPI.IsFinishedObjective(LoreLogic.FindOrbTitle) ) {
+			if( ObjectivesAPI.IsFinishedObjective(LoreEvents.FindOrbTitle) ) {
 				if( objFindOrb == null ) {	// Be sure objective is also declared
-					ObjectivesAPI.AddObjective( LoreLogic.FindOrb(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreEvents.FindOrb(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -84,7 +84,7 @@ namespace AdventureModeLore.Logic {
 
 					// 02 - Find an Orb
 					if( objFindOrb == null ) {
-						ObjectivesAPI.AddObjective( LoreLogic.FindOrb(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( LoreEvents.FindOrb(), 0, true, out _ );
 					}
 
 					if( oldHandler != null ) {

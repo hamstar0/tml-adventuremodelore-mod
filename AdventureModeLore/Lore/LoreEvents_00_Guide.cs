@@ -7,8 +7,8 @@ using HamstarHelpers.Helpers.Debug;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Logic {
-	public partial class LoreLogic : ILoadable {
+namespace AdventureModeLore.Lore {
+	public partial class LoreEvents : ILoadable {
 		public const string ObjectiveTitle_InvestigateDungeon = "Investigate Dungeon";
 
 
@@ -20,7 +20,7 @@ namespace AdventureModeLore.Logic {
 					dialogue: () => "Before the attack, reports came in of a large brick structure on the island a bit "
 							+ "inland. Perhaps we should check it out?",
 					objective: new FlatObjective(
-						title: LoreLogic.ObjectiveTitle_InvestigateDungeon,
+						title: LoreEvents.ObjectiveTitle_InvestigateDungeon,
 						description: "There appears to be a large, ominous structure with a suspicious old man"
 								+ "\n"+"wandering around it's entrance. Recommend an investigation.",
 						condition: ( obj ) => {

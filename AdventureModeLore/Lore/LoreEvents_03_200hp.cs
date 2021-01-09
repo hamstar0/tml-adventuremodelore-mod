@@ -7,13 +7,13 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Logic {
-	public partial class LoreLogic : ILoadable {
+namespace AdventureModeLore.Lore {
+	public partial class LoreEvents : ILoadable {
 		public static string FindGoblinTitle => "Talk To A Goblin";
 
 		internal static Objective FindGoblin() {
 			return new FlatObjective(
-				title: LoreLogic.FindGoblinTitle,
+				title: LoreEvents.FindGoblinTitle,
 				description: "It would seem there are natives in this land, if you'd call them that. Try to"
 					+ "\n"+"somehow open a line of communication with them.",
 				condition: ( obj ) => {
@@ -26,7 +26,7 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run03_200hp() {
-			Objective objFindGoblin = ObjectivesAPI.GetObjective( LoreLogic.FindGoblinTitle );
+			Objective objFindGoblin = ObjectivesAPI.GetObjective( LoreEvents.FindGoblinTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -38,9 +38,9 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			if( ObjectivesAPI.IsFinishedObjective(LoreLogic.FindGoblinTitle) ) {
+			if( ObjectivesAPI.IsFinishedObjective(LoreEvents.FindGoblinTitle) ) {
 				if( objFindGoblin == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( LoreLogic.FindGoblin(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreEvents.FindGoblin(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -62,7 +62,7 @@ namespace AdventureModeLore.Logic {
 
 					// 03 - Find goblin tinkerer
 					if( objFindGoblin == null ) {
-						ObjectivesAPI.AddObjective( LoreLogic.FindGoblin(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( LoreEvents.FindGoblin(), 0, true, out _ );
 					}
 
 					if( oldHandler != null ) {

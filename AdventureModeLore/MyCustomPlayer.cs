@@ -5,13 +5,13 @@ using Terraria.ModLoader;
 using HamstarHelpers.Classes.PlayerData;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.Maps;
-using AdventureModeLore.Logic;
+using AdventureModeLore.Lore;
 
 
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
-			LoreLogic.Initialize();
+			LoreEvents.Initialize();
 
 			if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
 				this.LoadFailedExpeditionMapMarkers();
