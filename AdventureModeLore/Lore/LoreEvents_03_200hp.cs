@@ -2,84 +2,34 @@
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Services.Dialogue;
-using Objectives;
 using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
-		public static string FindGoblinTitle => "Talk To A Goblin";
-
-		internal static Objective FindGoblin() {
-			return new FlatObjective(
-				title: LoreEvents.FindGoblinTitle,
-				description: "It would seem there are natives in this land, if you'd call them that. Try to"
-					+ "\n"+"somehow open a line of communication with them.",
-				condition: ( obj ) => {
-					return NPC.AnyNPCs( NPCID.GoblinTinkerer );
-				}
-			);
-		}
+		public const string ObjectiveTitle_TalkToGoblin = "Talk To A Goblin";
 
 
-		////////////////
-
-		private static bool Run03_200hp() {
-			Objective objFindGoblin = ObjectivesAPI.GetObjective( LoreEvents.FindGoblinTitle );
-
-			/***********************/
-			/**** Conditions:	****/
-			/***********************/
-
-			// Not ready yet?
-			if( Main.LocalPlayer.statLifeMax < 200 ) {
-				return true;
-			}
-
-			// Already done?
-			if( ObjectivesAPI.IsFinishedObjective(LoreEvents.FindGoblinTitle) ) {
-				if( objFindGoblin == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( LoreEvents.FindGoblin(), 0, true, out _ );
-				}
-				return false;
-			}
-
-			/***********************/
-			/**** Actions:		****/
-			/***********************/
-
-			DynamicDialogueHandler oldHandler = DialogueEditor.GetDynamicDialogueHandler( NPCID.Guide );
-			bool conveyance = true;
-
-			// Dialogue
-			DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, new DynamicDialogueHandler(
-				getDialogue: ( msg ) => {
-					if( !conveyance ) {
-						return msg;
-					}
-					conveyance = false;
-
-					// 03 - Find goblin tinkerer
-					if( objFindGoblin == null ) {
-						ObjectivesAPI.AddObjective( LoreEvents.FindGoblin(), 0, true, out _ );
-					}
-
-					if( oldHandler != null ) {
-						DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, oldHandler );
-					} else {
-						DialogueEditor.RemoveDynamicDialogueHandler( NPCID.Guide );
-					}
-
-					return "I have to tell you something. There are natives on this island!"
+		public static NPCLoreStage LoreDefs03_200hp { get; } = new NPCLoreStage(
+			prereqObjectives: new string[0],
+			prereqConditions: new Func<bool>[] {
+				() => Main.LocalPlayer.statLifeMax >= 200
+			},
+			npcType: NPCID.Guide,
+			subStages: new NPCLoreSubStage[] {
+				new NPCLoreSubStage(
+					dialogue: () => "I have to tell you something. There are natives on this island!"
 						+" Not mere scattered survivors or profiteers, but a full blown army of goblins!"
 						+" We must find a way to communicate with them directly."
-						+" I fear our presence here might be taken the wrong way!";
-				},
-				isShowingAlert: () => true
-			) );
-
-			return false;
-		}
+						+" I fear our presence here might be taken the wrong way!",
+					objective: new FlatObjective(
+						title: LoreEvents.ObjectiveTitle_TalkToGoblin,
+						description: "It would seem there are natives in this land, if you'd call them that. Try to"
+							+ "\n"+"somehow open a line of communication with them.",
+						condition: ( obj ) => NPC.AnyNPCs( NPCID.GoblinTinkerer )
+					)
+				)
+			}
+		);
 	}
 }

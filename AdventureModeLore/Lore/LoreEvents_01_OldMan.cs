@@ -15,7 +15,8 @@ namespace AdventureModeLore.Lore {
 			prereqObjectives: new string[] {
 				LoreEvents.ObjectiveTitle_InvestigateDungeon
 			},
-			npcType: NPCID.Guide,
+			prereqConditions: new Func<bool>[0],
+			npcType: NPCID.OldMan,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
 					dialogue: () => "You're in no shape to concern with why I'm here, or what this place is."

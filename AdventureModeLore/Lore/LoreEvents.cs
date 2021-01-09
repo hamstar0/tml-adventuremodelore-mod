@@ -16,11 +16,11 @@ namespace AdventureModeLore.Lore {
 			logic.Events.Clear();
 			logic.Events.Add( LoreEvents.LoreDefs00_Guide );
 			logic.Events.Add( LoreEvents.LoreDefs01_OldMan );
-			logic.Events.Add( LoreEvents.Run02_Merchant );
-			logic.Events.Add( LoreEvents.Run03_200hp );
-			logic.Events.Add( LoreEvents.Run04_Dryad );
-			logic.Events.Add( LoreEvents.Run05_Goblin );
-			logic.Events.Add( LoreEvents.Run06_WitchDoctor );
+			logic.Events.Add( LoreEvents.LoreDefs02_Merchant );
+			logic.Events.Add( LoreEvents.LoreDefs03_200hp );
+			logic.Events.Add( LoreEvents.LoreDefs04_DefeatEvil );
+			logic.Events.Add( LoreEvents.LoreDefs05_FindMechanicAndWitchDoctor );
+			logic.Events.Add( LoreEvents.LoreDefs06_SummonWoF );
 		}
 
 

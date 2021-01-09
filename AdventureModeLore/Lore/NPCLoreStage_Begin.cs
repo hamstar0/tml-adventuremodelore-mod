@@ -10,12 +10,11 @@ using Objectives.Definitions;
 namespace AdventureModeLore.Lore {
 	public partial class NPCLoreStage {
 		public bool Begin() {
-			foreach( string prereq in this.PrerequisiteObjectives ) {
-				Objective obj = ObjectivesAPI.GetObjective( prereq );
-				if( obj?.IsComplete != true ) {
-					return false;
-				}
+			if( !this.ArePrerequisitesMet() ) {
+				return false;
 			}
+
+			//
 
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NPCType );
 			int currStage = 0;
