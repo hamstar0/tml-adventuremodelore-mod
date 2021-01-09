@@ -83,7 +83,7 @@ namespace AdventureModeLore.WorldGeneration {
 			meterItem.SetDefaults( ModContent.ItemType<PKEMeter.Items.PKEMeterItem>(), true );
 
 			Item missionItem = ReadableBookItem.CreateBook(
-				"Mission Briefing",
+				"Mission Briefing - Codename 'Tinman'",
 				new string[] {
 					"As you know, the island has become a PKE hotbed in recent months. Readings are on the"
 					+ "\nrise, and it has become unsafe to send in living agents. Hence why you're here, Omega.",
@@ -92,9 +92,9 @@ namespace AdventureModeLore.WorldGeneration {
 					+ "\ninterference, but we've no time for search and recovery.",
 					"Before contact dropped, Sigma gave us a conclusive report that the specimen has indeed"
 					+ "\nfound its way back to the island. It MUST be captured ALIVE at all costs!",
-					"You've been outfitted with special detection equipment calibrated specifically for"
-					+ "\nlocating the specimen, though due to its nature, even this may be inadequate. The"
-					+ "\ndamn thing gets smarter by the minute!",
+					"You've been outfitted with special defense systems and detection equipment calibrated"
+					+ "\nspecifically for locating and apprehending the specimen, though due to its nature,"
+					+ "\neven this may be a challenge. The damn thing gets smarter by the minute!",
 					"Reports are coming in of other parties taking interest in the island and its recent"
 					+ "\nactivities. Avoid any encounters with the locals or other parties. You are well"
 					+ "\nequipped to handle threats, but we cannot predict who you'll encounter...",

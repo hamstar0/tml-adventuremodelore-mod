@@ -37,4 +37,7 @@
       <HintPath>..\..\..\The Mad Ranger\Project\TheMadRanger\bin\Release\net452\TheMadRanger.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tiles\" />
+  </ItemGroup>
 </Project>

@@ -1,5 +1,8 @@
 # Adventure Mode Lore
 
-Adventure Mode Lore is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+Provides cutscene and interactivity elements for Adventure Mode's lore.
+
+Credits:
+	koolaidlemonade - Vanilla cyborg tile
 
 https://forums.terraria.org/index.php?threads/adventure-mode.85140/

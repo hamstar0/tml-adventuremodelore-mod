@@ -2,7 +2,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
+using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
+using AdventureModeLore.Tiles;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -35,7 +37,19 @@ namespace AdventureModeLore.WorldGeneration {
 
 			x = expedPointRaw.Value.x;
 			nearFloorY = expedPointRaw.Value.nearFloorY;
-			if( !this.CreateExpeditionAt(x, nearFloorY, campWidth, paveTileType, false, out chestIdx, out err) ) {
+			int[] customTiles = new int[] { ModContent.TileType<FallenCyborgTile>() };
+
+			bool createdCamp = this.CreateExpeditionAt(
+				leftTileX: x,
+				nearFloorTileY: nearFloorY,
+				campWidth: campWidth + 2,
+				customTiles: customTiles,
+				paveTileType: paveTileType,
+				rememberLocation: false,
+				chestIdx: out chestIdx,
+				result: out err
+			);
+			if( !createdCamp ) {
 				LogHelpers.Log( "Could not generate first 'failed expedition': "+err );
 				return;
 			}
@@ -67,7 +81,18 @@ namespace AdventureModeLore.WorldGeneration {
 
 			x = expedPointRaw.Value.x;
 			nearFloorY = expedPointRaw.Value.nearFloorY;
-			if( !this.CreateExpeditionAt(x, nearFloorY, campWidth, paveTileType, true, out chestIdx, out err) ) {
+
+			bool createdCamp = this.CreateExpeditionAt(
+				leftTileX: x,
+				nearFloorTileY: nearFloorY,
+				campWidth: campWidth,
+				customTiles: new int[0],
+				paveTileType: paveTileType,
+				rememberLocation: true,
+				chestIdx: out chestIdx,
+				result: out err
+			);
+			if( !createdCamp ) {
 				LogHelpers.Log( "Could not generate jungle 'failed expedition': "+err );
 				return;
 			}
@@ -100,7 +125,18 @@ namespace AdventureModeLore.WorldGeneration {
 
 				x = expedPointRaw.Value.x;
 				nearFloorY = expedPointRaw.Value.nearFloorY;
-				if( !this.CreateExpeditionAt(x, nearFloorY, campWidth, paveTileType, true, out chestIdx, out err) ) {
+
+				bool createdCamp = this.CreateExpeditionAt(
+					leftTileX: x,
+					nearFloorTileY: nearFloorY,
+					campWidth: campWidth,
+					customTiles: new int[0],
+					paveTileType: paveTileType,
+					rememberLocation: true,
+					chestIdx: out chestIdx,
+					result: out err
+				);
+				if( !createdCamp ) {
 					LogHelpers.Log( "Could not finish generating all 'failed expeditions' ("+expedNum+" of "+count+"): "+err );
 					break;
 				}

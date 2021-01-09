@@ -15,6 +15,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int leftTileX,
 					int nearFloorTileY,
 					int campWidth,
+					int[] customTiles,
 					int paveTileType,
 					bool rememberLocation,
 					out int chestIdx,
@@ -65,6 +66,16 @@ namespace AdventureModeLore.WorldGeneration {
 					+"\n"+Main.tile[chestTileX, nearFloorTileY+1].ToString()
 					+"\n"+Main.tile[chestTileX+1, nearFloorTileY+1].ToString();*/
 				return false;
+			}
+
+			int customTileX = leftTileX + 11;
+			foreach( int customTile in customTiles ) {
+				if( TilePlacementHelpers.TryPrecisePlace(customTileX, nearFloorTileY, (ushort)customTile) ) {
+					customTileX += 2;
+				} else {
+					result = "Could not place custom tile "+customTile+" at "+customTileX+","+nearFloorTileY;
+					return false;
+				}
 			}
 
 			if( rememberLocation ) {
@@ -136,7 +147,8 @@ namespace AdventureModeLore.WorldGeneration {
 					WorldGen.SquareTileFrame( fillAt.x, fillAt.y );
 
 					if( !this.IsValidFloorTile( tile ) ) {
-						LogHelpers.Log( "Could not fill camp floor tile (type: "+tileType+") at "+fillAt.x+", "+fillAt.y+": "+tile.ToString() );
+						LogHelpers.Log( "Could not fill camp floor tile (type: "+tileType+") at "+fillAt.x+", "+fillAt.y
+							+": "+tile.ToString() );
 					}
 				}
 			}
