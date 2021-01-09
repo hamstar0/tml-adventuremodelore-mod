@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore {
 
 		public static NPCLoreStage LoreDefs01_OldMan { get; } = new NPCLoreStage(
 			prereqs: new Func<bool>[] {
-				() => ObjectivesAPI.IsFinishedObjective( LoreEvents.ObjectiveTitle_InvestigateDungeon )
+				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( LoreEvents.ObjectiveTitle_InvestigateDungeon )
 			},
 			npcType: NPCID.OldMan,
 			subStages: new NPCLoreSubStage[] {

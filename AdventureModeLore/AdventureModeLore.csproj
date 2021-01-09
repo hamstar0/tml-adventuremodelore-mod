@@ -15,6 +15,9 @@
     <Reference Include="HamstarHelpers">
       <HintPath>..\..\..\Mod Helpers\Project\HamstarHelpers\bin\Release\net452\HamstarHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="MountedMagicMirrors">
+      <HintPath>..\..\..\Mounted Magic Mirrors\Project\MountedMagicMirrors\bin\Release\net452\MountedMagicMirrors.dll</HintPath>
+    </Reference>
     <Reference Include="Necrotis">
       <HintPath>..\..\..\Necrotis\Project\Necrotis\bin\Release\net452\Necrotis.dll</HintPath>
     </Reference>

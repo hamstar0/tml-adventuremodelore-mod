@@ -10,22 +10,6 @@ using Objectives;
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
-		public static void Initialize() {
-			var logic = ModContent.GetInstance<LoreEvents>();
-
-			logic.Events.Clear();
-			logic.Events.Add( LoreEvents.LoreDefs00_Guide );
-			logic.Events.Add( LoreEvents.LoreDefs01_OldMan );
-			logic.Events.Add( LoreEvents.LoreDefs02_Merchant );
-			logic.Events.Add( LoreEvents.LoreDefs03_200hp );
-			logic.Events.Add( LoreEvents.LoreDefs04_DefeatEvil );
-			logic.Events.Add( LoreEvents.LoreDefs05_FindMechanicAndWitchDoctor );
-			logic.Events.Add( LoreEvents.LoreDefs06_SummonWoF );
-		}
-
-
-		////
-
 		public static void Run() {
 			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
 				return;
@@ -55,5 +39,31 @@ namespace AdventureModeLore.Lore {
 		void ILoadable.OnModsUnload() { }
 
 		void ILoadable.OnPostModsLoad() { }
+
+
+		////////////////
+
+		public void InitializeOnPlayerEnter() {
+			this.Events.Clear();
+			this.Events.Add( LoreEvents.LoreDefs00_Guide );
+			this.Events.Add( LoreEvents.LoreDefs01_OldMan );
+			this.Events.Add( LoreEvents.LoreDefs02_Merchant );
+			this.Events.Add( LoreEvents.LoreDefs03_200hp );
+			this.Events.Add( LoreEvents.LoreDefs04_DefeatEvil );
+			this.Events.Add( LoreEvents.LoreDefs05_FindMechanicAndWitchDoctor );
+			this.Events.Add( LoreEvents.LoreDefs06_SummonWoF );
+
+			// Pre-load all previously-finished objectives
+			foreach( NPCLoreStage stage in this.Events ) {
+				foreach( NPCLoreSubStage substage in stage.SubStages ) {
+					if( substage.Objective == null ) { continue; }
+					if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(substage.Objective.Title) ) { continue; }
+
+					if( ObjectivesAPI.GetObjective(substage.Objective.Title) == null ) {
+						ObjectivesAPI.AddObjective( substage.Objective, 0, false, out _ );
+					}
+				}
+			}
+		}
 	}
 }

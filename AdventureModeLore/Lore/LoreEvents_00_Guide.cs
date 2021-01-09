@@ -11,6 +11,8 @@ namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
 		public const string ObjectiveTitle_InvestigateDungeon = "Investigate Dungeon";
 
+		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
+
 
 		public static NPCLoreStage LoreDefs00_Guide { get; } = new NPCLoreStage(
 			prereqs: new Func<bool>[0],
@@ -18,11 +20,11 @@ namespace AdventureModeLore.Lore {
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
 					dialogue: () => "Before the attack, reports came in of a large brick structure on the island a bit "
-							+ "inland. Perhaps we should check it out?",
+							+"inland. Perhaps we should check it out?",
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_InvestigateDungeon,
 						description: "There appears to be a large, ominous structure with a suspicious old man"
-								+ "\n"+"wandering around it's entrance. Recommend an investigation.",
+								+"\n"+"wandering around it's entrance. Recommend an investigation.",
 						condition: ( obj ) => {
 							return Main.player.Any( plr => {
 								if( plr?.active != true ) {
@@ -41,8 +43,20 @@ namespace AdventureModeLore.Lore {
 				),
 				new NPCLoreSubStage(
 					dialogue: () => "If you're having trouble getting to a place, use your ropes, platforms, framing planks, "
-							+ "and track deployment kits. There should be some in the barrel on the raft. If you need more, "
-							+ "some of these can be crafted or bought, if you have the needed materials or money."
+							+"and track deployment kits. There should be some in the barrel on the raft. If you need more, "
+							+"some of these can be crafted or bought, if you have the needed materials or money."
+				),
+				new NPCLoreSubStage(
+					dialogue: () => "Speaking of getting around, this island is pretty big, and we're gonna need a method of "
+							+"transportation. Included with the raft's supplies are special mirrors that can be used for "
+							+"fast travel between areas where they're located. Furnishing Kits also come with them. I "
+							+"estimate we'll need at least [c/FFFFBB:10] of these to get our operation running smoothly. "
+							+"Be sure to spread them around for best effect. We don't have an unlimited supply.",
+					objective: new PercentObjective(
+						title: LoreEvents.ObjectiveTitle_Find10Mirrors,
+						description: "Create or locate 10 Mounted Magic Mirrors on your map.",
+						condition: ( obj ) => (float)LoreEvents.CountDiscoveredMirrors() / 10f
+					)
 				)
 			}
 		);
