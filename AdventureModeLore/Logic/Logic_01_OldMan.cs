@@ -8,12 +8,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Logic {
-	public partial class AMLLogic : ILoadable {
+	public partial class LoreLogic : ILoadable {
 		public static string FindMerchantTitle => "Find A Merchant";
 
 		internal static Objective FindMerchant() {
 			return new FlatObjective(
-				title: AMLLogic.FindMerchantTitle,
+				title: LoreLogic.FindMerchantTitle,
 				description: "Other inhabitants exist in this land, some less enslaved than others. Build a"
 					+ "\n" + "house for a merchant to settle in.",
 				condition: ( obj ) => {
@@ -28,7 +28,7 @@ namespace AdventureModeLore.Logic {
 
 		internal static Objective ReachJungle() {
 			return new FlatObjective(
-				title: AMLLogic.ReachJungleTitle,
+				title: LoreLogic.ReachJungleTitle,
 				description: "The old man says there's something suspicious in the jungle. Maybe take a look?",
 				condition: ( obj ) => {
 					return Main.LocalPlayer.ZoneJungle;
@@ -40,10 +40,10 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run01_OldMan() {
-			Objective objInvesDung = ObjectivesAPI.GetObjective( AMLLogic.InvestigateDungeonTitle );
+			Objective objInvesDung = ObjectivesAPI.GetObjective( LoreLogic.InvestigateDungeonTitle );
 
-			Objective objReachJungle = ObjectivesAPI.GetObjective( AMLLogic.ReachJungleTitle );
-			Objective objFindMerch = ObjectivesAPI.GetObjective( AMLLogic.FindMerchantTitle );
+			Objective objReachJungle = ObjectivesAPI.GetObjective( LoreLogic.ReachJungleTitle );
+			Objective objFindMerch = ObjectivesAPI.GetObjective( LoreLogic.FindMerchantTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -55,14 +55,14 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			bool isJungFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.ReachJungleTitle );
-			bool isMerchFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindMerchantTitle );
+			bool isJungFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.ReachJungleTitle );
+			bool isMerchFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.FindMerchantTitle );
 			if( isJungFinished || isMerchFinished ) {
 				if( objReachJungle == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( AMLLogic.ReachJungle(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreLogic.ReachJungle(), 0, true, out _ );
 				}
 				if( objFindMerch == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( AMLLogic.FindMerchant(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreLogic.FindMerchant(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -81,7 +81,7 @@ namespace AdventureModeLore.Logic {
 					case 0:
 						// 01b Objective: Find Merchant
 						if( objFindMerch == null ) {
-							ObjectivesAPI.AddObjective( AMLLogic.FindMerchant(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreLogic.FindMerchant(), 0, true, out _ );
 						}
 
 						return "You're in no shape to concern with why I'm here, or what this place is."
@@ -90,7 +90,7 @@ namespace AdventureModeLore.Logic {
 					case 1:
 						// 01a Objective: Reach Jungle
 						if( objReachJungle == null ) {
-							ObjectivesAPI.AddObjective( AMLLogic.ReachJungle(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreLogic.ReachJungle(), 0, true, out _ );
 						}
 
 						msg = "The plague? I know nothing of this. All I know is I made a pact long ago to keep this place sealed."

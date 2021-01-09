@@ -9,18 +9,18 @@ using Objectives;
 
 
 namespace AdventureModeLore.Logic {
-	public partial class AMLLogic : ILoadable {
+	public partial class LoreLogic : ILoadable {
 		public static void Initialize() {
-			var logic = ModContent.GetInstance<AMLLogic>();
+			var logic = ModContent.GetInstance<LoreLogic>();
 
 			logic.Events.Clear();
-			logic.Events.Add( AMLLogic.Run00_Guide );
-			logic.Events.Add( AMLLogic.Run01_OldMan );
-			logic.Events.Add( AMLLogic.Run02_Merchant );
-			logic.Events.Add( AMLLogic.Run03_200hp );
-			logic.Events.Add( AMLLogic.Run04_Dryad );
-			logic.Events.Add( AMLLogic.Run05_Goblin );
-			logic.Events.Add( AMLLogic.Run06_WitchDoctor );
+			logic.Events.Add( LoreLogic.Run00_Guide );
+			logic.Events.Add( LoreLogic.Run01_OldMan );
+			logic.Events.Add( LoreLogic.Run02_Merchant );
+			logic.Events.Add( LoreLogic.Run03_200hp );
+			logic.Events.Add( LoreLogic.Run04_Dryad );
+			logic.Events.Add( LoreLogic.Run05_Goblin );
+			logic.Events.Add( LoreLogic.Run06_WitchDoctor );
 		}
 
 
@@ -31,7 +31,7 @@ namespace AdventureModeLore.Logic {
 				return;
 			}
 
-			var logic = ModContent.GetInstance<AMLLogic>();
+			var logic = ModContent.GetInstance<LoreLogic>();
 
 			foreach( Func<bool> myevent in logic.Events.ToArray() ) {
 				if( !myevent.Invoke() ) {

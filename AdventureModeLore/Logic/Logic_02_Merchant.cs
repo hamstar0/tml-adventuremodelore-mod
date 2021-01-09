@@ -11,12 +11,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Logic {
-	public partial class AMLLogic : ILoadable {
+	public partial class LoreLogic : ILoadable {
 		public static string FindOrbTitle => "Find an Orb";
 
 		internal static Objective FindOrb() {
 			return new FlatObjective(
-				title: AMLLogic.FindOrbTitle,
+				title: LoreLogic.FindOrbTitle,
 				description: "It seems the land itself is enchanted. Special orbs can be found that appear"
 					+ "\n" + "to resonate with the terrain. Maybe this will be of help?",
 				condition: ( obj ) => {
@@ -45,10 +45,10 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run02_Merchant() {
-			Objective objFindMerch = ObjectivesAPI.GetObjective( AMLLogic.FindMerchantTitle );
-			Objective objReachJungle = ObjectivesAPI.GetObjective( AMLLogic.ReachJungleTitle );
+			Objective objFindMerch = ObjectivesAPI.GetObjective( LoreLogic.FindMerchantTitle );
+			Objective objReachJungle = ObjectivesAPI.GetObjective( LoreLogic.ReachJungleTitle );
 
-			Objective objFindOrb = ObjectivesAPI.GetObjective( AMLLogic.FindOrbTitle );
+			Objective objFindOrb = ObjectivesAPI.GetObjective( LoreLogic.FindOrbTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -60,9 +60,9 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			if( ObjectivesAPI.IsFinishedObjective(AMLLogic.FindOrbTitle) ) {
+			if( ObjectivesAPI.IsFinishedObjective(LoreLogic.FindOrbTitle) ) {
 				if( objFindOrb == null ) {	// Be sure objective is also declared
-					ObjectivesAPI.AddObjective( AMLLogic.FindOrb(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreLogic.FindOrb(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -84,7 +84,7 @@ namespace AdventureModeLore.Logic {
 
 					// 02 - Find an Orb
 					if( objFindOrb == null ) {
-						ObjectivesAPI.AddObjective( AMLLogic.FindOrb(), 0, true, out _ );
+						ObjectivesAPI.AddObjective( LoreLogic.FindOrb(), 0, true, out _ );
 					}
 
 					if( oldHandler != null ) {

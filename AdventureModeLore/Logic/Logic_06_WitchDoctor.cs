@@ -8,12 +8,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Logic {
-	public partial class AMLLogic : ILoadable {
+	public partial class LoreLogic : ILoadable {
 		public static string SummonWoFTitle => "Sacrifice Voodoo Doll";
 
 		internal static Objective SummonWoF() {
 			return new FlatObjective(
-				title: AMLLogic.SummonWoFTitle,
+				title: LoreLogic.SummonWoFTitle,
 				description: "The witch doctor describes a ritual to destroy the spiritual energy"
 					+ "\n" + "confluence; the source of the plague. It involves a voodoo sacrifice"
 					+ "\n" + "of one of its makers near its source: The underworld.",
@@ -27,7 +27,7 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run06_WitchDoctor() {
-			Objective objSummonWoF = ObjectivesAPI.GetObjective( AMLLogic.SummonWoFTitle );
+			Objective objSummonWoF = ObjectivesAPI.GetObjective( LoreLogic.SummonWoFTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -39,10 +39,10 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			bool isWofFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.SummonWoFTitle );
+			bool isWofFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.SummonWoFTitle );
 			if( isWofFinished ) {
 				if( objSummonWoF == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( AMLLogic.SummonWoF(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreLogic.SummonWoF(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -76,7 +76,7 @@ namespace AdventureModeLore.Logic {
 					case 3:
 						// 06 - Summon WoF
 						if( objSummonWoF == null ) {
-							ObjectivesAPI.AddObjective( AMLLogic.SummonWoF(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreLogic.SummonWoF(), 0, true, out _ );
 						}
 
 						if( oldHandler != null ) {

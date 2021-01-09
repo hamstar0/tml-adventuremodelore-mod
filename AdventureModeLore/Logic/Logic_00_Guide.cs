@@ -10,12 +10,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Logic {
-	public partial class AMLLogic : ILoadable {
+	public partial class LoreLogic : ILoadable {
 		public static string InvestigateDungeonTitle => "Investigate Dungeon";
 
 		internal static Objective InvestigateDungeon() {
 			return new FlatObjective(
-				title: AMLLogic.InvestigateDungeonTitle,
+				title: LoreLogic.InvestigateDungeonTitle,
 				description: "There appears to be a large, ominous structure with a suspicious old man"
 					+ "\n" + "wandering around it's entrance. Recommend an investigation.",
 				condition: ( obj ) => {
@@ -39,10 +39,10 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		internal static bool Run00_Guide() {
-			if( ObjectivesAPI.IsFinishedObjective( AMLLogic.InvestigateDungeonTitle ) ) {
-				AMLLogic.Run00_Guide_Actions_ObjectiveFinished();
+			if( ObjectivesAPI.IsFinishedObjective( LoreLogic.InvestigateDungeonTitle ) ) {
+				LoreLogic.Run00_Guide_Actions_ObjectiveFinished();
 			} else {
-				AMLLogic.Run00_Guide_Actions_ObjectiveUnfinished();
+				LoreLogic.Run00_Guide_Actions_ObjectiveUnfinished();
 			}
 
 			return false;
@@ -57,10 +57,26 @@ namespace AdventureModeLore.Logic {
 			// Dialogue
 			DialogueEditor.SetDynamicDialogueHandler( NPCID.Guide, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
+					Objective obj = null;
+
+					do {
+						switch( conveyances ) {
+						case 0:
+							obj = ObjectivesAPI.GetObjective( LoreLogic.InvestigateDungeonTitle );
+							if( obj != null ) {
+								conveyances++;
+							}
+							break;
+						default:
+							obj = null;
+							break;
+						}
+					} while( obj != null );
+
 					switch( conveyances++ ) {
 					case 0:
 						ObjectivesAPI.AddObjective(
-							objective: AMLLogic.InvestigateDungeon(),
+							objective: LoreLogic.InvestigateDungeon(),
 							order: -1,
 							alertPlayer: true,
 							out string _
@@ -89,7 +105,7 @@ namespace AdventureModeLore.Logic {
 
 		private static void Run00_Guide_Actions_ObjectiveFinished() {
 			ObjectivesAPI.AddObjective(
-				objective: AMLLogic.InvestigateDungeon(),
+				objective: LoreLogic.InvestigateDungeon(),
 				order: -1,
 				alertPlayer: true,
 				out string _

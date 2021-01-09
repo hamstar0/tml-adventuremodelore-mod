@@ -8,12 +8,12 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Logic {
-	public partial class AMLLogic : ILoadable {
+	public partial class LoreLogic : ILoadable {
 		public static string FindMechanicTitle => "Find Nechanic";
 
 		internal static Objective FindMechanic() {
 			return new FlatObjective(
-				title: AMLLogic.FindMechanicTitle,
+				title: LoreLogic.FindMechanicTitle,
 				description: "Rumors exist of a plan to empower technology with the dungeon's spiritual"
 					+ "\n" + "energies. This could be disasterous. Liberate the engineer.",
 				condition: ( obj ) => {
@@ -28,7 +28,7 @@ namespace AdventureModeLore.Logic {
 
 		internal static Objective FindWitchDoctor() {
 			return new FlatObjective(
-				title: AMLLogic.FindWitchDoctorTitle,
+				title: LoreLogic.FindWitchDoctorTitle,
 				description: "A mysterious lizard-man sorcerer may know the plague's secret. Some"
 					+ "\n" + "powerful monster in the jungle has put him into hiding, though.",
 				condition: ( obj ) => {
@@ -41,8 +41,8 @@ namespace AdventureModeLore.Logic {
 		////////////////
 
 		private static bool Run05_Goblin() {
-			Objective objFindMechanicBoss = ObjectivesAPI.GetObjective( AMLLogic.FindMechanicTitle );
-			Objective objFindWitchDoctor = ObjectivesAPI.GetObjective( AMLLogic.FindWitchDoctorTitle );
+			Objective objFindMechanicBoss = ObjectivesAPI.GetObjective( LoreLogic.FindMechanicTitle );
+			Objective objFindWitchDoctor = ObjectivesAPI.GetObjective( LoreLogic.FindWitchDoctorTitle );
 
 			/***********************/
 			/**** Conditions:	****/
@@ -54,14 +54,14 @@ namespace AdventureModeLore.Logic {
 			}
 
 			// Already done?
-			bool isMechFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindMechanicTitle );
-			bool isWitchFinished = ObjectivesAPI.IsFinishedObjective( AMLLogic.FindWitchDoctorTitle );
+			bool isMechFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.FindMechanicTitle );
+			bool isWitchFinished = ObjectivesAPI.IsFinishedObjective( LoreLogic.FindWitchDoctorTitle );
 			if( isMechFinished || isWitchFinished ) {
 				if( objFindMechanicBoss == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreLogic.FindMechanic(), 0, true, out _ );
 				}
 				if( objFindWitchDoctor == null ) {   // Be sure objective is also declared
-					ObjectivesAPI.AddObjective( AMLLogic.FindWitchDoctor(), 0, true, out _ );
+					ObjectivesAPI.AddObjective( LoreLogic.FindWitchDoctor(), 0, true, out _ );
 				}
 				return false;
 			}
@@ -83,7 +83,7 @@ namespace AdventureModeLore.Logic {
 					case 1:
 						// 05a - Find mechanic
 						if( objFindMechanicBoss == null ) {
-							ObjectivesAPI.AddObjective( AMLLogic.FindMechanic(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreLogic.FindMechanic(), 0, true, out _ );
 						}
 
 						return "I have urgent information for you: An unknown faction basing within the dungeon is attempting"
@@ -93,7 +93,7 @@ namespace AdventureModeLore.Logic {
 					case 2:
 						// 05b - Find Witch Doctor
 						if( objFindWitchDoctor == null ) {
-							ObjectivesAPI.AddObjective( AMLLogic.FindWitchDoctor(), 0, true, out _ );
+							ObjectivesAPI.AddObjective( LoreLogic.FindWitchDoctor(), 0, true, out _ );
 						}
 
 						if( oldHandler != null ) {

@@ -63,7 +63,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			AMLLogic.Run();
+			LoreLogic.Run();
 		}
 	}
 }

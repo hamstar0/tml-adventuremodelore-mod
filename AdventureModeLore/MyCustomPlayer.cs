@@ -11,7 +11,7 @@ using AdventureModeLore.Logic;
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
-			AMLLogic.Initialize();
+			LoreLogic.Initialize();
 
 			if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
 				this.LoadFailedExpeditionMapMarkers();
