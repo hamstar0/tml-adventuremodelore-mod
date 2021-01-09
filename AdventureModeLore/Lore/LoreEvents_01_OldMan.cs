@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
+using Objectives;
 using Objectives.Definitions;
 
 
@@ -12,10 +13,9 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs01_OldMan { get; } = new NPCLoreStage(
-			prereqObjectives: new string[] {
-				LoreEvents.ObjectiveTitle_InvestigateDungeon
+			prereqs: new Func<bool>[] {
+				() => ObjectivesAPI.IsFinishedObjective( LoreEvents.ObjectiveTitle_InvestigateDungeon )
 			},
-			prereqConditions: new Func<bool>[0],
 			npcType: NPCID.OldMan,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(

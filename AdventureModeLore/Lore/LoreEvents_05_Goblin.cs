@@ -13,8 +13,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs05_FindMechanicAndWitchDoctor { get; } = new NPCLoreStage(
-			prereqObjectives: new string[0],
-			prereqConditions: new Func<bool>[] {
+			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.GoblinTinkerer )
 			},
 			npcType: NPCID.GoblinTinkerer,

@@ -16,8 +16,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs04_DefeatEvil { get; } = new NPCLoreStage(
-			prereqObjectives: new string[0],
-			prereqConditions: new Func<bool>[] {
+			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.Dryad )
 			},
 			npcType: NPCID.GoblinTinkerer,

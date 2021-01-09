@@ -11,8 +11,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs03_200hp { get; } = new NPCLoreStage(
-			prereqObjectives: new string[0],
-			prereqConditions: new Func<bool>[] {
+			prereqs: new Func<bool>[] {
 				() => Main.LocalPlayer.statLifeMax >= 200
 			},
 			npcType: NPCID.Guide,

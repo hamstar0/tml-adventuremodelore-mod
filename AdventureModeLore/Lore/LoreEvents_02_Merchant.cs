@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Classes.Loadable;
 using HamstarHelpers.Helpers.Players;
+using Objectives;
 using Objectives.Definitions;
 
 
@@ -14,10 +15,9 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs02_Merchant { get; } = new NPCLoreStage(
-			prereqObjectives: new string[] {
-				LoreEvents.ObjectiveTitle_FindMerchant
+			prereqs: new Func<bool>[] {
+				() => ObjectivesAPI.IsFinishedObjective( LoreEvents.ObjectiveTitle_FindMerchant )
 			},
-			prereqConditions: new Func<bool>[0],
 			npcType: NPCID.Merchant,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
@@ -37,7 +37,7 @@ namespace AdventureModeLore.Lore {
 								itemTypes: new HashSet<int> {
 									orbsMod.ItemType("RedOrbItem"),
 									orbsMod.ItemType("BlueOrbItem"),
-									orbsMod.ItemType("TealOrbItem"),
+									orbsMod.ItemType("BrownOrbItem"),
 									orbsMod.ItemType("PurpleOrbItem"),
 									orbsMod.ItemType("CyanOrbItem"),
 									orbsMod.ItemType("GreenOrbItem"),

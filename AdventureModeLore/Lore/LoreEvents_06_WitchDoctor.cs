@@ -11,8 +11,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs06_SummonWoF { get; } = new NPCLoreStage(
-			prereqObjectives: new string[0],
-			prereqConditions: new Func<bool>[] {
+			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.WitchDoctor )
 			},
 			npcType: NPCID.WitchDoctor,
