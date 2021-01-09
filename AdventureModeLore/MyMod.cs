@@ -50,7 +50,7 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void PostUpdateEverything() {
-			if( Main.gameMenu && Main.netMode != NetmodeID.Server ) {
+			if( Main.gameMenu ) {
 				return;
 			}
 			if( Main.netMode == NetmodeID.Server ) {
