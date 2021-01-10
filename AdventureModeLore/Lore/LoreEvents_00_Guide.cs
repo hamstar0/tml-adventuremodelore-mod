@@ -47,11 +47,10 @@ namespace AdventureModeLore.Lore {
 							+"some of these can be crafted or bought, if you have the needed materials or money."
 				),
 				new NPCLoreSubStage(
-					dialogue: () => "Speaking of getting around, this island is pretty big, and we're gonna need a method of "
-							+"transportation. Included with the raft's supplies are special mirrors that can be used for "
-							+"fast travel between areas where they're located. Furnishing Kits also come with them. I "
-							+"estimate we'll need at least [c/FFFFBB:10] of these to get our operation running smoothly. "
-							+"Be sure to spread them around for best effect. We don't have an unlimited supply.",
+					dialogue: () => "Speaking of getting around, this island is pretty big, and we're gonna need to get "
+							+"around. In the raft's storage are magic wall mirrors that can be used to quickly travel "
+							+"between each other. Those furnishing Kits also come with them. I estimate we'll need at least "
+							+"[c/FFFFBB:10] of these to get up and running. Spread them around for best effect.",
 					objective: new PercentObjective(
 						title: LoreEvents.ObjectiveTitle_Find10Mirrors,
 						description: "Create or locate 10 Mounted Magic Mirrors on your map.",

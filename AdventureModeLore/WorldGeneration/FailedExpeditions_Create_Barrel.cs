@@ -83,7 +83,7 @@ namespace AdventureModeLore.WorldGeneration {
 			meterItem.SetDefaults( ModContent.ItemType<PKEMeter.Items.PKEMeterItem>(), true );
 
 			Item missionItem = ReadableBookItem.CreateBook(
-				"Mission Briefing - Codename 'Tinman'",
+				"Mission Briefing - Codename\n'Tinman'",
 				new string[] {
 					"As you know, the island has become a PKE hotbed in recent months. Readings are on the"
 					+ "\nrise, and it has become unsafe to send in living agents. Hence why you're here, Omega.",
@@ -104,7 +104,7 @@ namespace AdventureModeLore.WorldGeneration {
 			);
 
 			Item manualItem = ReadableBookItem.CreateBook(
-				"PKE Meter - Custom Order From Ectocorp™",
+				"PKE Meter - Custom Order\nFrom Ectocorp™",
 				new string[] {
 					"The special-issue PKE Detector Mk. VII comes now with separate sensors calibrated"
 					+ "\nspecifically for your mission. Avoid letting it fall into non-agency hands.",
@@ -117,8 +117,8 @@ namespace AdventureModeLore.WorldGeneration {
 					+ "\nmission specification, but we would like it if you could track the remains of the"
 					+ "\nother failed expeditions, and also your fellow agents, if possible.",
 					"As the expeditions prior were primarily recon, you may be able to locate them by"
-					+ "\nreadings from any gathered artifacts from their time on the island. The [c/44FF44:green]"
-					+ "\nchannel should be attuned accordingly.",
+					+ "\nreadings from any gathered artifacts from their time on the island. The [c/44FF44:green] channel"
+					+ "\nshould be attuned accordingly.",
 					"Finally, we have reason to believe a threat may exist on the island other than the"
 					+ "\nusual suspects. They may even be responsible for our missing crews and agents!",
 					"We have no leads, but previous agent reports indicate a strange PKE valence not"

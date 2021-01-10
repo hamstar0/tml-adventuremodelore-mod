@@ -29,10 +29,10 @@ namespace AdventureModeLore {
 					continue;
 				}
 
-				MapMarkers.AddFullScreenMapMarker(
+				MapMarkers.SetFullScreenMapMarker(
+					id: "AMLExpedition_" + i,
 					tileX: exped.x,
 					tileY: exped.y,
-					id: "AMLExpedition_" + i,
 					icon: Main.itemTexture[ ItemID.Skull ],
 					scale: 1f
 				);

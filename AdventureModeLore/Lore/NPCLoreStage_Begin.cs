@@ -13,6 +13,9 @@ namespace AdventureModeLore.Lore {
 			if( !this.ArePrerequisitesMet() ) {
 				return false;
 			}
+			//if( this.IsComplete ) {	// TODO
+			//	return true;
+			//}
 
 			//
 
@@ -21,7 +24,7 @@ namespace AdventureModeLore.Lore {
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NPCType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					return this.GetDialogue( oldDialogueHandler, msg, ref currStage );
+					return this.GetDialogue( msg, oldDialogueHandler, ref currStage );
 				},
 				isShowingAlert: () => true
 			) );
@@ -32,10 +35,16 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private string GetDialogue( DynamicDialogueHandler oldDialogueHandler, string existingMessage, ref int currStage ) {
-			NPCLoreSubStage stage = this.StepStage( ref currStage );
-			if( stage != null ) {
-				return stage.Dialogue.Invoke();
+		private string GetDialogue( string existingMessage, DynamicDialogueHandler oldDialogueHandler, ref int currStage ) {
+			string msg = existingMessage;
+			NPCLoreSubStage subStage = this.StepStage( ref currStage );
+
+			if( subStage != null ) {
+				msg = subStage.Dialogue.Invoke();
+			}
+
+			if( currStage < this.SubStages.Length ) {
+				return msg;
 			}
 
 			if( oldDialogueHandler != null ) {
@@ -44,43 +53,44 @@ namespace AdventureModeLore.Lore {
 				DialogueEditor.RemoveDynamicDialogueHandler( this.NPCType );
 			}
 
-			return existingMessage;
+			return msg;
 		}
 
 
 		////////////////
 
 		private NPCLoreSubStage StepStage( ref int currStage ) {
+			NPCLoreSubStage resultSubStage = null;
+
 			for( ; currStage < this.SubStages.Length; currStage++ ) {
-				NPCLoreSubStage stage = this.SubStages[currStage];
-				if( stage.Objective == null ) {
-					return stage;
+				NPCLoreSubStage currSubStage = this.SubStages[ currStage ];
+
+				if( currSubStage.Objective == null ) {
+					resultSubStage = currSubStage;
+					break;
 				}
 
-				string objTitle = stage.Objective.Title;
-				Objective obj = ObjectivesAPI.GetObjective( objTitle );
+				Objective obj = ObjectivesAPI.GetObjective( currSubStage.Objective.Title );
 
 				if( obj == null ) {
-					bool success = ObjectivesAPI.AddObjective(
+					obj = currSubStage.Objective;
+
+					ObjectivesAPI.AddObjective(
 						objective: obj,
 						order: -1,
 						alertPlayer: true,
 						out string _
 					);
-
-					if( success ) {
-						obj = ObjectivesAPI.GetObjective( objTitle );
-					} else {
-						throw new ModHelpersException( "Could not add objective '" + objTitle + "'" );
-					}
 				}
 
 				if( !obj.IsComplete ) {
-					return stage;
+					resultSubStage = currSubStage;
+					break;
 				}
 			}
 
-			return null;
+			currStage++;
+			return resultSubStage;
 		}
 	}
 }
