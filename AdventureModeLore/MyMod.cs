@@ -63,7 +63,7 @@ namespace AdventureModeLore {
 				return;
 			}
 
-			LoreEvents.Run();
+			LoreEvents.RunForLocalPlayer();
 		}
 	}
 }

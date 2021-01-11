@@ -9,7 +9,12 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore {
 	public partial class NPCLoreStage {
-		public bool Begin() {
+		public bool BeginForLocalPlayer() {
+			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
+			if( myplayer.CompletedLoreStages.Contains(this.Name) ) {
+				return true;
+			}
+
 			if( !this.ArePrerequisitesMet() ) {
 				return false;
 			}
@@ -20,11 +25,21 @@ namespace AdventureModeLore.Lore {
 			//
 
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NPCType );
-			int currStage = 0;
+			int currSubStage = 0;
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NPCType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					return this.GetDialogue( msg, oldDialogueHandler, ref currStage );
+					msg = this.GetDialogueAndAdvanceSubStage( msg, ref currSubStage, out bool isFinal );
+
+					if( isFinal ) {
+						if( oldDialogueHandler != null ) {
+							DialogueEditor.SetDynamicDialogueHandler( this.NPCType, oldDialogueHandler );
+						} else {
+							DialogueEditor.RemoveDynamicDialogueHandler( this.NPCType );
+						}
+					}
+
+					return msg;
 				},
 				isShowingAlert: () => true
 			) );
@@ -35,31 +50,22 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private string GetDialogue( string existingMessage, DynamicDialogueHandler oldDialogueHandler, ref int currStage ) {
-			string msg = existingMessage;
-			NPCLoreSubStage subStage = this.StepStage( ref currStage );
+		private string GetDialogueAndAdvanceSubStage( string existingMessage, ref int currSubStage, out bool isFinal ) {
+			NPCLoreSubStage subStage = this.StepSubStage( ref currSubStage, out isFinal );
 
-			if( subStage != null ) {
-				msg = subStage.Dialogue.Invoke();
+			if( isFinal ) {
+				var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
+				myplayer.CompletedLoreStages.Add( this.Name );
 			}
 
-			if( currStage < this.SubStages.Length ) {
-				return msg;
-			}
-
-			if( oldDialogueHandler != null ) {
-				DialogueEditor.SetDynamicDialogueHandler( this.NPCType, oldDialogueHandler );
-			} else {
-				DialogueEditor.RemoveDynamicDialogueHandler( this.NPCType );
-			}
-
-			return msg;
+			return subStage?.Dialogue.Invoke()
+				?? existingMessage;
 		}
 
 
 		////////////////
 
-		private NPCLoreSubStage StepStage( ref int currStage ) {
+		private NPCLoreSubStage StepSubStage( ref int currStage, out bool isFinal ) {
 			NPCLoreSubStage resultSubStage = null;
 
 			for( ; currStage < this.SubStages.Length; currStage++ ) {
@@ -90,6 +96,8 @@ namespace AdventureModeLore.Lore {
 			}
 
 			currStage++;
+
+			isFinal = currStage >= this.SubStages.Length;
 			return resultSubStage;
 		}
 	}

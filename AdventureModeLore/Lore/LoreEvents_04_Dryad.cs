@@ -16,10 +16,11 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs04_DefeatEvil { get; } = new NPCLoreStage(
+			name: "Dryad Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.Dryad )
 			},
-			npcType: NPCID.GoblinTinkerer,
+			npcType: NPCID.Dryad,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
 					dialogue: () => "I see you are here to stop the undeath plague. Might I suggest you first start with the "

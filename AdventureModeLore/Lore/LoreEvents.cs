@@ -10,7 +10,7 @@ using Objectives;
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
-		public static void Run() {
+		public static void RunForLocalPlayer() {
 			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
 				return;
 			}
@@ -18,7 +18,7 @@ namespace AdventureModeLore.Lore {
 			var logic = ModContent.GetInstance<LoreEvents>();
 
 			foreach( NPCLoreStage stage in logic.Events.ToArray() ) {
-				if( stage.Begin() ) {
+				if( stage.BeginForLocalPlayer() ) {
 					logic.Events.Remove( stage );
 				}
 			}
@@ -43,7 +43,7 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		public void InitializeOnPlayerEnter() {
+		public void InitializeOnCurrentPlayerEnter() {
 			this.Events.Clear();
 			this.Events.Add( LoreEvents.LoreDefs00_Guide );
 			this.Events.Add( LoreEvents.LoreDefs01_OldMan );

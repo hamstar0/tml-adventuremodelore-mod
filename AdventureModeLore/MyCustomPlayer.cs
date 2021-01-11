@@ -11,12 +11,14 @@ using AdventureModeLore.Lore;
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
-			var lore = ModContent.GetInstance<LoreEvents>();
+			if( isCurrentPlayer ) {
+				var lore = ModContent.GetInstance<LoreEvents>();
 
-			lore.InitializeOnPlayerEnter();
+				lore.InitializeOnCurrentPlayerEnter();
 
-			if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
-				this.LoadFailedExpeditionMapMarkers();
+				if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
+					this.LoadFailedExpeditionMapMarkers();
+				}
 			}
 		}
 

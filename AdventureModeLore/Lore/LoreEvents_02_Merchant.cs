@@ -15,6 +15,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs02_Merchant { get; } = new NPCLoreStage(
+			name: "Merchant Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( LoreEvents.ObjectiveTitle_FindMerchant )
 			},

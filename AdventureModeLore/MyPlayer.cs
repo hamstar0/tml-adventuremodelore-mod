@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.Maps;
 
 
 namespace AdventureModeLore {
 	partial class AMLPlayer : ModPlayer {
-		internal ISet<string> AlreadyIntroducedNpcs { get; } = new HashSet<string>();
+		internal ISet<string> CompletedLoreStages { get; } = new HashSet<string>();
 
 		////////////////
 
@@ -21,26 +19,26 @@ namespace AdventureModeLore {
 		////////////////
 
 		public override void Load( TagCompound tag ) {
-			this.AlreadyIntroducedNpcs.Clear();
+			this.CompletedLoreStages.Clear();
 
-			if( tag.ContainsKey( "introduced_npc_count" ) ) {
-				int count = tag.GetInt( "introduced_npc_count" );
+			if( tag.ContainsKey( "lore_done_count" ) ) {
+				int count = tag.GetInt( "lore_done_count" );
 
 				for( int i = 0; i < count; i++ ) {
-					string uniqueKey = tag.GetString( "introduced_npc_" + i );
-					this.AlreadyIntroducedNpcs.Add( uniqueKey );
+					string uniqueKey = tag.GetString( "lore_done_" + i );
+					this.CompletedLoreStages.Add( uniqueKey );
 				}
 			}
 		}
 
 		public override TagCompound Save() {
 			var tag = new TagCompound {
-				{ "introduced_npc_count", this.AlreadyIntroducedNpcs.Count }
+				{ "lore_done_count", this.CompletedLoreStages.Count }
 			};
 
 			int i = 0;
-			foreach( string key in this.AlreadyIntroducedNpcs ) {
-				tag["introduced_npc_" + i] = key;
+			foreach( string key in this.CompletedLoreStages ) {
+				tag["lore_done_" + i] = key;
 				i++;
 			}
 

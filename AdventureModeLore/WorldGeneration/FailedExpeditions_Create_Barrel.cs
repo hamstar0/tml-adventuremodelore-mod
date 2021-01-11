@@ -83,7 +83,7 @@ namespace AdventureModeLore.WorldGeneration {
 			meterItem.SetDefaults( ModContent.ItemType<PKEMeter.Items.PKEMeterItem>(), true );
 
 			Item missionItem = ReadableBookItem.CreateBook(
-				"Mission Briefing - Codename\n'Tinman'",
+				"Mission Briefing - Codename\n          'Tinman'",
 				new string[] {
 					"As you know, the island has become a PKE hotbed in recent months. Readings are on the"
 					+ "\nrise, and it has become unsafe to send in living agents. Hence why you're here, Omega.",
@@ -104,7 +104,7 @@ namespace AdventureModeLore.WorldGeneration {
 			);
 
 			Item manualItem = ReadableBookItem.CreateBook(
-				"PKE Meter - Custom Order\nFrom Ectocorp™",
+				"PKE Meter - Custom Order\n      From Ectocorp™",
 				new string[] {
 					"The special-issue PKE Detector Mk. VII comes now with separate sensors calibrated"
 					+ "\nspecifically for your mission. Avoid letting it fall into non-agency hands.",

@@ -15,6 +15,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs00_Guide { get; } = new NPCLoreStage(
+			name: "Guide Quests",
 			prereqs: new Func<bool>[0],
 			npcType: NPCID.Guide,
 			subStages: new NPCLoreSubStage[] {

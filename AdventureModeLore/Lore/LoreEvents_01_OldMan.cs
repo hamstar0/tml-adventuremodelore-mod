@@ -13,6 +13,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs01_OldMan { get; } = new NPCLoreStage(
+			name: "Old Man Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( LoreEvents.ObjectiveTitle_InvestigateDungeon )
 			},

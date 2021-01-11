@@ -11,6 +11,7 @@ namespace AdventureModeLore.Lore {
 
 
 		public static NPCLoreStage LoreDefs03_200hp { get; } = new NPCLoreStage(
+			name: "Pre-Goblins Quests",
 			prereqs: new Func<bool>[] {
 				() => Main.LocalPlayer.statLifeMax >= 200
 			},
