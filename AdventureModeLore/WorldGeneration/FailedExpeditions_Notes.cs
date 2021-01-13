@@ -8,18 +8,13 @@ namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
 		public static readonly (string title, string[] pages)[] LoreNotes = {
 			( "The Plague", new string[] {
-				"Also known as 'The Curse', 'The Undeath Plague', and even ominously to some as 'Signs',"
-				+ "\nthis is a phenomena of recent years accounting for mysterious afflictions of madness of"
-				+ "\nsome, who also exhibit an unnatural resilience against dying.",
+				"Also known as 'The Curse', 'The Undeath Plague', and even ominously as 'Signs', this is"
+				+ "\na phenomena of recent years accounting for mysterious afflictions of madness of some,"
+				+ "\nwho also exhibit an unnatural resilience against dying.",
 				"At first attributed to an unknown virulent organism, we now know this to be something"
 				+ "\naltogether new to science and medicine, though apparently not to theology.",
 				"Ancient records of civilizations falling to mysterious 'feral behavior' maladies can be"
 				+ "\nfound, often coinciding with the equally-mysterious rise of new civilizations.",
-				"Some thought this to be the work of secretive cults, noting curiously-recurrent signs"
-				+ "\nand witness accounts during such times. These cults were known to have zealotous"
-				+ "\nfollowings bordering on abject lunacy.",
-				"Perhaps they accomplished their dark work through some sort of chemical or even"
-				+ "\nsupernatural subversive means?",
 				"More pragmatically, the plague may be attributed simply to a viral source that yet"
 				+ "\nevades scientific comprehension. This has not yet given adaquate explaination for its"
 				+ "\neffect on things that are not of the living, however..."

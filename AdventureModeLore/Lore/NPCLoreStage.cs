@@ -2,6 +2,7 @@
 using Terraria;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
+using Objectives;
 
 
 namespace AdventureModeLore.Lore {
@@ -31,6 +32,18 @@ namespace AdventureModeLore.Lore {
 		public bool ArePrerequisitesMet() {
 			foreach( Func<bool> prereq in this.Prerequisites ) {
 				if( !prereq.Invoke() ) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+
+		public bool AreAllObjectivesComplete() {
+			foreach( NPCLoreSubStage subStage in this.SubStages ) {
+				if( subStage.Objective == null ) { continue; }
+				if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(subStage.Objective.Title) ) {
 					return false;
 				}
 			}

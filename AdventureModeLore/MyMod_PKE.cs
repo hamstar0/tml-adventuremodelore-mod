@@ -46,18 +46,18 @@ namespace AdventureModeLore {
 			}
 
 			var myworld = ModContent.GetInstance<AMLWorld>();
-			(int x, int y)? nearestExp = null;
 			float nearestExpDist = float.MaxValue;
 
 			foreach( (int x, int y) in myworld.FailedExpeditions ) {
 				var expPos = new Vector2( x * 16, y * 16 );
+				float dist = (expPos - worldPos).Length();
 
 				if( (expPos - worldPos).Length() < nearestExpDist ) {
-					nearestExp = (x, y);
+					nearestExpDist = dist;
 				}
 			}
 
-			if( !nearestExp.HasValue ) {
+			if( nearestExpDist >= float.MaxValue ) {
 				return null;
 			}
 

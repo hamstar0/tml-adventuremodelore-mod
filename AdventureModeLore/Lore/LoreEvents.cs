@@ -56,8 +56,12 @@ namespace AdventureModeLore.Lore {
 			// Pre-load all previously-finished objectives
 			foreach( NPCLoreStage stage in this.Events ) {
 				foreach( NPCLoreSubStage substage in stage.SubStages ) {
-					if( substage.Objective == null ) { continue; }
-					if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(substage.Objective.Title) ) { continue; }
+					if( substage.Objective == null ) {
+						continue;
+					}
+					if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(substage.Objective.Title) ) {
+						continue;
+					}
 
 					if( ObjectivesAPI.GetObjective(substage.Objective.Title) == null ) {
 						ObjectivesAPI.AddObjective( substage.Objective, 0, false, out _ );

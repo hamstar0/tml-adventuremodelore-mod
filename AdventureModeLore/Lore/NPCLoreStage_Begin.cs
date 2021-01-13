@@ -18,9 +18,12 @@ namespace AdventureModeLore.Lore {
 			if( !this.ArePrerequisitesMet() ) {
 				return false;
 			}
-			//if( this.IsComplete ) {	// TODO
-			//	return true;
-			//}
+
+			if( this.AreAllObjectivesComplete() ) {
+				myplayer.CompletedLoreStages.Add( this.Name );
+
+				return true;
+			}
 
 			//
 
@@ -52,11 +55,6 @@ namespace AdventureModeLore.Lore {
 
 		private string GetDialogueAndAdvanceSubStage( string existingMessage, ref int currSubStage, out bool isFinal ) {
 			NPCLoreSubStage subStage = this.StepSubStage( ref currSubStage, out isFinal );
-
-			if( isFinal ) {
-				var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
-				myplayer.CompletedLoreStages.Add( this.Name );
-			}
 
 			return subStage?.Dialogue.Invoke()
 				?? existingMessage;
