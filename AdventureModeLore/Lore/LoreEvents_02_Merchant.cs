@@ -32,8 +32,7 @@ namespace AdventureModeLore.Lore {
 							+ "\n"+"to resonate with the terrain. Maybe this will be of help?",
 						condition: ( obj ) => {
 							var orbsMod = ModLoader.GetMod( "Orbs" );
-
-							return PlayerItemFinderHelpers.CountTotalOfEach(
+							int totalOrbs = PlayerItemFinderHelpers.CountTotalOfEach(
 								player: Main.LocalPlayer,
 								itemTypes: new HashSet<int> {
 									orbsMod.ItemType("RedOrbItem"),
@@ -47,7 +46,8 @@ namespace AdventureModeLore.Lore {
 									orbsMod.ItemType("WhiteOrbItem")
 								},
 								includeBanks: true
-							) > 0;
+							);
+							return totalOrbs > 0;
 						}
 					)
 				)

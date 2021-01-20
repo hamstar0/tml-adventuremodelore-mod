@@ -9,24 +9,17 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore {
 	public partial class NPCLoreStage {
-		public bool BeginForLocalPlayer() {
+		public (bool CanBegin, bool IsDone) GetStatusForLocalPlayer() {
 			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
-			if( myplayer.CompletedLoreStages.Contains(this.Name) ) {
-				return true;
+			if( myplayer.CompletedLoreStages.Contains( this.Name ) ) {
+				return (false, true);
 			}
 
-			if( !this.ArePrerequisitesMet() ) {
-				return false;
-			}
+			return (this.ArePrerequisitesMet(), this.AreAllObjectivesPreviouslyOrInAdvanceComplete());
+		}
 
-			if( this.AreAllObjectivesComplete() ) {
-				myplayer.CompletedLoreStages.Add( this.Name );
 
-				return true;
-			}
-
-			//
-
+		public void BeginForLocalPlayer() {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NPCType );
 			int currSubStage = 0;
 
@@ -46,8 +39,6 @@ namespace AdventureModeLore.Lore {
 				},
 				isShowingAlert: () => true
 			) );
-
-			return true;
 		}
 
 
@@ -75,11 +66,10 @@ namespace AdventureModeLore.Lore {
 				}
 
 				Objective obj = ObjectivesAPI.GetObjective( currSubStage.Objective.Title );
-
 				if( obj == null ) {
 					obj = currSubStage.Objective;
 
-					ObjectivesAPI.AddObjective(
+					ObjectivesAPI.AddObjective(	// Evaluates `obj` if finished
 						objective: obj,
 						order: -1,
 						alertPlayer: true,
@@ -87,7 +77,7 @@ namespace AdventureModeLore.Lore {
 					);
 				}
 
-				if( !obj.IsComplete ) {
+				if( obj.IsComplete != true ) {
 					resultSubStage = currSubStage;
 					break;
 				}

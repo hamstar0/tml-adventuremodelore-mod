@@ -40,10 +40,13 @@ namespace AdventureModeLore.Lore {
 		}
 
 
-		public bool AreAllObjectivesComplete() {
+		public bool AreAllObjectivesPreviouslyOrInAdvanceComplete() {
 			foreach( NPCLoreSubStage subStage in this.SubStages ) {
 				if( subStage.Objective == null ) { continue; }
-				if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(subStage.Objective.Title) ) {
+
+				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( subStage.Objective.Title );
+
+				if( !isPrevComplete && subStage.Objective.ComputeCompletionPercent() < 1f ) {
 					return false;
 				}
 			}

@@ -18,7 +18,13 @@ namespace AdventureModeLore.Lore {
 			var logic = ModContent.GetInstance<LoreEvents>();
 
 			foreach( NPCLoreStage stage in logic.Events.ToArray() ) {
-				if( stage.BeginForLocalPlayer() ) {
+				(bool CanBegin, bool IsDone) status = stage.GetStatusForLocalPlayer();
+
+				if( status.CanBegin && !status.IsDone ) {
+					stage.BeginForLocalPlayer();
+				}
+
+				if( status.IsDone || status.CanBegin ) {
 					logic.Events.Remove( stage );
 				}
 			}

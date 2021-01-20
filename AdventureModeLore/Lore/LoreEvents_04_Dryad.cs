@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.NPCs;
 using HamstarHelpers.Helpers.World;
 using Objectives.Definitions;
 
@@ -32,10 +31,7 @@ namespace AdventureModeLore.Lore {
 						description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will "
 								+ "need to be stopped, or else the plague"
 								+ "\n"+"will spread.",
-						condition: ( obj ) => {
-							return NPC.killCount[NPCBannerHelpers.GetBannerItemTypeOfNpcType( NPCID.EaterofWorldsHead )] > 0
-								|| NPC.killCount[NPCBannerHelpers.GetBannerItemTypeOfNpcType( NPCID.BrainofCthulhu )] > 0;
-						}
+						condition: ( obj ) => NPC.downedBoss2
 					)
 				),
 				new NPCLoreSubStage(
