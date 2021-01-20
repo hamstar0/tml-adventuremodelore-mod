@@ -43,15 +43,14 @@ namespace AdventureModeLore.Lore {
 					)
 				),
 				new NPCLoreSubStage(
-					dialogue: () => "If you're having trouble getting to a place, use your ropes, platforms, framing planks, "
-							+"and track deployment kits. There should be some in the barrel on the raft. If you need more, "
+					dialogue: () => "If you're having trouble getting somewhere, use your ropes, platforms, framing planks, "
+							+"and track deployment kits. There should be some in the raft's barrel. If you need more, "
 							+"some of these can be crafted or bought, if you have the needed materials or money."
 				),
 				new NPCLoreSubStage(
-					dialogue: () => "Speaking of getting around, this island is pretty big, and we're gonna need to get "
-							+"around. In the raft's storage are magic wall mirrors that can be used to quickly travel "
-							+"between each other. Those furnishing Kits also come with them. I estimate we'll need at least "
-							+"[c/FFFFBB:10] of these to get up and running. Spread them around for best effect.",
+					dialogue: () => "Speaking of, this island is pretty big. In the raft's storage are magic wall mirrors "
+							+"that allow fast travel between each other. Furnishing Kits also come with them. We should get "
+							+"at least [c/FFFFBB:10] of these spread around the island for our operations.",
 					objective: new PercentObjective(
 						title: LoreEvents.ObjectiveTitle_Find10Mirrors,
 						description: "Create or locate 10 Mounted Magic Mirrors on your map.",
