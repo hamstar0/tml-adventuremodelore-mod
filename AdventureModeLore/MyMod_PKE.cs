@@ -8,33 +8,34 @@ using HamstarHelpers.Helpers.Debug;
 namespace AdventureModeLore {
 	public partial class AMLMod : Mod {
 		public static void InitializePKE() {
-			PKEMeter.Logic.PKEGauge gaugeFunc = PKEMeter.PKEMeterAPI.GetGauge();
+			PKEMeter.Logic.PKEGaugesGetter gaugeFunc = PKEMeter.PKEMeterAPI.GetGauge();
 
 			float lastGaugedExpeditionPercent = 0;
 			int gaugeTimer = 0;
 
 			PKEMeter.PKEMeterAPI.SetGauge( ( plr, pos ) => {
-				(float b, float g, float y, float r) existingGauge = gaugeFunc?.Invoke( plr, pos )
-					?? (0f, 0f, 0f, 0f);
+				PKEMeter.Logic.PKEGaugeValues existingGauge = gaugeFunc?.Invoke( plr, pos )
+					?? new PKEMeter.Logic.PKEGaugeValues( 0f, 0f, 0f, 0f);
 
 				if( gaugeTimer-- <= 0 ) {
 					gaugeTimer = 10;
 					lastGaugedExpeditionPercent = AMLMod.GaugeExpeditionsNear( pos ) ?? 0f;
 				}
 
-				existingGauge.g = lastGaugedExpeditionPercent;	// Green channel
+				existingGauge.GreenPercent = lastGaugedExpeditionPercent;	// Green channel
 
 				return existingGauge;
 			} );
 
 			PKEMeter.PKEMeterAPI.SetMeterText( "AMLoreFailedExpeditions", ( plr, pos, gauges ) =>
 				new PKEMeter.Logic.PKETextMessage(
-					title: "GREEN: CONCENTRATES",
 					message: "CLASS III ECTOPLASM CONCENTRATE VESSEL",
 					color: Color.Lime * (0.5f + (Main.rand.NextFloat() * 0.5f)),
-					priority: gauges.g
+					priority: gauges.GreenPercent
 				)
 			);
+
+			PKEMeter.PKEMeterAPI.SetPKEGreenTooltip( () => "CONCENTRATES" );
 		}
 
 		////
