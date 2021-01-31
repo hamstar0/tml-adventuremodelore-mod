@@ -19,13 +19,13 @@ namespace AdventureModeLore.Lore {
 		}
 
 
-		public void BeginForLocalPlayer() {
+		public void BeginForLocalPlayer( bool forceObjectiveIncomplete ) {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NPCType );
 			int currSubStage = 0;
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NPCType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					msg = this.GetDialogueAndAdvanceSubStage( msg, ref currSubStage, out bool isFinal );
+					msg = this.GetDialogueAndAdvanceSubStage( msg, forceObjectiveIncomplete, ref currSubStage, out bool isFinal );
 
 					if( isFinal ) {
 						if( oldDialogueHandler != null ) {
@@ -44,8 +44,12 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private string GetDialogueAndAdvanceSubStage( string existingMessage, ref int currSubStage, out bool isFinal ) {
-			NPCLoreSubStage subStage = this.StepSubStage( ref currSubStage, out isFinal );
+		private string GetDialogueAndAdvanceSubStage(
+					string existingMessage,
+					bool forceObjectiveIncomplete,
+					ref int currSubStage,
+					out bool isFinal ) {
+			NPCLoreSubStage subStage = this.StepSubStage( ref currSubStage, forceObjectiveIncomplete, out isFinal );
 
 			return subStage?.Dialogue.Invoke()
 				?? existingMessage;
@@ -54,18 +58,24 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private NPCLoreSubStage StepSubStage( ref int currStage, out bool isFinal ) {
+		private NPCLoreSubStage StepSubStage( ref int currStage, bool forceObjectiveIncomplete, out bool isFinal ) {
 			NPCLoreSubStage resultSubStage = null;
 
 			for( ; currStage < this.SubStages.Length; currStage++ ) {
 				NPCLoreSubStage currSubStage = this.SubStages[ currStage ];
+				string objectiveName = currSubStage.Objective.Title;
 
+				// No objective; dialogue only
 				if( currSubStage.Objective == null ) {
 					resultSubStage = currSubStage;
 					break;
 				}
 
-				Objective obj = ObjectivesAPI.GetObjective( currSubStage.Objective.Title );
+				if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) && forceObjectiveIncomplete ) {
+					ObjectivesAPI.RemoveObjective( objectiveName, true );
+				}
+
+				Objective obj = ObjectivesAPI.GetObjective( objectiveName );
 				if( obj == null ) {
 					obj = currSubStage.Objective;
 

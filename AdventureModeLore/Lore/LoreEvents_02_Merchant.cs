@@ -11,7 +11,7 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
-		public const string ObjectiveTitle_FindOrb = "Find an Orb";
+		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
 
 		public static NPCLoreStage LoreDefs02_Merchant { get; } = new NPCLoreStage(
@@ -29,29 +29,36 @@ namespace AdventureModeLore.Lore {
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_FindOrb,
 						description: "It seems the land itself is enchanted. Special orbs can be found that appear"
-							+ "\n"+"to resonate with the terrain. Maybe this will be of help?",
+							+ "\n"+"to resonate with the terrain. Maybe these will be of help?",
 						condition: ( obj ) => {
 							var orbsMod = ModLoader.GetMod( "Orbs" );
-							int totalOrbs = PlayerItemFinderHelpers.CountTotalOfEach(
-								player: Main.LocalPlayer,
-								itemTypes: new HashSet<int> {
-									orbsMod.ItemType("RedOrbItem"),
-									orbsMod.ItemType("BlueOrbItem"),
-									orbsMod.ItemType("BrownOrbItem"),
-									orbsMod.ItemType("PurpleOrbItem"),
-									orbsMod.ItemType("CyanOrbItem"),
-									orbsMod.ItemType("GreenOrbItem"),
-									orbsMod.ItemType("PinkOrbItem"),
-									orbsMod.ItemType("YellowOrbItem"),
-									orbsMod.ItemType("WhiteOrbItem")
-								},
-								includeBanks: true
-							);
-							return totalOrbs > 0;
+
+							//
+
+							bool hasOrb( string itemName ) {
+								return PlayerItemFinderHelpers.CountTotalOfEach(
+									player: Main.LocalPlayer,
+									itemTypes: new HashSet<int> { orbsMod.ItemType(itemName) },
+									includeBanks: true
+								) > 0;
+							}
+
+							//
+
+							return hasOrb("RedOrbItem")
+								&& hasOrb("BlueOrbItem")
+								&& hasOrb("BrownOrbItem")
+								&& hasOrb("PurpleOrbItem")
+								&& hasOrb("CyanOrbItem")
+								&& hasOrb("GreenOrbItem")
+								&& hasOrb("PinkOrbItem")
+								&& hasOrb("YellowOrbItem")
+								&& hasOrb("WhiteOrbItem");
 						}
 					)
 				)
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

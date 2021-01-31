@@ -15,15 +15,18 @@ namespace AdventureModeLore.Lore {
 
 		public NPCLoreSubStage[] SubStages { get; private set; }
 
+		public bool IsRepeatable { get; private set; }
+
 
 
 		////////////////
 
-		public NPCLoreStage( string name, Func<bool>[] prereqs, int npcType, NPCLoreSubStage[] subStages ) {
+		public NPCLoreStage( string name, Func<bool>[] prereqs, int npcType, NPCLoreSubStage[] subStages, bool isRepeatable ) {
 			this.Name = name;
 			this.Prerequisites = prereqs;
 			this.NPCType = npcType;
 			this.SubStages = subStages;
+			this.IsRepeatable = isRepeatable;
 		}
 
 

@@ -40,7 +40,8 @@ namespace AdventureModeLore.Lore {
 						condition: ( obj ) =>  NPC.AnyNPCs( NPCID.WitchDoctor )
 					)
 				)
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

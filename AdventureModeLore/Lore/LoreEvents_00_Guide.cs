@@ -57,7 +57,8 @@ namespace AdventureModeLore.Lore {
 						condition: ( obj ) => (float)LoreEvents.CountDiscoveredMirrors() / 10f
 					)
 				)
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

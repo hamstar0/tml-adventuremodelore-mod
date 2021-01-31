@@ -44,7 +44,8 @@ namespace AdventureModeLore.Lore {
 						condition: ( obj ) => Main.LocalPlayer.position.Y >= (WorldHelpers.UnderworldLayerTopTileY * 16)
 					)
 				)
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

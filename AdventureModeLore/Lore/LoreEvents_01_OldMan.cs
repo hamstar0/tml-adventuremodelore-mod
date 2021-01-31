@@ -41,7 +41,8 @@ namespace AdventureModeLore.Lore {
 						condition: ( obj ) =>  Main.LocalPlayer.ZoneJungle
 					)
 				)
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

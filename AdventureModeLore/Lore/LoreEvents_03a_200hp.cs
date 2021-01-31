@@ -10,7 +10,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_TalkToGoblin = "Talk To A Goblin";
 
 
-		public static NPCLoreStage LoreDefs03_200hp { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs03a_200hp { get; } = new NPCLoreStage(
 			name: "Pre-Goblins Quests",
 			prereqs: new Func<bool>[] {
 				() => Main.LocalPlayer.statLifeMax >= 200
@@ -29,7 +29,8 @@ namespace AdventureModeLore.Lore {
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.GoblinTinkerer )
 					)
 				)
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

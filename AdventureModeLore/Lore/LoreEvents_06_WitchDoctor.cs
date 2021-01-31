@@ -49,7 +49,8 @@ namespace AdventureModeLore.Lore {
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.WallofFlesh )
 					)
 				),
-			}
+			},
+			isRepeatable: false
 		);
 	}
 }

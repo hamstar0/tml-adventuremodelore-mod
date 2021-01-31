@@ -20,11 +20,13 @@ namespace AdventureModeLore.Lore {
 			foreach( NPCLoreStage stage in logic.Events.ToArray() ) {
 				(bool CanBegin, bool IsDone) status = stage.GetStatusForLocalPlayer();
 
-				if( status.CanBegin && !status.IsDone ) {
-					stage.BeginForLocalPlayer();
+				if( status.CanBegin && status.IsDone && stage.IsRepeatable ) {
+					stage.BeginForLocalPlayer( true );
+				} else if( status.CanBegin && !status.IsDone ) {
+					stage.BeginForLocalPlayer( false );
 				}
 
-				if( status.IsDone || status.CanBegin ) {
+				if( (status.IsDone || status.CanBegin) && !stage.IsRepeatable ) {
 					logic.Events.Remove( stage );
 				}
 			}
@@ -54,7 +56,7 @@ namespace AdventureModeLore.Lore {
 			this.Events.Add( LoreEvents.LoreDefs00_Guide );
 			this.Events.Add( LoreEvents.LoreDefs01_OldMan );
 			this.Events.Add( LoreEvents.LoreDefs02_Merchant );
-			this.Events.Add( LoreEvents.LoreDefs03_200hp );
+			this.Events.Add( LoreEvents.LoreDefs03a_200hp );
 			this.Events.Add( LoreEvents.LoreDefs04_DefeatEvil );
 			this.Events.Add( LoreEvents.LoreDefs05_FindMechanicAndWitchDoctor );
 			this.Events.Add( LoreEvents.LoreDefs06_SummonWoF );
