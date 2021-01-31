@@ -63,7 +63,6 @@ namespace AdventureModeLore.Lore {
 
 			for( ; currStage < this.SubStages.Length; currStage++ ) {
 				NPCLoreSubStage currSubStage = this.SubStages[ currStage ];
-				string objectiveName = currSubStage.Objective.Title;
 
 				// No objective; dialogue only
 				if( currSubStage.Objective == null ) {
@@ -71,6 +70,7 @@ namespace AdventureModeLore.Lore {
 					break;
 				}
 
+				string objectiveName = currSubStage.Objective.Title;
 				if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) && forceObjectiveIncomplete ) {
 					ObjectivesAPI.RemoveObjective( objectiveName, true );
 				}
