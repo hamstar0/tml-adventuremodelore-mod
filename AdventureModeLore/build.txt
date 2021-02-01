@@ -1,6 +1,6 @@
 displayName = Adventure Mode Lore
 author = hamstar
-version = 0.7.0
+version = 0.7.0.1
 modReferences = HamstarHelpers@5.9.7, Objectives@0.6.0, ReadableBooks@1.2.1
 weakReferences = TheMadRanger@1.5.1, Orbs@1.2.3, Necrotis@1.6.2, PKEMeter@1.4.0, MountedMagicMirrors@1.1.7, BossReigns@1.1.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*

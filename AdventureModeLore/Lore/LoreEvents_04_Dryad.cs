@@ -35,9 +35,9 @@ namespace AdventureModeLore.Lore {
 					)
 				),
 				new NPCLoreSubStage(
-					dialogue: () => "There are many contributing factors, but the main source of your so-called \"plague\" "
-							+"is from the furthest depths of the world itself. It will an endeavor just to make it there. "
-							+"May the blessings of nature be with you!",
+					dialogue: () => "There are many contributing factors, but the main source of your so-called plague "
+							+"is within the furthest depths of the world itself. It will be an endeavor just to make it "
+							+"there. May the blessings of nature be with you!",
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_ReachUnderworld,
 						description: "It would seem the source of the plague is deep underground. You must find it.",
