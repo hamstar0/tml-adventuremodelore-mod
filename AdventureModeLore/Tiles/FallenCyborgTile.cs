@@ -5,7 +5,7 @@ using Terraria.ObjectData;
 
 
 namespace AdventureModeLore.Tiles {
-	class FallenCyborgTile : ModTile {
+	public class FallenCyborgTile : ModTile {
 		public override void SetDefaults() {
 			Main.tileLighted[ this.Type ] = true;
 			Main.tileFrameImportant[ this.Type ] = true;
