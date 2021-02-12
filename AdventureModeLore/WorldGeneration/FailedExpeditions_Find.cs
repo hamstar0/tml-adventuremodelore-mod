@@ -9,20 +9,41 @@ namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
 		private (int x, int nearFloorY)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
-			int max = (Main.maxTilesX / 2) - 1;
-			int tileY = WorldHelpers.SurfaceLayerTopTileY;
+			int maxX = (Main.maxTilesX / 2) - 1;
+			int minTileY = WorldHelpers.SkyLayerBottomTileY + 1;
 			int maxTileY = WorldHelpers.RockLayerBottomTileY;
+			int tileY = minTileY;
 
-			for( int i = 0; i < max; i++ ) {
-				int tileX = max + i;
+			// Clear any islands
+			for( ; tileY < maxTileY; tileY++ ) {
+				if( !Framing.GetTileSafely(maxX, tileY).active() ) {
+					break;
+				}
+			}
 
-				scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, 7, out mostCommonTileType );
+			for( int i = 1; i < maxX; i++ ) {
+				scanPos = this.FindExpeditionFutureFloorArea(
+					tileX: maxX + i,
+					tileY: tileY,
+					maxTileY: maxTileY,
+					campWidth: campWidth,
+					floorPavingDepth: 8,
+					emptySpaceNeededAbove: 3,
+					mostCommonTileType: out mostCommonTileType
+				);
 				if( scanPos != null ) {
 					return scanPos;
 				}
 
-				tileX = max - i;
-				scanPos = this.FindExpeditionFutureFloorArea( tileX, tileY, maxTileY, campWidth, 7, out mostCommonTileType );
+				scanPos = this.FindExpeditionFutureFloorArea(
+					tileX: maxX - i,
+					tileY: tileY,
+					maxTileY: maxTileY,
+					campWidth: campWidth,
+					floorPavingDepth: 8,
+					emptySpaceNeededAbove: 3,
+					mostCommonTileType: out mostCommonTileType
+				);
 				if( scanPos != null ) {
 					return scanPos;
 				}
@@ -39,6 +60,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int tileX = 1;
 			int minTileY = WorldHelpers.SkyLayerBottomTileY + 1;
 			int maxTileY = WorldHelpers.DirtLayerTopTileY - 1;
+			int tileY = minTileY;
 
 			if( Main.dungeonX > (Main.maxTilesX / 2) ) {
 				tileX = 40;
@@ -48,11 +70,27 @@ namespace AdventureModeLore.WorldGeneration {
 				dir = -1;
 			}
 
-			int maxCheck = Main.maxTilesX / 2;
-			for( int i=0; i<maxCheck; i++ ) {
+			int maxX = Main.maxTilesX / 2;
+
+			// Clear any islands
+			for( ; tileY < maxTileY; tileY++ ) {
+				if( !Framing.GetTileSafely( maxX, tileY ).active() ) {
+					break;
+				}
+			}
+
+			for( int i=0; i<maxX; i++ ) {
 				int x = tileX + (i * dir);
 
-				scanPos = this.FindExpeditionFutureFloorArea( x, minTileY, maxTileY, campWidth, 8, out mostCommonTileType );
+				scanPos = this.FindExpeditionFutureFloorArea(
+					tileX: x,
+					tileY: tileY,
+					maxTileY: maxTileY,
+					campWidth: campWidth,
+					floorPavingDepth: 8,
+					emptySpaceNeededAbove: 3,
+					mostCommonTileType: out mostCommonTileType
+				);
 				if( scanPos != null ) {
 					return scanPos;
 				}
@@ -71,12 +109,13 @@ namespace AdventureModeLore.WorldGeneration {
 				int tileY = WorldGen.genRand.Next( WorldHelpers.DirtLayerTopTileY, maxTileY );
 
 				(int, int)? scanPos = this.FindExpeditionFutureFloorArea(
-					tileX,
-					tileY,
-					maxTileY,
-					campWidth,
-					6,
-					out mostCommonTileType
+					tileX: tileX,
+					tileY: tileY,
+					maxTileY: maxTileY,
+					campWidth: campWidth,
+					floorPavingDepth: 6,
+					emptySpaceNeededAbove: 3,
+					mostCommonTileType: out mostCommonTileType
 				);
 				if( scanPos != null ) {
 					return scanPos;
@@ -96,9 +135,10 @@ namespace AdventureModeLore.WorldGeneration {
 					int maxTileY,
 					int campWidth,
 					int floorPavingDepth,
+					int emptySpaceNeededAbove,
 					out int mostCommonTileType ) {
-			if( this.FindValidNearFloorTileAt(tileX, tileY, maxTileY, out tileY) ) {
-				if( this.ScanFromTile(tileX, tileY, campWidth, floorPavingDepth, out( int, int) scanPos, out mostCommonTileType) ) {
+			if( this.FindValidNearFloorTileAt(tileX, tileY, maxTileY, emptySpaceNeededAbove, out tileY) ) {
+				if( this.ScanFromTileForCamp(tileX, tileY, campWidth, floorPavingDepth, emptySpaceNeededAbove, out( int, int) scanPos, out mostCommonTileType) ) {
 					return scanPos;
 				}
 			}

@@ -10,48 +10,53 @@ using HamstarHelpers.Helpers.DotNET.Extensions;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
-		private bool ScanFromTile(
+		private bool ScanFromTileForCamp(
 					int tileX,
-					int tileY,
+					int nearCampFloortileY,
 					int campWidth,
 					int floorPavingThickness,
+					int neededEmptySpaceAbove,
 					out (int x, int nearFloorY) campStartPos,
 					out int mostCommonTileType ) {
 			var floorTileTypes = new Dictionary<ushort, int>();
 
-			int nearFloorY = 0;
 			int width = 0;
 			int checkLeftX = tileX - 1;
 			int checkRightX = tileX + 1;
-			int bot = tileY + floorPavingThickness;
+			int botY = nearCampFloortileY + floorPavingThickness;
 
-			bool isChecked;
+			nearCampFloortileY--;
+
+			bool foundValidFloor;
 			do {
-				isChecked = false;
+				foundValidFloor = false;
 
-				if( this.FindValidNearFloorTileAt(checkLeftX, tileY, bot, out nearFloorY) ) {
-					Tile floorTile = Main.tile[ checkLeftX, nearFloorY + 1 ];
+				int nearCampFloorTileY2 = 0;
+
+				if( this.FindValidNearFloorTileAt(checkLeftX, nearCampFloortileY, botY, neededEmptySpaceAbove, out nearCampFloorTileY2) ) {
+					Tile floorTile = Main.tile[ checkLeftX, nearCampFloorTileY2 + 1 ];
 					floorTileTypes.AddOrSet( floorTile.type, 1 );
 
-					isChecked = true;
+					foundValidFloor = true;
 					width++;
 					checkLeftX--;
 				}
-				if( this.FindValidNearFloorTileAt(checkRightX, tileY, bot, out nearFloorY) ) {
-					Tile floorTile = Main.tile[ checkRightX, nearFloorY + 1 ];
+				if( this.FindValidNearFloorTileAt(checkRightX, nearCampFloortileY, botY, neededEmptySpaceAbove, out nearCampFloorTileY2) ) {
+					Tile floorTile = Main.tile[ checkRightX, nearCampFloorTileY2 + 1 ];
 					floorTileTypes.AddOrSet( floorTile.type, 1 );
 
-					isChecked = true;
+					foundValidFloor = true;
 					width++;
 					checkRightX++;
 				}
-			} while( isChecked && width < campWidth );
+			} while( foundValidFloor && width < campWidth );
 
-			if( !this.FindValidNearFloorTileAt(checkLeftX, tileY, bot, out _) ) {
+			// Widen to the left by 1, if possible
+			if( !this.FindValidNearFloorTileAt(checkLeftX, nearCampFloortileY, botY, neededEmptySpaceAbove, out _ ) ) {
 				checkLeftX++;
 			}
 
-			campStartPos = (checkLeftX, tileY);
+			campStartPos = (checkLeftX, nearCampFloortileY);
 
 			if( floorTileTypes.Count > 0 ) {
 				mostCommonTileType = floorTileTypes.Aggregate( (kv1, kv2) => kv1.Value > kv2.Value ? kv1 : kv2 ).Key;
@@ -59,25 +64,25 @@ namespace AdventureModeLore.WorldGeneration {
 				mostCommonTileType = -1;
 			}
 
-			return width >= campWidth;
+			return mostCommonTileType != -1 && width >= campWidth;
 		}
 
 
 		////////////////
 
-		private bool FindValidNearFloorTileAt( int tileX, int tileY, int maxY, out int nearFloorY ) {
-			if( tileX < 0 || tileX >= Main.maxTilesX || tileY < 0 || tileY >= Main.maxTilesY ) {
-				nearFloorY = tileY;
+		private bool FindValidNearFloorTileAt( int tileX, int topTileY, int botTileY, int neededEmptySpaceAbove, out int nearFloorY ) {
+			if( tileX < 0 || tileX >= Main.maxTilesX || topTileY < 0 || topTileY >= Main.maxTilesY ) {
+				nearFloorY = topTileY;
 				return false;
 			}
 
-			int findFloorY = tileY;
+			int findFloorY = topTileY;
 
 			// Find floor
 			bool hasEmptySpace = false;
 			for( Tile tile = Main.tile[ tileX, findFloorY ];
-						findFloorY < maxY && this.IsValidEmptyTile(tile);
-						tile = Main.tile[tileX, ++findFloorY] ) {
+						findFloorY < botTileY && this.IsValidEmptyTile( tile );
+						tile = Main.tile[ tileX, ++findFloorY ] ) {
 				hasEmptySpace = true;
 			}
 			
@@ -90,7 +95,7 @@ namespace AdventureModeLore.WorldGeneration {
 			}
 
 			// Verify if valid "empty" space above floor
-			for( int i=0; i<3; i++ ) {
+			for( int i=0; i<neededEmptySpaceAbove; i++ ) {
 				if( (nearFloorY - i) < 0 ) {
 					return false;
 				}

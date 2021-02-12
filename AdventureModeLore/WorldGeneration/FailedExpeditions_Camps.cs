@@ -5,7 +5,7 @@ using Terraria.World.Generation;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Tiles;
-
+using HamstarHelpers.Classes.Errors;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
@@ -31,8 +31,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			expedPointRaw = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
-				LogHelpers.Log( "Could not find a place to generate first 'failed expedition'" );
-				return;
+				throw new ModHelpersException( "Could not find a place to generate first 'failed expedition'" );
 			}
 
 			x = expedPointRaw.Value.x;
