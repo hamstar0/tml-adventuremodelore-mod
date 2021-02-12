@@ -3,9 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
 using Terraria.ModLoader;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
 using AdventureModeLore.Tiles;
-using HamstarHelpers.Classes.Errors;
+
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {

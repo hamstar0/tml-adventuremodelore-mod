@@ -85,6 +85,7 @@ namespace AdventureModeLore {
 				idx += 1;
 			}
 
+			tasks.Insert( idx, new FallenCyborgsGen() );
 			tasks.Insert( idx, new FailedExpeditionsGen() );
 		}
 	}

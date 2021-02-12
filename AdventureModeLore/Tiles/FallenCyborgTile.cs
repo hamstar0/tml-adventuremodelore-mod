@@ -23,6 +23,11 @@ namespace AdventureModeLore.Tiles {
 			this.dustType = 1;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[] { this.Type };
+
+			Mod riMod = ModLoader.GetMod( "RuinedItems" );
+			if( riMod != null ) {
+				this.drop = riMod.ItemType( "MagitechScrapItem" );
+			}
 		}
 
 
