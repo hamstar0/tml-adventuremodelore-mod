@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -17,7 +18,7 @@ namespace AdventureModeLore {
 
 
 		////////////////
-
+		
 		public override void Load( TagCompound tag ) {
 			this.CompletedLoreStages.Clear();
 
@@ -43,6 +44,19 @@ namespace AdventureModeLore {
 			}
 
 			return tag;
+		}
+
+
+		////////////////
+
+		 private int _FEDiscoveryRecheckTimer = 0;
+
+		public override void PreUpdate() {
+			if( this._FEDiscoveryRecheckTimer-- <= 0 ) {
+				this._FEDiscoveryRecheckTimer = 15;
+
+				this.DiscoverNearbyFEsIf();
+			}
 		}
 	}
 }

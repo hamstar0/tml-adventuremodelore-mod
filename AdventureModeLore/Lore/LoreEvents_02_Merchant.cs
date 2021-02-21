@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.Players;
 using Objectives;
-using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore {
@@ -22,6 +18,12 @@ namespace AdventureModeLore.Lore {
 			npcType: NPCID.Merchant,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
+					dialogue: () => "I go where the money is. If you're looking for some, you'll need to find treasures."
+						+" This land itself is enchanted, and most areas can be accessed by using those special"
+						+" magic orbs found here and there. They'll often be accompanying said other treasures."
+						+" Strange, huh?"
+				),
+				/*new NPCLoreSubStage(
 					dialogue: () => "I go where the money is. If you're looking for some, you'll need to find treasures."
 						+" This land itself is enchanted, and most areas can be accessed by using those special"
 						+" magic orbs found here and there. They'll often be accompanying said other treasures."
@@ -56,7 +58,7 @@ namespace AdventureModeLore.Lore {
 								&& hasOrb("WhiteOrbItem");
 						}
 					)
-				)
+				)*/
 			},
 			isRepeatable: false
 		);

@@ -8,7 +8,7 @@ using AdventureModeLore.WorldGeneration;
 
 
 namespace AdventureModeLore {
-	class AMLWorld : ModWorld {
+	partial class AMLWorld : ModWorld {
 		internal ISet<(int tileX, int tileY)> FailedExpeditions = new HashSet<(int, int)>();
 
 

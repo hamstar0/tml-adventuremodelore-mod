@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using HamstarHelpers.Classes.Loadable;
 using Objectives.Definitions;
-using Terraria.ModLoader;
+
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
@@ -18,15 +19,14 @@ namespace AdventureModeLore.Lore {
 			npcType: NPCID.Guide,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
-					dialogue: () => "Uh oh! It seems conditions on this island have become more treacherous than usual. Don't"
-						+" ask me how I know, but it seems there's a buildup of ambient spiritual energy. It may disrupt some"
-						+" of your equipment, which will interfere with our mission. It's usually associated with a powerful"
-						+" entity residing somewhere on the island. It should disperse once it's destroyed. Find and kill it,"
-						+" if you can.",
+					dialogue: () => "Uh oh! It seems conditions on this island have become more treacherous than usual. A"
+						+" buildup of ambient spiritual energy is occurring that may disrupt some of your equipment, and"
+						+" interfere with the mission. The source is an [c/88FF88:undefeated powerful entity] residing somewhere"
+						+" on the island. Since we can't leave yet, it'll need to be destroyed.",
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_BackgroundPKE,
 						description: "Background spiritual energies (PKE) is on the rise. Equipment and mission at risk."
-							+ "\n"+"Find and destroy the powerful entity associated with this phenomenon.",
+							+ "\n"+"Find and destroy an unconquered powerful entity associated with this phenomenon.",
 						condition: ( obj ) => !LoreEvents.IsBackgroundPKEDangerous()
 					)
 				)

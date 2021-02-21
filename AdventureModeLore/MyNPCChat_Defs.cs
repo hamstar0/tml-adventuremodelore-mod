@@ -61,6 +61,18 @@ namespace AdventureModeLore {
 				)
 			},
 			{
+				NPCID.Guide, new NPCDialogueDefinitions(
+					added: new string[] {
+						"This island emanates spiritual energy. It's saturated even into it's very soils. Your presence here may "
+						+ "disturb these spirits. If they get too aggitated, something powerful may appear to attack and destroy you. "
+						+ "Killing it will usually remove this aggitation effect... for a time. You may need to kill different "
+						+ "types of such entities, for each of these disturbances.",
+					},
+					blocked: new string[] { },
+					isAvailable: ( msg ) => ModLoader.GetMod("BossReigns") != null
+				)
+			},
+			{
 				NPCID.Nurse, new NPCDialogueDefinitions(
 					added: new string[] {
 						"I can heal bodily wounds, but this land does things to people that I cannot heal. Spiritual matters are "
@@ -68,8 +80,7 @@ namespace AdventureModeLore {
 						+ "being speaking figuratively. Do NOT let your spirits get down, or things here can harm you. If you "
 						+ "survive, I can help with that, though.",
 					},
-					blocked: new string[] {
-					},
+					blocked: new string[] { },
 					isAvailable: ( msg ) => ModLoader.GetMod("Necrotis") != null
 				)
 			},
@@ -78,8 +89,7 @@ namespace AdventureModeLore {
 					added: new string[] {
 						"Ever encounter that annoying Trickster? I hear it likes to reward those who think they can outwit it with quick thinking. I think it's up to something...",
 					},
-					blocked: new string[] {
-					},
+					blocked: new string[] { },
 					isAvailable: ( msg ) => ModLoader.GetMod("TheTrickster") != null
 				)
 			},
@@ -90,8 +100,7 @@ namespace AdventureModeLore {
 						+ "why not buy a real gun from me? Surely that old thing can't hit the broad side of a barn! Would "
 						+ "probably level one just fine, with whatever you added to the powder.",
 					},
-					blocked: new string[] {
-					},
+					blocked: new string[] { },
 					isAvailable: ( msg ) => ModLoader.GetMod("TheMadRanger") != null
 				)
 			}

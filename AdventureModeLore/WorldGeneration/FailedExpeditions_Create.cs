@@ -87,6 +87,7 @@ namespace AdventureModeLore.WorldGeneration {
 			return true;
 		}
 
+
 		////////////////
 
 		private void PaveCampAt( int tileX, int nearFloorTileY, int tileType ) {
