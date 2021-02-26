@@ -12,7 +12,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_FindWitchDoctor = "Find Witch Doctor";
 
 
-		public static NPCLoreStage LoreDefs05_FindMechanicAndWitchDoctor { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs05_FindMechanicAndWitchDoctor => new NPCLoreStage(
 			name: "Goblin Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.GoblinTinkerer )

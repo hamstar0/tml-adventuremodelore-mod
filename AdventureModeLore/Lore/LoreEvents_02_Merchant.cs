@@ -10,7 +10,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
 
-		public static NPCLoreStage LoreDefs02_Merchant { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs02_Merchant => new NPCLoreStage(
 			name: "Merchant Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( LoreEvents.ObjectiveTitle_FindMerchant )

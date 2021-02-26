@@ -12,7 +12,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_FindJungle = "Find Jungle";
 
 
-		public static NPCLoreStage LoreDefs01_OldMan { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs01_OldMan => new NPCLoreStage(
 			name: "Old Man Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( LoreEvents.ObjectiveTitle_InvestigateDungeon )

@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
 
 
-		public static NPCLoreStage LoreDefs00_Guide { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs00_Guide => new NPCLoreStage(
 			name: "Guide Quests",
 			prereqs: new Func<bool>[0],
 			npcType: NPCID.Guide,

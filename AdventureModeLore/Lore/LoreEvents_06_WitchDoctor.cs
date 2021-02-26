@@ -10,7 +10,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_SummonWoF = "Sacrifice Voodoo Doll";
 
 
-		public static NPCLoreStage LoreDefs06_SummonWoF { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs06_SummonWoF => new NPCLoreStage(
 			name: "Witch Doctor Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.WitchDoctor )

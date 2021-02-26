@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_ReachUnderworld = "Reach Underworld";
 
 
-		public static NPCLoreStage LoreDefs04_DefeatEvil { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs04_DefeatEvil => new NPCLoreStage(
 			name: "Dryad Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.Dryad )

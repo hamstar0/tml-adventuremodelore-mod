@@ -11,7 +11,7 @@ namespace AdventureModeLore.Lore {
 		public const string ObjectiveTitle_BackgroundPKE = "Neutalize Disruptive PKE";
 
 
-		public static NPCLoreStage LoreDefs03b_BgPKE { get; } = new NPCLoreStage(
+		public static NPCLoreStage LoreDefs03b_BgPKE => new NPCLoreStage(
 			name: "Background PKE Maxed",
 			prereqs: new Func<bool>[] {
 				LoreEvents.IsBackgroundPKEDangerous

@@ -23,16 +23,28 @@ namespace AdventureModeLore.Tiles {
 			this.dustType = 1;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[] { this.Type };
-
-			Mod riMod = ModLoader.GetMod( "RuinedItems" );
-			if( riMod != null ) {
-				this.drop = riMod.ItemType( "MagitechScrapItem" );
-			}
 		}
 
 
 		public override void NumDust( int i, int j, bool fail, ref int num ) {
 			num = fail ? 1 : 3;
+		}
+
+
+		////////////////
+
+		public override void KillMultiTile( int i, int j, int frameX, int frameY ) {
+			Mod riMod = ModLoader.GetMod( "RuinedItems" );
+
+			if( riMod != null ) {
+				Item.NewItem(
+					X: i * 16,
+					Y: j * 16,
+					Height: 3 * 16,
+					Width: 2 * 16,
+					Type: riMod.ItemType( "MagitechScrapItem" )
+				);
+			}
 		}
 	}
 }
