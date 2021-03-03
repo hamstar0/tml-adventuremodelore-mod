@@ -172,7 +172,19 @@ namespace AdventureModeLore.WorldGeneration {
 		}
 
 		private bool IsValidFloorTile( Tile mytile ) {
-			return WorldGen.SolidTile3( mytile );
+			if( !WorldGen.SolidTile3(mytile) ) {
+				return false;
+			}
+
+			switch( mytile.type ) {
+			case TileID.BreakableIce:
+			case TileID.Obsidian:
+			case TileID.HoneyBlock:
+			case TileID.CrispyHoneyBlock:
+				return false;
+			default:
+				return true;
+			}
 		}
 	}
 }

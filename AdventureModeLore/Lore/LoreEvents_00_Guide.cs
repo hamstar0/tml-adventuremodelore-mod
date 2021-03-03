@@ -24,8 +24,8 @@ namespace AdventureModeLore.Lore {
 							+"inland. Perhaps we should check it out?",
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_InvestigateDungeon,
-						description: "There appears to be a large, ominous structure with a suspicious old man"
-								+"\n"+"wandering around it's entrance. Recommend an investigation.",
+						description: "There's a large, ominous structure with a strange old man wandering around"
+								+"\n"+"it's entrance. Ask the old man for information about the island.",
 						condition: ( obj ) => {
 							return Main.player.Any( plr => {
 								if( plr?.active != true ) {

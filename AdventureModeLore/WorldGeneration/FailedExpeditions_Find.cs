@@ -117,6 +117,7 @@ namespace AdventureModeLore.WorldGeneration {
 					emptySpaceNeededAbove: 3,
 					mostCommonTileType: out mostCommonTileType
 				);
+
 				if( scanPos != null ) {
 					return scanPos;
 				}
