@@ -11,7 +11,7 @@ namespace AdventureModeLore {
 		public void OnModsLoad() { }
 
 		public void OnPostModsLoad() {
-			foreach( (int npcType, NPCDialogueDefinitions chats) in this.NPCDialogues ) {
+			foreach( (int npcType, NPCDialogueDefinitions chats) in AdventureModeNpcChat.NPCDialogues ) {
 				foreach( string addedChat in chats.Added ) {
 					if( chats.IsAvailable?.Invoke(addedChat) ?? true ) {
 						DialogueEditor.AddChatForNPC( npcType, addedChat, 0.1f );
