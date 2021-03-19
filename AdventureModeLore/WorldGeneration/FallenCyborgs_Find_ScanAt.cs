@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
 
@@ -63,7 +64,9 @@ namespace AdventureModeLore.WorldGeneration {
 		////////////////
 
 		private bool IsValidFloorTile( Tile mytile ) {
-			return WorldGen.SolidTile3( mytile );
+			return WorldGen.SolidTile3( mytile )
+				&& mytile.type != TileID.BreakableIce
+				&& mytile.type != TileID.LeafBlock;
 		}
 	}
 }

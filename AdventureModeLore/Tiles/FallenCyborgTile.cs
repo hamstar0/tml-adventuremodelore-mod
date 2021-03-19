@@ -33,13 +33,16 @@ namespace AdventureModeLore.Tiles {
 
 		////////////////
 
-		public override void KillMultiTile( int i, int j, int frameX, int frameY ) {
+		public override void KillMultiTile( int x, int y, int frameX, int frameY ) {
 			Mod riMod = ModLoader.GetMod( "RuinedItems" );
+			if( riMod == null ) {
+				return;
+			}
 
-			if( riMod != null ) {
+			for( int i=0; i<3; i++ ) {
 				Item.NewItem(
-					X: i * 16,
-					Y: j * 16,
+					X: x * 16,
+					Y: y * 16,
 					Height: 3 * 16,
 					Width: 2 * 16,
 					Type: riMod.ItemType( "MagitechScrapItem" )
