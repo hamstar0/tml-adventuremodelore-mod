@@ -42,7 +42,7 @@ namespace AdventureModeLore.WorldGeneration {
 				break;
 			}
 
-			this.CreateCamps( progress, count, campWidth );
+			this.CreateAllFEs( progress, count, campWidth );
 		}
 	}
 }
