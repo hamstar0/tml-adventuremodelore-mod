@@ -1,60 +1,63 @@
 ﻿using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.World.Generation;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
-using System.Collections.Generic;
 
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FailedExpeditionsGen : GenPass {
 		private void CreateAllUndergroundFEs( GenerationProgress progress, int count, int campWidth ) {
-			var expeds = new List<(int x, int nearFloorY, int paveTileType)>();
+			var expedList = new List<(int tileX, int nearFloorTileY, int paveTileType)>();
 
-			int attempts = 0;
+			int retries = 0;
 			for( int expedNum = 1; expedNum < count; expedNum++ ) {
-				(int x, int nearFloorY)? expedPointRaw = this.FindRandomExpeditionLocation( campWidth, out int paveTileType );
+				(int tileX, int nearFloorTileY)? expedPointRaw = this.FindRandomExpeditionLocation(
+					campWidth,
+					out int paveTileType
+				);
 				if( !expedPointRaw.HasValue ) {
 					LogHelpers.Log( "Could not finish finding places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
 					break;
 				}
 
-				if( this.IsNearAnotherExpedition(expeds, expedPointRaw.Value) ) {
-					if( attempts++ > 1000 ) {
+				if( this.IsNearAnotherExpedition(expedList, expedPointRaw.Value) ) {
+					if( retries++ > 1000 ) {
 						LogHelpers.Log( "Could not finish finding open places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
 						break;
 					}
 
 					expedNum--;
 					continue;
-				} else {
-					attempts = 0;
 				}
 
-				expeds.Add( (expedPointRaw.Value.x, expedPointRaw.Value.nearFloorY, paveTileType) );
+				retries = 0;
+
+				expedList.Add( (expedPointRaw.Value.tileX, expedPointRaw.Value.nearFloorTileY, paveTileType) );
 			}
 
 			int i = 0;
-			foreach( (int x, int nearFloorY, int paveTileType) in expeds ) {
-				if( !this.CreateUndergroundFE( x, nearFloorY, paveTileType, campWidth, out string result ) ) {
-					LogHelpers.Log( "Could not finish generating all 'failed expeditions' (" + i + " of " + expeds.Count + "): " + result );
+			foreach( (int tileX, int nearFloorTileY, int paveTileType) in expedList ) {
+				if( !this.CreateUndergroundFE( tileX, nearFloorTileY, paveTileType, campWidth, out string result ) ) {
+					LogHelpers.Log( "Could not finish generating all 'failed expeditions' (" + i + " of " + expedList.Count + "): " + result );
 					break;
 				}
 
 				i++;
-				progress.Value = (float)i / ( (float)expeds.Count + 2f );
+				progress.Value = (float)i / ( (float)expedList.Count + 2f );
 			}
 		}
 
 
 		////
 
-		private bool CreateUndergroundFE( int x, int nearFloorY, int paveTileType, int campWidth, out string result ) {
+		private bool CreateUndergroundFE( int tileX, int nearFloorTileY, int paveTileType, int campWidth, out string result ) {
 			int chestIdx;
 
 			bool createdCamp = this.CreateExpeditionAt(
-				leftTileX: x,
-				nearFloorTileY: nearFloorY,
+				leftTileX: tileX,
+				nearFloorTileY: nearFloorTileY,
 				campWidth: campWidth,
 				customTiles: new int[0],
 				paveTileType: paveTileType,
@@ -67,8 +70,8 @@ namespace AdventureModeLore.WorldGeneration {
 			}
 
 			this.FillExpeditionBarrel(
-				tileX: x,
-				nearFloorTileY: nearFloorY,
+				tileX: tileX,
+				nearFloorTileY: nearFloorTileY,
 				chestIdx: chestIdx,
 				hasLoreNote: true,
 				speedloaderCount: WorldGen.genRand.NextFloat() < ( 2f / 3f ) ? 1 : 0,
@@ -84,19 +87,23 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
-		private bool IsNearAnotherExpedition( IList<(int x, int y, int paveTileType)> expeds, (int x, int y) proposed ) {
-			int minDist = 128 * 16;
+		private bool IsNearAnotherExpedition(
+					IList<(int tileX, int tileY, int paveTileType)> expeds,
+					(int tileX, int tileY) proposed ) {
+			var config = AMLConfig.Instance;
+			int minDist = config.Get<int>( nameof(config.MinimumTileDistanceBetweenFailedExpeditions) );
 			int minDistSqr = minDist * minDist;
 
-			foreach( (int x, int y, int _) in expeds ) {
-				int xDiff = proposed.x - x;
-				int yDiff = proposed.y - y;
+			foreach( (int tileX, int tileY, int _) in expeds ) {
+				int xDiff = proposed.tileX - tileX;
+				int yDiff = proposed.tileY - tileY;
+				int distSqr = (xDiff * xDiff) + (yDiff * yDiff);
 
-				if( ((xDiff * xDiff) + (yDiff * yDiff)) < minDistSqr ) {
-					return false;
+				if( distSqr < minDistSqr ) {
+					return true;
 				}
 			}
-			return true;
+			return false;
 		}
 	}
 }

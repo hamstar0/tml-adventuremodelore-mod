@@ -8,11 +8,11 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEvents : ILoadable {
-		public const string ObjectiveTitle_BackgroundPKE = "Neutalize Disruptive PKE";
+		public const string ObjectiveTitle_BackgroundPKE = "Neutralize Disruptive PKE Buildup";
 
 
 		public static NPCLoreStage LoreDefs03b_BgPKE => new NPCLoreStage(
-			name: "Background PKE Maxed",
+			name: "Background PKE Buildup Maxed",
 			prereqs: new Func<bool>[] {
 				LoreEvents.IsBackgroundPKEDangerous
 			},

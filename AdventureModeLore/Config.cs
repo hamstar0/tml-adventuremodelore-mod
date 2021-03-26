@@ -23,5 +23,9 @@ namespace AdventureModeLore {
 		[Range(-1, 4048)]
 		[DefaultValue( 256 )]
 		public int FailedExpeditionPKEDetectionTileRangeMax { get; set; } = 256;
+
+		[Range(0, 4048)]
+		[DefaultValue( 160 )]
+		public int MinimumTileDistanceBetweenFailedExpeditions { get; set; } = 160;
 	}
 }

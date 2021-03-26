@@ -130,7 +130,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////////////////
 
-		private (int x, int nearFloorY)? FindExpeditionFutureFloorArea(
+		private (int tileX, int nearFloorTileY)? FindExpeditionFutureFloorArea(
 					int tileX,
 					int tileY,
 					int maxTileY,
@@ -139,7 +139,17 @@ namespace AdventureModeLore.WorldGeneration {
 					int emptySpaceNeededAbove,
 					out int mostCommonTileType ) {
 			if( this.FindValidNearFloorTileAt(tileX, tileY, maxTileY, emptySpaceNeededAbove, out tileY) ) {
-				if( this.ScanFromTileForCamp(tileX, tileY, campWidth, floorPavingDepth, emptySpaceNeededAbove, out( int, int) scanPos, out mostCommonTileType) ) {
+				bool scan = this.ScanFromTileForCamp(
+					tileX,
+					tileY,
+					campWidth,
+					floorPavingDepth,
+					emptySpaceNeededAbove,
+					out (int, int) scanPos,
+					out mostCommonTileType
+				);
+
+				if( scan ) {
 					return scanPos;
 				}
 			}

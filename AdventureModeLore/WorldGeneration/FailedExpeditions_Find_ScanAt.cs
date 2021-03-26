@@ -16,7 +16,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int campWidth,
 					int floorPavingThickness,
 					int neededEmptySpaceAbove,
-					out (int x, int nearFloorY) campStartPos,
+					out (int tileX, int nearFloorTileY) campStartPos,
 					out int mostCommonTileType ) {
 			var floorTileTypes = new Dictionary<ushort, int>();
 
@@ -70,9 +70,14 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////////////////
 
-		private bool FindValidNearFloorTileAt( int tileX, int topTileY, int botTileY, int neededEmptySpaceAbove, out int nearFloorY ) {
+		private bool FindValidNearFloorTileAt(
+					int tileX,
+					int topTileY,
+					int botTileY,
+					int neededEmptySpaceAbove,
+					out int nearFloorTileY ) {
 			if( tileX < 0 || tileX >= Main.maxTilesX || topTileY < 0 || topTileY >= Main.maxTilesY ) {
-				nearFloorY = topTileY;
+				nearFloorTileY = topTileY;
 				return false;
 			}
 
@@ -86,7 +91,7 @@ namespace AdventureModeLore.WorldGeneration {
 				hasEmptySpace = true;
 			}
 			
-			nearFloorY = findFloorY - 1;
+			nearFloorTileY = findFloorY - 1;
 
 			// Confirm floor
 			Tile floorTile = Main.tile[ tileX, findFloorY ];
@@ -96,11 +101,11 @@ namespace AdventureModeLore.WorldGeneration {
 
 			// Verify if valid "empty" space above floor
 			for( int i=0; i<neededEmptySpaceAbove; i++ ) {
-				if( (nearFloorY - i) < 0 ) {
+				if( (nearFloorTileY - i) < 0 ) {
 					return false;
 				}
 
-				Tile tile = Main.tile[ tileX, nearFloorY - i ];
+				Tile tile = Main.tile[ tileX, nearFloorTileY - i ];
 				if( !this.IsValidEmptyTile(tile) ) {
 					return false;
 				}

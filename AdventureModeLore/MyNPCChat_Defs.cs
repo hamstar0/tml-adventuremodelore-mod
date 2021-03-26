@@ -103,6 +103,15 @@ namespace AdventureModeLore {
 				blocked: new string[] { },
 				isAvailable: ( msg ) => ModLoader.GetMod( "TheMadRanger" ) != null
 			);
+
+			AdventureModeNpcChat.NPCDialogues[NPCID.Demolitionist] = new NPCDialogueDefinitions(
+				added: new string[] {
+					"Remember you can craft Seismic Charges using plain bombs, an orb, and some obsidian. These vibrate "
+					+ "to make a sonic frequency that lets you destroy materials that normal explosives can't touch. ",
+				},
+				blocked: new string[] { },
+				isAvailable: ( msg ) => ModLoader.GetMod( "TheMadRanger" ) != null
+			);
 		}
 	}
 }
