@@ -30,7 +30,7 @@ namespace AdventureModeLore.Lore {
 					)
 				)
 			},
-			isRepeatable: true
+			isRepeatable: false
 		);
 	}
 }

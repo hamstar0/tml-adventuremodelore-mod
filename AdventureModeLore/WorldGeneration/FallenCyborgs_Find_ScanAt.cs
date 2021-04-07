@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Tiles.Walls;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -22,7 +23,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 
 		private bool FindValidNearFloorTileAt( int tileX, int topTileY, int botTileY, out int nearFloorY ) {
-			if( tileX < 0 || tileX >= Main.maxTilesX || topTileY < 0 || topTileY >= Main.maxTilesY ) {
+			if( !WorldGen.InWorld(tileX, topTileY) ) {
 				nearFloorY = topTileY;
 				return false;
 			}
@@ -52,7 +53,7 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 
 				Tile tile = Main.tile[ tileX, nearFloorY - i ];
-				if( !!tile.active() ) {
+				if( tile?.active() == false || TileWallGroupIdentityHelpers.IsDungeon(tile, out bool _) ) {
 					return false;
 				}
 			}
