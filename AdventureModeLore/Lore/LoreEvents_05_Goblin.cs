@@ -15,18 +15,23 @@ namespace AdventureModeLore.Lore {
 		public static NPCLoreStage LoreDefs05_FindMechanicAndWitchDoctor => new NPCLoreStage(
 			name: "Goblin Quests",
 			prereqs: new Func<bool>[] {
-				() => NPC.AnyNPCs( NPCID.GoblinTinkerer )
+				() => NPC.savedGoblin
 			},
 			npcType: NPCID.GoblinTinkerer,
 			subStages: new NPCLoreSubStage[] {
 				new NPCLoreSubStage(
-					dialogue: () => "Sorry, I cannot be of much assistance in diplomacy with my former tribe. I doubt they"
-							+" would have an open mind, anyhow.",
+					//"Sorry, I cannot be of much assistance in diplomacy with my former tribe. I doubt they"
+					//		+" would have an open mind, anyhow.
+					dialogue: () => "The only thing I can tell you for your mission is that strange activities have been seen"
+							+" at that big dungeon you've encountered. It's a veritable pressure cooker of necromantic"
+							+" energies. Someone is building technology there and infusing it with such energy. They must"
+							+" be a skilled engineer, but if this isn't stopped, it could be disasterous. If you can find"
+							+" their engineer, maybe we can turn things around?",
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_FindMechanic,
 						description: "Rumors exist of a plan to empower technology with the dungeon's spiritual"
 								+ "\n"+"energies. This could be disasterous. Liberate the engineer.",
-						condition: ( obj ) => NPC.AnyNPCs( NPCID.Mechanic )
+						condition: ( obj ) => NPC.savedMech
 					)
 				),
 				new NPCLoreSubStage(
@@ -37,7 +42,7 @@ namespace AdventureModeLore.Lore {
 						title: LoreEvents.ObjectiveTitle_FindWitchDoctor,
 						description: "A mysterious lizard-man sorcerer may know the plague's secret. Some"
 								+ "\n"+"powerful monster in the jungle has put him into hiding, though.",
-						condition: ( obj ) =>  NPC.AnyNPCs( NPCID.WitchDoctor )
+						condition: ( obj ) => NPC.AnyNPCs( NPCID.WitchDoctor )
 					)
 				)
 			},

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.Loadable;
@@ -32,4 +32,4 @@ namespace AdventureModeLore.Lore {
 			isRepeatable: false
 		);
 	}
-}
+}*/
