@@ -59,6 +59,7 @@ namespace AdventureModeLore.Lore {
 			this.Events.Add( LoreEvents.LoreDefs03a_200hp );
 			this.Events.Add( LoreEvents.LoreDefs03b_BgPKE );
 			this.Events.Add( LoreEvents.LoreDefs03c_RescueGoblin );
+			this.Events.Add( LoreEvents.LoreDefs03d_RescueGoblin );
 			this.Events.Add( LoreEvents.LoreDefs04_DefeatEvil );
 			this.Events.Add( LoreEvents.LoreDefs05_FindMechanicAndWitchDoctor );
 			this.Events.Add( LoreEvents.LoreDefs06_SummonWoF );
