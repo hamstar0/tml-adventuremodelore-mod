@@ -95,6 +95,17 @@ namespace AdventureModeLore.WorldGeneration {
 			return (meterItem, missionItem, manualItem);
 		}
 
+		private static Item CreateShadowMirrorItem() {
+			if( ModLoader.GetMod( "SpiritWalking" ) == null ) {
+				return null;
+			}
+
+			var mirrorItem = new Item();
+			mirrorItem.SetDefaults( ModContent.ItemType<SpiritWalking.Items.ShadowMirrorItem>(), true );
+
+			return mirrorItem;
+		}
+
 
 
 		////////////////
@@ -107,7 +118,8 @@ namespace AdventureModeLore.WorldGeneration {
 					int speedloaderCount,
 					int orbCount,
 					int canopicJarCount,
-					bool hasPKEMeter ) {
+					bool hasPKEMeter,
+					bool hasShadowMirror ) {
 			if( chestIdx == -1 ) {
 				LogHelpers.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
 				return;
@@ -146,6 +158,12 @@ namespace AdventureModeLore.WorldGeneration {
 					chest[itemIdx++] = pkeItems.Value.meterItem;
 					chest[itemIdx++] = pkeItems.Value.missionItem;
 					chest[itemIdx++] = pkeItems.Value.manualItem;
+				}
+			}
+			if( hasPKEMeter ) {
+				Item mirrorItem = FailedExpeditionsGen.CreateShadowMirrorItem();
+				if( mirrorItem != null ) {
+					chest[itemIdx++] = mirrorItem;
 				}
 			}
 

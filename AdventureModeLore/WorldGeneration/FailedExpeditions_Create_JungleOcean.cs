@@ -47,7 +47,8 @@ namespace AdventureModeLore.WorldGeneration {
 				speedloaderCount: WorldGen.genRand.NextFloat() < (2f/3f) ? 1 : 0,
 				orbCount: WorldGen.genRand.Next( 1, 4 ),
 				canopicJarCount: WorldGen.genRand.Next( 1, 3 ),
-				hasPKEMeter: false
+				hasPKEMeter: false,
+				hasShadowMirror: false
 			);
 		}
 	}
