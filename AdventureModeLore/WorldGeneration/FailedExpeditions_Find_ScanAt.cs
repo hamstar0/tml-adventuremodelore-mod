@@ -186,6 +186,8 @@ namespace AdventureModeLore.WorldGeneration {
 			case TileID.Obsidian:
 			case TileID.HoneyBlock:
 			case TileID.CrispyHoneyBlock:
+			case TileID.LeafBlock:
+			case TileID.LivingMahoganyLeaves:
 				return false;
 			default:
 				return true;

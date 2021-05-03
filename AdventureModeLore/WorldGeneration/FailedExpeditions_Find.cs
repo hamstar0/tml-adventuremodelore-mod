@@ -138,24 +138,27 @@ namespace AdventureModeLore.WorldGeneration {
 					int floorPavingDepth,
 					int emptySpaceNeededAbove,
 					out int mostCommonTileType ) {
-			if( this.FindValidNearFloorTileAt(tileX, tileY, maxTileY, emptySpaceNeededAbove, out tileY) ) {
-				bool scan = this.ScanFromTileForCamp(
-					tileX,
-					tileY,
-					campWidth,
-					floorPavingDepth,
-					emptySpaceNeededAbove,
-					out (int, int) scanPos,
-					out mostCommonTileType
-				);
-
-				if( scan ) {
-					return scanPos;
-				}
+			if( !this.FindValidNearFloorTileAt(tileX, tileY, maxTileY, emptySpaceNeededAbove, out tileY) ) {
+				mostCommonTileType = -1;
+				return null;
 			}
 
-			mostCommonTileType = -1;
-			return null;
+			bool scan = this.ScanFromTileForCamp(
+				tileX,
+				tileY,
+				campWidth,
+				floorPavingDepth,
+				emptySpaceNeededAbove,
+				out (int, int) scanPos,
+				out mostCommonTileType
+			);
+
+			if( !scan ) {
+				mostCommonTileType = -1;
+				return null;
+			}
+
+			return scanPos;
 		}
 	}
 }

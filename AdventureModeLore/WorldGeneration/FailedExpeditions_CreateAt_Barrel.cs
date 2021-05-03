@@ -160,7 +160,7 @@ namespace AdventureModeLore.WorldGeneration {
 					chest[itemIdx++] = pkeItems.Value.manualItem;
 				}
 			}
-			if( hasPKEMeter ) {
+			if( hasShadowMirror ) {
 				Item mirrorItem = FailedExpeditionsGen.CreateShadowMirrorItem();
 				if( mirrorItem != null ) {
 					chest[itemIdx++] = mirrorItem;
