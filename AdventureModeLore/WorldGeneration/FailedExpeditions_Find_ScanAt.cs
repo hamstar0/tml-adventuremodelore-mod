@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.DotNET.Extensions;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
 
 
 namespace AdventureModeLore.WorldGeneration {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore {

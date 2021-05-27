@@ -1,9 +1,9 @@
 ﻿using System;
 using Terraria;
-using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.DotNET.Extensions;
-using HamstarHelpers.Services.Dialogue;
+using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
+using ModLibsNPCDialogue.Services.Dialogue;
 
 
 namespace AdventureModeLore {

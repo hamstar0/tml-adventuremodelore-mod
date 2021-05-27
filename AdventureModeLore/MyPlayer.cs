@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore {

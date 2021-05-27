@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 

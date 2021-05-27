@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.Dialogue;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
+using ModLibsNPCDialogue.Services.Dialogue;
 using Objectives;
 using Objectives.Definitions;
 

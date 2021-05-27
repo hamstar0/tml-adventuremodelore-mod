@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {

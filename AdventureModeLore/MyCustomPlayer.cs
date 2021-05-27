@@ -2,9 +2,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.PlayerData;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.Maps;
+using ModLibsCore.Classes.PlayerData;
+using ModLibsCore.Libraries.Debug;
+using ModLibsMaps.Services.Maps;
 using AdventureModeLore.Lore;
 
 

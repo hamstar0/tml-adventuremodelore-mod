@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -18,13 +18,13 @@ namespace AdventureModeLore.WorldGeneration {
 					out int paveTileType
 				);
 				if( !expedPointRaw.HasValue ) {
-					LogHelpers.Log( "Could not finish finding places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
+					LogLibraries.Log( "Could not finish finding places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
 					break;
 				}
 
 				if( this.IsNearAnotherExpedition(expedList, expedPointRaw.Value) ) {
 					if( retries++ > 1000 ) {
-						LogHelpers.Log( "Could not finish finding open places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
+						LogLibraries.Log( "Could not finish finding open places to generate all 'failed expeditions' ("+expedNum+" of "+count+")" );
 						break;
 					}
 
@@ -40,7 +40,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int i = 0;
 			foreach( (int tileX, int nearFloorTileY, int paveTileType) in expedList ) {
 				if( !this.CreateUndergroundFE( tileX, nearFloorTileY, paveTileType, campWidth, out string result ) ) {
-					LogHelpers.Log( "Could not finish generating all 'failed expeditions' (" + i + " of " + expedList.Count + "): " + result );
+					LogLibraries.Log( "Could not finish generating all 'failed expeditions' (" + i + " of " + expedList.Count + "): " + result );
 					break;
 				}
 

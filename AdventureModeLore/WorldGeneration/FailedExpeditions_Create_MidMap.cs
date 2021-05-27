@@ -3,8 +3,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
 using AdventureModeLore.Tiles;
 
 
@@ -19,7 +19,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			expedPointRaw = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
-				throw new ModHelpersException( "Could not find a place to generate first 'failed expedition'" );
+				throw new ModLibsException( "Could not find a place to generate first 'failed expedition'" );
 			}
 
 			x = expedPointRaw.Value.x;
@@ -37,7 +37,7 @@ namespace AdventureModeLore.WorldGeneration {
 				result: out err
 			);
 			if( !createdCamp ) {
-				LogHelpers.Log( "Could not generate first 'failed expedition': "+err );
+				LogLibraries.Log( "Could not generate first 'failed expedition': "+err );
 				return;
 			}
 

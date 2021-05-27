@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -10,8 +10,8 @@ namespace AdventureModeLore.WorldGeneration {
 		private (int x, int nearFloorY)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
 			int maxX = (Main.maxTilesX / 2) - 1;
-			int minTileY = WorldHelpers.SkyLayerBottomTileY + 1;
-			int maxTileY = WorldHelpers.RockLayerBottomTileY;
+			int minTileY = WorldLibraries.SkyLayerBottomTileY + 1;
+			int maxTileY = WorldLibraries.RockLayerBottomTileY;
 			int tileY = minTileY;
 
 			// Clear any islands
@@ -58,8 +58,8 @@ namespace AdventureModeLore.WorldGeneration {
 			(int, int)? scanPos;
 			int dir = 0;
 			int tileX = 1;
-			int minTileY = WorldHelpers.SkyLayerBottomTileY + 1;
-			int maxTileY = WorldHelpers.DirtLayerTopTileY - 1;
+			int minTileY = WorldLibraries.SkyLayerBottomTileY + 1;
+			int maxTileY = WorldLibraries.DirtLayerTopTileY - 1;
 			int tileY = minTileY;
 
 			if( Main.dungeonX > (Main.maxTilesX / 2) ) {
@@ -102,11 +102,11 @@ namespace AdventureModeLore.WorldGeneration {
 
 
 		private (int x, int y)? FindRandomExpeditionLocation( int campWidth, out int mostCommonTileType ) {
-			int maxTileY = WorldHelpers.RockLayerBottomTileY;
+			int maxTileY = WorldLibraries.RockLayerBottomTileY;
 
 			for( int i=0; i<2000; i++ ) {
-				int tileX = WorldGen.genRand.Next( WorldHelpers.BeachWestTileX, WorldHelpers.BeachEastTileX );
-				int tileY = WorldGen.genRand.Next( WorldHelpers.DirtLayerTopTileY, maxTileY );
+				int tileX = WorldGen.genRand.Next( WorldLibraries.BeachWestTileX, WorldLibraries.BeachEastTileX );
+				int tileY = WorldGen.genRand.Next( WorldLibraries.DirtLayerTopTileY, maxTileY );
 
 				(int, int)? scanPos = this.FindExpeditionFutureFloorArea(
 					tileX: tileX,

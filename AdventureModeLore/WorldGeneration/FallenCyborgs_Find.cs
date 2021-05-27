@@ -1,18 +1,18 @@
 ﻿using System;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class FallenCyborgsGen : GenPass {
 		private (int x, int y)? FindRandomLocationForACyborg() {
-			int minTileY = WorldHelpers.DirtLayerTopTileY;
-			int maxTileY = WorldHelpers.RockLayerBottomTileY;
+			int minTileY = WorldLibraries.DirtLayerTopTileY;
+			int maxTileY = WorldLibraries.RockLayerBottomTileY;
 
 			for( int i=0; i<2000; i++ ) {
-				int tileX = WorldGen.genRand.Next( WorldHelpers.BeachWestTileX, WorldHelpers.BeachEastTileX );
+				int tileX = WorldGen.genRand.Next( WorldLibraries.BeachWestTileX, WorldLibraries.BeachEastTileX );
 				int tileY = WorldGen.genRand.Next( minTileY, maxTileY );
 
 				(int, int)? scanPos = this.FindCyborgFutureFloorArea(

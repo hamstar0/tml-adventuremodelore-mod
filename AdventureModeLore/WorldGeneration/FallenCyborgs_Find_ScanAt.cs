@@ -2,8 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Tiles.Walls;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.Tiles.Walls.Attributes;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -53,7 +53,7 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 
 				Tile tile = Main.tile[ tileX, nearFloorY - i ];
-				if( tile?.active() == false || TileWallGroupIdentityHelpers.IsDungeon(tile, out bool _) ) {
+				if( tile?.active() == false || TileWallAttributeLibraries.IsDungeon(tile, out bool _) ) {
 					return false;
 				}
 			}

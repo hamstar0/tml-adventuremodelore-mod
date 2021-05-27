@@ -4,9 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.World.Generation;
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Tiles;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.Tiles;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -29,7 +29,7 @@ namespace AdventureModeLore.WorldGeneration {
 			// Tent
 			int tentTileX = leftTileX + 1;
 
-			if( !TilePlacementHelpers.TryPrecisePlace(tentTileX, nearFloorTileY, TileID.LargePiles2, 26) ) {
+			if( !TilePlacementLibraries.TryPrecisePlace(tentTileX, nearFloorTileY, TileID.LargePiles2, 26) ) {
 				chestIdx = -1;
 				result = "Could not place tent at "+tentTileX+","+nearFloorTileY;
 				return false;
@@ -38,7 +38,7 @@ namespace AdventureModeLore.WorldGeneration {
 			// Campfire
 			int fireTileX = leftTileX + 4;
 
-			if( !TilePlacementHelpers.TryPrecisePlace(fireTileX, nearFloorTileY, TileID.Campfire) ) {
+			if( !TilePlacementLibraries.TryPrecisePlace(fireTileX, nearFloorTileY, TileID.Campfire) ) {
 				chestIdx = -1;
 				result = "Could not place campfire at "+fireTileX+","+nearFloorTileY;
 				return false;
@@ -70,7 +70,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			int customTileX = leftTileX + 11;
 			foreach( int customTile in customTiles ) {
-				if( TilePlacementHelpers.TryPrecisePlace(customTileX, nearFloorTileY, (ushort)customTile) ) {
+				if( TilePlacementLibraries.TryPrecisePlace(customTileX, nearFloorTileY, (ushort)customTile) ) {
 					customTileX += 2;
 				} else {
 					result = "Could not place custom tile "+customTile+" at "+customTileX+","+nearFloorTileY;
@@ -148,7 +148,7 @@ namespace AdventureModeLore.WorldGeneration {
 					WorldGen.SquareTileFrame( fillAt.x, fillAt.y );
 
 					if( !this.IsValidFloorTile( tile ) ) {
-						LogHelpers.Log( "Could not fill camp floor tile (type: "+tileType+") at "+fillAt.x+", "+fillAt.y
+						LogLibraries.Log( "Could not fill camp floor tile (type: "+tileType+") at "+fillAt.x+", "+fillAt.y
 							+": "+tile.ToString() );
 					}
 				}

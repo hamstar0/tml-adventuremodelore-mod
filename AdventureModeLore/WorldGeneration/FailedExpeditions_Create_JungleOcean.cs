@@ -2,8 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -17,7 +17,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			expedPointRaw = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
-				LogHelpers.Log( "Could not find a place to generate jungle 'failed expedition'" );
+				LogLibraries.Log( "Could not find a place to generate jungle 'failed expedition'" );
 				return;
 			}
 
@@ -35,7 +35,7 @@ namespace AdventureModeLore.WorldGeneration {
 				result: out err
 			);
 			if( !createdCamp ) {
-				LogHelpers.Log( "Could not generate jungle 'failed expedition': "+err );
+				LogLibraries.Log( "Could not generate jungle 'failed expedition': "+err );
 				return;
 			}
 

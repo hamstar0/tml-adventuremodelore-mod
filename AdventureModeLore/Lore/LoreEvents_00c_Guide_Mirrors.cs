@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.Lore {

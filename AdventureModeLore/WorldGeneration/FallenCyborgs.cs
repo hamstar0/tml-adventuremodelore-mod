@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -15,7 +15,7 @@ namespace AdventureModeLore.WorldGeneration {
 		public override void Apply( GenerationProgress progress ) {
 			int count = 24;
 
-			switch( WorldHelpers.GetSize() ) {
+			switch( WorldLibraries.GetSize() ) {
 			case WorldSize.SubSmall:
 				count = 20;
 				break;

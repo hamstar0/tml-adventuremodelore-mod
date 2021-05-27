@@ -2,8 +2,8 @@
 using System.Linq;
 using Terraria;
 using Terraria.ID;
-using HamstarHelpers.Classes.Loadable;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 using Objectives.Definitions;
 
 

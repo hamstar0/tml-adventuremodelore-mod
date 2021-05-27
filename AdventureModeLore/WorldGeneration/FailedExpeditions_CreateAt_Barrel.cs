@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.World.Generation;
 using Terraria.ModLoader;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ReadableBooks.Items.ReadableBook;
 
 
@@ -121,7 +121,7 @@ namespace AdventureModeLore.WorldGeneration {
 					bool hasPKEMeter,
 					bool hasShadowMirror ) {
 			if( chestIdx == -1 ) {
-				LogHelpers.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
+				LogLibraries.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
 				return;
 			}
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -24,7 +24,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int count = 14;
 			int campWidth = 12;
 
-			switch( WorldHelpers.GetSize() ) {
+			switch( WorldLibraries.GetSize() ) {
 			case WorldSize.SubSmall:
 				count = 11;
 				break;
