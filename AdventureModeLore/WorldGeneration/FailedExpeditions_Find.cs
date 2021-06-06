@@ -10,8 +10,8 @@ namespace AdventureModeLore.WorldGeneration {
 		private (int x, int nearFloorY)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
 			int maxX = (Main.maxTilesX / 2) - 1;
-			int minTileY = WorldLibraries.SkyLayerBottomTileY + 1;
-			int maxTileY = WorldLibraries.RockLayerBottomTileY;
+			int minTileY = WorldLocationLibraries.SkyLayerBottomTileY + 1;
+			int maxTileY = WorldLocationLibraries.RockLayerBottomTileY;
 			int tileY = minTileY;
 
 			// Clear any islands
@@ -58,8 +58,8 @@ namespace AdventureModeLore.WorldGeneration {
 			(int, int)? scanPos;
 			int dir = 0;
 			int tileX = 1;
-			int minTileY = WorldLibraries.SkyLayerBottomTileY + 1;
-			int maxTileY = WorldLibraries.DirtLayerTopTileY - 1;
+			int minTileY = WorldLocationLibraries.SkyLayerBottomTileY + 1;
+			int maxTileY = WorldLocationLibraries.DirtLayerTopTileY - 1;
 			int tileY = minTileY;
 
 			if( Main.dungeonX > (Main.maxTilesX / 2) ) {
@@ -102,11 +102,11 @@ namespace AdventureModeLore.WorldGeneration {
 
 
 		private (int x, int y)? FindRandomExpeditionLocation( int campWidth, out int mostCommonTileType ) {
-			int maxTileY = WorldLibraries.RockLayerBottomTileY;
+			int maxTileY = WorldLocationLibraries.RockLayerBottomTileY;
 
 			for( int i=0; i<2000; i++ ) {
-				int tileX = WorldGen.genRand.Next( WorldLibraries.BeachWestTileX, WorldLibraries.BeachEastTileX );
-				int tileY = WorldGen.genRand.Next( WorldLibraries.DirtLayerTopTileY, maxTileY );
+				int tileX = WorldGen.genRand.Next( WorldLocationLibraries.BeachWestTileX, WorldLocationLibraries.BeachEastTileX );
+				int tileY = WorldGen.genRand.Next( WorldLocationLibraries.DirtLayerTopTileY, maxTileY );
 
 				(int, int)? scanPos = this.FindExpeditionFutureFloorArea(
 					tileX: tileX,

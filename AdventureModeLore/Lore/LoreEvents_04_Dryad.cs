@@ -41,7 +41,7 @@ namespace AdventureModeLore.Lore {
 					objective: new FlatObjective(
 						title: LoreEvents.ObjectiveTitle_ReachUnderworld,
 						description: "It would seem the source of the plague is deep underground. You must find it.",
-						condition: ( obj ) => Main.LocalPlayer.position.Y >= (WorldLibraries.UnderworldLayerTopTileY * 16)
+						condition: ( obj ) => Main.LocalPlayer.position.Y >= (WorldLocationLibraries.UnderworldLayerTopTileY * 16)
 					)
 				)
 			},

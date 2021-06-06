@@ -8,11 +8,11 @@ using ModLibsGeneral.Libraries.World;
 namespace AdventureModeLore.WorldGeneration {
 	partial class FallenCyborgsGen : GenPass {
 		private (int x, int y)? FindRandomLocationForACyborg() {
-			int minTileY = WorldLibraries.DirtLayerTopTileY;
-			int maxTileY = WorldLibraries.RockLayerBottomTileY;
+			int minTileY = WorldLocationLibraries.DirtLayerTopTileY;
+			int maxTileY = WorldLocationLibraries.RockLayerBottomTileY;
 
 			for( int i=0; i<2000; i++ ) {
-				int tileX = WorldGen.genRand.Next( WorldLibraries.BeachWestTileX, WorldLibraries.BeachEastTileX );
+				int tileX = WorldGen.genRand.Next( WorldLocationLibraries.BeachWestTileX, WorldLocationLibraries.BeachEastTileX );
 				int tileY = WorldGen.genRand.Next( minTileY, maxTileY );
 
 				(int, int)? scanPos = this.FindCyborgFutureFloorArea(
