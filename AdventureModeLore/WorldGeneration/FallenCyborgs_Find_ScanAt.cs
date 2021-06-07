@@ -53,7 +53,7 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 
 				Tile tile = Main.tile[ tileX, nearFloorY - i ];
-				if( tile?.active() == false || TileWallAttributeLibraries.IsDungeon(tile, out bool _) ) {
+				if( tile?.active() != true && TileWallAttributeLibraries.IsDungeon(tile, out bool _) ) {
 					return false;
 				}
 			}
