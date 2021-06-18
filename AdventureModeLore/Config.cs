@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 
 namespace AdventureModeLore {
 	public partial class AMLConfig : ModConfig {
-		public static AMLConfig Instance { get; internal set; }
+		public static AMLConfig Instance => ModContent.GetInstance<AMLConfig>();
 
 
 

@@ -30,7 +30,6 @@ namespace AdventureModeLore {
 		}
 
 		public override void Load() {
-			AMLConfig.Instance = ModContent.GetInstance<AMLConfig>();
 		}
 
 		public override void PostSetupContent() {
@@ -42,7 +41,6 @@ namespace AdventureModeLore {
 		////
 
 		public override void Unload() {
-			AMLConfig.Instance = null;
 			AMLMod.Instance = null;
 		}
 
