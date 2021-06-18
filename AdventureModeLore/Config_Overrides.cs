@@ -36,5 +36,12 @@ namespace AdventureModeLore {
 			}
 			this.Overrides[propName] = value;
 		}
+
+
+		////////////////
+
+		private void CloneOverrides( AMLConfig from ) {
+			this.Overrides = new ConcurrentDictionary<string, object>( from.Overrides );
+		}
 	}
 }

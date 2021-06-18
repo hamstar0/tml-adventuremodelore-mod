@@ -27,5 +27,17 @@ namespace AdventureModeLore {
 		[Range(0, 4048)]
 		[DefaultValue( 160 )]
 		public int MinimumTileDistanceBetweenFailedExpeditions { get; set; } = 160;
+
+
+
+		////////////////
+
+		public override ModConfig Clone() {
+			var clone = (AMLConfig)this.MemberwiseClone();
+
+			clone.CloneOverrides( this );
+
+			return clone;
+		}
 	}
 }
