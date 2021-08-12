@@ -5,7 +5,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class FailedExpeditionsGen : GenPass {
+	partial class AbandonedExpeditionsGen : GenPass {
 		public static readonly (string title, string[] pages)[] LoreNotes = {
 			( "The Plague", new string[] {
 				"Also known as 'The Curse', 'The Undeath Plague', and even ominously as 'Signs', this is"

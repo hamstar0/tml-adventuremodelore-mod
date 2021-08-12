@@ -5,7 +5,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class FailedExpeditionsGen : GenPass {
+	partial class AbandonedExpeditionsGen : GenPass {
 		public static (string title, string[] pages) MissionBriefingBookInfo = (
 			"Mission Briefing - Codename\n          'Tinman'",
 			new string[] {

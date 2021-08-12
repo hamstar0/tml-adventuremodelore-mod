@@ -7,11 +7,11 @@ using ReadableBooks.Items.ReadableBook;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class FailedExpeditionsGen : GenPass {
+	partial class AbandonedExpeditionsGen : GenPass {
 		private static Item CreateLoreNoteItem( int currentNodeIdx ) {
 			return ReadableBookItem.CreateBook(
-				FailedExpeditionsGen.LoreNotes[currentNodeIdx].title,
-				FailedExpeditionsGen.LoreNotes[currentNodeIdx].pages
+				AbandonedExpeditionsGen.LoreNotes[currentNodeIdx].title,
+				AbandonedExpeditionsGen.LoreNotes[currentNodeIdx].pages
 			);
 		}
 
@@ -83,13 +83,13 @@ namespace AdventureModeLore.WorldGeneration {
 			meterItem.SetDefaults( ModContent.ItemType<PKEMeter.Items.PKEMeterItem>(), true );
 
 			Item missionItem = ReadableBookItem.CreateBook(
-				FailedExpeditionsGen.MissionBriefingBookInfo.title,
-				FailedExpeditionsGen.MissionBriefingBookInfo.pages
+				AbandonedExpeditionsGen.MissionBriefingBookInfo.title,
+				AbandonedExpeditionsGen.MissionBriefingBookInfo.pages
 			);
 
 			Item manualItem = ReadableBookItem.CreateBook(
-				FailedExpeditionsGen.PKEBookInfo.title,
-				FailedExpeditionsGen.PKEBookInfo.pages
+				AbandonedExpeditionsGen.PKEBookInfo.title,
+				AbandonedExpeditionsGen.PKEBookInfo.pages
 			);
 
 			return (meterItem, missionItem, manualItem);
@@ -121,7 +121,7 @@ namespace AdventureModeLore.WorldGeneration {
 					bool hasPKEMeter,
 					bool hasShadowMirror ) {
 			if( chestIdx == -1 ) {
-				LogLibraries.Warn( "Could not fill 'failed expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
+				LogLibraries.Warn( "Could not fill 'abandoned expedition' barrel at " + tileX+", "+nearFloorTileY+"." );
 				return;
 			}
 
@@ -129,31 +129,31 @@ namespace AdventureModeLore.WorldGeneration {
 			int itemIdx = 0;
 
 			if( hasLoreNote ) {
-				Item newItem = FailedExpeditionsGen.CreateLoreNoteItem( this.CurrentLoreNote );
+				Item newItem = AbandonedExpeditionsGen.CreateLoreNoteItem( this.CurrentLoreNote );
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<speedloaderCount; i++ ) {
-				Item newItem = FailedExpeditionsGen.CreateSpeedloaderItem();
+				Item newItem = AbandonedExpeditionsGen.CreateSpeedloaderItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<orbCount; i++ ) {
-				Item newItem = FailedExpeditionsGen.CreateOrbItem();
+				Item newItem = AbandonedExpeditionsGen.CreateOrbItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<canopicJarCount; i++ ) {
-				Item newItem = FailedExpeditionsGen.CreateCanopicJarItem();
+				Item newItem = AbandonedExpeditionsGen.CreateCanopicJarItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			if( hasPKEMeter ) {
-				(Item meterItem, Item missionItem, Item manualItem)? pkeItems = FailedExpeditionsGen.CreatePKEMeterItem();
+				(Item meterItem, Item missionItem, Item manualItem)? pkeItems = AbandonedExpeditionsGen.CreatePKEMeterItem();
 				if( pkeItems.HasValue ) {
 					chest[itemIdx++] = pkeItems.Value.meterItem;
 					chest[itemIdx++] = pkeItems.Value.missionItem;
@@ -161,14 +161,14 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 			}
 			if( hasShadowMirror ) {
-				Item mirrorItem = FailedExpeditionsGen.CreateShadowMirrorItem();
+				Item mirrorItem = AbandonedExpeditionsGen.CreateShadowMirrorItem();
 				if( mirrorItem != null ) {
 					chest[itemIdx++] = mirrorItem;
 				}
 			}
 
 			if( hasLoreNote ) {
-				this.CurrentLoreNote = (this.CurrentLoreNote + 1) % FailedExpeditionsGen.LoreNotes.Length;
+				this.CurrentLoreNote = (this.CurrentLoreNote + 1) % AbandonedExpeditionsGen.LoreNotes.Length;
 			}
 		}
 	}

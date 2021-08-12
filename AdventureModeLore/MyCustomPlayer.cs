@@ -16,17 +16,17 @@ namespace AdventureModeLore {
 
 				lore.InitializeOnCurrentPlayerEnter();
 
-				if( AMLConfig.Instance.DebugModeFailedExpeditionsReveal ) {
-					this.LoadFailedExpeditionMapMarkers();
+				if( AMLConfig.Instance.DebugModeAbandonedExpeditionsReveal ) {
+					this.LoadAbandonedExpeditionMapMarkers();
 				}
 			}
 		}
 
-		private void LoadFailedExpeditionMapMarkers() {
+		private void LoadAbandonedExpeditionMapMarkers() {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 
 			int i = 0;
-			foreach( (int x, int y) exped in myworld.FailedExpeditions ) {
+			foreach( (int x, int y) exped in myworld.AbandonedExpeditions ) {
 				if( MapMarkers.TryGetFullScreenMapMarker( "AMLExpedition_" + i, out _ ) ) {
 					continue;
 				}

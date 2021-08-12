@@ -9,7 +9,7 @@ using ModLibsCore.Libraries.DotNET.Extensions;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class FailedExpeditionsGen : GenPass {
+	partial class AbandonedExpeditionsGen : GenPass {
 		private bool ScanFromTileForCamp(
 					int tileX,
 					int nearCampFloortileY,
