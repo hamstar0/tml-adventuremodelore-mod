@@ -6,7 +6,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private void CreateAllFEs( GenerationProgress progress, int count, int campWidth ) {
 			this.CreateAtMidMapFE( campWidth );
 			progress.Value = 1f / ((float)count + 2f);

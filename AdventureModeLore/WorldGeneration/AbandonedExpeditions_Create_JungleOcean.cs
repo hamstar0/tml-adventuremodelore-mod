@@ -7,7 +7,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private void CreateJungleOceanFE( int campWidth ) {
 			(int x, int nearFloorY)? expedPointRaw;
 			int x, nearFloorY;
@@ -17,7 +17,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			expedPointRaw = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
-				LogLibraries.Log( "Could not find a place to generate jungle 'abandoned expedition'" );
+				LogLibraries.Log( "Could not find a place to generate jungle 'lost expedition'" );
 				return;
 			}
 
@@ -35,7 +35,7 @@ namespace AdventureModeLore.WorldGeneration {
 				result: out err
 			);
 			if( !createdCamp ) {
-				LogLibraries.Log( "Could not generate jungle 'abandoned expedition': " + err );
+				LogLibraries.Log( "Could not generate jungle 'lost expedition': " + err );
 				return;
 			}
 

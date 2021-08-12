@@ -9,7 +9,7 @@ using AdventureModeLore.Tiles;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private void CreateAtMidMapFE( int campWidth ) {
 			(int x, int nearFloorY)? expedPointRaw;
 			int x, nearFloorY;
@@ -19,7 +19,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			expedPointRaw = this.FindMiddleSurfaceExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
-				throw new ModLibsException( "Could not find a place to generate first 'abandoned expedition'" );
+				throw new ModLibsException( "Could not find a place to generate first 'lost expedition'" );
 			}
 
 			x = expedPointRaw.Value.x;
@@ -37,7 +37,7 @@ namespace AdventureModeLore.WorldGeneration {
 				result: out err
 			);
 			if( !createdCamp ) {
-				LogLibraries.Log( "Could not generate first 'abandoned expedition': " + err );
+				LogLibraries.Log( "Could not generate first 'lost expedition': " + err );
 				return;
 			}
 

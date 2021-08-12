@@ -17,17 +17,17 @@ namespace AdventureModeLore {
 
 		////////////////
 
-		public bool DebugModeAbandonedExpeditionsReveal { get; set; } = false;
+		public bool DebugModeLostExpeditionsReveal { get; set; } = false;
 
 		////
 
 		[Range(-1, 4048)]
 		[DefaultValue( 256 )]
-		public int AbandonedExpeditionPKEDetectionTileRangeMax { get; set; } = 256;
+		public int LostExpeditionPKEDetectionTileRangeMax { get; set; } = 256;
 
 		[Range(0, 4048)]
 		[DefaultValue( 160 )]
-		public int MinimumTileDistanceBetweenAbandonedExpeditions { get; set; } = 160;
+		public int MinimumTileDistanceBetweenLostExpeditions { get; set; } = 160;
 
 
 

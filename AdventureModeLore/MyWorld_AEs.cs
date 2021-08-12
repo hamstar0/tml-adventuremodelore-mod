@@ -9,7 +9,7 @@ namespace AdventureModeLore {
 			nearestFEPos = default;
 
 			var config = AMLConfig.Instance;
-			int maxTileRange = config.Get<int>( nameof( config.AbandonedExpeditionPKEDetectionTileRangeMax ) );
+			int maxTileRange = config.Get<int>( nameof( config.LostExpeditionPKEDetectionTileRangeMax ) );
 			if( maxTileRange <= 0 ) {
 				return null;
 			}
@@ -17,7 +17,7 @@ namespace AdventureModeLore {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			float nearestExpDist = float.MaxValue;
 
-			foreach( (int x, int y) in myworld.AbandonedExpeditions ) {
+			foreach( (int x, int y) in myworld.LostExpeditions ) {
 				var expPos = new Vector2( x * 16, y * 16 );
 				float dist = (expPos - worldPos).Length();
 
@@ -43,7 +43,7 @@ namespace AdventureModeLore {
 		public static bool RemoveExpeditionAt( int tileX, int tileY ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 
-			return myworld.AbandonedExpeditions.Remove( (tileX, tileY) );
+			return myworld.LostExpeditions.Remove( (tileX, tileY) );
 		}
 	}
 }

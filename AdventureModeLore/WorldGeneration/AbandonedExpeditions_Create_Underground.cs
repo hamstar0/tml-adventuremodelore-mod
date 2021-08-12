@@ -7,7 +7,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private void CreateAllUndergroundFEs( GenerationProgress progress, int count, int campWidth ) {
 			var expedList = new List<(int tileX, int nearFloorTileY, int paveTileType)>();
 
@@ -18,13 +18,13 @@ namespace AdventureModeLore.WorldGeneration {
 					out int paveTileType
 				);
 				if( !expedPointRaw.HasValue ) {
-					LogLibraries.Log( "Could not finish finding places to generate all 'abandoned expeditions' (" + expedNum+" of "+count+")" );
+					LogLibraries.Log( "Could not finish finding places to generate all 'lost expeditions' (" + expedNum+" of "+count+")" );
 					break;
 				}
 
 				if( this.IsNearAnotherExpedition(expedList, expedPointRaw.Value) ) {
 					if( retries++ > 1000 ) {
-						LogLibraries.Log( "Could not finish finding open places to generate all 'abandoned expeditions' (" + expedNum+" of "+count+")" );
+						LogLibraries.Log( "Could not finish finding open places to generate all 'lost expeditions' (" + expedNum+" of "+count+")" );
 						break;
 					}
 
@@ -40,7 +40,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int i = 0;
 			foreach( (int tileX, int nearFloorTileY, int paveTileType) in expedList ) {
 				if( !this.CreateUndergroundFE( tileX, nearFloorTileY, paveTileType, campWidth, out string result ) ) {
-					LogLibraries.Log( "Could not finish generating all 'abandoned expeditions' (" + i + " of " + expedList.Count + "): " + result );
+					LogLibraries.Log( "Could not finish generating all 'lost expeditions' (" + i + " of " + expedList.Count + "): " + result );
 					break;
 				}
 
@@ -92,7 +92,7 @@ namespace AdventureModeLore.WorldGeneration {
 					IList<(int tileX, int tileY, int paveTileType)> expeds,
 					(int tileX, int tileY) proposed ) {
 			var config = AMLConfig.Instance;
-			int minDist = config.Get<int>( nameof(config.MinimumTileDistanceBetweenAbandonedExpeditions) );
+			int minDist = config.Get<int>( nameof(config.MinimumTileDistanceBetweenLostExpeditions) );
 			int minDistSqr = minDist * minDist;
 
 			foreach( (int tileX, int tileY, int _) in expeds ) {

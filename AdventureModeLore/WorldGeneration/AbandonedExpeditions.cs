@@ -6,14 +6,14 @@ using ModLibsGeneral.Libraries.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private int CurrentLoreNote = 0;
 
 
 
 		////////////////
 
-		public AbandonedExpeditionsGen() : base( "Abandoned Expeditions", 1f ) { }
+		public LostExpeditionsGen() : base( "Lost Expeditions", 1f ) { }
 
 
 		////

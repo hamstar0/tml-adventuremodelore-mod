@@ -9,14 +9,14 @@ using AdventureModeLore.WorldGeneration;
 
 namespace AdventureModeLore {
 	partial class AMLWorld : ModWorld {
-		internal ISet<(int tileX, int tileY)> AbandonedExpeditions = new HashSet<(int, int)>();
+		internal ISet<(int tileX, int tileY)> LostExpeditions = new HashSet<(int, int)>();
 
 
 
 		////////////////
 
 		public override void Load( TagCompound tag ) {
-			this.AbandonedExpeditions.Clear();
+			this.LostExpeditions.Clear();
 
 			if( !tag.ContainsKey("expeditions") ) {
 				return;
@@ -28,15 +28,15 @@ namespace AdventureModeLore {
 				int x = tag.GetInt( "expedition_x_" + i );
 				int y = tag.GetInt( "expedition_y_" + i );
 
-				this.AbandonedExpeditions.Add( (x, y) );
+				this.LostExpeditions.Add( (x, y) );
 			}
 		}
 
 		public override TagCompound Save() {
-			var tag = new TagCompound { { "expeditions", this.AbandonedExpeditions.Count } };
+			var tag = new TagCompound { { "expeditions", this.LostExpeditions.Count } };
 
 			int i = 0;
-			foreach( (int x, int y) in this.AbandonedExpeditions ) {
+			foreach( (int x, int y) in this.LostExpeditions ) {
 				tag[ "expedition_x_"+i ] = x;
 				tag[ "expedition_y_"+i ] = y;
 				i++;
@@ -47,7 +47,7 @@ namespace AdventureModeLore {
 		////
 
 		public override void NetReceive( BinaryReader reader ) {
-			this.AbandonedExpeditions.Clear();
+			this.LostExpeditions.Clear();
 
 			try {
 				int count = reader.ReadInt32();
@@ -56,18 +56,18 @@ namespace AdventureModeLore {
 					int x = reader.ReadInt32();
 					int y = reader.ReadInt32();
 
-					this.AbandonedExpeditions.Add( (x, y) );
+					this.LostExpeditions.Add( (x, y) );
 				}
 			} catch { }
 		}
 
 		public override void NetSend( BinaryWriter writer ) {
 			try {
-				int count = this.AbandonedExpeditions.Count;
+				int count = this.LostExpeditions.Count;
 
-				writer.Write( this.AbandonedExpeditions.Count );
+				writer.Write( this.LostExpeditions.Count );
 
-				foreach( (int x, int y) in this.AbandonedExpeditions ) {
+				foreach( (int x, int y) in this.LostExpeditions ) {
 					writer.Write( x );
 					writer.Write( y );
 				}
@@ -86,7 +86,7 @@ namespace AdventureModeLore {
 			}
 
 			tasks.Insert( idx, new FallenCyborgsGen() );
-			tasks.Insert( idx, new AbandonedExpeditionsGen() );
+			tasks.Insert( idx, new LostExpeditionsGen() );
 		}
 	}
 }

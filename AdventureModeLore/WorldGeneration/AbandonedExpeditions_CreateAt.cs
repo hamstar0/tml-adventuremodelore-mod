@@ -10,7 +10,7 @@ using ModLibsGeneral.Libraries.Tiles;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private bool CreateExpeditionAt(
 					int leftTileX,
 					int nearFloorTileY,
@@ -80,7 +80,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			if( rememberLocation ) {
 				var myworld = ModContent.GetInstance<AMLWorld>();
-				myworld.AbandonedExpeditions.Add( (chestTileX, nearFloorTileY) );
+				myworld.LostExpeditions.Add( (chestTileX, nearFloorTileY) );
 			}
 
 			result = "Success.";

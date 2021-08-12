@@ -6,7 +6,7 @@ using ModLibsGeneral.Libraries.World;
 
 
 namespace AdventureModeLore.WorldGeneration {
-	partial class AbandonedExpeditionsGen : GenPass {
+	partial class LostExpeditionsGen : GenPass {
 		private (int x, int nearFloorY)? FindMiddleSurfaceExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			(int, int)? scanPos;
 			int maxX = (Main.maxTilesX / 2) - 1;
