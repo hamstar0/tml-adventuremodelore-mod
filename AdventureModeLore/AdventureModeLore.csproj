@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Lore\Unsequenced\" />
     <Folder Include="Tiles\" />
   </ItemGroup>
 </Project>
