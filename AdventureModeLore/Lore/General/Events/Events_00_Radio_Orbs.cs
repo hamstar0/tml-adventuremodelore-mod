@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using Messages;
 
 
 namespace AdventureModeLore.Lore.General.Events {
-	public partial class GeneralLoreEventDefinitions : ILoadable {
-		private GeneralLoreEvent GetRadioOrbsEvent() {
+	public partial class GeneralLoreEventDefinitions {
+		private static GeneralLoreEvent GetEvent_Radio_Orbs() {
 			var orbTypes = new HashSet<int> {
 				ModContent.ItemType<Orbs.Items.BlueOrbItem>(),
 				ModContent.ItemType<Orbs.Items.BrownOrbItem>(),
@@ -37,14 +36,14 @@ namespace AdventureModeLore.Lore.General.Events {
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
 					MessagesAPI.AddMessage(
-						title: "Message regarding Orbs usage",
+						title: "About Orbs usage",
 						description: "Guide: I see you've found an Orb. You can use those to open passages to"
 							+" underground areas you'd not normally be able to reach. Simply holding the orb will"
 							+" reveal any nearby chunks of terrain that can be removed by any orb of its given"
 							+" color. Special seeing instruments can also reveal more terrain color details from"
 							+" afar."
-							+" \n \nWe call these 'geo-resonant orbs' because they resonate with the"
-							+" ambient composition of soil-borne psychomagnotheric materials of a matching"
+							+" \n \nIn technical terms, we call these 'geo-resonant orbs' because they resonate with"
+							+" the ambient composition of soil-borne psychomagnotheric materials of a matching"
 							+" spiritual attenuation frequency. Upon contact, the resulting frequency"
 							+" harmonization causes solid matter extrusion and displacement from the occupying"
 							+" spiritual media, which then immediately disperses into the surroundings.",

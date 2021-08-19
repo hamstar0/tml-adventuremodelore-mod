@@ -11,7 +11,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_FindWitchDoctor = "Find Witch Doctor";
 
 
-		public static DialogueLoreEvent LoreDefs05_FindMechanicAndWitchDoctor => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue05_FindMechanicAndWitchDoctor() => new DialogueLoreEvent(
 			name: "Goblin Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.savedGoblin

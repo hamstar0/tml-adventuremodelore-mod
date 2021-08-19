@@ -9,7 +9,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_SummonWoF = "Sacrifice Voodoo Doll";
 
 
-		public static DialogueLoreEvent LoreDefs06_SummonWoF => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue06_SummonWoF() => new DialogueLoreEvent(
 			name: "Witch Doctor Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.WitchDoctor )

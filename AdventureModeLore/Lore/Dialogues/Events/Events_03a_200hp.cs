@@ -9,7 +9,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_TalkToGoblin = "Talk To A Goblin";
 
 
-		public static DialogueLoreEvent LoreDefs03a_200hp => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue03a_200hp() => new DialogueLoreEvent(
 			name: "Pre-Goblins Quests",
 			prereqs: new Func<bool>[] {
 				() => Main.LocalPlayer.statLifeMax >= 200

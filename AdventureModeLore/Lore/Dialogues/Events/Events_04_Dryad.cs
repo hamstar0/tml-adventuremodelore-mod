@@ -13,7 +13,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_ReachUnderworld = "Reach Underworld";
 
 
-		public static DialogueLoreEvent LoreDefs04_DefeatEvil => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue04_DefeatEvil() => new DialogueLoreEvent(
 			name: "Dryad Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.Dryad )

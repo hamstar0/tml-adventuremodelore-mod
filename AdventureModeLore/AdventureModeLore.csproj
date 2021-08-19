@@ -48,11 +48,17 @@
     <Reference Include="ReadableBooks">
       <HintPath>..\..\..\Readable Books\Project\ReadableBooks\bin\Release\net452\ReadableBooks.dll</HintPath>
     </Reference>
+    <Reference Include="SoulBarriers">
+      <HintPath>..\..\..\Soul Barriers\Project\SoulBarriers\bin\Release\net452\SoulBarriers.dll</HintPath>
+    </Reference>
     <Reference Include="SpiritWalking">
       <HintPath>..\..\..\Spirit Walking\Project\SpiritWalking\bin\Release\net452\SpiritWalking.dll</HintPath>
     </Reference>
     <Reference Include="TheMadRanger">
       <HintPath>..\..\..\The Mad Ranger\Project\TheMadRanger\bin\Release\net452\TheMadRanger.dll</HintPath>
+    </Reference>
+    <Reference Include="WorldGates">
+      <HintPath>..\..\..\World Gates\Project\WorldGates\bin\Release\net452\WorldGates.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

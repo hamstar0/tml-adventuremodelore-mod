@@ -9,7 +9,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_RescueGoblin = "Rescue Goblin Scientist";
 
 
-		public static DialogueLoreEvent LoreDefs03c_RescueGoblin => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue03c_RescueGoblin() => new DialogueLoreEvent(
 			name: "Goblin Rescue",
 			prereqs: new Func<bool>[] {
 				() => NPC.downedGoblins

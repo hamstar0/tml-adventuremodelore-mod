@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
 
 
-		public static DialogueLoreEvent LoreDefs00_Guide => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue00_Guide() => new DialogueLoreEvent(
 			name: "Guide Quests",
 			prereqs: new Func<bool>[0],
 			npcType: NPCID.Guide,

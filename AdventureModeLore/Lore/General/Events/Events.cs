@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.Lore.General.Events {
-	public partial class GeneralLoreEventDefinitions : ILoadable {
-		internal IList<GeneralLoreEvent> Defs;
-
-
-
-		////////////////
-
-		void ILoadable.OnModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
-
-		void ILoadable.OnPostModsLoad() {
-			this.Defs = new List<GeneralLoreEvent> {
-				this.GetRadioOrbsEvent()
+	public partial class GeneralLoreEventDefinitions {
+		internal static IList<GeneralLoreEvent> GetDefinitions() {
+			return new List<GeneralLoreEvent> {
+				GeneralLoreEventDefinitions.GetEvent_Radio_Orbs(),
+				GeneralLoreEventDefinitions.GetEvent_Radio_StrongGates()
 			};
 		}
 	}

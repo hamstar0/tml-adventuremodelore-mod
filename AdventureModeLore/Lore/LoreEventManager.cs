@@ -54,19 +54,9 @@ namespace AdventureModeLore.Lore {
 
 		public void InitializeOnCurrentPlayerEnter() {
 			this.Events.Clear();
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs00_Guide );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs01_OldMan );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs02_Merchant );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs03a_200hp );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs03b_BgPKE );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs03c_RescueGoblin );
-			//this.Events.Add( DialogueLoreEvents.LoreDefs03d_RescueGoblin );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs04_DefeatEvil );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs05_FindMechanicAndWitchDoctor );
-			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs06_SummonWoF );
 
-			var genDefs = ModContent.GetInstance<GeneralLoreEventDefinitions>();
-			this.Events.AddRange( genDefs.Defs );
+			this.Events.AddRange( DialogueLoreEventDefinitions.GetDefinitions() );
+			this.Events.AddRange( GeneralLoreEventDefinitions.GetDefinitions() );
 
 			// Pre-load all previously-finished objectives
 			foreach( LoreEvent myevent in this.Events ) {

@@ -9,7 +9,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
 
-		public static DialogueLoreEvent LoreDefs02_Merchant => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue02_Merchant() => new DialogueLoreEvent(
 			name: "Merchant Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant )

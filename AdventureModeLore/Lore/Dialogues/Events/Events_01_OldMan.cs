@@ -11,7 +11,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_FindJungle = "Find Jungle";
 
 
-		public static DialogueLoreEvent LoreDefs01_OldMan => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue01_OldMan() => new DialogueLoreEvent(
 			name: "Old Man Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEventDefinitions.ObjectiveTitle_InvestigateDungeon )

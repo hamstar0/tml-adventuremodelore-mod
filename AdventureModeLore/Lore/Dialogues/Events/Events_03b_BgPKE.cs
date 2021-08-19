@@ -10,7 +10,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public const string ObjectiveTitle_BackgroundPKE = "Neutralize Disruptive PKE Buildup";
 
 
-		public static DialogueLoreEvent LoreDefs03b_BgPKE => new DialogueLoreEvent(
+		public static DialogueLoreEvent GetEvent_Dialogue03b_BgPKE() => new DialogueLoreEvent(
 			name: "Background PKE Buildup Maxed",
 			prereqs: new Func<bool>[] {
 				DialogueLoreEventDefinitions.IsBackgroundPKEDangerous
