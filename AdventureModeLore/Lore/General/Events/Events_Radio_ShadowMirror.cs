@@ -34,11 +34,11 @@ namespace AdventureModeLore.Lore.General.Events {
 				myevent: () => {
 					MessagesAPI.AddMessage(
 						title: "About the Shadow Mirror",
-						description: "Guide: Oh cool! You found a Shadow Mirror! In ancient times, these were used"
+						description: "Guide: \"Oh cool! You found a Shadow Mirror. In ancient times, these were used"
 							+" by shamen to gaze into world of spirits to try to learn secrets and know of their"
 							+" fortunes. YOU, however, have a special gift that lets you use them to actually enter"
-							+" the spirit world; body and soul. Be warned: Entering the dark world may come at a cost"
-							+" to your soul!",
+							+" the spirit world; body and soul. Be warned: Entering that dark world may come at a"
+							+" cost to your soul!\"",
 						modOfOrigin: AMLMod.Instance,
 						alertPlayer: true,
 						isImportant: true,

@@ -58,10 +58,10 @@ namespace AdventureModeLore.Lore.General.Events {
 				myevent: () => {
 					MessagesAPI.AddMessage(
 						title: "About cursed bones patches",
-						description: "Guide: See those flickering, gross-looking piles of bones that seem to want"
+						description: "Guide: \"See those flickering, gross-looking piles of bones that seem to want"
 							+" to send deadly magical skulls your way? Those can only be removed with some good"
 							+" strong mining tools... if you can safely get close enough. I'd suggest avoiding them,"
-							+" for now. Use your P.B.G to protect against their projectiles, if you can't.",
+							+" for now. Use your P.B.G to protect against their projectiles, if you can't.\"",
 						modOfOrigin: AMLMod.Instance,
 						alertPlayer: true,
 						isImportant: true,

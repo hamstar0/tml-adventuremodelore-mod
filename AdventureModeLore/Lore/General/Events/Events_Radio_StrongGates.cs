@@ -45,8 +45,8 @@ namespace AdventureModeLore.Lore.General.Events {
 				myevent: () => {
 					MessagesAPI.AddMessage(
 						title: "About strong world gates",
-						description: "Guide: That gate is too strong for you right now. You'll need to find a way to"
-							+" increase your P.B.G's power, first.",
+						description: "Guide: \"That gate is too strong for you right now. You'll need to find a way"
+							+" to increase your P.B.G's power, first.\"",
 						modOfOrigin: AMLMod.Instance,
 						alertPlayer: true,
 						isImportant: true,
