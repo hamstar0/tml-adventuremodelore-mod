@@ -5,7 +5,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_TalkToGoblin = "Talk To A Goblin";
 
 
@@ -22,7 +22,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						+" We must find a way to communicate with them directly."
 						+" I fear our presence here might be taken the wrong way!",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_TalkToGoblin,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_TalkToGoblin,
 						description: "It would seem there are natives in this land, if you'd call them that. Try to"
 							+ "\n"+"somehow open a line of communication with them.",
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.GoblinTinkerer )

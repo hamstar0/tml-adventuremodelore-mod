@@ -5,7 +5,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_RescueGoblin = "Rescue Goblin Scientist";
 
 
@@ -22,7 +22,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						+" deep in the underground desert where no one wants to go. Prove them wrong. Try crafting"
 						+" Seismic Charges by combining your orbs with my bombs to make your way through.",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_RescueGoblin,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_RescueGoblin,
 						description: "The goblins have imprisoned one of their own for heresy. Search the underground"
 							+"\n"+"desert for their whereabouts. Seismic Charges may help.",
 						condition: ( obj ) => NPC.savedGoblin

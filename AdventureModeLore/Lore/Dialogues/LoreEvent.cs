@@ -48,12 +48,16 @@ namespace AdventureModeLore.Lore.Dialogues {
 		////////////////
 
 		protected override bool HasEventFinished() {
-			foreach( DialogueLoreEventStage subStage in this.Stages ) {
-				if( subStage.OptionalObjective == null ) { continue; }
+			foreach( DialogueLoreEventStage stage in this.Stages ) {
+				if( stage.OptionalObjective == null ) {
+					continue;
+				}
 
-				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( subStage.OptionalObjective.Title );
+				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(
+					stage.OptionalObjective.Title
+				);
 
-				if( !isPrevComplete && subStage.OptionalObjective.ComputeCompletionPercent() < 1f ) {
+				if( !isPrevComplete && stage.OptionalObjective.ComputeCompletionPercent() < 1f ) {
 					return false;
 				}
 			}

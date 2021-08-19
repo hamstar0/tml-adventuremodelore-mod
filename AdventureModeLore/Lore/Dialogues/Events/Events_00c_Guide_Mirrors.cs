@@ -5,10 +5,10 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public static int CountDiscoveredMirrors() {
 			if( ModLoader.GetMod( "MountedMagicMirrors" ) != null ) {
-				return DialogueLoreEvents.CountDiscoveredMirrors_WeakRef();
+				return DialogueLoreEventDefinitions.CountDiscoveredMirrors_WeakRef();
 			}
 			return 0;
 		}

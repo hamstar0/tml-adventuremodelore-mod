@@ -21,6 +21,6 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		public abstract void BeginForLocalPlayer( bool forceObjectivesIncomplete );
+		public abstract void BeginForLocalPlayer( bool isRepeat );
 	}
 }

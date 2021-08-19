@@ -5,7 +5,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_SummonWoF = "Sacrifice Voodoo Doll";
 
 
@@ -41,7 +41,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+" from the beginning. It is your choice to inform them of this. May this land have mercy on"
 							+" their soul.",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_SummonWoF,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_SummonWoF,
 						description: "The witch doctor describes a ritual to destroy the spiritual energy"
 							+ "\n"+"confluence; the source of the plague. It involves a voodoo sacrifice"
 							+ "\n"+"of one of its makers near its source: The underworld.",

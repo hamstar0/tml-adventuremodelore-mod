@@ -5,7 +5,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_FindMechanic = "Find Mechanic";
 
 		public const string ObjectiveTitle_FindWitchDoctor = "Find Witch Doctor";
@@ -27,7 +27,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+" be a skilled engineer, but if this isn't stopped, it could be disasterous. If you can find"
 							+" their engineer, maybe we can turn things around?",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_FindMechanic,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMechanic,
 						description: "Rumors exist of a plan to empower technology with the dungeon's spiritual"
 								+ "\n"+"energies. This could be disasterous. Liberate the engineer.",
 						condition: ( obj ) => NPC.savedMech
@@ -38,7 +38,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+" lands who may: A lone witch doctor residing in the jungle. Unfortunately, he has gone into"
 							+" hiding on on account of powerful monsters now residing in the jungle.",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_FindWitchDoctor,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindWitchDoctor,
 						description: "A mysterious lizard-man sorcerer may know the plague's secret. Some"
 								+ "\n"+"powerful monster in the jungle has put him into hiding, though.",
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.WitchDoctor )

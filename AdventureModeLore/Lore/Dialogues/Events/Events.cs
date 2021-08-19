@@ -4,6 +4,6 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 	}
 }

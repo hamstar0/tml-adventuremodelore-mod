@@ -9,14 +9,14 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore.Dialogues {
 	public partial class DialogueLoreEvent : LoreEvent {
-		public override void BeginForLocalPlayer( bool forceObjectivesIncomplete ) {
+		public override void BeginForLocalPlayer( bool isRepeat ) {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NpcType );
 			int currSubStageIdx = 0;
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NpcType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
 					DialogueLoreEventStage subStage = this.GetAndAdvanceSubStage(
-						forceObjectiveIncomplete: forceObjectivesIncomplete,
+						forceObjectiveIncomplete: isRepeat,
 						currSubStageIdx: ref currSubStageIdx,
 						isFinal: out bool isFinal
 					);

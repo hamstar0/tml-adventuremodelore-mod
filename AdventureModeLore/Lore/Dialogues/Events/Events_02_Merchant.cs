@@ -5,14 +5,14 @@ using Objectives;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
 
 		public static DialogueLoreEvent LoreDefs02_Merchant => new DialogueLoreEvent(
 			name: "Merchant Quests",
 			prereqs: new Func<bool>[] {
-				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEvents.ObjectiveTitle_FindMerchant )
+				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant )
 			},
 			npcType: NPCID.Merchant,
 			subStages: new DialogueLoreEventStage[] {

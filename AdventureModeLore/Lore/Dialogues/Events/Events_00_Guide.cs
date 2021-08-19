@@ -8,7 +8,7 @@ using AdventureModeLore.Lore.Dialogues;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_InvestigateDungeon = "Investigate Dungeon";
 
 		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
@@ -23,7 +23,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					dialogue: () => "Before the attack, reports came in of a large brick structure on the island a bit "
 							+"inland. Perhaps we should check it out?",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_InvestigateDungeon,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_InvestigateDungeon,
 						description: "There's a large, ominous structure with a strange old man wandering around"
 								+"\n"+"it's entrance. Ask the old man for information about the island.",
 						condition: ( obj ) => {
@@ -52,9 +52,9 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+"that allow fast travel between each other. Furnishing Kits also come with them. We should get "
 							+"at least [c/FFFFBB:10] of these spread around the island for our operations.",
 					objective: new PercentObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_Find10Mirrors,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_Find10Mirrors,
 						description: "Create or locate 10 Mounted Magic Mirrors on your map.",
-						condition: ( obj ) => (float)DialogueLoreEvents.CountDiscoveredMirrors() / 10f
+						condition: ( obj ) => (float)DialogueLoreEventDefinitions.CountDiscoveredMirrors() / 10f
 					)
 				)
 			},

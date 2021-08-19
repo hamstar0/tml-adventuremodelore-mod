@@ -6,7 +6,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		//public const string ObjectiveTitle_DefeatEvil = "Defeat The Evil Biome's Guardian";
 		public static string ObjectiveTitle_DefeatEvil => "Defeat The "+(WorldGen.crimson?"Crimson's":"Corruption")+" Guardian";
 
@@ -26,7 +26,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+" If these aren't stopped soon, evil essence will spread far and wide, and the plague along "
 							+"with it.",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_DefeatEvil,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_DefeatEvil,
 						description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will "
 								+ "need to be stopped, or else the plague"
 								+ "\n"+"will spread.",
@@ -38,7 +38,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+"is within the furthest depths of the world itself. It will be an endeavor just to make it "
 							+"there. May the blessings of nature be with you!",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_ReachUnderworld,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_ReachUnderworld,
 						description: "It would seem the source of the plague is deep underground. You must find it.",
 						condition: ( obj ) => Main.LocalPlayer.position.Y >= (WorldLocationLibraries.UnderworldLayerTopTileY * 16)
 					)

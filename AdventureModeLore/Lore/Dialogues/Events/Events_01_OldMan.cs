@@ -6,7 +6,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
-	public partial class DialogueLoreEvents {
+	public partial class DialogueLoreEventDefinitions {
 		public const string ObjectiveTitle_FindMerchant = "Find A Merchant";
 		public const string ObjectiveTitle_FindJungle = "Find Jungle";
 
@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		public static DialogueLoreEvent LoreDefs01_OldMan => new DialogueLoreEvent(
 			name: "Old Man Quests",
 			prereqs: new Func<bool>[] {
-				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEvents.ObjectiveTitle_InvestigateDungeon )
+				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEventDefinitions.ObjectiveTitle_InvestigateDungeon )
 			},
 			npcType: NPCID.OldMan,
 			subStages: new DialogueLoreEventStage[] {
@@ -23,7 +23,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+ " No, I'm not the only inhabitant of this cursed land, but anyone with sense will be in hiding."
 							+ " They might come to you if you have something to offer them and a safe place to stay.",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_FindMerchant,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant,
 						description: "Other inhabitants exist in this land, some less enslaved than others. Build a"
 								+ "\n"+"house for a merchant to settle in.",
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.Merchant )
@@ -35,7 +35,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+ "do with it!"
 							+ "\nYou might instead try investigating the jungle. I hear it too has its secrets. And dangers.",
 					objective: new FlatObjective(
-						title: DialogueLoreEvents.ObjectiveTitle_FindJungle,
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindJungle,
 						description: "The old man says there's something suspicious in the jungle. Maybe take a look?",
 						condition: ( obj ) =>  Main.LocalPlayer.ZoneJungle
 					)
