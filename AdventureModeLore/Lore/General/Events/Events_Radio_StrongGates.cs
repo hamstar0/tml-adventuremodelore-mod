@@ -10,7 +10,12 @@ using Messages;
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static bool Event_Radio_StrongGates_PreReq() {
-			Rectangle rect = Main.LocalPlayer.getRect();
+			var rect = new Rectangle(
+				x: (int)Main.LocalPlayer.Center.X,
+				y: (int)Main.LocalPlayer.Center.Y,
+				width: 0,
+				height: 0
+			);
 			rect.X -= 16 * 16;
 			rect.Y -= 16 * 16;
 			rect.Width += 32 * 16;

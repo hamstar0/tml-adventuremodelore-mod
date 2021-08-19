@@ -10,7 +10,8 @@ namespace AdventureModeLore.Lore.General.Events {
 			return new List<GeneralLoreEvent> {
 				GeneralLoreEventDefinitions.GetEvent_Radio_Orbs(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_StrongGates(),
-				GeneralLoreEventDefinitions.GetEvent_Radio_CursedBones()
+				GeneralLoreEventDefinitions.GetEvent_Radio_CursedBones(),
+				GeneralLoreEventDefinitions.GetEvent_Radio_ShadowMirror()
 			};
 		}
 	}

@@ -9,7 +9,7 @@ using Messages;
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
-		private static bool Event_Radio_Orbs_PreReq2( ref ISet<int> orbTypes ) {
+		private static bool Event_Radio_Orbs_PreReq( ref ISet<int> orbTypes ) {
 			if( orbTypes == null ) {
 				orbTypes = new HashSet<int> {
 						ModContent.ItemType<Orbs.Items.BlueOrbItem>(),
@@ -41,7 +41,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				if( ModLoader.GetMod( "Orbs" ) == null ) {
 					return false;
 				}
-				return GeneralLoreEventDefinitions.Event_Radio_Orbs_PreReq2( ref orbTypes );
+				return GeneralLoreEventDefinitions.Event_Radio_Orbs_PreReq( ref orbTypes );
 			}
 
 			//
