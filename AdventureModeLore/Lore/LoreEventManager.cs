@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using Objectives;
 using AdventureModeLore.Lore.Dialogues.Events;
+using AdventureModeLore.Lore.General.Events;
 
 
 namespace AdventureModeLore.Lore {
@@ -37,7 +37,7 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private IList<LoreEvent> Events = new List<LoreEvent>();
+		private List<LoreEvent> Events = new List<LoreEvent>();
 
 
 
@@ -64,6 +64,9 @@ namespace AdventureModeLore.Lore {
 			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs04_DefeatEvil );
 			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs05_FindMechanicAndWitchDoctor );
 			this.Events.Add( DialogueLoreEventDefinitions.LoreDefs06_SummonWoF );
+
+			var genDefs = ModContent.GetInstance<GeneralLoreEventDefinitions>();
+			this.Events.AddRange( genDefs.Defs );
 
 			// Pre-load all previously-finished objectives
 			foreach( LoreEvent myevent in this.Events ) {

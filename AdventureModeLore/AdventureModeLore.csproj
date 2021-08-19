@@ -15,6 +15,9 @@
     <Reference Include="BossReigns">
       <HintPath>..\..\..\Boss Reigns\Project\BossReigns\bin\Release\net452\BossReigns.dll</HintPath>
     </Reference>
+    <Reference Include="Messages">
+      <HintPath>..\..\..\Messages\Project\Messages\bin\Release\net452\Messages.dll</HintPath>
+    </Reference>
     <Reference Include="ModLibsCore">
       <HintPath>..\..\..\Mod Libs\Mod Libs Core\Project\ModLibsCore\bin\Release\net452\ModLibsCore.dll</HintPath>
     </Reference>
