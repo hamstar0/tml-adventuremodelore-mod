@@ -12,14 +12,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_FindJungle = "Find Jungle";
 
 
-		public static SequencedLoreStage LoreDefs01_OldMan => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs01_OldMan => new SequencedLoreEventStage(
 			name: "Old Man Quests",
 			prereqs: new Func<bool>[] {
 				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( SequencedLoreEventManager.ObjectiveTitle_InvestigateDungeon )
 			},
 			npcType: NPCID.OldMan,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					dialogue: () => "You're in no shape to concern with why I'm here, or what this place is."
 							+ " No, I'm not the only inhabitant of this cursed land, but anyone with sense will be in hiding."
 							+ " They might come to you if you have something to offer them and a safe place to stay.",
@@ -30,7 +30,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.Merchant )
 					)
 				),
-				new SequencedLoreSubStage(
+				new SequencedLoreEventSubStage(
 					dialogue: () => "The plague? I know nothing of this. All I know is I made a pact long ago to keep this "
 							+ "place sealed. I don't even remember why. This dungeon has its secrets, but I want nothing to "
 							+ "do with it!"

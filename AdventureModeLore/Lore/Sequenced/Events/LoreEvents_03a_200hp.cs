@@ -10,14 +10,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_TalkToGoblin = "Talk To A Goblin";
 
 
-		public static SequencedLoreStage LoreDefs03a_200hp => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs03a_200hp => new SequencedLoreEventStage(
 			name: "Pre-Goblins Quests",
 			prereqs: new Func<bool>[] {
 				() => Main.LocalPlayer.statLifeMax >= 200
 			},
 			npcType: NPCID.Guide,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					dialogue: () => "I have to tell you something. There are natives on this island!"
 						+" Not mere scattered survivors or profiteers, but a full blown army of goblins!"
 						+" We must find a way to communicate with them directly."

@@ -14,14 +14,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_ReachUnderworld = "Reach Underworld";
 
 
-		public static SequencedLoreStage LoreDefs04_DefeatEvil => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs04_DefeatEvil => new SequencedLoreEventStage(
 			name: "Dryad Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.AnyNPCs( NPCID.Dryad )
 			},
 			npcType: NPCID.Dryad,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					dialogue: () => "I see you are here to stop the undeath plague. Might I suggest you first start with the "
 							+(WorldGen.crimson?"crimson":"corruption")+" areas that have begun appearing in this land."
 							+" If these aren't stopped soon, evil essence will spread far and wide, and the plague along "
@@ -34,7 +34,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 						condition: ( obj ) => NPC.downedBoss2
 					)
 				),
-				new SequencedLoreSubStage(
+				new SequencedLoreEventSubStage(
 					dialogue: () => "There are many contributing factors, but the main source of your so-called plague "
 							+"is within the furthest depths of the world itself. It will be an endeavor just to make it "
 							+"there. May the blessings of nature be with you!",

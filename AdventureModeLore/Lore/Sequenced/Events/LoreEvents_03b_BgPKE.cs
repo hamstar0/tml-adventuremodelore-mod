@@ -11,14 +11,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_BackgroundPKE = "Neutralize Disruptive PKE Buildup";
 
 
-		public static SequencedLoreStage LoreDefs03b_BgPKE => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs03b_BgPKE => new SequencedLoreEventStage(
 			name: "Background PKE Buildup Maxed",
 			prereqs: new Func<bool>[] {
 				SequencedLoreEventManager.IsBackgroundPKEDangerous
 			},
 			npcType: NPCID.Guide,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					dialogue: () => "Uh oh! It seems conditions on this island have become more treacherous than usual. A"
 						+" buildup of ambient spiritual energy is occurring that may disrupt some of your equipment, and"
 						+" interfere with the mission. The source is an [c/88FF88:undefeated powerful entity] residing somewhere"

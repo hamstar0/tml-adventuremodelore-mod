@@ -12,14 +12,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_FindWitchDoctor = "Find Witch Doctor";
 
 
-		public static SequencedLoreStage LoreDefs05_FindMechanicAndWitchDoctor => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs05_FindMechanicAndWitchDoctor => new SequencedLoreEventStage(
 			name: "Goblin Quests",
 			prereqs: new Func<bool>[] {
 				() => NPC.savedGoblin
 			},
 			npcType: NPCID.GoblinTinkerer,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					//"Sorry, I cannot be of much assistance in diplomacy with my former tribe. I doubt they"
 					//		+" would have an open mind, anyhow.
 					dialogue: () => "The only thing I can tell you for your mission is that strange activities have been seen"
@@ -34,7 +34,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 						condition: ( obj ) => NPC.savedMech
 					)
 				),
-				new SequencedLoreSubStage(
+				new SequencedLoreEventSubStage(
 					dialogue: () => "I know little about the undeath plague, but I do know of another inhabitant of these"
 							+" lands who may: A lone witch doctor residing in the jungle. Unfortunately, he has gone into"
 							+" hiding on on account of powerful monsters now residing in the jungle.",

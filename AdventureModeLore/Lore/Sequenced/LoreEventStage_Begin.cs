@@ -8,7 +8,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreStage {
+	public partial class SequencedLoreEventStage {
 		public (bool CanBegin, bool IsDone) GetStatusForLocalPlayer() {
 			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
 			if( myplayer.CompletedLoreStages.Contains( this.Name ) ) {
@@ -25,7 +25,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NpcType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					SequencedLoreSubStage subStage = this.GetAndAdvanceSubStage(
+					SequencedLoreEventSubStage subStage = this.GetAndAdvanceSubStage(
 						forceObjectiveIncomplete: forceObjectiveIncomplete,
 						currSubStageIdx: ref currSubStageIdx,
 						isFinal: out bool isFinal
@@ -50,11 +50,11 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////////////////
 
-		private SequencedLoreSubStage GetAndAdvanceSubStage(
+		private SequencedLoreEventSubStage GetAndAdvanceSubStage(
 					bool forceObjectiveIncomplete,
 					ref int currSubStageIdx,
 					out bool isFinal ) {
-			SequencedLoreSubStage subStage = null;
+			SequencedLoreEventSubStage subStage = null;
 			
 			// Skip substages with completed objectives
 			for( ; currSubStageIdx < this.SubStages.Length; currSubStageIdx++ ) {
@@ -77,7 +77,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////
 
-		private bool ProcessSubStage( SequencedLoreSubStage subStage, bool forceObjectiveIncomplete ) {
+		private bool ProcessSubStage( SequencedLoreEventSubStage subStage, bool forceObjectiveIncomplete ) {
 			// No objective; dialogue only
 			if( subStage.OptionalObjective == null ) {
 				return true;
@@ -91,7 +91,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////
 
-		private Objective ProcessSubStageObjective( SequencedLoreSubStage currSubStage, bool forceObjectiveIncomplete ) {
+		private Objective ProcessSubStageObjective( SequencedLoreEventSubStage currSubStage, bool forceObjectiveIncomplete ) {
 			string objectiveName = currSubStage.OptionalObjective.Title;
 
 			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) ) {

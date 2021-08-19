@@ -59,6 +59,7 @@ namespace AdventureModeLore {
 				this._CheckTimer = 60;
 
 				SequencedLoreEventManager.RunForLocalPlayer();
+				UnsequencedLoreEventManager.RunForLocalPlayer();
 			}
 		}
 	}

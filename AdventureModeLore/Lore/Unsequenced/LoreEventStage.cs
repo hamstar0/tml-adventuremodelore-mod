@@ -5,15 +5,13 @@ using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreStage {
+namespace AdventureModeLore.Lore.Unsequenced {
+	public partial class UnsequencedLoreEventStage {
 		public string Name { get; private set; }
 
 		public Func<bool>[] Prerequisites { get; private set; }
 
-		public int NpcType { get; private set; }
-
-		public SequencedLoreSubStage[] SubStages { get; private set; }
+		public Action Event { get; private set; }
 
 		public bool IsRepeatable { get; private set; }
 
@@ -21,7 +19,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////////////////
 
-		public SequencedLoreStage(
+		public UnsequencedLoreEventStage(
 					string name,
 					Func<bool>[] prereqs,
 					int npcType,

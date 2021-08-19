@@ -8,35 +8,16 @@ using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreEventManager : ILoadable {
+namespace AdventureModeLore.Lore.Unsequenced {
+	public partial class UnsequencedLoreEventManager : ILoadable {
 		public static void RunForLocalPlayer() {
-			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
-				return;
-			}
-
-			var logic = ModContent.GetInstance<SequencedLoreEventManager>();
-
-			foreach( SequencedLoreEventStage stage in logic.Events.ToArray() ) {
-				(bool CanBegin, bool IsDone) status = stage.GetStatusForLocalPlayer();
-
-				if( status.CanBegin && status.IsDone && stage.IsRepeatable ) {
-					stage.BeginForLocalPlayer( true );
-				} else if( status.CanBegin && !status.IsDone ) {
-					stage.BeginForLocalPlayer( false );
-				}
-
-				if( (status.IsDone || status.CanBegin) && !stage.IsRepeatable ) {
-					logic.Events.Remove( stage );
-				}
-			}
 		}
 
 
 
 		////////////////
 
-		private IList<SequencedLoreEventStage> Events = new List<SequencedLoreEventStage>();
+		private IList<SequencedLoreStage> Events = new List<SequencedLoreStage>();
 
 
 
@@ -65,8 +46,8 @@ namespace AdventureModeLore.Lore.Sequenced {
 			this.Events.Add( SequencedLoreEventManager.LoreDefs06_SummonWoF );
 
 			// Pre-load all previously-finished objectives
-			foreach( SequencedLoreEventStage stage in this.Events ) {
-				foreach( SequencedLoreEventSubStage substage in stage.SubStages ) {
+			foreach( SequencedLoreStage stage in this.Events ) {
+				foreach( SequencedLoreSubStage substage in stage.SubStages ) {
 					if( substage.OptionalObjective == null ) {
 						continue;
 					}

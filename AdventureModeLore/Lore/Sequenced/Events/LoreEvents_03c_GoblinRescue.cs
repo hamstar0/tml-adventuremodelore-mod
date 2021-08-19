@@ -10,14 +10,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_RescueGoblin = "Rescue Goblin Scientist";
 
 
-		public static SequencedLoreStage LoreDefs03c_RescueGoblin => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs03c_RescueGoblin => new SequencedLoreEventStage(
 			name: "Goblin Rescue",
 			prereqs: new Func<bool>[] {
 				() => NPC.downedGoblins
 			},
 			npcType: NPCID.Demolitionist,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					dialogue: () => "Goblins sure are a wild lot. Rather than rise up like us civilized folk, they'd"
 						+" rather brand their greatest minds heretics and lock them away. I hear they're kept buried"
 						+" deep in the underground desert where no one wants to go. Prove them wrong. Try crafting"

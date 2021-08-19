@@ -5,7 +5,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreSubStage {
+	public partial class SequencedLoreEventSubStage {
 		public string OptionalRadio { get; private set; }
 		
 		public Func<string> OptionalDialogue { get; private set; }
@@ -18,21 +18,21 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////////////////
 
-		public SequencedLoreSubStage( string radioMessage, Action optionalAction = null ) {
+		public SequencedLoreEventSubStage( string radioMessage, Action optionalAction = null ) {
 			this.OptionalRadio = radioMessage;
 			this.OptionalDialogue = null;
 			this.OptionalObjective = null;
 			this.OptionalAction = optionalAction;
 		}
 
-		public SequencedLoreSubStage( Func<string> dialogue, Action optionalAction = null ) {
+		public SequencedLoreEventSubStage( Func<string> dialogue, Action optionalAction = null ) {
 			this.OptionalRadio = null;
 			this.OptionalDialogue = dialogue;
 			this.OptionalObjective = null;
 			this.OptionalAction = optionalAction;
 		}
 
-		public SequencedLoreSubStage( Func<string> dialogue, Objective objective, Action optionalAction = null ) {
+		public SequencedLoreEventSubStage( Func<string> dialogue, Objective objective, Action optionalAction = null ) {
 			this.OptionalRadio = null;
 			this.OptionalDialogue = dialogue;
 			this.OptionalObjective = objective;

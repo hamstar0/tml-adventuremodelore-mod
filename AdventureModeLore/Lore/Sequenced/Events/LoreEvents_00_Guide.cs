@@ -14,12 +14,12 @@ namespace AdventureModeLore.Lore.Sequenced {
 		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
 
 
-		public static SequencedLoreStage LoreDefs00_Guide => new SequencedLoreStage(
+		public static SequencedLoreEventStage LoreDefs00_Guide => new SequencedLoreEventStage(
 			name: "Guide Quests",
 			prereqs: new Func<bool>[0],
 			npcType: NPCID.Guide,
-			subStages: new SequencedLoreSubStage[] {
-				new SequencedLoreSubStage(
+			subStages: new SequencedLoreEventSubStage[] {
+				new SequencedLoreEventSubStage(
 					dialogue: () => "Before the attack, reports came in of a large brick structure on the island a bit "
 							+"inland. Perhaps we should check it out?",
 					objective: new FlatObjective(
@@ -42,12 +42,12 @@ namespace AdventureModeLore.Lore.Sequenced {
 						}
 					)
 				),
-				new SequencedLoreSubStage(
+				new SequencedLoreEventSubStage(
 					dialogue: () => "If you're having trouble getting somewhere, use your ropes, platforms, framing planks, "
 							+"and track deployment kits. There should be some in the raft's barrel. If you need more, "
 							+"some of these can be crafted or bought, if you have the needed materials or money."
 				),
-				new SequencedLoreSubStage(
+				new SequencedLoreEventSubStage(
 					dialogue: () => "Speaking of, this island is pretty big. In the raft's storage are magic wall mirrors "
 							+"that allow fast travel between each other. Furnishing Kits also come with them. We should get "
 							+"at least [c/FFFFBB:10] of these spread around the island for our operations.",
