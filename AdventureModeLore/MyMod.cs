@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using AdventureModeLore.Lore.Sequenced;
+using AdventureModeLore.Lore;
 
 
 namespace AdventureModeLore {
@@ -58,8 +58,7 @@ namespace AdventureModeLore {
 			if( this._CheckTimer-- <= 0 ) {
 				this._CheckTimer = 60;
 
-				SequencedLoreEventManager.RunForLocalPlayer();
-				UnsequencedLoreEventManager.RunForLocalPlayer();
+				LoreEventManager.RunForLocalPlayer();
 			}
 		}
 	}

@@ -2,10 +2,9 @@
 using Terraria;
 using Terraria.ID;
 using Objectives.Definitions;
-using AdventureModeLore.Lore.Dialogue;
 
 
-namespace AdventureModeLore.Lore.Sequenced.Events {
+namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEvents {
 		public const string ObjectiveTitle_TalkToGoblin = "Talk To A Goblin";
 

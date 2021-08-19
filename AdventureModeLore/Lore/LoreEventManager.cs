@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using Objectives;
-using AdventureModeLore.Lore.Sequenced.Events;
+using AdventureModeLore.Lore.Dialogues.Events;
 
 
 namespace AdventureModeLore.Lore {

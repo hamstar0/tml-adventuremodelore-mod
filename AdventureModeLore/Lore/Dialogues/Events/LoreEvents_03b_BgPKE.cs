@@ -3,10 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Objectives.Definitions;
-using AdventureModeLore.Lore.Dialogue;
 
 
-namespace AdventureModeLore.Lore.Sequenced.Events {
+namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEvents {
 		public const string ObjectiveTitle_BackgroundPKE = "Neutralize Disruptive PKE Buildup";
 

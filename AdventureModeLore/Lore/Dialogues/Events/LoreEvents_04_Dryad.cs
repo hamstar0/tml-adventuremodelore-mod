@@ -3,10 +3,9 @@ using Terraria;
 using Terraria.ID;
 using ModLibsGeneral.Libraries.World;
 using Objectives.Definitions;
-using AdventureModeLore.Lore.Dialogue;
 
 
-namespace AdventureModeLore.Lore.Sequenced.Events {
+namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEvents {
 		//public const string ObjectiveTitle_DefeatEvil = "Defeat The Evil Biome's Guardian";
 		public static string ObjectiveTitle_DefeatEvil => "Defeat The "+(WorldGen.crimson?"Crimson's":"Corruption")+" Guardian";

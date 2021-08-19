@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 
 
-namespace AdventureModeLore.Lore.Sequenced.Events {
+namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEvents {
 		public static int CountDiscoveredMirrors() {
 			if( ModLoader.GetMod( "MountedMagicMirrors" ) != null ) {

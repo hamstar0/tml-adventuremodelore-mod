@@ -5,14 +5,14 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.PlayerData;
 using ModLibsCore.Libraries.Debug;
 using ModLibsMaps.Services.Maps;
-using AdventureModeLore.Lore.Sequenced;
+using AdventureModeLore.Lore;
 
 
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
 			if( isCurrentPlayer ) {
-				var lore = ModContent.GetInstance<SequencedLoreEventManager>();
+				var lore = ModContent.GetInstance<LoreEventManager>();
 
 				lore.InitializeOnCurrentPlayerEnter();
 

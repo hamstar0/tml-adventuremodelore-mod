@@ -7,7 +7,7 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore.Dialogue {
+namespace AdventureModeLore.Lore.Dialogues {
 	public partial class DialogueLoreEvent : LoreEvent {
 		public override void BeginForLocalPlayer( bool forceObjectivesIncomplete ) {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NpcType );

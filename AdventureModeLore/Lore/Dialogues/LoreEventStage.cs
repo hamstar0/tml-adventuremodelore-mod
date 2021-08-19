@@ -5,7 +5,7 @@ using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore.Dialogue {
+namespace AdventureModeLore.Lore.Dialogues {
 	public partial class DialogueLoreEvent : LoreEvent {
 		public int NpcType { get; private set; }
 

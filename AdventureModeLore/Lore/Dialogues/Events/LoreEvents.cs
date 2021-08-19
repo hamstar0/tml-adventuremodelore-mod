@@ -3,7 +3,7 @@ using Terraria;
 using ModLibsCore.Libraries.Debug;
 
 
-namespace AdventureModeLore.Lore.Sequenced.Events {
+namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEvents {
 	}
 }
