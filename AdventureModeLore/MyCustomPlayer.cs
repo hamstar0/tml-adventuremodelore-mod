@@ -12,7 +12,7 @@ namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
 		protected override void OnEnter( bool isCurrentPlayer, object data ) {
 			if( isCurrentPlayer ) {
-				var lore = ModContent.GetInstance<LoreEvents>();
+				var lore = ModContent.GetInstance<SequencedLoreEventManager>();
 
 				lore.InitializeOnCurrentPlayerEnter();
 

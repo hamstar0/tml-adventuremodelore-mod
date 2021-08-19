@@ -8,7 +8,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore {
-	public partial class NPCLoreStage {
+	public partial class SequencedLoreStage {
 		public (bool CanBegin, bool IsDone) GetStatusForLocalPlayer() {
 			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
 			if( myplayer.CompletedLoreStages.Contains( this.Name ) ) {
@@ -20,18 +20,24 @@ namespace AdventureModeLore.Lore {
 
 
 		public void BeginForLocalPlayer( bool forceObjectiveIncomplete ) {
-			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NPCType );
-			int currSubStage = 0;
+			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NpcType );
+			int currSubStageIdx = 0;
 
-			DialogueEditor.SetDynamicDialogueHandler( this.NPCType, new DynamicDialogueHandler(
+			DialogueEditor.SetDynamicDialogueHandler( this.NpcType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					msg = this.GetDialogueAndAdvanceSubStage( msg, forceObjectiveIncomplete, ref currSubStage, out bool isFinal );
+					SequencedLoreSubStage subStage = this.GetAndAdvanceSubStage(
+						forceObjectiveIncomplete: forceObjectiveIncomplete,
+						currSubStageIdx: ref currSubStageIdx,
+						isFinal: out bool isFinal
+					);
+
+					msg = subStage?.OptionalDialogue?.Invoke() ?? msg;
 
 					if( isFinal ) {
 						if( oldDialogueHandler != null ) {
-							DialogueEditor.SetDynamicDialogueHandler( this.NPCType, oldDialogueHandler );
+							DialogueEditor.SetDynamicDialogueHandler( this.NpcType, oldDialogueHandler );
 						} else {
-							DialogueEditor.RemoveDynamicDialogueHandler( this.NPCType );
+							DialogueEditor.RemoveDynamicDialogueHandler( this.NpcType );
 						}
 					}
 
@@ -44,59 +50,69 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private string GetDialogueAndAdvanceSubStage(
-					string existingMessage,
+		private SequencedLoreSubStage GetAndAdvanceSubStage(
 					bool forceObjectiveIncomplete,
-					ref int currSubStage,
+					ref int currSubStageIdx,
 					out bool isFinal ) {
-			NPCLoreSubStage subStage = this.StepSubStage( ref currSubStage, forceObjectiveIncomplete, out isFinal );
+			SequencedLoreSubStage subStage = null;
+			
+			// Skip substages with completed objectives
+			for( ; currSubStageIdx < this.SubStages.Length; currSubStageIdx++ ) {
+				if( this.ProcessSubStage( this.SubStages[currSubStageIdx], forceObjectiveIncomplete) ) {
+					subStage = this.SubStages[currSubStageIdx];
 
-			return subStage?.Dialogue.Invoke()
-				?? existingMessage;
-		}
-
-
-		////////////////
-
-		private NPCLoreSubStage StepSubStage( ref int currStage, bool forceObjectiveIncomplete, out bool isFinal ) {
-			NPCLoreSubStage resultSubStage = null;
-
-			for( ; currStage < this.SubStages.Length; currStage++ ) {
-				NPCLoreSubStage currSubStage = this.SubStages[ currStage ];
-
-				// No objective; dialogue only
-				if( currSubStage.Objective == null ) {
-					resultSubStage = currSubStage;
-					break;
-				}
-
-				string objectiveName = currSubStage.Objective.Title;
-				if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) && forceObjectiveIncomplete ) {
-					ObjectivesAPI.RemoveObjective( objectiveName, true );
-				}
-
-				Objective obj = ObjectivesAPI.GetObjective( objectiveName );
-				if( obj == null ) {
-					obj = currSubStage.Objective;
-
-					ObjectivesAPI.AddObjective(	// Evaluates `obj` if finished
-						objective: obj,
-						order: -1,
-						alertPlayer: true,
-						out string _
-					);
-				}
-
-				if( obj.IsComplete != true ) {
-					resultSubStage = currSubStage;
 					break;
 				}
 			}
 
-			currStage++;
+			// Be ready start with the next sub stage, next time
+			currSubStageIdx++;
 
-			isFinal = currStage >= this.SubStages.Length;
-			return resultSubStage;
+			subStage?.OptionalAction?.Invoke();
+
+			isFinal = currSubStageIdx >= this.SubStages.Length;
+			return subStage;
+		}
+
+
+		////
+
+		private bool ProcessSubStage( SequencedLoreSubStage subStage, bool forceObjectiveIncomplete ) {
+			// No objective; dialogue only
+			if( subStage.OptionalObjective == null ) {
+				return true;
+			}
+
+			var obj = this.ProcessSubStageObjective( subStage, forceObjectiveIncomplete );
+
+			// If sub stage's objective is incomplete, step only to this sub stage
+			return obj.IsComplete != true;
+		}
+
+		////
+
+		private Objective ProcessSubStageObjective( SequencedLoreSubStage currSubStage, bool forceObjectiveIncomplete ) {
+			string objectiveName = currSubStage.OptionalObjective.Title;
+
+			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) ) {
+				if( forceObjectiveIncomplete ) {
+					ObjectivesAPI.RemoveObjective( objectiveName, true );
+				}
+			}
+
+			Objective obj = ObjectivesAPI.GetObjective( objectiveName );
+			if( obj == null ) {
+				obj = currSubStage.OptionalObjective;
+
+				ObjectivesAPI.AddObjective( // Evaluates `obj` if finished
+					objective: obj,
+					order: -1,
+					alertPlayer: true,
+					out string _
+				);
+			}
+
+			return obj;
 		}
 	}
 }

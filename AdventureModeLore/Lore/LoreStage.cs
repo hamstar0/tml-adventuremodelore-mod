@@ -6,14 +6,14 @@ using Objectives;
 
 
 namespace AdventureModeLore.Lore {
-	public partial class NPCLoreStage {
+	public partial class SequencedLoreStage {
 		public string Name { get; private set; }
 
 		public Func<bool>[] Prerequisites { get; private set; }
 
-		public int NPCType { get; private set; }
+		public int NpcType { get; private set; }
 
-		public NPCLoreSubStage[] SubStages { get; private set; }
+		public SequencedLoreSubStage[] SubStages { get; private set; }
 
 		public bool IsRepeatable { get; private set; }
 
@@ -21,10 +21,15 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		public NPCLoreStage( string name, Func<bool>[] prereqs, int npcType, NPCLoreSubStage[] subStages, bool isRepeatable ) {
+		public SequencedLoreStage(
+					string name,
+					Func<bool>[] prereqs,
+					int npcType,
+					SequencedLoreSubStage[] subStages,
+					bool isRepeatable ) {
 			this.Name = name;
 			this.Prerequisites = prereqs;
-			this.NPCType = npcType;
+			this.NpcType = npcType;
 			this.SubStages = subStages;
 			this.IsRepeatable = isRepeatable;
 		}
@@ -44,12 +49,12 @@ namespace AdventureModeLore.Lore {
 
 
 		public bool AreAllObjectivesPreviouslyOrInAdvanceComplete() {
-			foreach( NPCLoreSubStage subStage in this.SubStages ) {
-				if( subStage.Objective == null ) { continue; }
+			foreach( SequencedLoreSubStage subStage in this.SubStages ) {
+				if( subStage.OptionalObjective == null ) { continue; }
 
-				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( subStage.Objective.Title );
+				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( subStage.OptionalObjective.Title );
 
-				if( !isPrevComplete && subStage.Objective.ComputeCompletionPercent() < 1f ) {
+				if( !isPrevComplete && subStage.OptionalObjective.ComputeCompletionPercent() < 1f ) {
 					return false;
 				}
 			}

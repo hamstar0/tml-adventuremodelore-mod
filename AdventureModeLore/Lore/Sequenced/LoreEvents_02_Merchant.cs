@@ -6,18 +6,18 @@ using Objectives;
 
 
 namespace AdventureModeLore.Lore {
-	public partial class LoreEvents : ILoadable {
+	public partial class SequencedLoreEventManager : ILoadable {
 		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
 
-		public static NPCLoreStage LoreDefs02_Merchant => new NPCLoreStage(
+		public static SequencedLoreStage LoreDefs02_Merchant => new SequencedLoreStage(
 			name: "Merchant Quests",
 			prereqs: new Func<bool>[] {
-				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( LoreEvents.ObjectiveTitle_FindMerchant )
+				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( SequencedLoreEventManager.ObjectiveTitle_FindMerchant )
 			},
 			npcType: NPCID.Merchant,
-			subStages: new NPCLoreSubStage[] {
-				new NPCLoreSubStage(
+			subStages: new SequencedLoreSubStage[] {
+				new SequencedLoreSubStage(
 					dialogue: () => "I go where the money is. If you're looking for some, you'll need to find treasures."
 						+" This land itself is enchanted, and most areas can be accessed by using those special"
 						+" magic orbs found here and there. They'll often be accompanying said other treasures."

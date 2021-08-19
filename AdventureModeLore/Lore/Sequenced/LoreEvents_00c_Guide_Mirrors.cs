@@ -6,10 +6,10 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace AdventureModeLore.Lore {
-	public partial class LoreEvents : ILoadable {
+	public partial class SequencedLoreEventManager : ILoadable {
 		public static int CountDiscoveredMirrors() {
 			if( ModLoader.GetMod( "MountedMagicMirrors" ) != null ) {
-				return LoreEvents.CountDiscoveredMirrors_WeakRef();
+				return SequencedLoreEventManager.CountDiscoveredMirrors_WeakRef();
 			}
 			return 0;
 		}

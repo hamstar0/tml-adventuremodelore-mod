@@ -9,15 +9,15 @@ using Objectives;
 
 
 namespace AdventureModeLore.Lore {
-	public partial class LoreEvents : ILoadable {
+	public partial class SequencedLoreEventManager : ILoadable {
 		public static void RunForLocalPlayer() {
 			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
 				return;
 			}
 
-			var logic = ModContent.GetInstance<LoreEvents>();
+			var logic = ModContent.GetInstance<SequencedLoreEventManager>();
 
-			foreach( NPCLoreStage stage in logic.Events.ToArray() ) {
+			foreach( SequencedLoreStage stage in logic.Events.ToArray() ) {
 				(bool CanBegin, bool IsDone) status = stage.GetStatusForLocalPlayer();
 
 				if( status.CanBegin && status.IsDone && stage.IsRepeatable ) {
@@ -36,7 +36,7 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		private IList<NPCLoreStage> Events = new List<NPCLoreStage>();
+		private IList<SequencedLoreStage> Events = new List<SequencedLoreStage>();
 
 
 
@@ -53,29 +53,29 @@ namespace AdventureModeLore.Lore {
 
 		public void InitializeOnCurrentPlayerEnter() {
 			this.Events.Clear();
-			this.Events.Add( LoreEvents.LoreDefs00_Guide );
-			this.Events.Add( LoreEvents.LoreDefs01_OldMan );
-			this.Events.Add( LoreEvents.LoreDefs02_Merchant );
-			this.Events.Add( LoreEvents.LoreDefs03a_200hp );
-			this.Events.Add( LoreEvents.LoreDefs03b_BgPKE );
-			this.Events.Add( LoreEvents.LoreDefs03c_RescueGoblin );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs00_Guide );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs01_OldMan );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs02_Merchant );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs03a_200hp );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs03b_BgPKE );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs03c_RescueGoblin );
 			//this.Events.Add( LoreEvents.LoreDefs03d_RescueGoblin );
-			this.Events.Add( LoreEvents.LoreDefs04_DefeatEvil );
-			this.Events.Add( LoreEvents.LoreDefs05_FindMechanicAndWitchDoctor );
-			this.Events.Add( LoreEvents.LoreDefs06_SummonWoF );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs04_DefeatEvil );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs05_FindMechanicAndWitchDoctor );
+			this.Events.Add( SequencedLoreEventManager.LoreDefs06_SummonWoF );
 
 			// Pre-load all previously-finished objectives
-			foreach( NPCLoreStage stage in this.Events ) {
-				foreach( NPCLoreSubStage substage in stage.SubStages ) {
-					if( substage.Objective == null ) {
+			foreach( SequencedLoreStage stage in this.Events ) {
+				foreach( SequencedLoreSubStage substage in stage.SubStages ) {
+					if( substage.OptionalObjective == null ) {
 						continue;
 					}
-					if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(substage.Objective.Title) ) {
+					if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(substage.OptionalObjective.Title) ) {
 						continue;
 					}
 
-					if( ObjectivesAPI.GetObjective(substage.Objective.Title) == null ) {
-						ObjectivesAPI.AddObjective( substage.Objective, 0, false, out _ );
+					if( ObjectivesAPI.GetObjective(substage.OptionalObjective.Title) == null ) {
+						ObjectivesAPI.AddObjective( substage.OptionalObjective, 0, false, out _ );
 					}
 				}
 			}
