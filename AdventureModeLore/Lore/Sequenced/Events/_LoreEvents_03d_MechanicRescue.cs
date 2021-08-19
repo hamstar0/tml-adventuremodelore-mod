@@ -5,7 +5,7 @@ using ModLibsCore.Classes.Loadable;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
+namespace AdventureModeLore.Lore.Sequenced.Events {
 	public partial class SequencedLoreEventManager : ILoadable {
 		public const string ObjectiveTitle_RescueMechanic = "Find Live Occupant Inside Dungeon";
 

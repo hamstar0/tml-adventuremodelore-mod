@@ -7,26 +7,16 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreEventStage {
-		public (bool CanBegin, bool IsDone) GetStatusForLocalPlayer() {
-			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();
-			if( myplayer.CompletedLoreStages.Contains( this.Name ) ) {
-				return (false, true);
-			}
-
-			return (this.ArePrerequisitesMet(), this.AreAllObjectivesPreviouslyOrInAdvanceComplete());
-		}
-
-
-		public void BeginForLocalPlayer( bool forceObjectiveIncomplete ) {
+namespace AdventureModeLore.Lore.Dialogue {
+	public partial class DialogueLoreEvent : LoreEvent {
+		public override void BeginForLocalPlayer( bool forceObjectivesIncomplete ) {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NpcType );
 			int currSubStageIdx = 0;
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NpcType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					SequencedLoreEventSubStage subStage = this.GetAndAdvanceSubStage(
-						forceObjectiveIncomplete: forceObjectiveIncomplete,
+					DialogueLoreEventStage subStage = this.GetAndAdvanceSubStage(
+						forceObjectiveIncomplete: forceObjectivesIncomplete,
 						currSubStageIdx: ref currSubStageIdx,
 						isFinal: out bool isFinal
 					);
@@ -50,16 +40,16 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////////////////
 
-		private SequencedLoreEventSubStage GetAndAdvanceSubStage(
+		private DialogueLoreEventStage GetAndAdvanceSubStage(
 					bool forceObjectiveIncomplete,
 					ref int currSubStageIdx,
 					out bool isFinal ) {
-			SequencedLoreEventSubStage subStage = null;
+			DialogueLoreEventStage subStage = null;
 			
 			// Skip substages with completed objectives
-			for( ; currSubStageIdx < this.SubStages.Length; currSubStageIdx++ ) {
-				if( this.ProcessSubStage( this.SubStages[currSubStageIdx], forceObjectiveIncomplete) ) {
-					subStage = this.SubStages[currSubStageIdx];
+			for( ; currSubStageIdx < this.Stages.Length; currSubStageIdx++ ) {
+				if( this.ProcessSubStage( this.Stages[currSubStageIdx], forceObjectiveIncomplete) ) {
+					subStage = this.Stages[currSubStageIdx];
 
 					break;
 				}
@@ -68,16 +58,14 @@ namespace AdventureModeLore.Lore.Sequenced {
 			// Be ready start with the next sub stage, next time
 			currSubStageIdx++;
 
-			subStage?.OptionalAction?.Invoke();
-
-			isFinal = currSubStageIdx >= this.SubStages.Length;
+			isFinal = currSubStageIdx >= this.Stages.Length;
 			return subStage;
 		}
 
 
 		////
 
-		private bool ProcessSubStage( SequencedLoreEventSubStage subStage, bool forceObjectiveIncomplete ) {
+		private bool ProcessSubStage( DialogueLoreEventStage subStage, bool forceObjectiveIncomplete ) {
 			// No objective; dialogue only
 			if( subStage.OptionalObjective == null ) {
 				return true;
@@ -91,7 +79,7 @@ namespace AdventureModeLore.Lore.Sequenced {
 
 		////
 
-		private Objective ProcessSubStageObjective( SequencedLoreEventSubStage currSubStage, bool forceObjectiveIncomplete ) {
+		private Objective ProcessSubStageObjective( DialogueLoreEventStage currSubStage, bool forceObjectiveIncomplete ) {
 			string objectiveName = currSubStage.OptionalObjective.Title;
 
 			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) ) {

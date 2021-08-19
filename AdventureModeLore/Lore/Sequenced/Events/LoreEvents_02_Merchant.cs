@@ -1,23 +1,23 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
-using ModLibsCore.Classes.Loadable;
 using Objectives;
+using AdventureModeLore.Lore.Dialogue;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreEventManager : ILoadable {
+namespace AdventureModeLore.Lore.Sequenced.Events {
+	public partial class DialogueLoreEvents {
 		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
 
-		public static SequencedLoreEventStage LoreDefs02_Merchant => new SequencedLoreEventStage(
+		public static DialogueLoreEvent LoreDefs02_Merchant => new DialogueLoreEvent(
 			name: "Merchant Quests",
 			prereqs: new Func<bool>[] {
-				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( SequencedLoreEventManager.ObjectiveTitle_FindMerchant )
+				() => ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( DialogueLoreEvents.ObjectiveTitle_FindMerchant )
 			},
 			npcType: NPCID.Merchant,
-			subStages: new SequencedLoreEventSubStage[] {
-				new SequencedLoreEventSubStage(
+			subStages: new DialogueLoreEventStage[] {
+				new DialogueLoreEventStage(
 					dialogue: () => "I go where the money is. If you're looking for some, you'll need to find treasures."
 						+" This land itself is enchanted, and most areas can be accessed by using those special"
 						+" magic orbs found here and there. They'll often be accompanying said other treasures."

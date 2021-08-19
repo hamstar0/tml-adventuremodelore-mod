@@ -5,51 +5,50 @@ using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreEventStage {
-		public string Name { get; private set; }
-
-		public Func<bool>[] Prerequisites { get; private set; }
-
+namespace AdventureModeLore.Lore.Dialogue {
+	public partial class DialogueLoreEvent : LoreEvent {
 		public int NpcType { get; private set; }
 
-		public SequencedLoreEventSubStage[] SubStages { get; private set; }
-
-		public bool IsRepeatable { get; private set; }
+		public DialogueLoreEventStage[] Stages { get; private set; }
 
 
 
 		////////////////
 
-		public SequencedLoreEventStage(
+		public DialogueLoreEvent(
 					string name,
 					Func<bool>[] prereqs,
 					int npcType,
-					SequencedLoreEventSubStage[] subStages,
-					bool isRepeatable ) {
-			this.Name = name;
-			this.Prerequisites = prereqs;
+					DialogueLoreEventStage[] subStages,
+					bool isRepeatable )
+				: base( name, prereqs, isRepeatable ) {
 			this.NpcType = npcType;
-			this.SubStages = subStages;
-			this.IsRepeatable = isRepeatable;
+			this.Stages = subStages;
 		}
 
 
 		////
 
-		public bool ArePrerequisitesMet() {
-			foreach( Func<bool> prereq in this.Prerequisites ) {
-				if( !prereq.Invoke() ) {
-					return false;
+		public override void Initialize() {
+			foreach( DialogueLoreEventStage substage in this.Stages ) {
+				if( substage.OptionalObjective == null ) {
+					continue;
+				}
+				if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( substage.OptionalObjective.Title ) ) {
+					continue;
+				}
+
+				if( ObjectivesAPI.GetObjective( substage.OptionalObjective.Title ) == null ) {
+					ObjectivesAPI.AddObjective( substage.OptionalObjective, 0, false, out _ );
 				}
 			}
-
-			return true;
 		}
 
 
-		public bool AreAllObjectivesPreviouslyOrInAdvanceComplete() {
-			foreach( SequencedLoreEventSubStage subStage in this.SubStages ) {
+		////////////////
+
+		protected override bool HasEventFinished() {
+			foreach( DialogueLoreEventStage subStage in this.Stages ) {
 				if( subStage.OptionalObjective == null ) { continue; }
 
 				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( subStage.OptionalObjective.Title );

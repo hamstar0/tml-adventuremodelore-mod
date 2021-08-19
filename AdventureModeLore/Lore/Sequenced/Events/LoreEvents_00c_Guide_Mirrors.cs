@@ -1,15 +1,14 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
-namespace AdventureModeLore.Lore.Sequenced {
-	public partial class SequencedLoreEventManager : ILoadable {
+namespace AdventureModeLore.Lore.Sequenced.Events {
+	public partial class DialogueLoreEvents {
 		public static int CountDiscoveredMirrors() {
 			if( ModLoader.GetMod( "MountedMagicMirrors" ) != null ) {
-				return SequencedLoreEventManager.CountDiscoveredMirrors_WeakRef();
+				return DialogueLoreEvents.CountDiscoveredMirrors_WeakRef();
 			}
 			return 0;
 		}
