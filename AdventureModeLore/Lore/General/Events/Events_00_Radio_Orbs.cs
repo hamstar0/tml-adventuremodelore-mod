@@ -9,24 +9,39 @@ using Messages;
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
+		private static bool Event_Radio_Orbs_PreReq2( ref ISet<int> orbTypes ) {
+			if( orbTypes == null ) {
+				orbTypes = new HashSet<int> {
+						ModContent.ItemType<Orbs.Items.BlueOrbItem>(),
+						ModContent.ItemType<Orbs.Items.BrownOrbItem>(),
+						ModContent.ItemType<Orbs.Items.CyanOrbItem>(),
+						ModContent.ItemType<Orbs.Items.GreenOrbItem>(),
+						ModContent.ItemType<Orbs.Items.PinkOrbItem>(),
+						ModContent.ItemType<Orbs.Items.PurpleOrbItem>(),
+						ModContent.ItemType<Orbs.Items.RedOrbItem>(),
+						ModContent.ItemType<Orbs.Items.WhiteOrbItem>(),
+						ModContent.ItemType<Orbs.Items.YellowOrbItem>(),
+					};
+			}
+
+			var ot = orbTypes;
+			return Main.LocalPlayer.inventory
+				.Any( i => i?.active == true && ot.Contains( i.type ) );
+		}
+
+
+		////////////////
+
 		private static GeneralLoreEvent GetEvent_Radio_Orbs() {
-			var orbTypes = new HashSet<int> {
-				ModContent.ItemType<Orbs.Items.BlueOrbItem>(),
-				ModContent.ItemType<Orbs.Items.BrownOrbItem>(),
-				ModContent.ItemType<Orbs.Items.CyanOrbItem>(),
-				ModContent.ItemType<Orbs.Items.GreenOrbItem>(),
-				ModContent.ItemType<Orbs.Items.PinkOrbItem>(),
-				ModContent.ItemType<Orbs.Items.PurpleOrbItem>(),
-				ModContent.ItemType<Orbs.Items.RedOrbItem>(),
-				ModContent.ItemType<Orbs.Items.WhiteOrbItem>(),
-				ModContent.ItemType<Orbs.Items.YellowOrbItem>(),
-			};
+			ISet<int> orbTypes = null;
 
 			//
-
+			
 			bool PreReq() {
-				return Main.LocalPlayer.inventory
-					.Any( i => i?.active == true && orbTypes.Contains(i.type) );
+				if( ModLoader.GetMod( "Orbs" ) == null ) {
+					return false;
+				}
+				return GeneralLoreEventDefinitions.Event_Radio_Orbs_PreReq2( ref orbTypes );
 			}
 
 			//

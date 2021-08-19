@@ -2,23 +2,34 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using Messages;
 
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
+		private static bool Event_Radio_StrongGates_PreReq() {
+			Rectangle rect = Main.LocalPlayer.getRect();
+			rect.X -= 16 * 16;
+			rect.Y -= 16 * 16;
+			rect.Width += 32 * 16;
+			rect.Height += 32 * 16;
+
+			return WorldGates.WorldGatesAPI.GetGateBarriers()
+				.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
+				.Any( b => rect.Intersects( b.WorldArea ) );
+		}
+
+
+		////////////////
+
 		private static GeneralLoreEvent GetEvent_Radio_StrongGates() {
 			bool PreReq() {
-				Rectangle rect = Main.LocalPlayer.getRect();
-				rect.X -= 16 * 16;
-				rect.Y -= 16 * 16;
-				rect.Width += 32 * 16;
-				rect.Height += 32 * 16;
-
-				return WorldGates.WorldGatesAPI.GetGateBarriers()
-					.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
-					.Any( b => rect.Intersects(b.WorldArea) );
+				if( ModLoader.GetMod("WorldGates") == null ) {
+					return false;
+				}
+				return GeneralLoreEventDefinitions.Event_Radio_StrongGates_PreReq();
 			}
 
 			//
