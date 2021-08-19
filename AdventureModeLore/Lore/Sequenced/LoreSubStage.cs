@@ -4,7 +4,7 @@ using ModLibsCore.Libraries.Debug;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreSubStage {
 		public string OptionalRadio { get; private set; }
 		

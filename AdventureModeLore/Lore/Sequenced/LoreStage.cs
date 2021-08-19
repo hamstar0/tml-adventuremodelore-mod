@@ -5,7 +5,7 @@ using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreStage {
 		public string Name { get; private set; }
 

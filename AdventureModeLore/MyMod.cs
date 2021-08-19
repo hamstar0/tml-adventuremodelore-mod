@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using AdventureModeLore.Lore;
+using AdventureModeLore.Lore.Sequenced;
 
 
 namespace AdventureModeLore {

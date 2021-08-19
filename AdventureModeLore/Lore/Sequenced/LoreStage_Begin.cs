@@ -7,7 +7,7 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreStage {
 		public (bool CanBegin, bool IsDone) GetStatusForLocalPlayer() {
 			var myplayer = Main.LocalPlayer.GetModPlayer<AMLPlayer>();

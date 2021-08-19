@@ -5,7 +5,7 @@ using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreEventManager : ILoadable {
 		public static int CountDiscoveredMirrors() {
 			if( ModLoader.GetMod( "MountedMagicMirrors" ) != null ) {

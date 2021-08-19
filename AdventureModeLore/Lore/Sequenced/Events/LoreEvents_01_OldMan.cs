@@ -6,7 +6,7 @@ using Objectives;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreEventManager : ILoadable {
 		public const string ObjectiveTitle_FindMerchant = "Find A Merchant";
 		public const string ObjectiveTitle_FindJungle = "Find Jungle";

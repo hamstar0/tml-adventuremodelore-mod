@@ -53,7 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Lore\Sequenced\Events\" />
     <Folder Include="Tiles\" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.PlayerData;
 using ModLibsCore.Libraries.Debug;
 using ModLibsMaps.Services.Maps;
-using AdventureModeLore.Lore;
+using AdventureModeLore.Lore.Sequenced;
 
 
 namespace AdventureModeLore {

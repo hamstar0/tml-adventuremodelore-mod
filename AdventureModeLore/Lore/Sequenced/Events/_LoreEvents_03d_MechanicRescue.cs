@@ -6,7 +6,7 @@ using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Sequenced {
-	public partial class LoreEvents : ILoadable {
+	public partial class SequencedLoreEventManager : ILoadable {
 		public const string ObjectiveTitle_RescueMechanic = "Find Live Occupant Inside Dungeon";
 
 

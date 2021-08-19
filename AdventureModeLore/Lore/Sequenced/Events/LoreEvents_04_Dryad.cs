@@ -6,7 +6,7 @@ using ModLibsGeneral.Libraries.World;
 using Objectives.Definitions;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreEventManager : ILoadable {
 		//public const string ObjectiveTitle_DefeatEvil = "Defeat The Evil Biome's Guardian";
 		public static string ObjectiveTitle_DefeatEvil => "Defeat The "+(WorldGen.crimson?"Crimson's":"Corruption")+" Guardian";

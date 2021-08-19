@@ -8,7 +8,7 @@ using ModLibsCore.Libraries.Debug;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreEventManager : ILoadable {
 		public static void RunForLocalPlayer() {
 			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {

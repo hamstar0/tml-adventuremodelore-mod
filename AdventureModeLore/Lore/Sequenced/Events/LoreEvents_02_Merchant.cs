@@ -5,7 +5,7 @@ using ModLibsCore.Classes.Loadable;
 using Objectives;
 
 
-namespace AdventureModeLore.Lore {
+namespace AdventureModeLore.Lore.Sequenced {
 	public partial class SequencedLoreEventManager : ILoadable {
 		public const string ObjectiveTitle_FindOrb = "Find 1 of Each Orb Type";
 
