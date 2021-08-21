@@ -20,8 +20,8 @@ namespace AdventureModeLore.WorldGeneration {
 				+ "\nevades scientific comprehension. This has not yet given adaquate explaination for its"
 				+ "\neffect on things that are not of the living, however..."
 			} ),
-			( "Ectoplasm", new string[] {
-				"The environmental effects of concentrations of \"negatively-charged spiritual residue\""
+			( "Ectoplasm Volume 1", new string[] {
+				"The environmental effects of concentrations of \"neutrally-charged spiritual residue\""
 				+ "\nare numerous. Commonly called Ectoplasm, this wispy substance can animate and alter"
 				+ "\nthings around it, though often only destructively.",
 				"Large concentrations of naturally-occuring ectoplasm have been known to turn wildlife"
@@ -32,6 +32,28 @@ namespace AdventureModeLore.WorldGeneration {
 				+ "\nit to be the cause of the plague. Modern science, however, has yet to corroborate on any"
 				+ "\nof these assertions. Efforts to acquire, or even definitively confirm the presence of"
 				+ "\nthis substance, have so far proven unfruitful."
+			} ),
+			( "Ectoplasm Volume 2", new string[] {
+				"Though not much history formally exists about the island of Terraria, one need not look"
+				+ "\nfar to discern at least a few important details. All around and within the island are"
+				+ "\nto be found immaculately preserved burial urns. Tons of them. These urns contain the"
+				+ "\nremains of ancient peoples, along with assorted bits of treasure... surely not their"
+				+ "\nfull individual wealth. Maybe rather a modest deposit in hopes of some sort of barter"
+				+ "\nfor a better afterlife?",
+				"More worth noting, however, are the remains themselves. Not by any means fresh, what is of"
+				+ "\nnote is an aggregation of nigh-visible spiritual essence in corporeal form: Unspoiled"
+				+ "\nectoplasmic residue! This rare substance is poorly understood due to its elusive and"
+				+ "\ntransient nature, but what we do know is that it is a sort of \"solid state\" of"
+				+ "\nspiritual energies before the diffuse into the local environment... or otherwise"
+				+ "\nmanifest upon it. Ethics and sentiments aside, it's a shame we don't know more about"
+				+ "\nthis, as it surely is an untapped source of limitless possibilities for thaumaturgic"
+				+ "\nand meta-physical research.",
+				"Due to the island's dangerous nature, and certain difficult requirements needed before"
+				+ "\nurns could hope to be processed for any use, we've yet to actually take such steps."
+				+ "\nFurthermore, it remains a mystery as to why none of the island's, uh, other inhabitants"
+				+ "\nhave seen fit to also attempt such action. Surely even just base looting of their"
+				+ "\ntreasure contents ought to have enticed at least a few unscrupulous folk by now? What"
+				+ "\nan ominous mystery!",
 			} ),
 			( "The Island of Terraria", new string[] {
 				"The island of Terraria is a mysterious place. Although indications of a long history are"
