@@ -15,6 +15,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				GeneralLoreEventDefinitions.GetEvent_Radio_PKE(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_Settlements(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_RedBar(),
+				GeneralLoreEventDefinitions.GetEvent_Radio_UGDesert(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_Dungeon()
 			};
 		}
