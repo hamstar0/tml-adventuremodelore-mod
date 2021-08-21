@@ -8,16 +8,6 @@ using Messages;
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
-		private static bool Event_Radio_UGDesert_PreReq() {
-			int pkeType = ModContent.ItemType<PKEMeter.Items.PKEMeterItem>();
-
-			return Main.LocalPlayer.inventory
-				.Any( i => i?.active == true && i.type == pkeType );
-		}
-
-
-		////////////////
-
 		private static GeneralLoreEvent GetEvent_Radio_UGDesert() {
 			bool PreReq() {
 				return NPC.downedGoblins
