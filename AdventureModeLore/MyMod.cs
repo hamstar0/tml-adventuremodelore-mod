@@ -36,6 +36,9 @@ namespace AdventureModeLore {
 			if( ModLoader.GetMod( "PKEMeter" ) != null ) {
 				AMLMod.InitializePKE();
 			}
+			if( ModLoader.GetMod( "SpiritWalking" ) != null ) {
+				AMLMod.InitializeSpiritWalking();
+			}
 		}
 
 		////
