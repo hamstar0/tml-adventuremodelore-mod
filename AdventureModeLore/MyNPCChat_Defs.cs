@@ -36,7 +36,7 @@ namespace AdventureModeLore {
 			var guideDialogues = new List<string> {
 				"Good thing the dungeon is sealed. I hear it's blighted with an undeath curse and filled with deadly fumes!",
 				//"The people who lived here once discovered ways to wield artifacts of power, and hid their secrets around this land.",
-				"Rare magic crystals can be found hidden underground. Use your binoculars to pick up their trail. I also hear they resonate with nearby magical spell casting.",
+				//"Rare magic crystals can be found hidden underground. Use your binoculars to pick up their trail. I also hear they resonate with nearby magical spell casting.",
 				"You may find digging to be rather difficult. If you find yourself needing to squeeze into tight areas, a simple hammer might be your best tool. Odd, huh?",
 				"Not everything can be crafted. You'll have to learn to make do with what you can find or buy. Check with me for more information, if in doubt.",
 				"Need to add a few small patches or solid additions to a given area? You'll want to get your hands on some framing planks.",

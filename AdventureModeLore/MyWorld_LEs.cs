@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using ModLibsCore.Libraries.DotNET.Extensions;
 
 
 namespace AdventureModeLore {
@@ -17,12 +18,12 @@ namespace AdventureModeLore {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 			float nearestExpDist = float.MaxValue;
 
-			foreach( (int x, int y) in myworld.LostExpeditions ) {
-				var expPos = new Vector2( x * 16, y * 16 );
+			foreach( ((int x, int y) tile, bool found) in myworld.LostExpeditions ) {
+				var expPos = new Vector2( tile.x * 16, tile.y * 16 );
 				float dist = (expPos - worldPos).Length();
 
 				if( (expPos - worldPos).Length() < nearestExpDist ) {
-					nearestFEPos = (x, y);
+					nearestFEPos = tile;
 					nearestExpDist = dist;
 				}
 			}
@@ -40,10 +41,11 @@ namespace AdventureModeLore {
 
 		////////////////
 
-		public static bool RemoveExpeditionAt( int tileX, int tileY ) {
+		public static void RevealExpeditionAt( int tileX, int tileY ) {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 
-			return myworld.LostExpeditions.Remove( (tileX, tileY) );
+			myworld.LostExpeditions[ (tileX, tileY) ] = true;
+			//return myworld.LostExpeditions.Remove( (tileX, tileY) );
 		}
 	}
 }

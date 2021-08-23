@@ -27,7 +27,7 @@ namespace AdventureModeLore {
 					Main.NewText( "Lost expedition discovered!", Color.Lime );
 				}
 
-				AMLWorld.RemoveExpeditionAt( nearestFEPos.tileX, nearestFEPos.tileY );
+				AMLWorld.RevealExpeditionAt( nearestFEPos.tileX, nearestFEPos.tileY );
 			}
 		}
 	}

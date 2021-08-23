@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.ID;
 using ModLibsCore.Libraries.Debug;
 using Objectives.Definitions;
-using AdventureModeLore.Lore.Dialogues;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
@@ -13,6 +12,8 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 
 		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
 
+
+		////
 
 		public static DialogueLoreEvent GetEvent_Dialogue00_Guide() => new DialogueLoreEvent(
 			name: "Guide Quests",
@@ -31,13 +32,13 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 								if( plr?.active != true ) {
 									return false;
 								}
-
+								
 								NPC oldMan = Main.npc.FirstOrDefault( n => n.type == NPCID.OldMan );
 								if( oldMan?.active != true ) {
 									return false;
 								}
 
-								return ( plr.position - oldMan.position ).LengthSquared() < ( 256f * 256f );
+								return (plr.position - oldMan.position).LengthSquared() < (256f * 256f);
 							} );
 						}
 					)

@@ -80,7 +80,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			if( rememberLocation ) {
 				var myworld = ModContent.GetInstance<AMLWorld>();
-				myworld.LostExpeditions.Add( (chestTileX, nearFloorTileY) );
+				myworld.LostExpeditions[ (chestTileX, nearFloorTileY) ] = false;
 			}
 
 			result = "Success.";
