@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.ID;
 using ModLibsCore.Libraries.Debug;
 using Messages;
+using Messages.Definitions;
 
 
 namespace AdventureModeLore.Lore.General.Events {
@@ -17,19 +17,23 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 			
+			string msg = Message.RenderFormattedDescription( NPCID.Guide,
+				"I've just gotten a report that neutrally-aligned goblin folk"
+				+" may be found somewhere in your current vicinity. What an unusual place to find any"
+				+" civilized being... even one such as a goblin."
+				+"\n \n"
+				+"Anyway, if you want to gain access to the depths of this place, you'll need some"
+				+" tools. If you have a supply or orbs and bombs, you can use these to craft a special"
+				+" explosive designed for destroying hardened sand. There are variations of these"
+				+" explosives available for other uses, also. Don't squander your orbs, though."
+			);
 			return new GeneralLoreEvent(
 				name: "Radio - Underground Desert",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
 					MessagesAPI.AddMessage(
 						title: "About the Underground Desert",
-						description: "Guide: \"I've just gotten a report that neutrally-aligned goblin folk"
-						+" may be found somewhere in your current vicinity. What an unusual place to find any"
-						+" civilized being... even one such as a goblin.\""
-						+"\n \n\"Anyway, if you want to gain access to the depths of this place, you'll need some"
-						+" tools. If you have a supply or orbs and bombs, you can use these to craft a special"
-						+" explosive designed for destroying hardened sand. There are variations of these"
-						+" explosives available for other uses, also. Don't squander your orbs, though.\"",
+						description: msg,
 						modOfOrigin: AMLMod.Instance,
 						alertPlayer: true,
 						isImportant: true,

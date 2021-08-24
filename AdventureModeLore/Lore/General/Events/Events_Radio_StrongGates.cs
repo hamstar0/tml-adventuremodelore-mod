@@ -2,10 +2,11 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using Messages;
-
+using Messages.Definitions;
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
@@ -38,15 +39,18 @@ namespace AdventureModeLore.Lore.General.Events {
 			}
 
 			//
-
+			
+			string msg = Message.RenderFormattedDescription( NPCID.Guide,
+				"That gate is too strong for you right now. You'll need to find a way"
+				+" to increase your P.B.G's power, first."
+			);
 			return new GeneralLoreEvent(
 				name: "Radio - Strong Gates",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
 					MessagesAPI.AddMessage(
 						title: "About strong world gates",
-						description: "Guide: \"That gate is too strong for you right now. You'll need to find a way"
-							+" to increase your P.B.G's power, first.\"",
+						description: msg,
 						modOfOrigin: AMLMod.Instance,
 						alertPlayer: true,
 						isImportant: true,

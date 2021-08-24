@@ -1,8 +1,10 @@
 ﻿using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using Messages;
+using Messages.Definitions;
 
 
 namespace AdventureModeLore.Lore.General.Events {
@@ -52,16 +54,19 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
+			string msg = Message.RenderFormattedDescription( NPCID.Guide,
+				"See those flickering, gross-looking piles of bones that seem to want"
+				+" to send deadly magical skulls your way? Those can only be removed with some good"
+				+" strong mining tools... if you can safely get close enough. I'd suggest avoiding them,"
+				+" for now. Use your P.B.G to protect against their projectiles, if you can't."
+			);
 			return new GeneralLoreEvent(
 				name: "Radio - Cursed Bones",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
 					MessagesAPI.AddMessage(
 						title: "About cursed bones patches",
-						description: "Guide: \"See those flickering, gross-looking piles of bones that seem to want"
-							+" to send deadly magical skulls your way? Those can only be removed with some good"
-							+" strong mining tools... if you can safely get close enough. I'd suggest avoiding them,"
-							+" for now. Use your P.B.G to protect against their projectiles, if you can't.\"",
+						description: msg,
 						modOfOrigin: AMLMod.Instance,
 						alertPlayer: true,
 						isImportant: true,
