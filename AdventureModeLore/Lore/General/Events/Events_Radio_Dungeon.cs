@@ -15,6 +15,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
+			string id = "AML_Radio_Dungeon";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I see you've obtained safe access to that gigantic dungeon building."
 				+" And I thought it looked big on the outside! Who knows what the ancient civilizations"
@@ -35,10 +36,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						title: "About the Dungeon",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_Dungeon"
+						id: id
 					);
 				},
 				isRepeatable: false

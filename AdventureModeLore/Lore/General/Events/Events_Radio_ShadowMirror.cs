@@ -29,7 +29,8 @@ namespace AdventureModeLore.Lore.General.Events {
 			}
 
 			//
-			
+
+			string id = "AML_Radio_ShadowMirror";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Oh cool! You found a Shadow Mirror. In ancient times, these were used"
 				+" by shamen to gaze into world of spirits to try to learn secrets and know of their"
@@ -45,10 +46,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						title: "About the Shadow Mirror",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_ShadowMirror"
+						id: id
 					);
 				},
 				isRepeatable: false

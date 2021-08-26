@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Objectives;
 using Messages;
 using Messages.Definitions;
@@ -17,7 +18,8 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 			}
 
 			//
-			
+
+			string id = "AML_Radio_ManaShards2";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Listen. I've discovered something important: You remember that"
 				+" PKE meter you found earlier? I've noticed its blue gauge matches the a resonance"
@@ -38,10 +40,10 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: "About Mana Shards (2)",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_ManaShards2"
+						id: id
 					);
 				},
 				isRepeatable: false

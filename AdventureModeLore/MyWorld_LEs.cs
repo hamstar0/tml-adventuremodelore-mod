@@ -6,7 +6,9 @@ using ModLibsCore.Libraries.DotNET.Extensions;
 
 namespace AdventureModeLore {
 	partial class AMLWorld : ModWorld {
-		public static float? GaugeExpeditionsNear( Vector2 worldPos, out (int tileX, int tileY) nearestFEPos ) {
+		public static float? GaugeUnexploredExpeditionsNear(
+					Vector2 worldPos,
+					out (int tileX, int tileY) nearestFEPos ) {
 			nearestFEPos = default;
 
 			var config = AMLConfig.Instance;
@@ -19,6 +21,10 @@ namespace AdventureModeLore {
 			float nearestExpDist = float.MaxValue;
 
 			foreach( ((int x, int y) tile, bool found) in myworld.LostExpeditions ) {
+				if( found ) {
+					continue;
+				}
+
 				var expPos = new Vector2( tile.x * 16, tile.y * 16 );
 				float dist = (expPos - worldPos).Length();
 

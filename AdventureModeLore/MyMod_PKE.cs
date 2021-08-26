@@ -19,7 +19,8 @@ namespace AdventureModeLore {
 
 				if( gaugeTimer-- <= 0 ) {
 					gaugeTimer = 10;
-					lastGaugedExpeditionProximityPercent = AMLWorld.GaugeExpeditionsNear( pos, out _ ) ?? 0f;
+					lastGaugedExpeditionProximityPercent = AMLWorld.GaugeUnexploredExpeditionsNear( pos, out _ )
+						?? 0f;
 				}
 
 				existingGauge.GreenPercent = lastGaugedExpeditionProximityPercent;	// Green channel

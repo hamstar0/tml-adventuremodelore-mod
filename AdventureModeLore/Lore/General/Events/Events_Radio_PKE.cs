@@ -28,7 +28,8 @@ namespace AdventureModeLore.Lore.General.Events {
 			}
 
 			//
-			
+
+			string id = "AML_Radio_PKE";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"That's some serious tech to be hauling out here. I don't know much"
 				+" about these cyborgs, but they must also be looking for something on this island."
@@ -49,10 +50,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						title: "About the PKE Meter",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_PKE"
+						id: id
 					);
 				},
 				isRepeatable: false

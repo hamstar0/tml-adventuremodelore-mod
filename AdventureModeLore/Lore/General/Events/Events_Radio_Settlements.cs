@@ -21,7 +21,8 @@ namespace AdventureModeLore.Lore.General.Events {
 			}
 
 			//
-			
+
+			string id = "AML_Radio_Settlements";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"So many caves in this land. And so many burial urns just lying"
 				+" around. I can't tell if these are more caverns or catacombs..."
@@ -46,10 +47,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						title: "About settlements and travel",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_Settlements"
+						id: id
 					);
 				},
 				isRepeatable: false

@@ -13,14 +13,12 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		private static GeneralLoreEvent GetEvent_Radio_ManaShardHints1() {
 			bool PreReq() {
 				var myworld = ModContent.GetInstance<AMLWorld>();
-				return myworld.LostExpeditions.Count( kv => kv.Value ) >= 3;
-				//return ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(
-				//	DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant
-				//);
+				return myworld.LostExpeditions.Count(kv => kv.Value) >= 3;
 			}
 
 			//
-			
+
+			string id = "AML_Radio_ManaShards1";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I have news that might help your progress! In case you didn't"
 				+" already know, your P.B.G device isn't strong enough to create access to certain"
@@ -41,10 +39,10 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: "About Mana Shards (1)",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_ManaShards1"
+						id: id
 					);
 				},
 				isRepeatable: false

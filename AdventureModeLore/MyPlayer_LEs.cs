@@ -9,7 +9,7 @@ namespace AdventureModeLore {
 	partial class AMLPlayer : ModPlayer {
 		private void DiscoverNearbyFEsIf() {
 			(int tileX, int tileY) nearestFEPos;
-			if( AMLWorld.GaugeExpeditionsNear(this.player.MountedCenter, out nearestFEPos) == null ) {
+			if( AMLWorld.GaugeUnexploredExpeditionsNear(this.player.MountedCenter, out nearestFEPos) == null ) {
 				return;
 			}
 

@@ -54,6 +54,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
+			string id = "AML_Radio_CursedBones";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"See those flickering, gross-looking piles of bones that seem to want"
 				+" to send deadly magical skulls your way? Those can only be removed with some good"
@@ -68,10 +69,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						title: "About cursed bones patches",
 						description: msg,
 						modOfOrigin: AMLMod.Instance,
-						alertPlayer: true,
+						alertPlayer: MessagesAPI.IsUnread(id),
 						isImportant: true,
 						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: "AML_Radio_CursedBones"
+						id: id
 					);
 				},
 				isRepeatable: false
