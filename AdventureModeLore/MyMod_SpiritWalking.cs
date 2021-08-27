@@ -12,6 +12,8 @@ namespace AdventureModeLore {
 					return;
 				}
 
+				string id = "AML_SpiritWalking_WalkLore";
+
 				Messages.MessagesAPI.AddMessage(
 					title: "Break on through to the Other Side",
 					description: "In ancient times, spirit walking was a journey of one's metaphysical self to the"
@@ -32,10 +34,10 @@ namespace AdventureModeLore {
 						+"\n \nOne with a 'fortified spirit', however, is usually safe from this lethality, but still"
 						+" subject to a duration limit imposed by their Anima supply.",
 					modOfOrigin: SpiritWalking.SpiritWalkingMod.Instance,
-					alertPlayer: true,
+					alertPlayer: Messages.MessagesAPI.IsUnread(id),
 					isImportant: false,
 					parentMessage: Messages.MessagesAPI.StoryLoreCategoryMsg,
-					id: "SpiritWalking_WalkLore"
+					id: id
 				);
 			}
 

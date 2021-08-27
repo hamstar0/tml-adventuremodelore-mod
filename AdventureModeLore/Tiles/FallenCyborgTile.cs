@@ -55,6 +55,8 @@ namespace AdventureModeLore.Tiles {
 		////////////////
 
 		public override void MouseOverFar( int i, int j ) {
+			string id = "AML_Lore_FallenCyborg";
+
 			MessagesAPI.AddMessage(
 				title: "Fallen Cyborgs",
 				description: "These poor guys can sometimes be found simply lying around in the deep places of the"
@@ -65,10 +67,10 @@ namespace AdventureModeLore.Tiles {
 					+"\n \nIn the meantime, maybe a more pragmatic move would be to salvage their parts for your"
 					+" own use. They are just machines after all, right...?",
 				modOfOrigin: AMLMod.Instance,
-				alertPlayer: true,
+				alertPlayer: MessagesAPI.IsUnread(id),
 				isImportant: false,
 				parentMessage: MessagesAPI.StoryLoreCategoryMsg,
-				id: "AML_Lore_FallenCyborg"
+				id: id
 			);
 		}
 	}

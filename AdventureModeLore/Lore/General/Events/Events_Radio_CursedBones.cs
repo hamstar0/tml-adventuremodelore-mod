@@ -12,11 +12,11 @@ namespace AdventureModeLore.Lore.General.Events {
 		private static bool Event_Radio_CursedBones_PreReq( int tileRange ) {
 			int cursedBonesType = ModContent.TileType<CursedBones.Tiles.CursedBonesTile>();
 
-			int minX = (int)Main.LocalPlayer.Center.X / 16;
+			int minX = (int)Main.LocalPlayer.MountedCenter.X / 16;
 			minX -= tileRange;
 			if( minX < 0 ) { minX = 0; }
 
-			int minY = (int)Main.LocalPlayer.Center.Y / 16;
+			int minY = (int)Main.LocalPlayer.MountedCenter.Y / 16;
 			minY -= tileRange;
 			if( minY < 0 ) { minY = 0; }
 
@@ -46,10 +46,9 @@ namespace AdventureModeLore.Lore.General.Events {
 			int tileRange = 8;
 
 			bool PreReq() {
-				if( ModLoader.GetMod("CursedBones") == null ) {
-					return false;
-				}
-				return GeneralLoreEventDefinitions.Event_Radio_CursedBones_PreReq( tileRange );
+				return ModLoader.GetMod( "CursedBones" ) == null
+					? false
+					: GeneralLoreEventDefinitions.Event_Radio_CursedBones_PreReq( tileRange );
 			}
 
 			//
