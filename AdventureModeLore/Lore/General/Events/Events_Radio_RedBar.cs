@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
 
@@ -57,19 +58,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" summon it explicitly. Destroy that manifestation, and the curse should lift... for a"
 				+" time."
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Red Bar",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "Uh oh!",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "Uh oh!",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread(id),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);

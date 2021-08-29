@@ -5,8 +5,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
+
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
@@ -45,19 +47,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				"That gate is too strong for you right now. You'll need to find a way"
 				+" to increase your P.B.G's power, first."
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Strong Gates",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "About strong world gates",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "About strong world gates",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread(id),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);

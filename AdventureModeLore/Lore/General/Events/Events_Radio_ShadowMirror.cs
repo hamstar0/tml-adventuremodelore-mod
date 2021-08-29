@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
 
@@ -38,19 +39,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" the spirit world; body and soul. Be warned: Entering that dark world may come at a"
 				+" cost to your soul!"
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Shadow Mirror",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "About the Shadow Mirror",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "About the Shadow Mirror",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread(id),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);

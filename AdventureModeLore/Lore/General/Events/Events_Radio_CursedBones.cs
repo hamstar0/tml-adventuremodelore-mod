@@ -29,13 +29,12 @@ namespace AdventureModeLore.Lore.General.Events {
 			for( int tileX = minX; tileX < maxX; tileX++ ) {
 				for( int tileY = minY; tileY < maxY; tileY++ ) {
 					Tile tile = Main.tile[tileX, tileY];
-					if( tile?.active() != true ) { continue; }
-
-					if( tile.type == cursedBonesType ) {
+					if( tile?.active() == true && tile.type == cursedBonesType ) {
 						return true;
 					}
 				}
 			}
+
 			return false;
 		}
 
@@ -43,7 +42,7 @@ namespace AdventureModeLore.Lore.General.Events {
 		////////////////
 
 		private static GeneralLoreEvent GetEvent_Radio_CursedBones() {
-			int tileRange = 8;
+			int tileRange = 12;
 
 			bool PreReq() {
 				return ModLoader.GetMod( "CursedBones" ) == null
@@ -60,6 +59,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" strong mining tools... if you can safely get close enough. I'd suggest avoiding them,"
 				+" for now. Use your P.B.G to protect against their projectiles, if you can't."
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Cursed Bones",
 				prereqs: new Func<bool>[] { PreReq },

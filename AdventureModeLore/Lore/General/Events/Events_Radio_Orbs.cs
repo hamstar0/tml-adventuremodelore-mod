@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
 
@@ -62,19 +63,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" harmonization causes solid matter extrusion and displacement from the occupying"
 				+" spiritual media, which then immediately disperses into the surroundings."
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Orbs",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "About Orbs usage",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "About Orbs usage",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread(id),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);

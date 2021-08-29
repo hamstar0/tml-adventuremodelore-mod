@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
 
@@ -28,19 +29,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" explosive designed for destroying hardened sand. There are variations of these"
 				+" explosives available for other uses, also. Don't squander your orbs, though."
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Underground Desert",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "About the Underground Desert",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "About the Underground Desert",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread(id),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);

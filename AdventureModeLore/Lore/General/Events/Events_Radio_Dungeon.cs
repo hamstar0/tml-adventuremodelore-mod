@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
 
@@ -28,19 +29,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" The powerful spiritual presence of this place may even adversely affect your own"
 				+" spiritual state. Do not linger longer than needed!"
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Dungeon",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "About the Dungeon",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "About the Dungeon",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread( id ),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);

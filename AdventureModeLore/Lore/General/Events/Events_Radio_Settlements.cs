@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using ModLibsGeneral.Libraries.World;
 using Messages;
 using Messages.Definitions;
@@ -39,19 +40,23 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" more. We'll need a large, thorough mirror network if our quest is going to"
 				+" succeed."
 			);
+
 			return new GeneralLoreEvent(
 				name: "Radio - Settlements",
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
-					MessagesAPI.AddMessage(
-						title: "About settlements and travel",
-						description: msg,
-						modOfOrigin: AMLMod.Instance,
-						alertPlayer: MessagesAPI.IsUnread(id),
-						isImportant: true,
-						parentMessage: MessagesAPI.EventsCategoryMsg,
-						id: id
-					);
+					Timers.SetTimer( 60 * 5, false, () => {
+						MessagesAPI.AddMessage(
+							title: "About settlements and travel",
+							description: msg,
+							modOfOrigin: AMLMod.Instance,
+							alertPlayer: MessagesAPI.IsUnread(id),
+							isImportant: true,
+							parentMessage: MessagesAPI.EventsCategoryMsg,
+							id: id
+						);
+						return false;
+					} );
 				},
 				isRepeatable: false
 			);
