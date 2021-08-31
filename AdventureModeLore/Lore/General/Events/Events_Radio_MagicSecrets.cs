@@ -20,7 +20,7 @@ namespace AdventureModeLore.Lore.General.Events {
 			//
 
 			string id = "AML_Radio_MagicSecrets";
-			string msg = Message.RenderFormattedDescription( NPCID.Guide,
+			string msg = Message.RenderFormattedDescription( NPCID.OldMan,
 				"Is this thing what you kids are using to talk with? I don't know what sort of quest you're on"
 				+" exactly, but I do know this: This island is full of buried secrets. Someone clearly thought they"
 				+" should stay buried. How do you think I get to be stuck here like I am, for example? Just a fair"
