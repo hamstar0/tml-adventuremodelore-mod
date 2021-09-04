@@ -42,7 +42,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
-			string id = "AML_Radio_StrongGates";
+			string msgId = "AML_Radio_StrongGates";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"That gate is too strong for you right now. You'll need to find a way"
 				+" to increase your P.B.G's power, first."
@@ -57,10 +57,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About strong world gates",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

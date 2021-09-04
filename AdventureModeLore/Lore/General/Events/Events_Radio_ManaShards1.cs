@@ -18,7 +18,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
-			string id = "AML_Radio_ManaShards1";
+			string msgId = "AML_Radio_ManaShards1";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I have news that might help your progress! In case you didn't"
 				+" already know, your P.B.G device isn't strong enough to create access to certain"
@@ -41,10 +41,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About Mana Shards (1)",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

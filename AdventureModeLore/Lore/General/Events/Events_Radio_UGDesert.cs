@@ -18,7 +18,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
-			string id = "AML_Radio_UGDesert";
+			string msgId = "AML_Radio_UGDesert";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I've just gotten a report that neutrally-aligned goblin folk"
 				+" may be found somewhere in your current vicinity. What an unusual place to find any"
@@ -39,10 +39,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About the Underground Desert",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

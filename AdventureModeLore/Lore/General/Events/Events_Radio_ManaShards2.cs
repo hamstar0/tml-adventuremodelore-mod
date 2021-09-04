@@ -1,25 +1,48 @@
 ﻿using System;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
+using ModLibsCore.Services.Timers;
 using Objectives;
 using Messages;
 using Messages.Definitions;
-using ModLibsCore.Services.Timers;
 using AdventureModeLore.Lore.Dialogues.Events;
 
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
+		private static bool Event_Radio_ManaShardHints2_PreReq() {
+			bool hasMerch = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(
+				DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant
+			);
+			if( !hasMerch ) {
+				return false;
+			}
+
+			int pkeType = ModContent.ItemType<PKEMeter.Items.PKEMeterItem>();
+			return Main.LocalPlayer.inventory
+				.Any( i => i?.active == true && i.type == pkeType );
+		}
+
+
+		////////////////
+
 		private static GeneralLoreEvent GetEvent_Radio_ManaShardHints2() {
 			bool PreReq() {
-				return ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(
-					DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant
-				);
+				if( ModLoader.GetMod("PKEMeter") == null ) {
+					return false;
+				}
+				if( ModLoader.GetMod("FindableManaCrystals") == null ) {
+					return false;
+				}
+
+				return GeneralLoreEventDefinitions.Event_Radio_ManaShardHints2_PreReq();
 			}
 
 			//
 
-			string id = "AML_Radio_ManaShards2";
+			string msgId = "AML_Radio_ManaShards2";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Listen. I've discovered something important: You remember that"
 				+" PKE meter you found earlier? I've noticed its blue gauge matches a resonance"
@@ -42,10 +65,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About Mana Shards (2)",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

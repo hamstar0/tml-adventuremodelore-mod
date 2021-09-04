@@ -41,7 +41,7 @@ namespace AdventureModeLore.Lore.General.Events {
 			//
 			
 			bool PreReq() {
-				if( ModLoader.GetMod( "Orbs" ) == null ) {
+				if( ModLoader.GetMod("Orbs") == null ) {
 					return false;
 				}
 				return GeneralLoreEventDefinitions.Event_Radio_Orbs_PreReq( ref orbTypes );
@@ -49,7 +49,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
-			string id = "AML_Radio_Orbs";
+			string msgId = "AML_Radio_Orbs";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I see you've found an Orb. You can use those to open passages to"
 				+" underground areas you'd not normally be able to reach. Simply holding the orb will"
@@ -73,10 +73,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About Orbs usage",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

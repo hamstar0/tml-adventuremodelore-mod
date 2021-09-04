@@ -19,7 +19,7 @@ namespace AdventureModeLore.Lore.General.Events {
 			
 			//
 
-			string id = "AML_Radio_MagicSecrets";
+			string msgId = "AML_Radio_MagicSecrets";
 			string msg = Message.RenderFormattedDescription( NPCID.OldMan,
 				"Is this thing what you kids are using to talk with? I don't know what sort of quest you're on"
 				+" exactly, but I do know this: This island is full of buried secrets. Someone clearly thought they"
@@ -42,10 +42,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About Magic Secrets",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

@@ -27,7 +27,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
-			string id = "AML_Radio_AnimaEmpty";
+			string msgId = "AML_Radio_AnimaEmpty";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Hey be careful! If you spend too much time in dark and dingey places in this land, it'll have"
 				+" a way of getting to you. You look like you're a bit down in the dumps, presently. That's called"
@@ -50,10 +50,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "About your Anima",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );

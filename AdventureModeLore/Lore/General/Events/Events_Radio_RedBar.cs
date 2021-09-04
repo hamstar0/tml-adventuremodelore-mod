@@ -37,7 +37,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			//
 
-			string id = "AML_Radio_RedBar";
+			string msgId = "AML_Radio_RedBar";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I have some bad news! Your orbs seem to be non-function, currently."
 				+"\n \n"
@@ -68,10 +68,10 @@ namespace AdventureModeLore.Lore.General.Events {
 							title: "Uh oh!",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(id),
+							alertPlayer: MessagesAPI.IsUnread(msgId),
 							isImportant: true,
 							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: id
+							id: msgId
 						);
 						return false;
 					} );
