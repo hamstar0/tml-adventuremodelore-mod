@@ -19,7 +19,9 @@ namespace AdventureModeLore.Lore.General.Events {
 				GeneralLoreEventDefinitions.GetEvent_Radio_Dungeon(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_ManaShardHints1(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_ManaShardHints2(),
-				GeneralLoreEventDefinitions.GetEvent_Radio_MagicSecrets()
+				GeneralLoreEventDefinitions.GetEvent_Radio_MagicSecrets(),
+				GeneralLoreEventDefinitions.GetEvent_Radio_AnimaEmpty(),
+				GeneralLoreEventDefinitions.GetEvent_Radio_LostExpeditions()
 			};
 		}
 	}

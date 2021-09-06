@@ -16,7 +16,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 
 		////////////////
-
+		
 		private static GeneralLoreEvent GetEvent_Radio_AnimaEmpty() {
 			bool PreReq() {
 				if( ModLoader.GetMod("Necrotis") == null ) {
