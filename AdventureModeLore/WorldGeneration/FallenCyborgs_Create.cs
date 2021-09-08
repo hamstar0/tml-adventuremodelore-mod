@@ -29,10 +29,12 @@ namespace AdventureModeLore.WorldGeneration {
 					LogLibraries.Log( "Placed cyborg ("+cybCount+" of "+count+")" );
 					progress.Value = (float)cybCount / ( (float)count + 2f );
 				} else {
-					LogLibraries.Log( "Failed to place cyborg ("+cybCount+" of "+count+")"
-					//	+"\n  "+Main.tile[x-1, nearFloorY-1].ToString()+", "+Main.tile[x, nearFloorY-1].ToString()+", "+Main.tile[x+1, nearFloorY-1].ToString()
-					//	+"\n  "+Main.tile[x-1, nearFloorY].ToString()+", "+Main.tile[x, nearFloorY].ToString()+", "+Main.tile[x+1, nearFloorY].ToString()
-					);
+					if( AMLConfig.Instance.DebugModeMiscInfo ) {
+						LogLibraries.Log( "Failed to place cyborg ("+cybCount+" of "+count+")"
+							//	+"\n  "+Main.tile[x-1, nearFloorY-1].ToString()+", "+Main.tile[x, nearFloorY-1].ToString()+", "+Main.tile[x+1, nearFloorY-1].ToString()
+							//	+"\n  "+Main.tile[x-1, nearFloorY].ToString()+", "+Main.tile[x, nearFloorY].ToString()+", "+Main.tile[x+1, nearFloorY].ToString()
+						);
+					}
 					cybCount--;
 				}
 			}

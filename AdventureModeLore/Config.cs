@@ -17,6 +17,8 @@ namespace AdventureModeLore {
 
 		////////////////
 
+		public bool DebugModeMiscInfo { get; set; } = false;
+
 		public bool DebugModeLostExpeditionsReveal { get; set; } = false;
 
 		////

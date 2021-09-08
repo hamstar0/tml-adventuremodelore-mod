@@ -65,7 +65,7 @@ namespace AdventureModeLore.Tiles {
 					+" presence on here cannot be directly discerned. Are they friendly? Are they here to combat"
 					+" the plague? Hopefully time will tell!"
 					+"\n \nIn the meantime, maybe a more pragmatic move would be to salvage their parts for your"
-					+" own use. They are just machines after all, right...?",
+					+" own use. They are just machines after all... right?",
 				modOfOrigin: AMLMod.Instance,
 				alertPlayer: MessagesAPI.IsUnread(id),
 				isImportant: false,
