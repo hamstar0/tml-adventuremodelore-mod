@@ -55,6 +55,8 @@ namespace AdventureModeLore.Lore {
 		public void InitializeOnCurrentPlayerEnter() {
 			this.Events.Clear();
 
+			GeneralLoreEventDefinitions.Initialize();
+
 			this.Events.AddRange( DialogueLoreEventDefinitions.GetDefinitions() );
 			this.Events.AddRange( GeneralLoreEventDefinitions.GetDefinitions() );
 

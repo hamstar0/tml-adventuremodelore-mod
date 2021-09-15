@@ -22,14 +22,16 @@ namespace AdventureModeLore {
 		private int _CheckTimer = 0;
 
 
+		////////////////
+
+		public bool HasFurnishedAHouse { get; internal set; } = false;
+
+
 
 		////////////////
 
-		public AMLMod() {
-			AMLMod.Instance = this;
-		}
-
 		public override void Load() {
+			AMLMod.Instance = this;
 		}
 
 		public override void PostSetupContent() {
