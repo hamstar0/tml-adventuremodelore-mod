@@ -12,6 +12,10 @@ namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static GeneralLoreEvent GetEvent_Radio_ManaShardHints1() {
 			bool PreReq() {
+				if( ModLoader.GetMod("FindableManaCrystals") == null ) {
+					return false;
+				}
+
 				var myworld = ModContent.GetInstance<AMLWorld>();
 				return myworld.LostExpeditions.Count(kv => kv.Value) >= 3;
 			}

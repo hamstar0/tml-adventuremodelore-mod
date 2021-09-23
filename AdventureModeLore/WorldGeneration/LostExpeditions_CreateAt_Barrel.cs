@@ -15,22 +15,32 @@ namespace AdventureModeLore.WorldGeneration {
 			);
 		}
 
-		private static Item CreateSpeedloaderItem() {
-			if( ModLoader.GetMod( "TheMadRanger" ) == null ) {
-				return null;
-			}
 
+		////
+
+		private static Item CreateSpeedloaderItem() {
+			if( ModLoader.GetMod("TheMadRanger") != null ) {
+				return LostExpeditionsGen.CreateSpeedloaderItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static Item CreateSpeedloaderItem_WeakRef() {
 			var item = new Item();
 			item.SetDefaults( ModContent.ItemType<TheMadRanger.Items.SpeedloaderItem>(), true );
 
 			return item;
 		}
 
-		private static Item CreateOrbItem() {
-			if( ModLoader.GetMod( "Orbs" ) == null ) {
-				return null;
-			}
 
+		private static Item CreateOrbItem() {
+			if( ModLoader.GetMod("Orbs") != null ) {
+				return LostExpeditionsGen.CreateOrbItem_WeakRef();
+			}
+			return default;
+		}
+		
+		private static Item CreateOrbItem_WeakRef() {
 			var item = new Item();
 			/*switch( WorldGen.genRand.Next(8) ) {
 			case 0:
@@ -63,22 +73,30 @@ namespace AdventureModeLore.WorldGeneration {
 			return item;
 		}
 
-		private static Item CreateCanopicJarItem() {
-			if( ModLoader.GetMod("Necrotis") == null ) {
-				return null;
-			}
 
+		private static Item CreateCanopicJarItem() {
+			if( ModLoader.GetMod("Necrotis") != null ) {
+				return LostExpeditionsGen.CreateCanopicJarItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static Item CreateCanopicJarItem_WeakRef() {
 			var item = new Item();
 			item.SetDefaults( ModContent.ItemType<Necrotis.Items.EmptyCanopicJarItem>(), true );
 
 			return item;
 		}
 
-		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItem() {
-			if( ModLoader.GetMod( "PKEMeter" ) == null ) {
-				return null;
-			}
 
+		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItem() {
+			if( ModLoader.GetMod("PKEMeter") != null ) {
+				return LostExpeditionsGen.CreatePKEMeterItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItem_WeakRef() {
 			var meterItem = new Item();
 			meterItem.SetDefaults( ModContent.ItemType<PKEMeter.Items.PKEMeterItem>(), true );
 
@@ -95,11 +113,15 @@ namespace AdventureModeLore.WorldGeneration {
 			return (meterItem, missionItem, manualItem);
 		}
 
-		private static Item CreateShadowMirrorItem() {
-			if( ModLoader.GetMod( "SpiritWalking" ) == null ) {
-				return null;
-			}
 
+		private static Item CreateShadowMirrorItem() {
+			if( ModLoader.GetMod("SpiritWalking") != null ) {
+				return LostExpeditionsGen.CreateShadowMirrorItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static Item CreateShadowMirrorItem_WeakRef() {
 			var mirrorItem = new Item();
 			mirrorItem.SetDefaults( ModContent.ItemType<SpiritWalking.Items.ShadowMirrorItem>(), true );
 
@@ -121,7 +143,7 @@ namespace AdventureModeLore.WorldGeneration {
 					bool hasPKEMeter,
 					bool hasShadowMirror ) {
 			if( chestIdx == -1 ) {
-				LogLibraries.Warn( "Could not fill 'lost expedition' barrel at " + tileX+", "+nearFloorTileY+"." );
+				LogLibraries.Warn( "Could not fill 'lost expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
 				return;
 			}
 
@@ -135,13 +157,13 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 			}
 			for( int i=0; i<speedloaderCount; i++ ) {
-				Item newItem = LostExpeditionsGen.CreateSpeedloaderItem();
+				Item newItem = LostExpeditionsGen.CreateSpeedloaderItem_WeakRef();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
 			for( int i=0; i<orbCount; i++ ) {
-				Item newItem = LostExpeditionsGen.CreateOrbItem();
+				Item newItem = LostExpeditionsGen.CreateOrbItem_WeakRef();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}

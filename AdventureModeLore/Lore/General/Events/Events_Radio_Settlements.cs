@@ -25,8 +25,8 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_Settlements";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"So many caves in this land. And so many burial urns just lying"
-				+" around. I can't tell if these are more caverns or catacombs..."
+				"So many caves in this land. And so many burial urns just lying around. I can't tell if these are more caverns or"
+				+" catacombs..."
 				+"\n \n"
 				+"I have it on good authority that we'll need to search these as deeply as"
 				+" possible. We'll need transport, lodging, and amenities as we go. Remember those"

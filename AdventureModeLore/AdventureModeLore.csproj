@@ -18,6 +18,9 @@
     <Reference Include="CursedBones">
       <HintPath>..\..\..\Cursed Bones\Project\CursedBones\bin\Release\net452\CursedBones.dll</HintPath>
     </Reference>
+    <Reference Include="CursedBrambles">
+      <HintPath>..\..\..\Cursed Brambles\Project\CursedBrambles\bin\Release\net452\CursedBrambles.dll</HintPath>
+    </Reference>
     <Reference Include="Ergophobia">
       <HintPath>..\..\..\Ergophobia\Project\Ergophobia\bin\Release\net452\Ergophobia.dll</HintPath>
     </Reference>
@@ -62,6 +65,9 @@
     </Reference>
     <Reference Include="TheMadRanger">
       <HintPath>..\..\..\The Mad Ranger\Project\TheMadRanger\bin\Release\net452\TheMadRanger.dll</HintPath>
+    </Reference>
+    <Reference Include="TheTrickster">
+      <HintPath>..\..\..\The Trickster\Project\TheTrickster\bin\Release\net452\TheTrickster.dll</HintPath>
     </Reference>
     <Reference Include="WorldGates">
       <HintPath>..\..\..\World Gates\Project\WorldGates\bin\Release\net452\WorldGates.dll</HintPath>
