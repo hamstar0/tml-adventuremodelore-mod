@@ -24,16 +24,14 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_ManaShards1";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"I have news that might help your progress! In case you didn't"
-				+" already know, your P.B.G device isn't strong enough to create access to certain"
-				+" areas of this island. But I have found the solution! You will need to increase your"
-				+" magic wielding proficiency. Allow me to explain:"
+				"I have news that might help your progress! In case you didn't already know, your P.B.G device isn't strong enough"
+				+" to create access to certain areas of this island. This is because your magical proficiency isn't high enough to"
+				+" give it the power it needs."
 				+"\n \n"
-				+"Hidden around the island are pieces of a crystaline substance known as Mana"
-				+" Shards. They are not visible to the naked eye, but can occasionally be found on"
-				+" floors, walls, and ceilings. You should be able to be extracted them with basic"
-				+" mining tools. I can't tell you yet how to go about detecting these reliably, but"
-				+" keep your eyes peeled for clues!"
+				+"Fret not! If the ancient civilizations of this land were able to discover and master magic, you may be able to as"
+				+" well. The secret to doing so must be somewhere in this land... or maybe even the land itself. You might try"
+				+" seaching for hidden magical phenomena within caves and grottos. Keep your eyes open for ways to detect such"
+				+" things."
 			);
 
 			return new GeneralLoreEvent(
@@ -42,7 +40,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				myevent: () => {
 					Timers.SetTimer( 60 * 5, false, () => {
 						MessagesAPI.AddMessage(
-							title: "About Mana Shards (1)",
+							title: "About Mana Shards",
 							description: msg,
 							modOfOrigin: AMLMod.Instance,
 							alertPlayer: MessagesAPI.IsUnread(msgId),
