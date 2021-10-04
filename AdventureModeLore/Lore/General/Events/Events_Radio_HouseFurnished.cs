@@ -22,9 +22,9 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_HouseFurnished";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"We'll need to establish more houses if we plan to have the support we need. Each house has its own"
-				+" mirror you can use for travel. We'll need to spread these around as much as possible to"
-				+" to accomplish our missions. These kits aren't cheap, so use them wisely!"
+				"We'll need to establish more houses if we plan to have the support we need. Remember each house has its own"
+				+" [c/88FF88:mirror you can use for travel]. We'll need to spread these around as much as possible to accomplish"
+				+" our missions. These furnishing kits aren't cheap, so use them wisely!"
 			);
 
 			return new GeneralLoreEvent(

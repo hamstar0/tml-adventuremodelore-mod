@@ -18,11 +18,10 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_Dungeon";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"I see you've obtained safe access to that gigantic dungeon building."
-				+" And I thought it looked big on the outside! Who knows what the ancient civilizations"
-				+" used this monstrous building for..."
+				"I see you've obtained access to that gigantic dungeon building. And I thought it looked big on the outside!"
+				+" Who knows what the ancient civilizations used this monstrous building for..."
 				+"\n \n"
-				+"YOU'RE here to use this building for getting answers to this plague business."
+				+"YOU'RE here to use this building for getting answers to our plague business."
 				+" Having confirmed a massive PKE reading from this structure, it's safe to assume there's"
 				+" going to be something to learn from here... and to fear! This place is absolutely"
 				+" teaming with dark energies, and I swear there's noises coming from within, as well."

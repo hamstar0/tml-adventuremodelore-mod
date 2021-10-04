@@ -35,9 +35,9 @@ namespace AdventureModeLore.Lore.General.Events {
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Oh cool! You found a Shadow Mirror. In ancient times, these were used"
 				+" by shamen to gaze into world of spirits to try to learn secrets and know of their"
-				+" fortunes. YOU, however, have a special gift that lets you use them to actually enter"
-				+" the spirit world; body and soul. Be warned: Entering that dark world may come at a"
-				+" cost to your soul!"
+				+" fortunes. YOU, however, have a special gift that lets you use them to actually [c/88FF88:enter"
+				+" the spirit world; body and soul]. Be warned: Entering that dark world may come at a"
+				+" [c/88FF88:cost to your soul]!"
 			);
 
 			return new GeneralLoreEvent(

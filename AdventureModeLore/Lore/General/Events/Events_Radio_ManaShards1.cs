@@ -26,12 +26,12 @@ namespace AdventureModeLore.Lore.General.Events {
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I have news that might help your progress! In case you didn't already know, your P.B.G device isn't strong enough"
 				+" to create access to certain areas of this island. This is because your magical proficiency isn't high enough to"
-				+" give it the power it needs."
+				+" give it the [c/88FF88:power it needs]."
 				+"\n \n"
 				+"Fret not! If the ancient civilizations of this land were able to discover and master magic, you may be able to as"
 				+" well. The secret to doing so must be somewhere in this land... or maybe even the land itself. You might try"
-				+" seaching for hidden magical phenomena within caves and grottos. Keep your eyes open for ways to detect such"
-				+" things."
+				+" seaching for [c/88FF88:hidden magical phenomena] within caves and grottos. Keep your eyes open for [c/88FF88:ways"
+				+" to detect such things]."
 			);
 
 			return new GeneralLoreEvent(
