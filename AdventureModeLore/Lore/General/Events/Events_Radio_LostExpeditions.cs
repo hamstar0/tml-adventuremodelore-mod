@@ -42,9 +42,13 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_LostExpeditions";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
+				"According to your PKE meter, you're getting close to something. Observe your green meter, and follow"
+				+" it's signal. If my hunch is correct, you may find something important to your mission!"
+			);
+			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"According to your PKE meter, you're getting close to something. [c/88FF88:Observe your green meter, and follow"
 				+" it's signal]. If my hunch is correct, you may find something important to your mission!"
-			);
+			);*/
 
 			return new GeneralLoreEvent(
 				name: "Radio - Lost Expeditions",

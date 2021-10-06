@@ -33,6 +33,8 @@ namespace AdventureModeLore.WorldGeneration {
 		}
 
 
+		////
+
 		private static Item CreateOrbItem() {
 			if( ModLoader.GetMod("Orbs") != null ) {
 				return LostExpeditionsGen.CreateOrbItem_WeakRef();
@@ -74,6 +76,8 @@ namespace AdventureModeLore.WorldGeneration {
 		}
 
 
+		////
+
 		private static Item CreateCanopicJarItem() {
 			if( ModLoader.GetMod("Necrotis") != null ) {
 				return LostExpeditionsGen.CreateCanopicJarItem_WeakRef();
@@ -88,6 +92,23 @@ namespace AdventureModeLore.WorldGeneration {
 			return item;
 		}
 
+		////
+
+		private static Item CreateElixirOfLifeItem() {
+			if( ModLoader.GetMod("Necrotis") != null ) {
+				return LostExpeditionsGen.CreateElixirOfLifeItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static Item CreateElixirOfLifeItem_WeakRef() {
+			var item = new Item();
+			item.SetDefaults( ModContent.ItemType<Necrotis.Items.ElixirOfLifeItem>(), true );
+
+			return item;
+		}
+
+		////
 
 		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItem() {
 			if( ModLoader.GetMod("PKEMeter") != null ) {
@@ -113,6 +134,8 @@ namespace AdventureModeLore.WorldGeneration {
 			return (meterItem, missionItem, manualItem);
 		}
 
+
+		////
 
 		private static Item CreateShadowMirrorItem() {
 			if( ModLoader.GetMod("SpiritWalking") != null ) {
@@ -140,6 +163,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int speedloaderCount,
 					int orbCount,
 					int canopicJarCount,
+					int elixirCount,
 					bool hasPKEMeter,
 					bool hasShadowMirror ) {
 			if( chestIdx == -1 ) {
@@ -170,6 +194,12 @@ namespace AdventureModeLore.WorldGeneration {
 			}
 			for( int i=0; i<canopicJarCount; i++ ) {
 				Item newItem = LostExpeditionsGen.CreateCanopicJarItem();
+				if( newItem != null ) {
+					chest[itemIdx++] = newItem;
+				}
+			}
+			for( int i=0; i<elixirCount; i++ ) {
+				Item newItem = LostExpeditionsGen.CreateElixirOfLifeItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}

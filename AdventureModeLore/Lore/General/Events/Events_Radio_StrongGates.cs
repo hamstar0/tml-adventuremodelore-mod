@@ -26,7 +26,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			return WorldGates.WorldGatesAPI.GetGateBarriers()
 				.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
-				.Any( b => rect.Intersects( b.WorldArea ) );
+				.Any( b => rect.Intersects( b.TileArea ) );
 		}
 
 
@@ -44,9 +44,13 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_StrongGates";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"That gate is too strong for you right now. You'll need to find a way to [c/88FF88:increase your P.B.G's power],"
+				"That gate is too strong for you right now. You'll need to find a way to increase your P.B.G's power,"
 				+" first."
 			);
+			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
+				"That gate is too strong for you right now. You'll need to find a way to [c/88FF88:increase your P.B.G's power],"
+				+" first."
+			);*/
 
 			return new GeneralLoreEvent(
 				name: "Radio - Strong Gates",

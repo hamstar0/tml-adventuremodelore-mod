@@ -51,6 +51,18 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_Orbs";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
+				"I see you've found an Orb. You can use those to open passages to underground areas you'd not normally"
+				+" be able to reach. Simply holding the orb will reveal any nearby chunks of terrain that can be removed by"
+				+" orbs of its given color. Special seeing instruments can also reveal more terrain color details from"
+				+" afar."
+				+"\n \n"
+				+"In technical terms, we call these 'Geo-Resonant Orbs' because they resonate with the ambient composition of"
+				+" soil-borne psychomagnotheric materials of a matching spiritual attenuation frequency. Upon contact, the"
+				+" resulting frequency harmonization causes solid matter extrusion and displacement from the occupying spiritual"
+				+" media, which then immediately disperses into the surroundings. In short, this creates voids or passages, which"
+				+" then permit access."
+			);
+			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I see you've found an Orb. You can use those to [c/88FF88:open passages to underground areas you'd not normally"
 				+" be able to reach]. Simply holding the orb will reveal any nearby chunks of terrain that can be removed by"
 				+" [c/88FF88:orbs of its given color]. Special seeing instruments can also reveal more terrain color details from"
@@ -61,7 +73,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" resulting frequency harmonization causes solid matter extrusion and displacement from the occupying spiritual"
 				+" media, which then immediately disperses into the surroundings. In short, this creates voids or passages, which"
 				+" then permit access."
-			);
+			);*/
 
 			return new GeneralLoreEvent(
 				name: "Radio - Orbs",

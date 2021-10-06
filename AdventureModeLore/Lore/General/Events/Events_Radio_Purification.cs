@@ -21,9 +21,14 @@ namespace AdventureModeLore.Lore.General.Events {
 			string msgId = "AML_Radio_Purification";
 			string msg = Message.RenderFormattedDescription( NPCID.Dryad,
 				"Are you trying to help save this world? You'll need my help! You cannot hope to penetrate the nasty"
-				+" "+evil+" growth of this land by the usual means. You'll need my [c/88FF88:purification powder] to have a"
+				+" "+evil+" growth of this land by the usual means. You'll need my purification powder to have a"
 				+" chance to break through. Use it."
 			);
+			/*string msg = Message.RenderFormattedDescription( NPCID.Dryad,
+				"Are you trying to help save this world? You'll need my help! You cannot hope to penetrate the nasty"
+				+" "+evil+" growth of this land by the usual means. You'll need my [c/88FF88:purification powder] to have a"
+				+" chance to break through. Use it."
+			);*/
 
 			return new GeneralLoreEvent(
 				name: "Radio - Purification",
