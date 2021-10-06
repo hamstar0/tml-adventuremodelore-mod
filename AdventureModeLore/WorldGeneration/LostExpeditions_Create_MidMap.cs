@@ -49,6 +49,7 @@ namespace AdventureModeLore.WorldGeneration {
 				speedloaderCount: 0,
 				orbCount: 0,
 				canopicJarCount: 0,
+				elixirCount: 0,
 				hasPKEMeter: true,
 				hasShadowMirror: false
 			);
