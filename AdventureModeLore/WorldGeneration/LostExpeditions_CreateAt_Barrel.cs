@@ -110,6 +110,22 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
+		private static Item CreateMountedMirrorItem() {
+			if( ModLoader.GetMod("MountedMagicMirrors") != null ) {
+				return LostExpeditionsGen.CreateMountedMirrorItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static Item CreateMountedMirrorItem_WeakRef() {
+			var item = new Item();
+			item.SetDefaults( ModContent.ItemType<MountedMagicMirrors.Items.MountableMagicMirrorTileItem>(), true );
+
+			return item;
+		}
+
+		////
+
 		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItem() {
 			if( ModLoader.GetMod("PKEMeter") != null ) {
 				return LostExpeditionsGen.CreatePKEMeterItem_WeakRef();
@@ -164,6 +180,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int orbCount,
 					int canopicJarCount,
 					int elixirCount,
+					int mountedMirrorsCount,
 					bool hasPKEMeter,
 					bool hasShadowMirror ) {
 			if( chestIdx == -1 ) {
@@ -200,6 +217,12 @@ namespace AdventureModeLore.WorldGeneration {
 			}
 			for( int i=0; i<elixirCount; i++ ) {
 				Item newItem = LostExpeditionsGen.CreateElixirOfLifeItem();
+				if( newItem != null ) {
+					chest[itemIdx++] = newItem;
+				}
+			}
+			for( int i=0; i<mountedMirrorsCount; i++ ) {
+				Item newItem = LostExpeditionsGen.CreateMountedMirrorItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}

@@ -29,15 +29,15 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_AnimaEmpty";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"Hey be careful! If you spend too much time in dark and dingey places in this land, it'll have a way of getting"
-				+" to you. You look like you're a bit down in the dumps, presently. That's called Necrotis: The symptom most"
-				+" commonly associated with the undeath plague. Get clear of the area you're in when it starts getting"
-				+" too severe. Your anima meter shows how close you are to becoming afflicted."
+				"Hey be careful! If you spend too much time in dark and dingey places, it'll start to get to you. The effect"
+				+" is called Necrotis: The symptom most commonly associated with the undeath plague. Go and find some fresh air"
+				+" and open, well-lit spaces if your symptoms start getting too severe. Your anima meter shows how close you are"
+				+" to becoming afflicted."
 				+"\n \n"
-				+"You might be able to recover your status if you can extract from a pure spiritual energy source"
-				+" somewhere in your vicinity. You'll commonly find this on this island in the form of ectoplasmic"
-				+" residue located within burial containers. Though grave robbing is usually frowned upon, I'm sure"
-				+" the dead won't mind. Not like they need it anymore... except to become UNdead, if left unchecked!"
+				+"You might also be able to recover your anima if you can extract it from a pure spiritual energy source"
+				+" somewhere. You'll commonly find this in the form of ectoplasmic deposits located within burial containers."
+				+" Though grave robbing is usually frowned upon, I'm sure the dead won't mind. Not like they need it"
+				+" anymore... except to turn into UNdead, if left unchecked!"
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Hey be careful! If you spend too much time in dark and dingey places in this land, it'll have a way of getting"

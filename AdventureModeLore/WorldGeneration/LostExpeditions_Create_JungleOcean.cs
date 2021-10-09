@@ -48,6 +48,7 @@ namespace AdventureModeLore.WorldGeneration {
 				orbCount: WorldGen.genRand.Next( 1, 4 ),
 				canopicJarCount: WorldGen.genRand.Next( 1, 3 ),
 				elixirCount: WorldGen.genRand.Next( 1, 3 ),
+				mountedMirrorsCount: 0,
 				hasPKEMeter: false,
 				hasShadowMirror: false
 			);

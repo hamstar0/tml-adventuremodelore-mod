@@ -40,7 +40,7 @@ namespace AdventureModeLore.Tiles {
 				return;
 			}
 
-			for( int i=0; i<3; i++ ) {
+			for( int i=0; i<2; i++ ) {
 				Item.NewItem(
 					X: x * 16,
 					Y: y * 16,
