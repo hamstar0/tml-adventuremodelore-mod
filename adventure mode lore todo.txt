@@ -1,6 +1,6 @@
-v1
+v2
 -	Import cutscene from Cutscene Lib
-
+v1
 -	Implement custom dialogues to go with custom objectives
 	-	Witch Doctor: Guide seals spiritual energy
 	-	Goblin: Liberate mechanic, find witch doctor (knows plague source)

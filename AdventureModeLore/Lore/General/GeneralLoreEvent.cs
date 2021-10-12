@@ -29,7 +29,7 @@ namespace AdventureModeLore.Lore.General {
 
 		////
 
-		public override void Initialize() { }
+		internal override void Initialize() { }
 
 
 		////////////////
