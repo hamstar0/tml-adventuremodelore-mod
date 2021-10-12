@@ -17,14 +17,17 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 			npcType: NPCID.Demolitionist,
 			subStages: new DialogueLoreEventStage[] {
 				new DialogueLoreEventStage(
-					dialogue: () => "Goblins sure are a wild lot. Rather than rise up like us civilized folk, they'd"
-						+" rather brand their greatest minds heretics and lock them away. I hear they're kept buried"
-						+" deep in the underground desert where no one wants to go. Prove them wrong. Try crafting"
-						+" Seismic Charges by combining your orbs with my bombs to make your way through.",
+					dialogue: () => "Goblins sure are a wild lot. Rather than advance like us civilized folk, they'd"
+						+" rather have savage wars and brand those of their own smart enough to know better as heretics. I hear"
+						+" they like to keep such dissidants buried deep in the underground desert where no one wants to go."
+						+" Prove them wrong. Try crafting Seismic Charges by combining your orbs with my bombs to make your way"
+						+" through, and liberate these hapless prisoners."
+						+"\n \n"
+						+"I'm not much for smarty pants stuff myself, but even I have to get my bomb supplies from somewhere.",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_RescueGoblin,
-						description: "The goblins have imprisoned one of their own for heresy. Search the underground"
-							+"\n"+"desert for their whereabouts. Seismic Charges may help.",
+						description: "The goblins keep dissidants imprisoned deep in the underground desert. Craft"
+							+"\n"+"Seismic Charges to help you get access.",
 						condition: ( obj ) => NPC.savedGoblin
 					)
 				)

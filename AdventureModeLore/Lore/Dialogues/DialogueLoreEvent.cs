@@ -29,7 +29,8 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 		////
 
-		public override void Initialize() {
+		internal override void Initialize() {
+			// Process event objectives
 			foreach( DialogueLoreEventStage substage in this.Stages ) {
 				if( substage.OptionalObjective == null ) {
 					continue;
@@ -48,6 +49,7 @@ namespace AdventureModeLore.Lore.Dialogues {
 		////////////////
 
 		protected override bool HasEventFinished() {
+			// Check objectives
 			foreach( DialogueLoreEventStage stage in this.Stages ) {
 				if( stage.OptionalObjective == null ) {
 					continue;

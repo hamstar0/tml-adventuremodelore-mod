@@ -63,7 +63,7 @@ namespace AdventureModeLore {
 			if( this._CheckTimer-- <= 0 ) {
 				this._CheckTimer = 60;
 
-				LoreEventManager.RunForLocalPlayer();
+				LoreEventManager.RunForLocalPlayerPerSecond();
 			}
 		}
 	}

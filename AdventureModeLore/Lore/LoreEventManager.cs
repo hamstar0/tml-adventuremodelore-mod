@@ -11,7 +11,7 @@ using AdventureModeLore.Lore.General.Events;
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEventManager : ILoadable {
-		public static void RunForLocalPlayer() {
+		public static void RunForLocalPlayerPerSecond() {
 			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
 				return;
 			}
@@ -21,14 +21,15 @@ namespace AdventureModeLore.Lore {
 			foreach( LoreEvent stage in logic.Events.ToArray() ) {
 				(bool CanBegin, bool IsDone) status = stage.GetStatusForLocalPlayer();
 
-				if( status.CanBegin && status.IsDone && stage.IsRepeatable ) {
-					stage.BeginForLocalPlayer( true );
-				} else if( status.CanBegin && !status.IsDone ) {
-					stage.BeginForLocalPlayer( false );
+				if( status.CanBegin ) {
+					if( !status.IsDone || stage.IsRepeatable ) {
+						stage.BeginForLocalPlayer( true );
+					}
 				}
 
+				// If already done or just now done, remove it
 				if( (status.IsDone || status.CanBegin) && !stage.IsRepeatable ) {
-					logic.Events.Remove( stage );
+					logic.Events.Remove( stage );	// TODO: Implement repeatable events
 				}
 			}
 		}

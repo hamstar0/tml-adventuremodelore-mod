@@ -27,7 +27,7 @@ namespace AdventureModeLore.Lore {
 
 		////
 
-		public abstract void Initialize();
+		internal abstract void Initialize();
 
 
 		////////////////

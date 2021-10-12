@@ -30,7 +30,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					)
 				)
 			},
-			isRepeatable: true
+			isRepeatable: false
 		);
 
 
@@ -41,10 +41,10 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 			if( ModLoader.GetMod("BossReigns") == null ) {
 				return false;
 			}
-			return DialogueLoreEventDefinitions._IsBackgroundPKEDangerous();
+			return DialogueLoreEventDefinitions.IsBackgroundPKEDangerous_BossReigns();
 		}
 
-		private static bool _IsBackgroundPKEDangerous() {
+		private static bool IsBackgroundPKEDangerous_BossReigns() {
 			return BossReigns.BossReignsAPI.GetBackgroundPKEPercent() >= 1f;
 		}
 	}

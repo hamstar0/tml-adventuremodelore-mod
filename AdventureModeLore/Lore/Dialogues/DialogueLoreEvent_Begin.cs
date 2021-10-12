@@ -21,12 +21,15 @@ namespace AdventureModeLore.Lore.Dialogues {
 						isFinal: out bool isFinal
 					);
 
-					msg = subStage?.OptionalDialogue?.Invoke() ?? msg;
+					msg = subStage?.OptionalDialogue?.Invoke()
+						?? msg;
 
 					if( isFinal ) {
 						if( oldDialogueHandler != null ) {
+							// Restore previous dialogue handler
 							DialogueEditor.SetDynamicDialogueHandler( this.NpcType, oldDialogueHandler );
 						} else {
+							// Otherwise, clear handler
 							DialogueEditor.RemoveDynamicDialogueHandler( this.NpcType );
 						}
 					}
