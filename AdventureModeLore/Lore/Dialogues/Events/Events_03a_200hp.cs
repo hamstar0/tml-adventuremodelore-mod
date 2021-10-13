@@ -18,9 +18,8 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 			subStages: new DialogueLoreEventStage[] {
 				new DialogueLoreEventStage(
 					dialogue: () => "I have to tell you something. There are natives on this island!"
-						+" Not mere scattered survivors or profiteers, but a full blown army of goblins!"
-						+" We must find a way to communicate with them directly."
-						+" I fear our presence here might be taken the wrong way!",
+						+" Not mere scattered survivors or profiteers, but a full blown army of goblins! We must find a way"
+						+" to communicate with them directly. I fear our presence here might be taken the wrong way!",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_TalkToGoblin,
 						description: "It would seem there are natives in this land, if you'd call them that. Try to"
