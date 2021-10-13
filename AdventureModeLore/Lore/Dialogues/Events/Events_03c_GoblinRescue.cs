@@ -21,13 +21,11 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						+" rather have savage wars and brand those of their own smart enough to know better as heretics. I hear"
 						+" they like to keep such dissidants buried deep in the underground desert where no one wants to go."
 						+" Prove them wrong. Try crafting Seismic Charges by combining your orbs with my bombs to make your way"
-						+" through, and liberate these hapless prisoners."
-						+"\n \n"
-						+"I'm not much for smarty pants stuff myself, but even I have to get my bomb supplies from somewhere.",
+						+" through, and liberate any of these hapless prisoners you find.",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_RescueGoblin,
 						description: "The goblins keep dissidants imprisoned deep in the underground desert. Craft"
-							+"\n"+"Seismic Charges to help you get access.",
+							+"\n"+"Seismic Charges to help liberate any you can find.",
 						condition: ( obj ) => NPC.savedGoblin
 					)
 				)
