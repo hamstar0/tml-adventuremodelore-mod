@@ -32,11 +32,11 @@ namespace AdventureModeLore {
 					continue;
 				}
 
-				if( MapMarkers.TryGetFullScreenMapMarker("AMLExpedition_" + i, out _) ) {
+				if( MapMarkersAPI.TryGetFullScreenMapMarker("AMLExpedition_" + i, out _) ) {
 					continue;
 				}
 
-				MapMarkers.SetFullScreenMapMarker(
+				MapMarkersAPI.SetFullScreenMapMarker(
 					id: "AMLExpedition_" + i,
 					tileX: tile.x,
 					tileY: tile.y,
