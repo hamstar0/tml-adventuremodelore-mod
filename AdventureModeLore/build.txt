@@ -1,6 +1,6 @@
 displayName = Adventure Mode Lore
 author = hamstar
-version = 0.17.1
+version = 0.17.2
 modReferences = Messages@1.1.2, ModLibsCore@1.2.0.1, ModLibsGeneral@1.2.0, ModLibsMaps@2.0.0, ModLibsNPCDialogue@1.0.0, Objectives@0.6.2, ReadableBooks@1.2.1
 weakReferences = BossReigns@1.2.1, CursedBones@0.8.2, CursedBrambles@1.1.1, Ergophobia@1.11.3, MountedMagicMirrors@1.1.9, Necrotis@2.0.0, PKEMeter@1.5.3, Orbs@1.4.2, SpiritWalking@1.0.0, SoulBarriers@1.0.0, TheMadRanger@1.8.5, TheTrickster@1.7.2, WorldGates@1.2.2
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
