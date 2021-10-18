@@ -36,7 +36,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 				new DialogueLoreEventStage(
 					dialogue: () => "I know little about the undeath plague, but I do know of another inhabitant of these"
 							+" lands who may: A lone witch doctor residing in the jungle. Unfortunately, he has gone into"
-							+" hiding on on account of powerful monsters now residing in the jungle.",
+							+" hiding on account of powerful monsters now residing in the jungle.",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindWitchDoctor,
 						description: "A mysterious lizard-man sorcerer may know the plague's secret. Some"
