@@ -14,8 +14,8 @@ namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static bool Event_Radio_StrongGates_PreReq() {
 			var rect = new Rectangle(
-				x: (int)Main.LocalPlayer.Center.X,
-				y: (int)Main.LocalPlayer.Center.Y,
+				x: (int)Main.LocalPlayer.MountedCenter.X,
+				y: (int)Main.LocalPlayer.MountedCenter.Y,
 				width: 0,
 				height: 0
 			);

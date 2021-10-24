@@ -13,13 +13,19 @@ namespace AdventureModeLore.Lore.General.Events {
 		private static GeneralLoreEvent GetEvent_Radio_StrangePlants() {
 			bool PreReq() {
 				return Main.LocalPlayer.inventory
-					.Any(
-						i => i?.active == true
-						&& (i.type == ItemID.StrangePlant1
-							|| i.type == ItemID.StrangePlant2
-							|| i.type == ItemID.StrangePlant3
-							|| i.type == ItemID.StrangePlant4)
-					);
+					.Any( i => {
+						if( i?.active != true ) {
+							return false;
+						}
+						switch( i.type ) {
+						case ItemID.StrangePlant1:
+						case ItemID.StrangePlant2:
+						case ItemID.StrangePlant3:
+						case ItemID.StrangePlant4:
+							return true;
+						}
+						return false;
+					} );
 			}
 
 			//

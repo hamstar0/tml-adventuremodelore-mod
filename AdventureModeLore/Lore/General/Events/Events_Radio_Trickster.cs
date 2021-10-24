@@ -12,7 +12,19 @@ using Messages.Definitions;
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static bool Event_Radio_Trickster_PreReq() {
-			return TheTrickster.TheTricksterAPI.GetTricksterDefeatLocations().Count > 0;
+			if( TheTrickster.TheTricksterAPI.GetTricksterDefeatLocations().Count <= 0 ) {
+				return false;
+			}
+
+			int tricksterType = ModContent.NPCType<TheTrickster.NPCs.TricksterNPC>();
+
+			if( NPC.AnyNPCs(tricksterType) ) {
+				Timers.SetTimer( "AML_TricksterLore", 60 * 5, false, () => false );
+			}
+
+			int timerTicks = Timers.GetTimerTickDuration( "AML_TricksterLore" );
+
+			return timerTicks > 1 && timerTicks <= 2;
 		}
 
 

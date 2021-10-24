@@ -12,8 +12,8 @@ namespace AdventureModeLore.Lore.General.Events {
 		private static GeneralLoreEvent GetEvent_Radio_UGDesert() {
 			bool PreReq() {
 				return NPC.downedGoblins
-					&& Main.LocalPlayer.ZoneUndergroundDesert
-					&& !NPC.savedGoblin;
+					&& !NPC.savedGoblin
+					&& Main.LocalPlayer.ZoneUndergroundDesert;
 			}
 
 			//

@@ -20,8 +20,8 @@ namespace AdventureModeLore.Lore.General.Events {
 			}
 
 			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
-			int tileX = (int)Main.LocalPlayer.Center.X / 16;
-			int tileY = (int)Main.LocalPlayer.Center.Y / 16;
+			int tileX = (int)Main.LocalPlayer.MountedCenter.X / 16;
+			int tileY = (int)Main.LocalPlayer.MountedCenter.Y / 16;
 			int mixX = tileX - 16;
 			int mixY = tileY - 16;
 			int maxX = tileX + 16;

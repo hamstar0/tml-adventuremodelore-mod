@@ -12,13 +12,13 @@ namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static GeneralLoreEvent GetEvent_Radio_Settlements() {
 			int duration = 0;
-			int minY = WorldLocationLibraries.SurfaceLayerBottomTileY * 16;
+			int minWldY = WorldLocationLibraries.SurfaceLayerBottomTileY * 16;
 
 			bool PreReq() {
-				if( !Main.LocalPlayer.dead && Main.LocalPlayer.MountedCenter.Y > minY ) {
+				if( !Main.LocalPlayer.dead && Main.LocalPlayer.MountedCenter.Y > minWldY ) {
 					duration++;
 				}
-				return duration > 60 * 60;
+				return duration > (60 * 60);	// 1 minute
 			}
 
 			//

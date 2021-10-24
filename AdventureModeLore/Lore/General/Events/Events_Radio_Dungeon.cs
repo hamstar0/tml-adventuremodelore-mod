@@ -10,9 +10,7 @@ using Messages.Definitions;
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static GeneralLoreEvent GetEvent_Radio_Dungeon() {
-			bool PreReq() {
-				return Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
-			}
+			bool PreReq() => Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
 
 			//
 
