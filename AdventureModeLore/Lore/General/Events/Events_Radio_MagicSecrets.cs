@@ -26,9 +26,9 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" think I get to be stuck here like I am, for example? Just a fair warning."
 				+"\n \n"
 				+"Anyway, if you're intent on exploring the depths, I can suggest one thing: Magic powers can reveal"
-				+" magic secrets! Don't believe me? Try using magic wherever you can underground, and see what turns up!"
+				+" magic secrets! Don't believe me? Try using magic items wherever you can underground, and see what turns up!"
 				+"\n \n"
-				+" Just don't forget: The pursuit of magic is what the ancient peoples of this land were also doing. We all"
+				+" Just don't forget: The pursuit of magic is what the ancient peoples were also doing. We all"
 				+" know how that turned out..."
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.OldMan,

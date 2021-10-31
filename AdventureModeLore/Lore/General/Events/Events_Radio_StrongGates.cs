@@ -8,6 +8,8 @@ using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
+using Objectives;
+using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.General.Events {
@@ -45,7 +47,7 @@ namespace AdventureModeLore.Lore.General.Events {
 			string msgId = "AML_Radio_StrongGates";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"That gate is too strong for you right now. You'll need to find a way to increase your P.B.G's power,"
-				+" first."
+				+" first. Since it works by way of its user's magical proficiency, you'll have to find a way to increase yours."
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"That gate is too strong for you right now. You'll need to find a way to [c/88FF88:increase your P.B.G's power],"
@@ -68,6 +70,21 @@ namespace AdventureModeLore.Lore.General.Events {
 						);
 						return false;
 					} );
+
+					var objective = new PercentObjective(
+						title: "Breach 3 Magical Barrier Gates",
+						description: "Find and disable 3 magical barriers throughout the world. You may need to increase"
+							+ "\n"+"your magic to do so. Your binoculars may give you some hints for this.",
+						units: 3,
+						condition: ( obj ) => {
+							int downGates = WorldGates.WorldGatesAPI.GetGateBarriers()
+								.Where( b => !b.IsActive )
+								.Count();
+							return (float)downGates / 3f;
+						}
+					);
+
+					ObjectivesAPI.AddObjective( objective, 0, true, out _ );
 				},
 				isRepeatable: false
 			);

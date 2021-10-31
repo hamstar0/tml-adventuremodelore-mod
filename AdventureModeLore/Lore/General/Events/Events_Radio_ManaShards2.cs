@@ -45,13 +45,13 @@ namespace AdventureModeLore.Lore.General.Events {
 			string msgId = "AML_Radio_ManaShards2";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Listen. I've discovered something important: You remember that PKE meter you found earlier? I've noticed its"
-				+" blue gauge matches a resonance detection behavior of your binoculars! We've been using special"
+				+" blue gauge matches the resonance detection behavior of your binoculars! We've been using special"
 				+" binoculars like those in previous expeditions to this island to detect spiritual phenomena. It seems like"
 				+" those cyborgs had something of the same idea!"
 				+"\n \n"
-				+"Anyway, to spell it out: Binoculars will occasionally detect certain magical phenomena in the"
-				+" environment by way of a sparkling effect. They appear to be associated with some hidden magical property or"
-				+" substance within the island. It may aid in our quest to locate these phenomena."
+				+"Anyway, to spell it out: Binoculars will occasionally detect certain magical phenomena in the environment by"
+				+" way of a sparkling effect (especially while being focused). These appear to be associated with some hidden"
+				+" magical property or even substance within the land."
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Listen. I've discovered something important: You remember that PKE meter you found earlier? I've noticed its"
