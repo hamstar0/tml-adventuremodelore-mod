@@ -50,7 +50,8 @@ namespace AdventureModeLore.WorldGeneration {
 				elixirCount: WorldGen.genRand.Next( 1, 3 ),
 				mountedMirrorsCount: 0,
 				hasPKEMeter: false,
-				hasShadowMirror: false
+				hasShadowMirror: false,
+				darkHeartPieceCount: 1
 			);
 		}
 	}

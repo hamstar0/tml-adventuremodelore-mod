@@ -168,6 +168,23 @@ namespace AdventureModeLore.WorldGeneration {
 		}
 
 
+		////
+
+		private static Item CreateDarkHeartPieceItem() {
+			if( ModLoader.GetMod("LockedAbilities") != null ) {
+				return LostExpeditionsGen.CreateDarkHeartPieceItem_WeakRef();
+			}
+			return default;
+		}
+
+		private static Item CreateDarkHeartPieceItem_WeakRef() {
+			var mirrorItem = new Item();
+			mirrorItem.SetDefaults( ModContent.ItemType<LockedAbilities.Items.Consumable.DarkHeartPieceItem>(), true );
+
+			return mirrorItem;
+		}
+
+
 
 		////////////////
 
@@ -182,7 +199,8 @@ namespace AdventureModeLore.WorldGeneration {
 					int elixirCount,
 					int mountedMirrorsCount,
 					bool hasPKEMeter,
-					bool hasShadowMirror ) {
+					bool hasShadowMirror,
+					int darkHeartPieceCount ) {
 			if( chestIdx == -1 ) {
 				LogLibraries.Warn( "Could not fill 'lost expedition' barrel at "+tileX+", "+nearFloorTileY+"." );
 				return;
@@ -239,6 +257,12 @@ namespace AdventureModeLore.WorldGeneration {
 				Item mirrorItem = LostExpeditionsGen.CreateShadowMirrorItem();
 				if( mirrorItem != null ) {
 					chest[itemIdx++] = mirrorItem;
+				}
+			}
+			for( int i=0; i< darkHeartPieceCount; i++ ) {
+				Item newItem = LostExpeditionsGen.CreateDarkHeartPieceItem();
+				if( newItem != null ) {
+					chest[itemIdx++] = newItem;
 				}
 			}
 

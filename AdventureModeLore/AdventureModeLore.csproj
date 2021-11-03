@@ -24,6 +24,9 @@
     <Reference Include="Ergophobia">
       <HintPath>..\..\..\Ergophobia\Project\Ergophobia\bin\Release\net452\Ergophobia.dll</HintPath>
     </Reference>
+    <Reference Include="LockedAbilities">
+      <HintPath>..\..\..\Locked Abilities\Project\LockedAbilities\bin\Release\net452\LockedAbilities.dll</HintPath>
+    </Reference>
     <Reference Include="Messages">
       <HintPath>..\..\..\Messages\Project\Messages\bin\Release\net452\Messages.dll</HintPath>
     </Reference>
