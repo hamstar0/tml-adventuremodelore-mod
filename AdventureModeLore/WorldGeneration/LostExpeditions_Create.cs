@@ -8,13 +8,16 @@ using ModLibsCore.Libraries.Debug;
 namespace AdventureModeLore.WorldGeneration {
 	partial class LostExpeditionsGen : GenPass {
 		private void CreateAllFEs( GenerationProgress progress, int count, int campWidth ) {
-			this.CreateAtMidMapFE( campWidth );
-			progress.Value = 1f / ((float)count + 2f);
+			this.CreateAtDungeonLE( campWidth );
+			progress.Value += 1f / ((float)count + 3f);
+			
+			this.CreateAtMidMapLE( campWidth );
+			progress.Value += 1f / ((float)count + 3f);
 
-			this.CreateJungleOceanFE( campWidth );
-			progress.Value = 1f / ((float)count + 2f);
+			this.CreateJungleOceanLE( campWidth );
+			progress.Value += 1f / ((float)count + 3f);
 
-			this.CreateAllUndergroundFEs( progress, count, campWidth );
+			this.CreateAllUndergroundLEs( progress, count, campWidth );
 		}
 	}
 }

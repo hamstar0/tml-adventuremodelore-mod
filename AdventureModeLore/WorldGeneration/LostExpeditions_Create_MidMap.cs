@@ -10,7 +10,7 @@ using AdventureModeLore.Tiles;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class LostExpeditionsGen : GenPass {
-		private void CreateAtMidMapFE( int campWidth ) {
+		private void CreateAtMidMapLE( int campWidth ) {
 			(int x, int nearFloorY)? expedPointRaw;
 			int x, nearFloorY;
 			int paveTileType = TileID.Dirt;

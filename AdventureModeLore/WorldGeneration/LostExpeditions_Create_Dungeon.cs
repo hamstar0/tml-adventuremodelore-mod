@@ -8,17 +8,16 @@ using ModLibsCore.Libraries.Debug;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class LostExpeditionsGen : GenPass {
-		private void CreateJungleOceanLE( int campWidth ) {
+		private void CreateAtDungeonLE( int campWidth ) {
 			(int x, int nearFloorY)? expedPointRaw;
 			int x, nearFloorY;
 			int paveTileType = TileID.Dirt;
 			int chestIdx;
 			string err;
 
-			expedPointRaw = this.FindJungleSideBeachExpeditionLocation( campWidth, out paveTileType );
+			expedPointRaw = this.FindDungeonExpeditionLocation( campWidth, out paveTileType );
 			if( !expedPointRaw.HasValue ) {
-				LogLibraries.Log( "Could not find a place to generate jungle 'lost expedition'" );
-				return;
+				throw new ModLibsException( "Could not find a place to generate dungeon 'lost expedition'" );
 			}
 
 			x = expedPointRaw.Value.x;
@@ -27,7 +26,7 @@ namespace AdventureModeLore.WorldGeneration {
 			bool createdCamp = this.CreateExpeditionAt(
 				leftTileX: x,
 				nearFloorTileY: nearFloorY,
-				campWidth: campWidth,
+				campWidth: campWidth + 2,
 				customTiles: new int[0],
 				paveTileType: paveTileType,
 				rememberLocation: true,
@@ -35,7 +34,7 @@ namespace AdventureModeLore.WorldGeneration {
 				result: out err
 			);
 			if( !createdCamp ) {
-				LogLibraries.Log( "Could not generate jungle 'lost expedition': " + err );
+				LogLibraries.Log( "Could not generate dungeon 'lost expedition': " + err );
 				return;
 			}
 
@@ -43,11 +42,11 @@ namespace AdventureModeLore.WorldGeneration {
 				tileX: expedPointRaw.Value.x,
 				nearFloorTileY: expedPointRaw.Value.nearFloorY,
 				chestIdx: chestIdx,
-				hasLoreNote: true,
-				speedloaderCount: WorldGen.genRand.NextFloat() < (2f/3f) ? 1 : 0,
-				orbCount: WorldGen.genRand.Next( 1, 4 ),
-				canopicJarCount: WorldGen.genRand.Next( 1, 3 ),
-				elixirCount: WorldGen.genRand.Next( 1, 3 ),
+				hasLoreNote: false,
+				speedloaderCount: 0,
+				orbCount: 4,
+				canopicJarCount: 0,
+				elixirCount: 0,
 				mountedMirrorsCount: 0,
 				hasPKEMeter: false,
 				hasShadowMirror: false,

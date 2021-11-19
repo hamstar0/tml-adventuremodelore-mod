@@ -8,7 +8,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class LostExpeditionsGen : GenPass {
-		private void CreateAllUndergroundFEs( GenerationProgress progress, int count, int campWidth ) {
+		private void CreateAllUndergroundLEs( GenerationProgress progress, int count, int campWidth ) {
 			var expedList = new List<(int tileX, int nearFloorTileY, int paveTileType)>();
 
 			int retries = 0;
@@ -39,7 +39,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 			int i = 0;
 			foreach( (int tileX, int nearFloorTileY, int paveTileType) in expedList ) {
-				if( !this.CreateUndergroundFE( tileX, nearFloorTileY, paveTileType, campWidth, out string result ) ) {
+				if( !this.CreateUndergroundLE( tileX, nearFloorTileY, paveTileType, campWidth, out string result ) ) {
 					LogLibraries.Log( "Could not finish generating all 'lost expeditions' (" + i + " of " + expedList.Count + "): " + result );
 					break;
 				}
@@ -52,7 +52,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
-		private bool CreateUndergroundFE( int tileX, int nearFloorTileY, int paveTileType, int campWidth, out string result ) {
+		private bool CreateUndergroundLE( int tileX, int nearFloorTileY, int paveTileType, int campWidth, out string result ) {
 			int chestIdx;
 
 			bool createdCamp = this.CreateExpeditionAt(

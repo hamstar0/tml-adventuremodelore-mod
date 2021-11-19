@@ -16,6 +16,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int campWidth,
 					int floorPavingThickness,
 					int neededEmptySpaceAbove,
+					bool permitDungeonWalls,
 					out (int tileX, int nearFloorTileY) campStartPos,
 					out int mostCommonTileType ) {
 			var floorTileTypes = new Dictionary<ushort, int>();
@@ -27,13 +28,23 @@ namespace AdventureModeLore.WorldGeneration {
 
 			nearCampFloortileY--;
 
-			bool foundValidFloor;
+			//
+
+			bool foundValidFloor, isValidFloorTile;
 			do {
 				foundValidFloor = false;
 
 				int nearCampFloorTileY2 = 0;
 
-				if( this.FindValidNearFloorTileAt(checkLeftX, nearCampFloortileY, botY, neededEmptySpaceAbove, out nearCampFloorTileY2) ) {
+				isValidFloorTile = this.FindValidNearFloorTileAt(
+					tileX: checkLeftX,
+					topTileY: nearCampFloortileY,
+					botTileY: botY,
+					neededEmptySpaceAbove: neededEmptySpaceAbove,
+					permitDungeonWalls: permitDungeonWalls,
+					nearFloorTileY: out nearCampFloorTileY2
+				);
+				if( isValidFloorTile ) {
 					Tile floorTile = Main.tile[ checkLeftX, nearCampFloorTileY2 + 1 ];
 					floorTileTypes.AddOrSet( floorTile.type, 1 );
 
@@ -41,7 +52,16 @@ namespace AdventureModeLore.WorldGeneration {
 					width++;
 					checkLeftX--;
 				}
-				if( this.FindValidNearFloorTileAt(checkRightX, nearCampFloortileY, botY, neededEmptySpaceAbove, out nearCampFloorTileY2) ) {
+
+				isValidFloorTile = this.FindValidNearFloorTileAt(
+					tileX: checkRightX,
+					topTileY: nearCampFloortileY,
+					botTileY: botY,
+					neededEmptySpaceAbove: neededEmptySpaceAbove,
+					permitDungeonWalls: permitDungeonWalls,
+					nearFloorTileY: out nearCampFloorTileY2
+				);
+				if( isValidFloorTile ) {
 					Tile floorTile = Main.tile[ checkRightX, nearCampFloorTileY2 + 1 ];
 					floorTileTypes.AddOrSet( floorTile.type, 1 );
 
@@ -51,19 +71,34 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 			} while( foundValidFloor && width < campWidth );
 
+			//
+
 			// Widen to the left by 1, if possible
-			if( !this.FindValidNearFloorTileAt(checkLeftX, nearCampFloortileY, botY, neededEmptySpaceAbove, out _ ) ) {
+			isValidFloorTile = this.FindValidNearFloorTileAt(
+				tileX: checkLeftX,
+				topTileY: nearCampFloortileY,
+				botTileY: botY,
+				neededEmptySpaceAbove: neededEmptySpaceAbove,
+				permitDungeonWalls: permitDungeonWalls,
+				nearFloorTileY: out _
+			);
+			if( !isValidFloorTile ) {
 				checkLeftX++;
 			}
 
 			campStartPos = (checkLeftX, nearCampFloortileY);
 
 			if( floorTileTypes.Count > 0 ) {
-				mostCommonTileType = floorTileTypes.Aggregate( (kv1, kv2) => kv1.Value > kv2.Value ? kv1 : kv2 ).Key;
+				mostCommonTileType = floorTileTypes.Aggregate(
+					(kv1, kv2) => kv1.Value > kv2.Value
+						? kv1
+						: kv2
+				).Key;
 			} else {
 				mostCommonTileType = -1;
 			}
-
+			
+//LogLibraries.Log( "2 "+mostCommonTileType+", "+width+" (vs "+campWidth+"), "+campStartPos );
 			return mostCommonTileType != -1 && width >= campWidth;
 		}
 
@@ -75,6 +110,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int topTileY,
 					int botTileY,
 					int neededEmptySpaceAbove,
+					bool permitDungeonWalls,
 					out int nearFloorTileY ) {
 			if( tileX < 0 || tileX >= Main.maxTilesX || topTileY < 0 || topTileY >= Main.maxTilesY ) {
 				nearFloorTileY = topTileY;
@@ -86,7 +122,7 @@ namespace AdventureModeLore.WorldGeneration {
 			// Find floor
 			bool hasEmptySpace = false;
 			for( Tile tile = Main.tile[ tileX, findFloorY ];
-						findFloorY < botTileY && this.IsValidEmptyTile( tile );
+						findFloorY < botTileY && this.IsValidEmptyTile( tile, permitDungeonWalls );
 						tile = Main.tile[ tileX, ++findFloorY ] ) {
 				hasEmptySpace = true;
 			}
@@ -106,7 +142,7 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 
 				Tile tile = Main.tile[ tileX, nearFloorTileY - i ];
-				if( !this.IsValidEmptyTile(tile) ) {
+				if( !this.IsValidEmptyTile(tile, permitDungeonWalls) ) {
 					return false;
 				}
 			}
@@ -117,7 +153,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////////////////
 
-		private bool IsValidEmptyTile( Tile mytile ) {
+		private bool IsValidEmptyTile( Tile mytile, bool permitDungeonWalls ) {
 			if( (mytile?.liquid ?? 0) > 0 ) {
 				return false;
 			}
@@ -141,6 +177,7 @@ namespace AdventureModeLore.WorldGeneration {
 				case TileID.HallowedGrass:
 				case TileID.JungleGrass:
 				case TileID.MushroomGrass:
+				case TileID.Pots:
 					break;
 				default:
 					return false;
@@ -158,6 +195,7 @@ namespace AdventureModeLore.WorldGeneration {
 			case WallID.PinkDungeonTileUnsafe:
 			case WallID.PinkDungeonUnsafe:
 			case WallID.LihzahrdBrickUnsafe:
+				return permitDungeonWalls;
 			case WallID.CorruptionUnsafe1:
 			case WallID.CorruptionUnsafe2:
 			case WallID.CorruptionUnsafe3:
