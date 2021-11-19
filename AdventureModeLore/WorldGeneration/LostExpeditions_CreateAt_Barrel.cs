@@ -35,14 +35,59 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
-		private static Item CreateOrbItem() {
+		private static Item CreateRandomOrbItem() {
 			if( ModLoader.GetMod("Orbs") != null ) {
-				return LostExpeditionsGen.CreateOrbItem_WeakRef();
+				return LostExpeditionsGen.CreateRandomOrbItem_WeakRef();
 			}
 			return default;
 		}
 		
-		private static Item CreateOrbItem_WeakRef() {
+		private static Item CreateRandomOrbItem_WeakRef() {
+			var item = new Item();
+			switch( WorldGen.genRand.Next(8) ) {
+			case 0:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.BlueOrbItem>(), true );
+				break;
+			case 1:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.BrownOrbItem>(), true );
+				break;
+			case 2:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.CyanOrbItem>(), true );
+				break;
+			case 3:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.GreenOrbItem>(), true );
+				break;
+			case 4:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.PinkOrbItem>(), true );
+				break;
+			case 5:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.PurpleOrbItem>(), true );
+				break;
+			case 6:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.RedOrbItem>(), true );
+				break;
+			case 7:
+				item.SetDefaults( ModContent.ItemType<Orbs.Items.YellowOrbItem>(), true );
+				break;
+			//case 8:
+			//	item.SetDefaults( ModContent.ItemType<Orbs.Items.WhiteOrbItem>(), true );
+			//	break;
+			}
+
+			return item;
+		}
+
+
+		////
+
+		private static Item CreateWhiteOrbItem() {
+			if( ModLoader.GetMod("Orbs") != null ) {
+				return LostExpeditionsGen.CreateWhiteOrbItem_WeakRef();
+			}
+			return default;
+		}
+		
+		private static Item CreateWhiteOrbItem_WeakRef() {
 			var item = new Item();
 			/*switch( WorldGen.genRand.Next(8) ) {
 			case 0:
@@ -126,7 +171,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
-		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItem() {
+		private static (Item meterItem, Item missionItem, Item manualItem)? CreatePKEMeterItems() {
 			if( ModLoader.GetMod("PKEMeter") != null ) {
 				return LostExpeditionsGen.CreatePKEMeterItem_WeakRef();
 			}
@@ -194,11 +239,12 @@ namespace AdventureModeLore.WorldGeneration {
 					int chestIdx,
 					bool hasLoreNote,
 					int speedloaderCount,
-					int orbCount,
+					int randomOrbCount,
+					int whiteOrbCount,
 					int canopicJarCount,
 					int elixirCount,
 					int mountedMirrorsCount,
-					bool hasPKEMeter,
+					int PKEMeterCount,
 					bool hasShadowMirror,
 					int darkHeartPieceCount ) {
 			if( chestIdx == -1 ) {
@@ -216,13 +262,19 @@ namespace AdventureModeLore.WorldGeneration {
 				}
 			}
 			for( int i=0; i<speedloaderCount; i++ ) {
-				Item newItem = LostExpeditionsGen.CreateSpeedloaderItem_WeakRef();
+				Item newItem = LostExpeditionsGen.CreateSpeedloaderItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
 			}
-			for( int i=0; i<orbCount; i++ ) {
-				Item newItem = LostExpeditionsGen.CreateOrbItem_WeakRef();
+			for( int i=0; i< randomOrbCount; i++ ) {
+				Item newItem = LostExpeditionsGen.CreateRandomOrbItem();
+				if( newItem != null ) {
+					chest[itemIdx++] = newItem;
+				}
+			}
+			for( int i=0; i<whiteOrbCount; i++ ) {
+				Item newItem = LostExpeditionsGen.CreateWhiteOrbItem();
 				if( newItem != null ) {
 					chest[itemIdx++] = newItem;
 				}
@@ -245,12 +297,14 @@ namespace AdventureModeLore.WorldGeneration {
 					chest[itemIdx++] = newItem;
 				}
 			}
-			if( hasPKEMeter ) {
-				(Item meterItem, Item missionItem, Item manualItem)? pkeItems = LostExpeditionsGen.CreatePKEMeterItem();
+			for( int i = 0; i<PKEMeterCount; i++ ) {
+				(Item meterItem, Item missionItem, Item manualItem)? pkeItems = LostExpeditionsGen.CreatePKEMeterItems();
 				if( pkeItems.HasValue ) {
 					chest[itemIdx++] = pkeItems.Value.meterItem;
-					chest[itemIdx++] = pkeItems.Value.missionItem;
-					chest[itemIdx++] = pkeItems.Value.manualItem;
+					if( i == 0 ) {
+						chest[itemIdx++] = pkeItems.Value.missionItem;
+						chest[itemIdx++] = pkeItems.Value.manualItem;
+					}
 				}
 			}
 			if( hasShadowMirror ) {

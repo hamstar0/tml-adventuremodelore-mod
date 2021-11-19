@@ -45,11 +45,12 @@ namespace AdventureModeLore.WorldGeneration {
 				chestIdx: chestIdx,
 				hasLoreNote: true,
 				speedloaderCount: WorldGen.genRand.NextFloat() < (2f/3f) ? 1 : 0,
-				orbCount: WorldGen.genRand.Next( 1, 4 ),
+				randomOrbCount: 0,
+				whiteOrbCount: WorldGen.genRand.Next( 1, 4 ),
 				canopicJarCount: WorldGen.genRand.Next( 1, 3 ),
 				elixirCount: WorldGen.genRand.Next( 1, 3 ),
 				mountedMirrorsCount: 0,
-				hasPKEMeter: false,
+				PKEMeterCount: 0,
 				hasShadowMirror: false,
 				darkHeartPieceCount: 1
 			);

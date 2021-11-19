@@ -60,7 +60,7 @@ namespace AdventureModeLore.WorldGeneration {
 			for( int i = 1; i < 40; i++ ) {
 				scanPos = this.FindExpeditionFutureFloorArea(
 					tileX: tileX - i,
-					tileY: tileY - 1,
+					tileY: tileY,
 					maxTileY: WorldLocationLibraries.DirtLayerTopTileY - 1,
 					campWidth: campWidth,
 					floorPavingDepth: 2,
@@ -74,7 +74,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 				scanPos = this.FindExpeditionFutureFloorArea(
 					tileX: tileX + i,
-					tileY: tileY - 1,
+					tileY: tileY,
 					maxTileY: WorldLocationLibraries.DirtLayerTopTileY - 1,
 					campWidth: campWidth,
 					floorPavingDepth: 2,

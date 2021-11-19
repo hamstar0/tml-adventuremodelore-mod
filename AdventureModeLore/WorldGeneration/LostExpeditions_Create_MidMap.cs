@@ -47,11 +47,12 @@ namespace AdventureModeLore.WorldGeneration {
 				chestIdx: chestIdx,
 				hasLoreNote: false,
 				speedloaderCount: 0,
-				orbCount: 0,
+				randomOrbCount: 0,
+				whiteOrbCount: 0,
 				canopicJarCount: 0,
 				elixirCount: 0,
 				mountedMirrorsCount: 0,
-				hasPKEMeter: true,
+				PKEMeterCount: 2,
 				hasShadowMirror: false,
 				darkHeartPieceCount: 0
 			);
