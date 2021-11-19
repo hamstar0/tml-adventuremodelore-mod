@@ -12,7 +12,7 @@ namespace AdventureModeLore.WorldGeneration {
 	partial class LostExpeditionsGen : GenPass {
 		private bool ScanFromTileForCamp(
 					int tileX,
-					int nearCampFloortileY,
+					int nearFloorTileY,
 					int campWidth,
 					int floorPavingThickness,
 					int neededEmptySpaceAbove,
@@ -24,9 +24,7 @@ namespace AdventureModeLore.WorldGeneration {
 			int width = 0;
 			int checkLeftX = tileX - 1;
 			int checkRightX = tileX + 1;
-			int botY = nearCampFloortileY + floorPavingThickness;
-
-			nearCampFloortileY--;
+			int botY = nearFloorTileY + floorPavingThickness;
 
 			//
 
@@ -38,7 +36,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 				isValidFloorTile = this.FindValidNearFloorTileAt(
 					tileX: checkLeftX,
-					topTileY: nearCampFloortileY,
+					topTileY: nearFloorTileY - 1,
 					botTileY: botY,
 					neededEmptySpaceAbove: neededEmptySpaceAbove,
 					permitDungeonWalls: permitDungeonWalls,
@@ -55,7 +53,7 @@ namespace AdventureModeLore.WorldGeneration {
 
 				isValidFloorTile = this.FindValidNearFloorTileAt(
 					tileX: checkRightX,
-					topTileY: nearCampFloortileY,
+					topTileY: nearFloorTileY - 1,
 					botTileY: botY,
 					neededEmptySpaceAbove: neededEmptySpaceAbove,
 					permitDungeonWalls: permitDungeonWalls,
@@ -76,7 +74,7 @@ namespace AdventureModeLore.WorldGeneration {
 			// Widen to the left by 1, if possible
 			isValidFloorTile = this.FindValidNearFloorTileAt(
 				tileX: checkLeftX,
-				topTileY: nearCampFloortileY,
+				topTileY: nearFloorTileY - 1,
 				botTileY: botY,
 				neededEmptySpaceAbove: neededEmptySpaceAbove,
 				permitDungeonWalls: permitDungeonWalls,
@@ -86,7 +84,11 @@ namespace AdventureModeLore.WorldGeneration {
 				checkLeftX++;
 			}
 
-			campStartPos = (checkLeftX, nearCampFloortileY);
+			//
+
+			campStartPos = (checkLeftX, nearFloorTileY);
+
+			//
 
 			if( floorTileTypes.Count > 0 ) {
 				mostCommonTileType = floorTileTypes.Aggregate(
@@ -129,7 +131,7 @@ namespace AdventureModeLore.WorldGeneration {
 			
 			nearFloorTileY = findFloorY - 1;
 
-			// Confirm floor
+			// Validate existing floor
 			Tile floorTile = Main.tile[ tileX, findFloorY ];
 			if( !hasEmptySpace || !this.IsValidFloorTile(floorTile) ) {
 				return false;
@@ -214,12 +216,12 @@ namespace AdventureModeLore.WorldGeneration {
 			return true;
 		}
 
-		private bool IsValidFloorTile( Tile mytile ) {
-			if( !WorldGen.SolidTile3(mytile) ) {
+		private bool IsValidFloorTile( Tile tile ) {
+			if( !WorldGen.SolidTile3(tile) ) {
 				return false;
 			}
 
-			switch( mytile.type ) {
+			switch( tile.type ) {
 			case TileID.BreakableIce:
 			case TileID.Obsidian:
 			case TileID.HoneyBlock:

@@ -15,29 +15,29 @@ namespace AdventureModeLore.WorldGeneration {
 					int emptySpaceNeededAbove,
 					bool permitDungeonWalls,
 					out int mostCommonTileType ) {
-			//int oldTileY = tileY;
+			int nearFloorTileY;
+
 			bool isValidFloor = this.FindValidNearFloorTileAt(
 				tileX: tileX,
 				topTileY: tileY,
 				botTileY: maxTileY,
 				neededEmptySpaceAbove: emptySpaceNeededAbove,
 				permitDungeonWalls: permitDungeonWalls,
-				nearFloorTileY: out tileY
+				nearFloorTileY: out nearFloorTileY
 			);
 			if( !isValidFloor ) {
-//LogLibraries.Log( "1 "+oldTileY+", "+tileY );
 				mostCommonTileType = -1;
 				return null;
 			}
 
 			bool scan = this.ScanFromTileForCamp(
 				tileX: tileX,
-				nearCampFloortileY: tileY,
+				nearFloorTileY: nearFloorTileY,
 				campWidth: campWidth,
 				floorPavingThickness: floorPavingDepth,
 				neededEmptySpaceAbove: emptySpaceNeededAbove,
 				permitDungeonWalls: permitDungeonWalls,
-				campStartPos: out (int, int) scanPos,
+				campStartPos: out (int, int) scannedPosition,
 				mostCommonTileType: out mostCommonTileType
 			);
 
@@ -45,8 +45,8 @@ namespace AdventureModeLore.WorldGeneration {
 				mostCommonTileType = -1;
 				return null;
 			}
-
-			return scanPos;
+			
+			return scannedPosition;
 		}
 	}
 }

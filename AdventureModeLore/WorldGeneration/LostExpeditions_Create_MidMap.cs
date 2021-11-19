@@ -53,6 +53,7 @@ namespace AdventureModeLore.WorldGeneration {
 				elixirCount: 0,
 				mountedMirrorsCount: 0,
 				PKEMeterCount: 2,
+				hasOrbsBooklet: false,
 				hasShadowMirror: false,
 				darkHeartPieceCount: 0
 			);

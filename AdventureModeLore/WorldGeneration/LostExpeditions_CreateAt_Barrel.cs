@@ -198,6 +198,27 @@ namespace AdventureModeLore.WorldGeneration {
 
 		////
 
+		private static Item CreateOrbsBookletItem() {
+			Item orbsBookletItem = ReadableBookItem.CreateBook(
+				"Guide To Orbs",
+				new string[] {
+					"Also known as Spirit Orbs or Geo-Resonant Orbs, these spheres contain spiritual energy"
+					+"\nparticularly attuned to the land itself. An orb's color indicates the nature of its"
+					+"\nresonance; certain methods exist to find matchingly-resonant patches of terrain.",
+					"An orb can be directly applied to these areas to cause them to disperse, creating voids"
+					+"\nthat may allow one to access what lies beneath. Though consumed on use, this is the"
+					+"\nonly known means to obtain access to many of Terraria's buried secrets.",
+					"The ancient inhabitants of this land locked away their dead and their secrets within"
+					+"\nthe ground with such magics that merely digging or blasting them out is of no avail."
+				}
+			);
+
+			return orbsBookletItem;
+		}
+
+
+		////
+
 		private static Item CreateShadowMirrorItem() {
 			if( ModLoader.GetMod("SpiritWalking") != null ) {
 				return LostExpeditionsGen.CreateShadowMirrorItem_WeakRef();
@@ -245,6 +266,7 @@ namespace AdventureModeLore.WorldGeneration {
 					int elixirCount,
 					int mountedMirrorsCount,
 					int PKEMeterCount,
+					bool hasOrbsBooklet,
 					bool hasShadowMirror,
 					int darkHeartPieceCount ) {
 			if( chestIdx == -1 ) {
@@ -305,6 +327,12 @@ namespace AdventureModeLore.WorldGeneration {
 						chest[itemIdx++] = pkeItems.Value.missionItem;
 						chest[itemIdx++] = pkeItems.Value.manualItem;
 					}
+				}
+			}
+			if( hasOrbsBooklet ) {
+				Item bookItem = LostExpeditionsGen.CreateOrbsBookletItem();
+				if( bookItem != null ) {
+					chest[itemIdx++] = bookItem;
 				}
 			}
 			if( hasShadowMirror ) {

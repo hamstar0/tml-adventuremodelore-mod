@@ -8,24 +8,25 @@ using ModLibsGeneral.Libraries.World;
 
 namespace AdventureModeLore.WorldGeneration {
 	partial class LostExpeditionsGen : GenPass {
-		private (int x, int y)? FindDungeonExpeditionLocation( int campWidth, out int mostCommonTileType ) {
+		private (int TileX, int NearFloorTileY)? FindDungeonExpeditionLocation( int campWidth, out int mostCommonTileType ) {
 			int dir = Main.dungeonX > ( Main.maxTilesX / 2 )
 				? -1
 				: 1;
 
 			int tileX = Main.dungeonX;
 			int tileY = Main.dungeonY;
+			int nearFloorY = tileY;
 
 			//
 
 			// Scan until open air
-			while( Framing.GetTileSafely(tileX, tileY).active() && Main.tile[tileX, tileY].type != TileID.Pots ) {
-				tileY--;
+			while( Main.tile[tileX, nearFloorY].active() && Main.tile[tileX, nearFloorY].type != TileID.Pots ) {
+				nearFloorY--;	// go up
 			}
-			while( !Framing.GetTileSafely(tileX, tileY).active() || Main.tile[tileX, tileY].type == TileID.Pots ) {
-				tileY++;
+			while( !Main.tile[tileX, nearFloorY].active() || Main.tile[tileX, nearFloorY].type == TileID.Pots ) {
+				nearFloorY++;	// go down
 			}
-			tileY--;	// air tile
+			nearFloorY--;	// air tile
 
 			//
 
@@ -35,13 +36,13 @@ namespace AdventureModeLore.WorldGeneration {
 				// scan towards map center
 				int x = tileX + (offsetX * dir);
 
-				Tile tile = Framing.GetTileSafely( x, tileY+1 );
-				if( !tile.active() ) {
+				Tile floorTile = Framing.GetTileSafely( x, nearFloorY+1 );
+				if( !floorTile.active() ) {
 					break;
 				}
-				if( tile.type != TileID.BlueDungeonBrick
-						&& tile.type != TileID.GreenDungeonBrick
-						&& tile.type != TileID.PinkDungeonBrick ) {
+				if( floorTile.type != TileID.BlueDungeonBrick
+						&& floorTile.type != TileID.GreenDungeonBrick
+						&& floorTile.type != TileID.PinkDungeonBrick ) {
 					break;
 				}
 			}
@@ -60,7 +61,7 @@ namespace AdventureModeLore.WorldGeneration {
 			for( int i = 1; i < 40; i++ ) {
 				scanPos = this.FindExpeditionFutureFloorArea(
 					tileX: tileX - i,
-					tileY: tileY,
+					tileY: nearFloorY,
 					maxTileY: WorldLocationLibraries.DirtLayerTopTileY - 1,
 					campWidth: campWidth,
 					floorPavingDepth: 2,
@@ -68,13 +69,13 @@ namespace AdventureModeLore.WorldGeneration {
 					permitDungeonWalls: true,
 					mostCommonTileType: out mostCommonTileType
 				);
-				if( scanPos != null ) {
+				if( scanPos.HasValue ) {
 					return scanPos;
 				}
 
 				scanPos = this.FindExpeditionFutureFloorArea(
 					tileX: tileX + i,
-					tileY: tileY,
+					tileY: nearFloorY,
 					maxTileY: WorldLocationLibraries.DirtLayerTopTileY - 1,
 					campWidth: campWidth,
 					floorPavingDepth: 2,
@@ -82,7 +83,7 @@ namespace AdventureModeLore.WorldGeneration {
 					permitDungeonWalls: true,
 					mostCommonTileType: out mostCommonTileType
 				);
-				if( scanPos != null ) {
+				if( scanPos.HasValue ) {
 					return scanPos;
 				}
 			}

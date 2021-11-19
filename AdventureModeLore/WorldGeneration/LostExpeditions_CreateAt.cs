@@ -68,6 +68,8 @@ namespace AdventureModeLore.WorldGeneration {
 				return false;
 			}
 
+			//
+
 			int customTileX = leftTileX + 11;
 			foreach( int customTile in customTiles ) {
 				if( TilePlacementLibraries.TryPrecisePlace(customTileX, nearFloorTileY, (ushort)customTile) ) {
@@ -77,6 +79,8 @@ namespace AdventureModeLore.WorldGeneration {
 					return false;
 				}
 			}
+
+			//
 
 			if( rememberLocation ) {
 				var myworld = ModContent.GetInstance<AMLWorld>();
@@ -91,32 +95,40 @@ namespace AdventureModeLore.WorldGeneration {
 		////////////////
 
 		private void PaveCampAt( int tileX, int nearFloorTileY, int tileType ) {
+			// Clear space above camp
+			int minAirY = nearFloorTileY - 3;
+			int maxAirY = nearFloorTileY;
+			int airY = maxAirY;
+
+			for( Tile tile = Framing.GetTileSafely(tileX, airY);
+						airY > minAirY;
+						tile = Framing.GetTileSafely(tileX, --airY) ) {
+				try {
+					if( tile.active() ) {
+						WorldGen.KillTile( tileX, airY );
+					}
+				} catch { }
+
+				if( tile.active() ) {
+					tile.ClearEverything();
+				}
+			}
+
+			//
+
 			var needsFill = new List<(int, int)>();
 
-			// Clear space above camp
-			int aboveY = nearFloorTileY;
-			for( Tile tile = Framing.GetTileSafely(tileX, aboveY);
-						aboveY > (nearFloorTileY - 3);
-						tile = Framing.GetTileSafely(tileX, --aboveY) ) {
+			// Clear bogus floor material away
+			int minSolidY = nearFloorTileY + 1;
+			int maxSolidY = nearFloorTileY + 7;
+			int solidY = minSolidY;
+
+			for( Tile tile = Framing.GetTileSafely(tileX, solidY);
+						solidY < maxSolidY && !this.IsValidFloorTile(tile);
+						tile = Framing.GetTileSafely(tileX, ++solidY) ) {
 				try {
 					if( tile.active() ) {
-						WorldGen.KillTile( tileX, aboveY );
-					}
-				} catch { }
-
-				if( tile.active() ) {
-					tile.ClearEverything();
-				}
-			}
-
-			// Clear space below and find 'floor'
-			int belowY = nearFloorTileY + 1;
-			for( Tile tile = Framing.GetTileSafely(tileX, belowY);
-						belowY < (nearFloorTileY + 7) && !this.IsValidFloorTile(tile);
-						tile = Framing.GetTileSafely(tileX, ++belowY) ) {
-				try {
-					if( tile.active() ) {
-						WorldGen.KillTile( tileX, belowY );
+						WorldGen.KillTile( tileX, solidY );
 					}
 				} catch { }
 
@@ -124,13 +136,15 @@ namespace AdventureModeLore.WorldGeneration {
 					tile.ClearEverything();
 				}
 
-				needsFill.Add( (tileX, belowY) );
+				needsFill.Add( (tileX, solidY) );
 			}
 
-			Main.tile[ tileX, belowY ]?.slope( 0 );
-			Main.tile[ tileX, belowY ]?.halfBrick( false );
+			//
 
-			// Raise floor to camp's level
+			Main.tile[ tileX, solidY ]?.slope( 0 );
+			Main.tile[ tileX, solidY ]?.halfBrick( false );
+
+			// Refill removed floor material
 			for( int i=needsFill.Count-1; i>=0; i-- ) {
 				(int x, int y) fillAt = needsFill[i];
 
@@ -147,7 +161,7 @@ namespace AdventureModeLore.WorldGeneration {
 					tile.type = (ushort)tileType;
 					WorldGen.SquareTileFrame( fillAt.x, fillAt.y );
 
-					if( !this.IsValidFloorTile( tile ) ) {
+					if( !this.IsValidFloorTile(tile) ) {
 						LogLibraries.Log( "Could not fill camp floor tile (type: "+tileType+") at "+fillAt.x+", "+fillAt.y
 							+": "+tile.ToString() );
 					}
