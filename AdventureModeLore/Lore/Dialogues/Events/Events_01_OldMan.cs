@@ -33,12 +33,17 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					dialogue: () => "The plague? I know nothing of this. All I know is I made a pact long ago to keep this "
 							+ "place sealed. I don't even remember why. This dungeon has its secrets, but I want nothing to "
 							+ "do with it!"
-							+ "\nYou might instead try investigating the jungle. I hear it too has its secrets. And dangers.",
+							+ "\n"+"You might instead try investigating the jungle. I hear it too has its secrets. And dangers.",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindJungle,
 						description: "The old man says there's something suspicious in the jungle. Maybe take a look?",
 						condition: ( obj ) =>  Main.LocalPlayer.ZoneJungle
 					)
+				),
+				new DialogueLoreEventStage(
+					dialogue: () => "I guess to reach the jungle you'll need to get through that barrier over yonder. "
+							+ "It was created to block access to the rest of this island. Unless you know the arts of "
+							+ "creating barriers of your own, you're out of luck penetrating through others..."
 				)
 			},
 			isRepeatable: false

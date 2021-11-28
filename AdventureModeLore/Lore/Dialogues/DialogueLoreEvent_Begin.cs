@@ -87,7 +87,7 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) ) {
 				if( forceObjectiveIncomplete ) {
-					ObjectivesAPI.RemoveObjective( objectiveName, true );
+					ObjectivesAPI.RemoveObjectiveIf( objectiveName, true );
 				}
 			}
 

@@ -11,7 +11,7 @@ using Messages.Definitions;
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
-		private static bool Event_Radio_Trickster_PreReq() {
+		private static bool Event_Radio_WeakRef_Trickster() {
 			if( TheTrickster.TheTricksterAPI.GetTricksterDefeatLocations().Count <= 0 ) {
 				return false;
 			}
@@ -39,7 +39,7 @@ namespace AdventureModeLore.Lore.General.Events {
 					return false;
 				}
 
-				return GeneralLoreEventDefinitions.Event_Radio_Trickster_PreReq();
+				return GeneralLoreEventDefinitions.Event_Radio_WeakRef_Trickster();
 			}
 
 			//
