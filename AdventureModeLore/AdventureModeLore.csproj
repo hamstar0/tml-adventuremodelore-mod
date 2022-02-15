@@ -24,6 +24,9 @@
     <Reference Include="Ergophobia">
       <HintPath>..\..\..\Ergophobia\Project\Ergophobia\bin\Release\net452\Ergophobia.dll</HintPath>
     </Reference>
+    <Reference Include="FindableManaCrystals">
+      <HintPath>..\..\..\Findable Mana Crystals\Project\FindableManaCrystals\bin\Release\net452\FindableManaCrystals.dll</HintPath>
+    </Reference>
     <Reference Include="LostExpeditions">
       <HintPath>..\..\..\Lost Expeditions\Project\LostExpeditions\bin\Release\net452\LostExpeditions.dll</HintPath>
     </Reference>

@@ -14,7 +14,8 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 		}
 
 		private static int CountDiscoveredMirrors_WeakRef() {
-			return MountedMagicMirrors.MountedMagicMirrorsAPI.GetDiscoveredMirrors( Main.LocalPlayer ).Count;
+			return MountedMagicMirrors.MountedMagicMirrorsAPI
+				.GetDiscoveredMirrors( Main.LocalPlayer ).Count;
 		}
 	}
 }

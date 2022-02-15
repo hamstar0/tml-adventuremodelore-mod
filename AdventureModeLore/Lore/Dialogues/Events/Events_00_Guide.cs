@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using Objectives.Definitions;
+using FindableManaCrystals.Items;
 
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEventDefinitions {
+		public const string ObjectiveTitle_FindMagicalPhenomena = "Discover Magical Phenomena";
+		
 		public const string ObjectiveTitle_InvestigateDungeon = "Investigate Dungeon";
 
 		public const string ObjectiveTitle_Find10Mirrors = "Locate 10 Mounted Magic Mirrors";
@@ -21,12 +26,30 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 			npcType: NPCID.Guide,
 			subStages: new DialogueLoreEventStage[] {
 				new DialogueLoreEventStage(
+					dialogue: () => "We made it! We finally have a chance to put an end to the accursed plague! With "
+						+"your special... magical gift, we must learn about the magical properties of this island, "
+						+"which seem to be the key to this threat.",
+					objective: new FlatObjective(
+						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMagicalPhenomena,
+						description: "Discover a hidden sample of magical phenomena on this island.",
+						condition: ( obj ) => {
+							IEnumerable<Item> manaShards = Main.LocalPlayer.inventory
+								.Where( i =>
+									i?.active == true
+									&& i.type == ModContent.ItemType<ManaCrystalShardItem>()
+								);
+
+							return manaShards.Count() >= 1;
+						}
+					)
+				),
+				new DialogueLoreEventStage(
 					dialogue: () => "Before the attack, reports came in of a large brick structure on the island a bit "
-							+"inland. Perhaps we should check it out?",
+						+"inland. Perhaps our first stop should be to check it out?",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_InvestigateDungeon,
 						description: "There's a large, ominous structure with a strange old man wandering around"
-								+"\n"+"it's entrance. Ask the old man for information about the island.",
+							+"\n"+"it's entrance. Ask the old man for information about the island.",
 						condition: ( obj ) => {
 							return Main.player.Any( plr => {
 								if( plr?.active != true ) {
@@ -44,11 +67,11 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					)
 				),
 				new DialogueLoreEventStage(
-					dialogue: () => "If you're having trouble getting somewhere, use your ropes, platforms, framing planks, "
-							+"and track deployment kits. There should be some in the raft's barrel. If you need more, "
-							+"some of these can be crafted or bought, if you have the needed materials or money."
+					dialogue: () => "If you're having trouble getting somewhere, use your ropes, platforms, framing "
+						+"planks, and track deployment kits. There should be some in the raft's barrel. If you need "
+						+"more, you'll need to craft or buy them, if and when you can."
 				),
-				new DialogueLoreEventStage(
+				/*new DialogueLoreEventStage(
 					dialogue: () => "Speaking of, this island is pretty big. In the raft's storage are magic wall mirrors "
 							+"that allow fast travel between each other. Furnishing Kits also come with them. We should get "
 							+"at least [c/FFFFBB:10] of these spread around the island for our operations.",
@@ -57,7 +80,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						description: "Create or locate 10 Mounted Magic Mirrors on your map.",
 						condition: ( obj ) => (float)DialogueLoreEventDefinitions.CountDiscoveredMirrors() / 10f
 					)
-				)
+				)*/
 			},
 			isRepeatable: false
 		);
