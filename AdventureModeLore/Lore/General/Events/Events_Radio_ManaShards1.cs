@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Messages;
 using Messages.Definitions;
 using ModLibsCore.Services.Timers;
-
+using LostExpeditions;
 
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
@@ -17,7 +17,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				}
 
 				var myworld = ModContent.GetInstance<AMLWorld>();
-				return myworld.LostExpeditions.Count(kv => kv.Value) >= 3
+				return LostExpeditionsAPI.GetLostExpeditionLocations().Length >= 3
 					&& Main.LocalPlayer.statManaMax2 < 100;
 			}
 

@@ -44,18 +44,5 @@ namespace AdventureModeLore {
 
 			return tag;
 		}
-
-
-		////////////////
-
-		 private int _FEDiscoveryRecheckTimer = 0;
-
-		public override void PreUpdate() {
-			if( this._FEDiscoveryRecheckTimer-- <= 0 ) {
-				this._FEDiscoveryRecheckTimer = 15;
-
-				this.DiscoverNearbyFEsIf();
-			}
-		}
 	}
 }

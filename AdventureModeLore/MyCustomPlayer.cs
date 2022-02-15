@@ -7,7 +7,7 @@ using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Extensions;
 using ModLibsMaps.Services.Maps;
 using AdventureModeLore.Lore;
-
+using LostExpeditions;
 
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
@@ -27,8 +27,8 @@ namespace AdventureModeLore {
 			var myworld = ModContent.GetInstance<AMLWorld>();
 
 			int i = 0;
-			foreach( ((int x, int y) tile, bool found) in myworld.LostExpeditions ) {
-				if( found ) {
+			foreach( (int x, int y) tile in LostExpeditionsAPI.GetLostExpeditionLocations() ) {
+				if( LostExpeditionsAPI.IsLostExpeditionFound(tile.x, tile.y) == true ) {
 					continue;
 				}
 

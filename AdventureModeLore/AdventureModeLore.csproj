@@ -24,8 +24,8 @@
     <Reference Include="Ergophobia">
       <HintPath>..\..\..\Ergophobia\Project\Ergophobia\bin\Release\net452\Ergophobia.dll</HintPath>
     </Reference>
-    <Reference Include="LockedAbilities">
-      <HintPath>..\..\..\Locked Abilities\Project\LockedAbilities\bin\Release\net452\LockedAbilities.dll</HintPath>
+    <Reference Include="LostExpeditions">
+      <HintPath>..\..\..\Lost Expeditions\Project\LostExpeditions\bin\Release\net452\LostExpeditions.dll</HintPath>
     </Reference>
     <Reference Include="Messages">
       <HintPath>..\..\..\Messages\Project\Messages\bin\Release\net452\Messages.dll</HintPath>
@@ -42,6 +42,9 @@
     <Reference Include="ModLibsNPCDialogue">
       <HintPath>..\..\..\Mod Libs\Mod Libs Services NPC Dialogue\Project\ModLibsNPCDialogue\bin\Release\net452\ModLibsNPCDialogue.dll</HintPath>
     </Reference>
+    <Reference Include="ModLibsUtilityContent">
+      <HintPath>..\..\..\Mod Libs\Mod Libs Utility Content\Project\ModLibsUtilityContent\bin\Release\net452\ModLibsUtilityContent.dll</HintPath>
+    </Reference>
     <Reference Include="MountedMagicMirrors">
       <HintPath>..\..\..\Mounted Magic Mirrors\Project\MountedMagicMirrors\bin\Release\net452\MountedMagicMirrors.dll</HintPath>
     </Reference>
@@ -56,9 +59,6 @@
     </Reference>
     <Reference Include="PKEMeter">
       <HintPath>..\..\..\PKE Meter\Project\PKEMeter\bin\Release\net452\PKEMeter.dll</HintPath>
-    </Reference>
-    <Reference Include="ReadableBooks">
-      <HintPath>..\..\..\Readable Books\Project\ReadableBooks\bin\Release\net452\ReadableBooks.dll</HintPath>
     </Reference>
     <Reference Include="SoulBarriers">
       <HintPath>..\..\..\Soul Barriers\Project\SoulBarriers\bin\Release\net452\SoulBarriers.dll</HintPath>

@@ -13,7 +13,7 @@ namespace AdventureModeLore.WorldGeneration {
 			(int x, int nearFloorY)? cybPointRaw;
 			int x, nearFloorY;
 
-			int cybType = ModContent.TileType<FallenCyborgTile>();
+			int cybType = ModContent.TileType<MyFallenCyborgTile>();
 
 			for( int cybCount=1; cybCount<count; cybCount++ ) {
 				cybPointRaw = this.FindRandomLocationForACyborg();

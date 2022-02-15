@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using LostExpeditions;
 
 
 namespace AdventureModeLore {
@@ -19,7 +20,7 @@ namespace AdventureModeLore {
 
 				if( gaugeTimer-- <= 0 ) {
 					gaugeTimer = 10;
-					lastGaugedExpeditionProximityPercent = AMLWorld.GaugeUnexploredExpeditionsNear( pos, out _ )
+					lastGaugedExpeditionProximityPercent = LostExpeditionsAPI.GaugeUnexploredExpeditionsNear(pos, out _)
 						?? 0f;
 				}
 
