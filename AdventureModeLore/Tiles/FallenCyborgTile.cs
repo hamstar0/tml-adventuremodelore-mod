@@ -1,20 +1,34 @@
 ﻿using Messages;
 using Microsoft.Xna.Framework;
-using ModLibsUtilityContent.Tiles;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
+using ModLibsCore.Classes.Loadable;
+using ModLibsUtilityContent.Tiles;
 
 
 namespace AdventureModeLore.Tiles {
-	public class MyFallenCyborgTile : FallenCyborgTile {
-		public override void KillMultiTile( int x, int y, int frameX, int frameY ) {
+	public class MyFallenCyborgTile : ILoadable {
+		void ILoadable.OnModsLoad() { }
+
+		void ILoadable.OnModsUnload() { }
+
+		void ILoadable.OnPostModsLoad() {
+			var mytile = ModContent.GetInstance<FallenCyborgTile>();
+
+			mytile.KillMultiTile_Hook = this.KillMultiTile;
+			mytile.MouseOverFar_Hook = this.MouseOverFar;
+		}
+
+
+		////////////////
+
+		private void KillMultiTile( int x, int y, int frameX, int frameY ) {
 			Mod riMod = ModLoader.GetMod( "RuinedItems" );
 			if( riMod == null ) {
 				return;
 			}
 
-			for( int i=0; i<2; i++ ) {
+			for( int i = 0; i < 2; i++ ) {
 				Item.NewItem(
 					X: x * 16,
 					Y: y * 16,
@@ -25,10 +39,7 @@ namespace AdventureModeLore.Tiles {
 			}
 		}
 
-
-		////////////////
-
-		public override void MouseOverFar( int i, int j ) {
+		private void MouseOverFar( int i, int j ) {
 			string id = "AML_Lore_FallenCyborg";
 			string story = "These poor guys can sometimes be found simply lying around in the deep places of the"
 					+ " island, either in disrepair, or maybe simply out of juice. Without the means of repairing"
@@ -40,9 +51,9 @@ namespace AdventureModeLore.Tiles {
 
 			MessagesAPI.AddMessage(
 				title: "Fallen Cyborgs",
-				description: story+"\n \n"+addenum,
+				description: story + "\n \n" + addenum,
 				modOfOrigin: AMLMod.Instance,
-				alertPlayer: MessagesAPI.IsUnread(id),
+				alertPlayer: MessagesAPI.IsUnread( id ),
 				isImportant: false,
 				parentMessage: MessagesAPI.StoryLoreCategoryMsg,
 				id: id

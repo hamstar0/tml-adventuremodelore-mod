@@ -4,7 +4,7 @@ using Terraria.World.Generation;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
-using AdventureModeLore.Tiles;
+using ModLibsUtilityContent.Tiles;
 
 
 namespace AdventureModeLore.WorldGeneration {
@@ -13,7 +13,7 @@ namespace AdventureModeLore.WorldGeneration {
 			(int x, int nearFloorY)? cybPointRaw;
 			int x, nearFloorY;
 
-			int cybType = ModContent.TileType<MyFallenCyborgTile>();
+			int cybType = ModContent.TileType<FallenCyborgTile>();
 
 			for( int cybCount=1; cybCount<count; cybCount++ ) {
 				cybPointRaw = this.FindRandomLocationForACyborg();
