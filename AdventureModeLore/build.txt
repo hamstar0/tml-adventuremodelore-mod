@@ -1,7 +1,7 @@
 displayName = Adventure Mode Lore
 author = hamstar
 version = 0.19.0
-modReferences = FindableManaCrystals@1.6.0, LostExpeditions@1.0.0, Messages@1.1.2, ModLibsCore@1.2.0.1, ModLibsGeneral@1.2.0, ModLibsMaps@2.0.0, ModLibsNPCDialogue@1.0.0, Objectives@0.7.2.2
+modReferences = FindableManaCrystals@2.0.0, LostExpeditions@1.0.0, Messages@1.1.2, ModLibsCore@1.2.0.1, ModLibsGeneral@1.2.0, ModLibsMaps@2.0.0, ModLibsNPCDialogue@1.0.0, Objectives@0.7.2.2
 weakReferences = BossReigns@1.2.1, CursedBones@1.0.0, CursedBrambles@1.1.1, Ergophobia@1.11.3, MountedMagicMirrors@1.1.9, Necrotis@2.0.0, PKEMeter@1.5.3, Orbs@1.4.2, SpiritWalking@1.0.0, SoulBarriers@2.0.0, TheMadRanger@1.8.5, TheTrickster@1.7.2, WorldGates@1.2.2
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://forums.terraria.org/index.php?threads/adventure-mode.85140/
