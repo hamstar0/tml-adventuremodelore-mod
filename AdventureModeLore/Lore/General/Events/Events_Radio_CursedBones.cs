@@ -54,7 +54,7 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_CursedBones";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"See those flickering, gross-looking piles of bones that seem to want to send deadly magical skulls your way?"
+				"See those eerie patches of bones that like sending deadly magical skulls flying your way?"
 				+" Those can only be removed with some strong mining tools... if you can safely get close enough. I'd"
 				+" suggest avoiding them, for now. Use your P.B.G to protect against their projectiles, if you can't."
 			);
