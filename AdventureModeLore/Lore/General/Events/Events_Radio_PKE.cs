@@ -7,6 +7,10 @@ using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
+using Objectives;
+using Objectives.Definitions;
+using PKEMeter;
+using PKEMeter.Logic;
 
 
 namespace AdventureModeLore.Lore.General.Events {
@@ -60,6 +64,35 @@ namespace AdventureModeLore.Lore.General.Events {
 				+"We should try to find out what those cyborgs were after."
 			);*/
 
+			//
+
+			bool hasBluePKE = false;
+			bool hasGreenPKE = false;
+			bool hasYellowPKE = false;
+			bool hasRedPKE = false;
+
+			var pkeObj = new FlatObjective(
+				title: "Max each PKE gauge color",
+				description: "Find out what causes each PKE colored gauge to climb to full by encountering"
+					+"\n"+"the source of each reading.",
+				condition: ( co ) => {
+					PKEGaugesGetter gaugesGetter = PKEMeterAPI.GetGauge();
+					PKEGaugeValues gauges = gaugesGetter?.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
+					if( gauges == null ) {
+						return false;
+					}
+
+					hasBluePKE |= gauges.BluePercent >= 0.9f;
+					hasGreenPKE |= gauges.GreenPercent >= 0.9f;
+					hasYellowPKE |= gauges.YellowPercent >= 0.9f;
+					hasRedPKE |= gauges.RedPercent >= 0.9f;
+
+					return hasBluePKE && hasGreenPKE && hasYellowPKE && hasRedPKE;
+				}
+			);
+
+			//
+
 			return new GeneralLoreEvent(
 				name: "Radio - PKE",
 				prereqs: new Func<bool>[] { PreReq },
@@ -74,6 +107,9 @@ namespace AdventureModeLore.Lore.General.Events {
 							parentMessage: MessagesAPI.EventsCategoryMsg,
 							id: msgId
 						);
+
+						ObjectivesAPI.AddObjective( pkeObj, 0, false, out _ );
+
 						return false;
 					} );
 				},

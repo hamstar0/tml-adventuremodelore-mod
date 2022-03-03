@@ -8,7 +8,7 @@ namespace AdventureModeLore.Lore.Dialogues {
 	public partial class DialogueLoreEventStage {
 		public Func<string> OptionalDialogue { get; private set; }
 
-		public Objective OptionalObjective { get; private set; }
+		public Objective[] OptionalObjectives { get; private set; }
 
 
 
@@ -16,12 +16,17 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 		public DialogueLoreEventStage( Func<string> dialogue ) {
 			this.OptionalDialogue = dialogue;
-			this.OptionalObjective = null;
+			this.OptionalObjectives = null;
 		}
 
 		public DialogueLoreEventStage( Func<string> dialogue, Objective objective ) {
 			this.OptionalDialogue = dialogue;
-			this.OptionalObjective = objective;
+			this.OptionalObjectives = new Objective[] { objective };
+		}
+
+		public DialogueLoreEventStage( Func<string> dialogue, Objective[] objectives ) {
+			this.OptionalDialogue = dialogue;
+			this.OptionalObjectives = objectives;
 		}
 	}
 }

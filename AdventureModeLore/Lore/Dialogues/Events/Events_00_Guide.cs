@@ -11,6 +11,8 @@ using FindableManaCrystals.Items;
 
 namespace AdventureModeLore.Lore.Dialogues.Events {
 	public partial class DialogueLoreEventDefinitions {
+		public const string ObjectiveTitle_EndPlague = "Eliminate Plague Source";
+		
 		public const string ObjectiveTitle_FindMagicalPhenomena = "Discover Magical Phenomena";
 		
 		public const string ObjectiveTitle_InvestigateDungeon = "Investigate Dungeon";
@@ -29,19 +31,26 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					dialogue: () => "We made it! We finally have a chance to put an end to the accursed plague! With "
 						+"your special... magical gift, we must learn about the magical properties of this island, "
 						+"which seem to be the key to this threat.",
-					objective: new FlatObjective(
-						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMagicalPhenomena,
-						description: "Discover a hidden sample of magical phenomena on this island.",
-						condition: ( obj ) => {
-							IEnumerable<Item> manaShards = Main.LocalPlayer.inventory
-								.Where( i =>
-									i?.active == true
-									&& i.type == ModContent.ItemType<ManaCrystalShardItem>()
-								);
+					objectives: new Objective[] {
+						new FlatObjective(
+							title: DialogueLoreEventDefinitions.ObjectiveTitle_EndPlague,
+							description: "Eliminate the source of the undeath plague.",
+							condition: ( obj ) => Main.hardMode
+						),
+						new FlatObjective(
+							title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMagicalPhenomena,
+							description: "Discover a hidden sample of magical phenomena on this island.",
+							condition: ( obj ) => {
+								IEnumerable<Item> manaShards = Main.LocalPlayer.inventory
+									.Where( i =>
+										i?.active == true
+										&& i.type == ModContent.ItemType<ManaCrystalShardItem>()
+									);
 
-							return manaShards.Count() >= 1;
-						}
-					)
+								return manaShards.Count() >= 1;
+							}
+						)
+					}
 				),
 				new DialogueLoreEventStage(
 					dialogue: () => "Before the attack, reports came in of a large brick structure on the island a bit "

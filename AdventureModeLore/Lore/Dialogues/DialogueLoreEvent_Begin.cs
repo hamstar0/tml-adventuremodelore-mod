@@ -9,6 +9,56 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore.Dialogues {
 	public partial class DialogueLoreEvent : LoreEvent {
+		private static bool ProcessSubStage( DialogueLoreEventStage subStage, bool forceObjectiveIncomplete ) {
+			// No objective; dialogue only
+			if( subStage.OptionalObjectives.Length == 0 ) {
+				return true;
+			}
+
+			foreach( Objective topLevelObj in subStage.OptionalObjectives ) {
+				Objective currObj = DialogueLoreEvent.ProcessSubStageObjective( topLevelObj, forceObjectiveIncomplete );
+
+				// If sub stage's objective is incomplete, step only to this sub stage
+				if( currObj.IsComplete != true ) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		////
+
+		private static Objective ProcessSubStageObjective(
+					Objective topLevelObj,
+					bool forceObjectiveIncomplete ) {
+			string objectiveName = topLevelObj.Title;
+
+			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( objectiveName ) ) {
+				if( forceObjectiveIncomplete ) {
+					ObjectivesAPI.RemoveObjectiveIf( objectiveName, true );
+				}
+			}
+
+			Objective obj = ObjectivesAPI.GetObjective( objectiveName );
+			if( obj == null ) {
+				obj = topLevelObj;
+
+				ObjectivesAPI.AddObjective( // Evaluates `obj` if finished
+					objective: obj,
+					order: -1,
+					alertPlayer: true,
+					out string _
+				);
+			}
+
+			return obj;
+		}
+
+
+
+		////////////////
+
 		public override void BeginForLocalPlayer( bool isRepeat ) {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NpcType );
 			int currSubStageIdx = 0;
@@ -51,7 +101,7 @@ namespace AdventureModeLore.Lore.Dialogues {
 			
 			// Skip substages with completed objectives
 			for( ; currSubStageIdx < this.Stages.Length; currSubStageIdx++ ) {
-				if( this.ProcessSubStage( this.Stages[currSubStageIdx], forceObjectiveIncomplete) ) {
+				if( DialogueLoreEvent.ProcessSubStage( this.Stages[currSubStageIdx], forceObjectiveIncomplete) ) {
 					subStage = this.Stages[currSubStageIdx];
 
 					break;
@@ -63,47 +113,6 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 			isFinal = currSubStageIdx >= this.Stages.Length;
 			return subStage;
-		}
-
-
-		////
-
-		private bool ProcessSubStage( DialogueLoreEventStage subStage, bool forceObjectiveIncomplete ) {
-			// No objective; dialogue only
-			if( subStage.OptionalObjective == null ) {
-				return true;
-			}
-
-			var obj = this.ProcessSubStageObjective( subStage, forceObjectiveIncomplete );
-
-			// If sub stage's objective is incomplete, step only to this sub stage
-			return obj.IsComplete != true;
-		}
-
-		////
-
-		private Objective ProcessSubStageObjective( DialogueLoreEventStage currSubStage, bool forceObjectiveIncomplete ) {
-			string objectiveName = currSubStage.OptionalObjective.Title;
-
-			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(objectiveName) ) {
-				if( forceObjectiveIncomplete ) {
-					ObjectivesAPI.RemoveObjectiveIf( objectiveName, true );
-				}
-			}
-
-			Objective obj = ObjectivesAPI.GetObjective( objectiveName );
-			if( obj == null ) {
-				obj = currSubStage.OptionalObjective;
-
-				ObjectivesAPI.AddObjective( // Evaluates `obj` if finished
-					objective: obj,
-					order: -1,
-					alertPlayer: true,
-					out string _
-				);
-			}
-
-			return obj;
 		}
 	}
 }

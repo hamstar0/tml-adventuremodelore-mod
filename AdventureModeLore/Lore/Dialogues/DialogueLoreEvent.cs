@@ -3,6 +3,7 @@ using Terraria;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
 using Objectives;
+using Objectives.Definitions;
 
 
 namespace AdventureModeLore.Lore.Dialogues {
@@ -31,16 +32,15 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 		internal override void Initialize() {
 			// Process event objectives
-			foreach( DialogueLoreEventStage substage in this.Stages ) {
-				if( substage.OptionalObjective == null ) {
-					continue;
-				}
-				if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( substage.OptionalObjective.Title ) ) {
-					continue;
-				}
+			foreach( DialogueLoreEventStage stage in this.Stages ) {
+				foreach( Objective objective in stage.OptionalObjectives ) {
+					if( !ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( objective.Title ) ) {
+						continue;
+					}
 
-				if( ObjectivesAPI.GetObjective( substage.OptionalObjective.Title ) == null ) {
-					ObjectivesAPI.AddObjective( substage.OptionalObjective, 0, false, out _ );
+					if( ObjectivesAPI.GetObjective( objective.Title ) == null ) {
+						ObjectivesAPI.AddObjective( objective, 0, false, out _ );
+					}
 				}
 			}
 		}
@@ -51,16 +51,14 @@ namespace AdventureModeLore.Lore.Dialogues {
 		protected override bool HasEventFinished() {
 			// Check objectives
 			foreach( DialogueLoreEventStage stage in this.Stages ) {
-				if( stage.OptionalObjective == null ) {
-					continue;
-				}
+				foreach( Objective objective in stage.OptionalObjectives ) {
+					bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(
+						objective.Title
+					);
 
-				bool isPrevComplete = ObjectivesAPI.HasRecordedObjectiveByNameAsFinished(
-					stage.OptionalObjective.Title
-				);
-
-				if( !isPrevComplete && stage.OptionalObjective.ComputeCompletionPercent() < 1f ) {
-					return false;
+					if( !isPrevComplete && objective.ComputeCompletionPercent() < 1f ) {
+						return false;
+					}
 				}
 			}
 
