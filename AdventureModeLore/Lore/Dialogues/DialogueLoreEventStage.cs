@@ -16,7 +16,7 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 		public DialogueLoreEventStage( Func<string> dialogue ) {
 			this.OptionalDialogue = dialogue;
-			this.OptionalObjectives = null;
+			this.OptionalObjectives = new Objective[] { };
 		}
 
 		public DialogueLoreEventStage( Func<string> dialogue, Objective objective ) {
