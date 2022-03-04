@@ -21,6 +21,6 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 
-		public abstract void BeginForLocalPlayer( bool isRepeat );
+		public abstract void Begin_Local( bool isRepeat );
 	}
 }

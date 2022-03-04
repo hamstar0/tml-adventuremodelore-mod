@@ -9,30 +9,33 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore.Dialogues {
 	public partial class DialogueLoreEvent : LoreEvent {
-		private static bool ProcessSubStage( DialogueLoreEventStage subStage, bool forceObjectiveIncomplete ) {
-			// No objective; dialogue only
-			if( subStage.OptionalObjectives.Length == 0 ) {
-				return true;
+		private static bool ExecuteStage( DialogueLoreEventStage stage, bool forceObjectiveIncomplete ) {
+			if( stage.OptionalObjectives.Length == 0 ) {
+				return true;	// No objectives? dialogue only; may advance
 			}
 
-			foreach( Objective topLevelObj in subStage.OptionalObjectives ) {
-				Objective currObj = DialogueLoreEvent.ProcessSubStageObjective( topLevelObj, forceObjectiveIncomplete );
+			//
 
-				// If sub stage's objective is incomplete, step only to this sub stage
-				if( currObj.IsComplete != true ) {
-					return false;
+			bool isIncomplete = false;
+
+			foreach( Objective dataObj in stage.OptionalObjectives ) {
+				Objective obj = DialogueLoreEvent.ExecuteStageObjective( dataObj, forceObjectiveIncomplete );
+
+				// If stage's objective is incomplete, advance only to this stage
+				if( obj.IsComplete != true ) {
+					isIncomplete = true;
 				}
 			}
 
-			return true;
+			return isIncomplete;
 		}
 
 		////
 
-		private static Objective ProcessSubStageObjective(
-					Objective topLevelObj,
+		private static Objective ExecuteStageObjective(
+					Objective dataOnlyObjective,
 					bool forceObjectiveIncomplete ) {
-			string objectiveName = topLevelObj.Title;
+			string objectiveName = dataOnlyObjective.Title;
 
 			if( ObjectivesAPI.HasRecordedObjectiveByNameAsFinished( objectiveName ) ) {
 				if( forceObjectiveIncomplete ) {
@@ -40,38 +43,38 @@ namespace AdventureModeLore.Lore.Dialogues {
 				}
 			}
 
-			Objective obj = ObjectivesAPI.GetObjective( objectiveName );
-			if( obj == null ) {
-				obj = topLevelObj;
+			Objective objective = ObjectivesAPI.GetObjective( objectiveName );
+			if( objective == null ) {
+				objective = dataOnlyObjective;
 
 				ObjectivesAPI.AddObjective( // Evaluates `obj` if finished
-					objective: obj,
+					objective: objective,
 					order: -1,
 					alertPlayer: true,
 					out string _
 				);
 			}
 
-			return obj;
+			return objective;
 		}
 
 
 
 		////////////////
 
-		public override void BeginForLocalPlayer( bool isRepeat ) {
+		public override void Begin_Local( bool isRepeat ) {
 			DynamicDialogueHandler oldDialogueHandler = DialogueEditor.GetDynamicDialogueHandler( this.NpcType );
-			int currSubStageIdx = 0;
+			int currStageIdx = 0;
 
 			DialogueEditor.SetDynamicDialogueHandler( this.NpcType, new DynamicDialogueHandler(
 				getDialogue: ( msg ) => {
-					DialogueLoreEventStage subStage = this.GetAndAdvanceSubStage(
+					DialogueLoreEventStage stage = this.GetAndAdvanceStage(
 						forceObjectiveIncomplete: isRepeat,
-						currSubStageIdx: ref currSubStageIdx,
+						currStageIdx: ref currStageIdx,
 						isFinal: out bool isFinal
 					);
 
-					msg = subStage?.OptionalDialogue?.Invoke()
+					msg = stage?.OptionalDialogue?.Invoke()
 						?? msg;
 
 					if( isFinal ) {
@@ -93,26 +96,28 @@ namespace AdventureModeLore.Lore.Dialogues {
 
 		////////////////
 
-		private DialogueLoreEventStage GetAndAdvanceSubStage(
+		private DialogueLoreEventStage GetAndAdvanceStage(
 					bool forceObjectiveIncomplete,
-					ref int currSubStageIdx,
+					ref int currStageIdx,
 					out bool isFinal ) {
-			DialogueLoreEventStage subStage = null;
+			DialogueLoreEventStage stage = null;
 			
 			// Skip substages with completed objectives
-			for( ; currSubStageIdx < this.Stages.Length; currSubStageIdx++ ) {
-				if( DialogueLoreEvent.ProcessSubStage( this.Stages[currSubStageIdx], forceObjectiveIncomplete) ) {
-					subStage = this.Stages[currSubStageIdx];
+			for( ; currStageIdx < this.Stages.Length; currStageIdx++ ) {
+				DialogueLoreEventStage currStage = this.Stages[ currStageIdx ];
+
+				if( DialogueLoreEvent.ExecuteStage(currStage, forceObjectiveIncomplete) ) {
+					stage = currStage;
 
 					break;
 				}
 			}
 
-			// Be ready start with the next sub stage, next time
-			currSubStageIdx++;
+			// Be ready start with the next stage, next time
+			currStageIdx++;
 
-			isFinal = currSubStageIdx >= this.Stages.Length;
-			return subStage;
+			isFinal = currStageIdx >= this.Stages.Length;
+			return stage;
 		}
 	}
 }

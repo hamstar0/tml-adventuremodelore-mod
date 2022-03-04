@@ -41,7 +41,7 @@ namespace AdventureModeLore.Lore.General {
 
 		////////////////
 
-		public override void BeginForLocalPlayer( bool isRepeat ) {
+		public override void Begin_Local( bool isRepeat ) {
 			this.Event.Invoke();
 
 			this.IsFinished = true;

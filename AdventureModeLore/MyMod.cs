@@ -56,14 +56,13 @@ namespace AdventureModeLore {
 			if( Main.gameMenu ) {
 				return;
 			}
-			if( Main.netMode == NetmodeID.Server ) {
-				return;
-			}
 
-			if( this._CheckTimer-- <= 0 ) {
-				this._CheckTimer = 60;
+			if( Main.netMode != NetmodeID.Server ) {
+				if( this._CheckTimer-- <= 0 ) {
+					this._CheckTimer = 60;
 
-				LoreEventManager.RunForLocalPlayerPerSecond();
+					LoreEventManager.RunPerSecond_Local();
+				}
 			}
 		}
 	}

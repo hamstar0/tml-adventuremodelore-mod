@@ -11,7 +11,7 @@ using AdventureModeLore.Lore.General.Events;
 
 namespace AdventureModeLore.Lore {
 	public partial class LoreEventManager : ILoadable {
-		public static void RunForLocalPlayerPerSecond() {
+		public static void RunPerSecond_Local() {
 			if( !ObjectivesAPI.AreObjectivesLoadedForCurrentPlayer() ) {
 				return;
 			}
@@ -23,7 +23,7 @@ namespace AdventureModeLore.Lore {
 
 				if( status.CanBegin ) {
 					if( !status.IsDone || stage.IsRepeatable ) {
-						stage.BeginForLocalPlayer( true );
+						stage.Begin_Local( true );
 					}
 				}
 
