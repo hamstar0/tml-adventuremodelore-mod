@@ -10,7 +10,9 @@ namespace AdventureModeLore.Lore {
 		void ILoadable.OnModsUnload() { }
 
 		void ILoadable.OnPostModsLoad() {
+			Scannables.LoadScannable_PBGvBrambles();
 			Scannables.LoadScannable_Orbs();
+			Scannables.LoadScannable_ShadowMirror();
 			Scannables.LoadScannable_StrangePlants();
 			Scannables.LoadScannable_StrongGates();
 			Scannables.LoadScannable_UGDesert();

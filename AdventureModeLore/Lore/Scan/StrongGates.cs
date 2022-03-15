@@ -18,7 +18,8 @@ namespace AdventureModeLore.Lore {
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"That gate is too strong for you right now. You'll need to find a way to increase your P.B.G's"
 				+" power, first. Since it works by way of its user's magical proficiency, you'll have to find"
-				+" a way to increase yours.";
+				+" a way to increase yours."
+			);
 
 			//
 

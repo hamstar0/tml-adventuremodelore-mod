@@ -11,7 +11,7 @@ namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_StrangePlants() {
 			string msgId = "Scannable_StrangePlants";
-			string msgTitle = "About Orbs usage";
+			string msgTitle = "About the Strange Plants";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Certain strange plants seem to have inherited some metaphysical properties from their environment. It is"
 				+ " rare to see such a completely passive manifestation of spiritual energy, but I guess it's statistically"
