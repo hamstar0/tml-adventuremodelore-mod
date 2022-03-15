@@ -8,6 +8,7 @@ using Messages.Definitions;
 using ModLibsCore.Services.Timers;
 using LostExpeditions;
 
+
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static GeneralLoreEvent GetEvent_Radio_ManaShardHints1() {

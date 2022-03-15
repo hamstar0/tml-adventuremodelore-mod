@@ -18,13 +18,13 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			int tricksterType = ModContent.NPCType<TheTrickster.NPCs.TricksterNPC>();
 
-			if( NPC.AnyNPCs(tricksterType) ) {
+			if( NPC.AnyNPCs(tricksterType) ) {	// Frees the timer when no tricksters exist
 				Timers.SetTimer( "AML_TricksterLore", 60 * 5, false, () => false );
 			}
 
 			int timerTicks = Timers.GetTimerTickDuration( "AML_TricksterLore" );
 
-			return timerTicks > 1 && timerTicks <= 2;
+			return timerTicks == 2;	// TODO: Flawed
 		}
 
 
