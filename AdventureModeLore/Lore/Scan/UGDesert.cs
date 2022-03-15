@@ -25,9 +25,12 @@ namespace AdventureModeLore.Lore {
 			);
 
 			bool canScan( int x, int y ) {
+				int mouseWldX = (int)Main.MouseWorld.X / 16;
+				int mouseWldY = (int)Main.MouseWorld.Y / 16;
+
 				return WorldGates.WorldGatesAPI.GetGateBarriers()
 					.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
-					.Any( b => b.TileArea.Contains( (int)Main.MouseWorld.X/16, (int)Main.MouseWorld.Y/16 ) );
+					.Any( b => b.TileArea.Contains(mouseWldX, mouseWldY) );
 			}
 
 			//

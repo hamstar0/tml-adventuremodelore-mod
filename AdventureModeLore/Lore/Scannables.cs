@@ -10,6 +10,7 @@ namespace AdventureModeLore.Lore {
 		void ILoadable.OnModsUnload() { }
 
 		void ILoadable.OnPostModsLoad() {
+			Scannables.LoadScannable_CursedBones();
 			Scannables.LoadScannable_Dungeon();
 			Scannables.LoadScannable_LostExpeditions();
 			Scannables.LoadScannable_PBGvBrambles();
@@ -18,6 +19,8 @@ namespace AdventureModeLore.Lore {
 			Scannables.LoadScannable_StrangePlants();
 			Scannables.LoadScannable_StrongGates();
 			Scannables.LoadScannable_UGDesert();
+			Scannables.LoadScannable_Warn_Jungle();
+			Scannables.LoadScannable_Warn_Underworld();
 		}
 	}
 }

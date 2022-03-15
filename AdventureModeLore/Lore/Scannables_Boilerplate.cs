@@ -1,5 +1,6 @@
 ﻿using System;
 using Messages;
+using Messages.Definitions;
 using ModLibsCore.Classes.Loadable;
 using Objectives;
 using Objectives.Definitions;
@@ -7,14 +8,19 @@ using Objectives.Definitions;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		public static void CreateMessage( string msgId, string title, string msg ) {
+		public static void CreateMessage(
+					string msgId,
+					string title,
+					string msg,
+					bool important=true,
+					Message parent=null ) {
 			MessagesAPI.AddMessage(
 				title: title,
 				description: msg,
 				modOfOrigin: AMLMod.Instance,
 				alertPlayer: MessagesAPI.IsUnread( msgId ),
-				isImportant: true,
-				parentMessage: MessagesAPI.EventsCategoryMsg,
+				isImportant: important,
+				parentMessage: parent ?? MessagesAPI.EventsCategoryMsg,
 				id: msgId
 			);
 		}

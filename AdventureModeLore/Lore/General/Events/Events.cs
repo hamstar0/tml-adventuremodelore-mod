@@ -40,7 +40,7 @@ namespace AdventureModeLore.Lore.General.Events {
 		internal static IList<GeneralLoreEvent> GetDefinitions() {
 			return new List<GeneralLoreEvent> {
 				GeneralLoreEventDefinitions.GetEvent_Radio_AnimaEmpty(),
-				GeneralLoreEventDefinitions.GetEvent_Radio_CursedBones(),
+				//GeneralLoreEventDefinitions.GetEvent_Radio_CursedBones(),
 				//GeneralLoreEventDefinitions.GetEvent_Radio_Dungeon(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_HouseFurnished(),
 				//GeneralLoreEventDefinitions.GetEvent_Radio_LostExpeditions(),
@@ -59,8 +59,8 @@ namespace AdventureModeLore.Lore.General.Events {
 				GeneralLoreEventDefinitions.GetEvent_Radio_Trickster(),
 				//GeneralLoreEventDefinitions.GetEvent_Radio_UGDesert(),
 				//
-				GeneralLoreEventDefinitions.GetEvent_Message_JungleWarn(),
-				GeneralLoreEventDefinitions.GetEvent_Message_UnderworldWarn()
+				//GeneralLoreEventDefinitions.GetEvent_Message_JungleWarn(),
+				//GeneralLoreEventDefinitions.GetEvent_Message_UnderworldWarn()
 			};
 		}
 	}

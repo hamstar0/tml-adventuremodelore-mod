@@ -30,7 +30,8 @@ namespace AdventureModeLore.Lore {
 			string msgTitle = "About Cursed Brambles";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Curse those brambles! I guess you can now see where they get their name. Use your P.B.G to"
-				+" clear them out of your way, like most other metaphysical threats."
+				+" clear them out of your way, like most other metaphysical threats. Your pickaxe may also work,"
+				+" albeit slowly."
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Curse those brambles! I guess you can now see where they get their name. Use your [c/88FF88:P.B.G] to clear them"
