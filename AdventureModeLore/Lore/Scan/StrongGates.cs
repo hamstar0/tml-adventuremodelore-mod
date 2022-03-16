@@ -21,6 +21,10 @@ namespace AdventureModeLore.Lore {
 				+" a way to increase yours."
 			);
 
+			bool canScan( int x, int y ) {
+				return NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert;
+			}
+
 			//
 
 			string objTitle = "Breach 3 Magical Barrier Gates";
@@ -38,7 +42,7 @@ namespace AdventureModeLore.Lore {
 			//
 
 			var scannable = new PKEScannable(
-				canScan: (x, y) => NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert,
+				canScan: canScan,
 				onScanCompleteAction: () => {
 					Scannables.CreateMessage( msgId, msgTitle, msg );
 					Scannables.CreatePercentObjective( objTitle, objMsg, 3, objectiveCondition );

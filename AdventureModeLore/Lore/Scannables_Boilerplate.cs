@@ -1,7 +1,8 @@
 ﻿using System;
+using Terraria;
+using ModLibsCore.Classes.Loadable;
 using Messages;
 using Messages.Definitions;
-using ModLibsCore.Classes.Loadable;
 using Objectives;
 using Objectives.Definitions;
 
@@ -41,6 +42,31 @@ namespace AdventureModeLore.Lore {
 			);
 
 			ObjectivesAPI.AddObjective( objective, 0, true, out _ );
+		}
+
+
+		////////////////
+		
+		public static bool FindTileNear( int worldX, int worldY, int tileType ) {
+			int rectRadius = 16;
+
+			for( int x = (worldX - rectRadius); x <= (worldX + rectRadius); x += rectRadius ) {
+				int tileX = x / 16;
+				
+				for( int y = (worldY - rectRadius); y <= (worldY + rectRadius); y += rectRadius ) {
+					int tileY = y / 16;
+					if( !WorldGen.InWorld(x, y) ) {
+						continue;
+					}
+
+					Tile tile = Main.tile[tileX, tileY];
+					if( tile?.active() == true && tile.type == tileType ) {
+						return true;
+					}
+				}
+			}
+
+			return false;
 		}
 	}
 }
