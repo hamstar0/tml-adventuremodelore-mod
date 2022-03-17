@@ -44,15 +44,17 @@ namespace AdventureModeLore.Tiles {
 			string addenum = "In the meantime, maybe a more pragmatic move would be to salvage their parts for your"
 					+ " own use. They are just machines after all... right?";
 
-			MessagesAPI.AddMessage(
-				title: "Fallen Cyborgs",
-				description: story + "\n \n" + addenum,
-				modOfOrigin: AMLMod.Instance,
-				alertPlayer: MessagesAPI.IsUnread( id ),
-				isImportant: false,
-				parentMessage: MessagesAPI.StoryLoreCategoryMsg,
-				id: id
-			);
+			MessagesAPI.AddMessagesCategoriesInitializeEvent( () => {
+				MessagesAPI.AddMessage(
+					title: "Fallen Cyborgs",
+					description: story + "\n \n" + addenum,
+					modOfOrigin: AMLMod.Instance,
+					alertPlayer: MessagesAPI.IsUnread( id ),
+					isImportant: false,
+					parentMessage: MessagesAPI.StoryLoreCategoryMsg,
+					id: id
+				);
+			} );
 		}
 	}
 }

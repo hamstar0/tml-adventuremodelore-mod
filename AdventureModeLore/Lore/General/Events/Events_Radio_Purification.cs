@@ -35,15 +35,17 @@ namespace AdventureModeLore.Lore.General.Events {
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
 					Timers.SetTimer( 60 * 25, false, () => {
-						MessagesAPI.AddMessage(
-							title: "About "+(WorldGen.crimson ? "crimson" : "corruption")+" purification",
-							description: msg,
-							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(msgId),
-							isImportant: true,
-							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: msgId
-						);
+						MessagesAPI.AddMessagesCategoriesInitializeEvent( () => {
+							MessagesAPI.AddMessage(
+								title: "About "+(WorldGen.crimson ? "crimson" : "corruption")+" purification",
+								description: msg,
+								modOfOrigin: AMLMod.Instance,
+								alertPlayer: MessagesAPI.IsUnread(msgId),
+								isImportant: true,
+								parentMessage: MessagesAPI.EventsCategoryMsg,
+								id: msgId
+							);
+						} );
 						return false;
 					} );
 				},

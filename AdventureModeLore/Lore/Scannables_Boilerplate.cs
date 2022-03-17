@@ -15,15 +15,17 @@ namespace AdventureModeLore.Lore {
 					string msg,
 					bool important=true,
 					Message parent=null ) {
-			MessagesAPI.AddMessage(
-				title: title,
-				description: msg,
-				modOfOrigin: AMLMod.Instance,
-				alertPlayer: MessagesAPI.IsUnread( msgId ),
-				isImportant: important,
-				parentMessage: parent ?? MessagesAPI.EventsCategoryMsg,
-				id: msgId
-			);
+			MessagesAPI.AddMessagesCategoriesInitializeEvent( () => {
+				MessagesAPI.AddMessage(
+					title: title,
+					description: msg,
+					modOfOrigin: AMLMod.Instance,
+					alertPlayer: MessagesAPI.IsUnread( msgId ),
+					isImportant: important,
+					parentMessage: parent ?? MessagesAPI.EventsCategoryMsg,
+					id: msgId
+				);
+			} );
 		}
 
 

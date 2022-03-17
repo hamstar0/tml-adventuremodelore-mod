@@ -98,15 +98,17 @@ namespace AdventureModeLore.Lore.General.Events {
 				prereqs: new Func<bool>[] { PreReq },
 				myevent: () => {
 					Timers.SetTimer( 60 * 5, false, () => {
-						MessagesAPI.AddMessage(
-							title: "About the PKE Meter",
-							description: msg,
-							modOfOrigin: AMLMod.Instance,
-							alertPlayer: MessagesAPI.IsUnread(msgId),
-							isImportant: true,
-							parentMessage: MessagesAPI.EventsCategoryMsg,
-							id: msgId
-						);
+						MessagesAPI.AddMessagesCategoriesInitializeEvent( () => {
+							MessagesAPI.AddMessage(
+								title: "About the PKE Meter",
+								description: msg,
+								modOfOrigin: AMLMod.Instance,
+								alertPlayer: MessagesAPI.IsUnread(msgId),
+								isImportant: true,
+								parentMessage: MessagesAPI.EventsCategoryMsg,
+								id: msgId
+							);
+						} );
 
 						ObjectivesAPI.AddObjective( pkeObj, 0, false, out _ );
 
