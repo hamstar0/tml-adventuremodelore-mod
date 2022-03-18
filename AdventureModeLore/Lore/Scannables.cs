@@ -12,6 +12,7 @@ namespace AdventureModeLore.Lore {
 		void ILoadable.OnPostModsLoad() {
 			Scannables.LoadScannable_CursedBones();
 			Scannables.LoadScannable_Dungeon();
+			Scannables.LoadScannable_Gems();
 			Scannables.LoadScannable_LostExpeditions();
 			Scannables.LoadScannable_PBGvBrambles();
 			Scannables.LoadScannable_Orbs();
