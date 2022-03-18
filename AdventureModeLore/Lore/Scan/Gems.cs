@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore {
 			string msgTitle = "About Gems";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Gem stones in these lands often associate with magical power. Since our goal here may involve "
-				+"learning about magic, using these to procure magic items is a priority. Seems the best way"
+				+"learning about magic, using these to procure magic items is a priority. Seems the best way "
 				+"to understand magic is with magic."
 				+"\n \n"
 				+"Be sure to bring me gems to see what to craft from them."
