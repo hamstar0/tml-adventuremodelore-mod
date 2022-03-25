@@ -3,9 +3,10 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
 using Messages;
 using Messages.Definitions;
-using ModLibsCore.Services.Timers;
 using LostExpeditions;
 
 
@@ -18,8 +19,10 @@ namespace AdventureModeLore.Lore.General.Events {
 				}
 				
 				var myworld = ModContent.GetInstance<AMLWorld>();
-				return LostExpeditionsAPI.GetLostExpeditionLocations().Length >= 4
-					&& Main.LocalPlayer.statManaMax2 <= 30;
+				int leCount = LostExpeditionsAPI.GetLostExpeditionLocations(true)
+					.Length;
+
+				return leCount >= 3 && Main.LocalPlayer.statManaMax2 <= 30;
 			}
 
 			//
