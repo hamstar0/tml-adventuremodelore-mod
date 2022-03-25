@@ -12,6 +12,18 @@ using LostExpeditions;
 namespace AdventureModeLore.Lore.General.Events {
 	public partial class GeneralLoreEventDefinitions {
 		private static GeneralLoreEvent GetEvent_Radio_ManaShardHints1() {
+			bool PreReq() {
+				if( ModLoader.GetMod("FindableManaCrystals") == null ) {
+					return false;
+				}
+				
+				var myworld = ModContent.GetInstance<AMLWorld>();
+				return LostExpeditionsAPI.GetLostExpeditionLocations().Length >= 4
+					&& Main.LocalPlayer.statManaMax2 <= 30;
+			}
+
+			//
+			
 			string msgId = "AML_Radio_ManaShards1";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I have news that might help your progress! In case you didn't already know, your P.B.G device"
@@ -34,18 +46,6 @@ namespace AdventureModeLore.Lore.General.Events {
 				+" seaching for [c/88FF88:hidden magical phenomena] within caves and grottos. Keep your eyes open for [c/88FF88:ways"
 				+" to detect such things]."
 			);*/
-
-			//
-
-			bool PreReq() {
-				if( ModLoader.GetMod("FindableManaCrystals") == null ) {
-					return false;
-				}
-
-				var myworld = ModContent.GetInstance<AMLWorld>();
-				return LostExpeditionsAPI.GetLostExpeditionLocations().Length >= 3
-					&& Main.LocalPlayer.statManaMax2 < 100;
-			}
 
 			//
 

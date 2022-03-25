@@ -23,7 +23,7 @@ namespace AdventureModeLore.Lore.General.Events {
 			string msg = Message.RenderFormattedDescription( NPCID.OldMan,
 				"Is this thing what you kids are using to talk with? I don't know what sort of quest you're on"
 				+" exactly, but I do know this: This island is full of buried secrets. Someone clearly thought"
-				+" they should stay buried. How do you think I get to be stuck here like I am, for example?"
+				+" they should stay buried. How do you think I got to be stuck here like I am, for example?"
 				+" Just a fair warning."
 				+"\n \n"
 				+"Anyway, if you're intent on exploring the depths, I can suggest one thing: Magic powers can"
