@@ -14,6 +14,7 @@ namespace AdventureModeLore.Lore {
 			Scannables.LoadScannable_Dungeon();
 			Scannables.LoadScannable_Gems();
 			Scannables.LoadScannable_LostExpeditions();
+			Scannables.LoadScannable_MagicItems();
 			Scannables.LoadScannable_PBGvBrambles();
 			Scannables.LoadScannable_Orbs();
 			Scannables.LoadScannable_ShadowMirror();

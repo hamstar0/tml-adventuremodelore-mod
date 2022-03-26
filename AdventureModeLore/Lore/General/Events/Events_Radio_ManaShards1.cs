@@ -36,8 +36,8 @@ namespace AdventureModeLore.Lore.General.Events {
 				+"Fret not! If the ancient civilizations of this land were able to discover and master magic,"
 				+" you may be able to as well. The secret to doing so must be somewhere in this land... or"
 				+" maybe even the land itself. You might try seaching for hidden magical phenomena within"
-				+" caves and grottos. Your binoculars can detect some kinds of magic. There are probably other"
-				+" methods as well."
+				+" caves and grottos. Your binoculars are modified to emit signs when magic phenomena are"
+				+" near. There are probably other methods as well."
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"I have news that might help your progress! In case you didn't already know, your P.B.G device isn't strong enough"

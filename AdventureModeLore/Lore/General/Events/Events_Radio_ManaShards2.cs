@@ -34,7 +34,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				"Listen. I've discovered something important: You remember that PKE meter you found earlier?"
 				+" I've noticed its blue gauge matches the resonance detection behavior of your binoculars!"
 				+" We've been using special binoculars like those in previous expeditions to this island to"
-				+" detect spiritual phenomena. It seems like those cyborgs had something of the same idea!"
+				+" detect magical phenomena. It seems like those cyborgs had something of the same idea!"
 				+"\n \n"
 				+"Anyway, to spell it out: Binoculars will occasionally detect certain magical phenomena in"
 				+" the environment by way of a sparkling effect (especially while being focused). These appear"
