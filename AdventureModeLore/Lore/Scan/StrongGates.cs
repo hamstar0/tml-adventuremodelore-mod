@@ -13,6 +13,17 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_StrongGates() {
+			bool CanScan( int x, int y ) {
+				int mouseTileX = (int)Main.MouseWorld.X / 16;
+				int mouseTileY = (int)Main.MouseWorld.Y / 16;
+
+				return WorldGates.WorldGatesAPI.GetGateBarriers()
+					.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
+					.Any( b => b.TileArea.Contains( mouseTileX, mouseTileY ) );
+			}
+
+			//
+
 			string msgId = "Scannable_StrongGates";
 			string msgTitle = "About strong World Gates";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -21,8 +32,13 @@ namespace AdventureModeLore.Lore {
 				+" a way to increase yours."
 			);
 
-			bool canScan( int x, int y ) {
-				return NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert;
+			//
+
+			float ObjectiveCondition( Objective objective ) {
+				int downGates = WorldGates.WorldGatesAPI.GetGateBarriers()
+					.Where( b => !b.IsActive )
+					.Count();
+				return (float)downGates / 3f;
 			}
 
 			//
@@ -30,22 +46,14 @@ namespace AdventureModeLore.Lore {
 			string objTitle = "Breach 3 Magical Barrier Gates";
 			string objMsg = "Find and disable 3 magical barriers throughout the world. You may need to increase"
 				+ "\n"+"your magic to do so. Your binoculars may give you some hints for this.";
-			int units = 3;
-
-			float objectiveCondition( Objective objective ) {
-				int downGates = WorldGates.WorldGatesAPI.GetGateBarriers()
-					.Where( b => !b.IsActive )
-					.Count();
-				return (float)downGates / (float)units;
-			}
 
 			//
 
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => {
 					Scannables.CreateMessage( msgId, msgTitle, msg );
-					Scannables.CreatePercentObjective( objTitle, objMsg, 3, objectiveCondition );
+					Scannables.CreatePercentObjective( objTitle, objMsg, 3, ObjectiveCondition );
 				}
 			);
 

@@ -11,6 +11,12 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_Dungeon() {
+			bool CanScan( int x, int y ) {
+				return Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
+			}
+
+			//
+
 			string msgId = "Scannable_Dungeon";
 			string msgTitle = "About the Dungeon";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -25,14 +31,10 @@ namespace AdventureModeLore.Lore {
 				+" spiritual state. Do not linger longer than needed!"
 			);
 
-			bool canScan( int x, int y ) {
-				return Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
-			}
-
 			//
 
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => Scannables.CreateMessage( msgId, msgTitle, msg )
 			);
 

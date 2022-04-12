@@ -12,6 +12,18 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_LostExpeditions() {
+			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
+
+			bool CanScan( int x, int y ) {
+				PKEGaugeValues gauge = PKEMeterAPI.GetGauge()?
+					.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
+				return gauge != null
+					? gauge.GreenPercent >= 0.75f
+					: false;
+			}
+
+			//
+
 			string msgId = "Scannable_LostExpeditions";
 			string msgTitle = "About Lost Expeditions";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -25,20 +37,10 @@ namespace AdventureModeLore.Lore {
 
 			//
 
-			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
-
-			bool canScan( int x, int y ) {
-				PKEGaugeValues gauge = PKEMeterAPI.GetGauge()?
-					.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
-				return gauge != null
-					? gauge.GreenPercent >= 0.75f
-					: false;
-			}
-
 			//
 
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => Scannables.CreateMessage( msgId, msgTitle, msg )
 			);
 

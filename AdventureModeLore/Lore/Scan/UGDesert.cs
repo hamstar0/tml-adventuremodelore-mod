@@ -12,6 +12,12 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_UGDesert() {
+			bool CanScan( int x, int y ) {
+				return NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert;
+			}
+
+			//
+
 			string msgId = "Scannable_UGDesert";
 			string msgTitle = "About the Underground Desert";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -24,19 +30,10 @@ namespace AdventureModeLore.Lore {
 				+" squander your orbs, though."
 			);
 
-			bool canScan( int x, int y ) {
-				int mouseTileX = (int)Main.MouseWorld.X / 16;
-				int mouseTileY = (int)Main.MouseWorld.Y / 16;
-
-				return WorldGates.WorldGatesAPI.GetGateBarriers()
-					.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
-					.Any( b => b.TileArea.Contains(mouseTileX, mouseTileY) );
-			}
-
 			//
 
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => Scannables.CreateMessage( msgId, msgTitle, msg )
 			);
 

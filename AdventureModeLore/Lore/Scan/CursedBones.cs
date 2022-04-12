@@ -20,6 +20,14 @@ namespace AdventureModeLore.Lore {
 		}
 
 		private static void LoadScannable_CursedBones_WeakRef() {
+			int cursedBonesType = ModContent.TileType<CursedBones.Tiles.CursedBonesTile>();
+
+			bool CanScan( int x, int y ) {
+				return Scannables.FindTileNear( (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, cursedBonesType );
+			}
+
+			//
+
 			string msgId = "Scannable_CursedBones";
 			string msgTitle = "About Cursed Brambles";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -36,16 +44,8 @@ namespace AdventureModeLore.Lore {
 
 			//
 
-			int cursedBonesType = ModContent.TileType<CursedBones.Tiles.CursedBonesTile>();
-
-			bool canScan( int x, int y ) {
-				return Scannables.FindTileNear( (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, cursedBonesType );
-			}
-
-			//
-
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => Scannables.CreateMessage( msgId, msgTitle, msg )
 			);
 

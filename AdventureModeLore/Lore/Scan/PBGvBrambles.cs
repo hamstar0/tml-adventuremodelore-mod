@@ -26,6 +26,14 @@ namespace AdventureModeLore.Lore {
 		}
 
 		private static void LoadScannable_PBGvBrambles_WeakRef() {
+			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
+
+			bool CanScan( int x, int y ) {
+				return Scannables.FindTileNear( (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, brambleType );
+			}
+
+			//
+
 			string msgId = "Scannable_PBGvBrambles";
 			string msgTitle = "About Cursed Brambles";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -40,16 +48,10 @@ namespace AdventureModeLore.Lore {
 
 			//
 
-			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
-
-			bool canScan( int x, int y ) {
-				return Scannables.FindTileNear( (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, brambleType );
-			}
-
 			//
 
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => Scannables.CreateMessage( msgId, msgTitle, msg )
 			);
 

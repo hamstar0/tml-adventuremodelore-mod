@@ -12,20 +12,22 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_Warn_Underworld() {
+			bool CanScan( int x, int y ) {
+				return Main.LocalPlayer.ZoneUnderworldHeight;
+			}
+
+			//
+
 			string msgId = "Scannable_Warn_Underworld";
 			string msgTitle = "Message - Underworld PGB Warning";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Underworld warning: Your PBG decays quickly!"
 			);
 
-			bool canScan( int x, int y ) {
-				return Main.LocalPlayer.ZoneUnderworldHeight;
-			}
-
 			//
 
 			var scannable = new PKEScannable(
-				canScan: canScan,
+				canScan: CanScan,
 				onScanCompleteAction: () => Scannables.CreateMessage(
 					msgId: msgId,
 					title: msgTitle,
