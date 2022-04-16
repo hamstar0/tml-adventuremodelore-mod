@@ -18,7 +18,7 @@ namespace AdventureModeLore.Lore {
 				PKEGaugeValues gauge = PKEMeterAPI.GetGauge()?
 					.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
 				return gauge != null
-					? gauge.GreenPercent >= 0.75f
+					? gauge.GreenPercent >= 0.85f
 					: false;
 			}
 
