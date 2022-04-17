@@ -20,9 +20,10 @@ namespace AdventureModeLore.Lore.General.Events {
 
 			string msgId = "AML_Radio_Purification";
 			string msg = Message.RenderFormattedDescription( NPCID.Dryad,
-				"Are you trying to help save this world? You'll need my help! You cannot hope to penetrate the nasty"
-				+" "+evil+" growth of this land by the usual means. You'll need my purification powder to have a"
-				+" chance to break through. Use it."
+				$"Are you trying to help save this world? You'll need my help! You cannot hope to penetrate the nasty"
+				+$" {evil} growth of this land by the usual means. I have the last remaining reserve of a special"
+				+$" powder to purify earth-bourne spiritual corruption. Come see me to stock up. It's the only thing"
+				+$" that will enable you to breach that defiled earth with your orbs."
 			);
 			/*string msg = Message.RenderFormattedDescription( NPCID.Dryad,
 				"Are you trying to help save this world? You'll need my help! You cannot hope to penetrate the nasty"
