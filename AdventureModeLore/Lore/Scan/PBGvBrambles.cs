@@ -28,10 +28,10 @@ namespace AdventureModeLore.Lore {
 		private static void LoadScannable_PBGvBrambles_WeakRef() {
 			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
 
-			bool CanScan( int x, int y ) {
+			bool CanScan( int scrX, int scrY ) {
 				return Scannables.FindTileNear(
-					(int)Main.MouseWorld.X,
-					(int)Main.MouseWorld.Y,
+					(int)Main.MouseWorld.X / 16,
+					(int)Main.MouseWorld.Y / 16,
 					tile => tile.type == brambleType
 				);
 			}

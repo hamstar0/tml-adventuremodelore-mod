@@ -12,7 +12,7 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_UGDesert() {
-			bool CanScan( int x, int y ) {
+			bool CanScan( int scrX, int scrY ) {
 				return NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert;
 			}
 

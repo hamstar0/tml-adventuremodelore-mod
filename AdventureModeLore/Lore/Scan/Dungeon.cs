@@ -11,7 +11,7 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_Dungeon() {
-			bool CanScan( int x, int y ) {
+			bool CanScan( int scrX, int scrY ) {
 				return Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
 			}
 

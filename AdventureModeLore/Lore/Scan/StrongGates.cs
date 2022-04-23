@@ -13,7 +13,7 @@ using PKEMeter.Logic;
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_StrongGates() {
-			bool CanScan( int x, int y ) {
+			bool CanScan( int scrX, int scrY ) {
 				int mouseTileX = (int)Main.MouseWorld.X / 16;
 				int mouseTileY = (int)Main.MouseWorld.Y / 16;
 

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -22,11 +23,14 @@ namespace AdventureModeLore.Lore {
 		private static void LoadScannable_JungleWater_WeakRef() {
 			int cursedBonesType = ModContent.TileType<CursedBones.Tiles.CursedBonesTile>();
 
-			bool CanScan( int x, int y ) {
+			bool CanScan( int scrX, int scrY ) {
+				if( !Main.LocalPlayer.ZoneJungle ) {
+					return false;
+				}
 				return Scannables.FindTileNear(
-					(int)Main.MouseWorld.X,
-					(int)Main.MouseWorld.Y,
-					tile => Main.LocalPlayer.ZoneJungle && tile.liquid > 0 && !tile.lava() && !tile.honey()
+					(int)Main.MouseWorld.X / 16,
+					(int)Main.MouseWorld.Y / 16,
+					tile => tile.liquid > 0 && !tile.lava() && !tile.honey()
 				);
 			}
 

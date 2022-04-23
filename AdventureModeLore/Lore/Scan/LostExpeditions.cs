@@ -14,7 +14,7 @@ namespace AdventureModeLore.Lore {
 		private static void LoadScannable_LostExpeditions() {
 			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
 
-			bool CanScan( int x, int y ) {
+			bool CanScan( int scrX, int scrY ) {
 				PKEGaugeValues gauge = PKEMeterAPI.GetGauge()?
 					.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
 				return gauge != null

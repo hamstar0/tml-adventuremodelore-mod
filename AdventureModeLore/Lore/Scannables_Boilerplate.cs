@@ -49,19 +49,16 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 		
-		public static bool FindTileNear( int worldX, int worldY, Func<Tile, bool> criteria ) {
-			int rectRadius = 24;
+		public static bool FindTileNear( int tileX, int tileY, Func<Tile, bool> criteria ) {
+			int rad = 1;
 
-			for( int x = (worldX - rectRadius); x <= (worldX + rectRadius); x += rectRadius ) {
-				int tileX = x / 16;
-				
-				for( int y = (worldY - rectRadius); y <= (worldY + rectRadius); y += rectRadius ) {
-					int tileY = y / 16;
+			for( int x = (tileX - rad); x <= (tileX + rad); x += rad ) {
+				for( int y = (tileY - rad); y <= (tileY + rad); y += rad ) {
 					if( !WorldGen.InWorld(x, y) ) {
 						continue;
 					}
 
-					Tile tile = Main.tile[tileX, tileY];
+					Tile tile = Main.tile[x, y];
 					if( tile?.active() == true && criteria(tile) ) {
 						return true;
 					}

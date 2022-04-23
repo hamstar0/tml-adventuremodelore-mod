@@ -13,10 +13,10 @@ namespace AdventureModeLore.Lore {
 			string msgId = "Scannable_StrangePlants";
 			string msgTitle = "About the Strange Plants";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"Certain strange plants seem to have inherited some metaphysical properties from their environment. It is"
-				+ " rare to see such a completely passive manifestation of spiritual energy, but I guess it's statistically"
-				+ " plausible, considering all the other types of manifestation we've seen. In any case, try to harvest these"
-				+ " when you can. They're just brimming with hidden powers!"
+				"Certain strange plants seem to have inherited some metaphysical properties from their environment."
+				+" It is rare to see such a completely passive manifestation of spiritual energy, but I guess it's"
+				+" statistically plausible, considering all the other types of manifestation we've seen. In any case,"
+				+" try to harvest these when you can. They're just brimming with hidden powers!"
 			);
 
 			int[] anyOfItemTypes = new int[] {
