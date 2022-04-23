@@ -49,8 +49,8 @@ namespace AdventureModeLore.Lore {
 
 		////////////////
 		
-		public static bool FindTileNear( int worldX, int worldY, int tileType ) {
-			int rectRadius = 16;
+		public static bool FindTileNear( int worldX, int worldY, Func<Tile, bool> criteria ) {
+			int rectRadius = 24;
 
 			for( int x = (worldX - rectRadius); x <= (worldX + rectRadius); x += rectRadius ) {
 				int tileX = x / 16;
@@ -62,7 +62,7 @@ namespace AdventureModeLore.Lore {
 					}
 
 					Tile tile = Main.tile[tileX, tileY];
-					if( tile?.active() == true && tile.type == tileType ) {
+					if( tile?.active() == true && criteria(tile) ) {
 						return true;
 					}
 				}

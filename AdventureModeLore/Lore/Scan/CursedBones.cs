@@ -23,7 +23,11 @@ namespace AdventureModeLore.Lore {
 			int cursedBonesType = ModContent.TileType<CursedBones.Tiles.CursedBonesTile>();
 
 			bool CanScan( int x, int y ) {
-				return Scannables.FindTileNear( (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, cursedBonesType );
+				return Scannables.FindTileNear(
+					(int)Main.MouseWorld.X,
+					(int)Main.MouseWorld.Y,
+					tile => tile.type == cursedBonesType
+				);
 			}
 
 			//

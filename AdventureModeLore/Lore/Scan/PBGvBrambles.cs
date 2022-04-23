@@ -29,7 +29,11 @@ namespace AdventureModeLore.Lore {
 			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
 
 			bool CanScan( int x, int y ) {
-				return Scannables.FindTileNear( (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, brambleType );
+				return Scannables.FindTileNear(
+					(int)Main.MouseWorld.X,
+					(int)Main.MouseWorld.Y,
+					tile => tile.type == brambleType
+				);
 			}
 
 			//
