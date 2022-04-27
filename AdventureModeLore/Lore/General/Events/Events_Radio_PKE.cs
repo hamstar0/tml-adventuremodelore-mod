@@ -82,10 +82,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						return false;
 					}
 
-					hasBluePKE |= gauges.BluePercent >= 0.9f;
-					hasGreenPKE |= gauges.GreenPercent >= 0.9f;
-					hasYellowPKE |= gauges.YellowPercent >= 0.9f;
-					hasRedPKE |= gauges.RedPercent >= 0.9f;
+					hasBluePKE |= gauges.BluePercent >= 0.8f;
+					hasGreenPKE |= gauges.GreenPercent >= 0.8f;
+					hasYellowPKE |= gauges.YellowPercent >= 0.8f;
+					hasRedPKE |= gauges.RedPercent >= 0.8f;
 
 					return hasBluePKE && hasGreenPKE && hasYellowPKE && hasRedPKE;
 				}
