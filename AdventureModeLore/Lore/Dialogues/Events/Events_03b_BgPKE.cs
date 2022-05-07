@@ -25,7 +25,8 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_BackgroundPKE,
 						description: "Background spiritual energies (PKE) is on the rise. Equipment and mission at risk."
-							+ "\n"+"Find and destroy an unconquered powerful entity associated with this phenomenon.",
+							+ "\n"+"Find and destroy an unconquered powerful entity to disperse this phenomenon.",
+						isImportant: true,
 						condition: ( obj ) => !DialogueLoreEventDefinitions.IsBackgroundPKEDangerous()
 					)
 				)

@@ -24,7 +24,8 @@ namespace AdventureModeLore {
 						?? 0f;
 				}
 
-				existingGauge.GreenPercent = lastGaugedExpeditionProximityPercent;	// Green channel
+				existingGauge.GreenSeenPercent = lastGaugedExpeditionProximityPercent;  // Green channel
+				existingGauge.GreenRealPercent = existingGauge.GreenSeenPercent;
 
 				return existingGauge;
 			} );
@@ -33,7 +34,7 @@ namespace AdventureModeLore {
 				new PKEMeter.Logic.PKETextMessage(
 					message: "CLASS III ECTOPLASM CONCENTRATE VESSEL",
 					color: Color.Lime * (0.5f + (Main.rand.NextFloat() * 0.5f)),
-					priority: gauges.GreenPercent
+					priority: gauges.GreenRealPercent
 				)
 			);
 

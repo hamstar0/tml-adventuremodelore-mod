@@ -24,6 +24,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_TalkToGoblin,
 						description: "It would seem there are natives in this land, if you'd call them that. Try to"
 							+ "\n"+"somehow open a line of communication with them.",
+						isImportant: true,
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.GoblinTinkerer )
 					)
 				)

@@ -30,6 +30,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						description: "There's evil growing in the "+(WorldGen.crimson?"crimson":"corruption")+". It will "
 								+ "need to be stopped, or else the plague"
 								+ "\n"+"will spread.",
+						isImportant: true,
 						condition: ( obj ) => NPC.downedBoss2
 					)
 				),
@@ -40,6 +41,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_ReachUnderworld,
 						description: "It would seem the source of the plague is deep underground. You must find it.",
+						isImportant: true,
 						condition: ( obj ) => Main.LocalPlayer.position.Y >= (WorldLocationLibraries.UnderworldLayerTopTileY * 16)
 					)
 				)

@@ -34,11 +34,13 @@ namespace AdventureModeLore.Lore {
 		public static void CreatePercentObjective(
 					string title,
 					string msg,
+					bool isImportant,
 					int units,
 					PercentObjective.PercentObjectiveCondition condition ) {
 			var objective = new PercentObjective(
 				title: title,
 				description: msg,
+				isImportant: isImportant,
 				units: units,
 				condition: condition
 			);

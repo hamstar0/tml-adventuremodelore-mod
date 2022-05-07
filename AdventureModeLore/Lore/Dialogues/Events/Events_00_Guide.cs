@@ -35,11 +35,13 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						new FlatObjective(
 							title: DialogueLoreEventDefinitions.ObjectiveTitle_EndPlague,
 							description: "Eliminate the source of the undeath plague.",
+							isImportant: true,
 							condition: ( obj ) => Main.hardMode
 						),
 						new FlatObjective(
 							title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMagicalPhenomena,
-							description: "Discover a hidden sample of magical phenomena on this island.",
+							description: "Discover a hidden sample of magical material on this island.",
+							isImportant: true,
 							condition: ( obj ) => {
 								IEnumerable<Item> manaShards = Main.LocalPlayer.inventory
 									.Where( i =>
@@ -59,6 +61,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_InvestigateDungeon,
 						description: "There's a large, ominous structure with a strange old man wandering around"
 							+"\n"+"it's entrance. Ask the old man for information about the island.",
+						isImportant: true,
 						condition: ( obj ) => {
 							return Main.player.Any( plr => {
 								if( plr?.active != true ) {

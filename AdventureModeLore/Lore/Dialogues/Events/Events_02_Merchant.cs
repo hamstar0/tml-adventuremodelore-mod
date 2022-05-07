@@ -48,6 +48,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							title: DialogueLoreEventDefinitions.ObjectiveTitle_FindOrb,
 							description: "It seems the land itself is enchanted. Special orbs can be found that"
 								+"\nappear to resonate with very land itself. Maybe these will be of help?",
+							isImportant: false,
 							condition: ( obj ) => {
 								IEnumerable<int> eachOrbType = Main.LocalPlayer
 										.inventory

@@ -75,6 +75,7 @@ namespace AdventureModeLore.Lore.General.Events {
 				title: "Max each PKE gauge color",
 				description: "Find out what causes each PKE colored gauge to climb to full by encountering"
 					+"\n"+"the source of each reading.",
+				isImportant: false,
 				condition: ( co ) => {
 					PKEGaugesGetter gaugesGetter = PKEMeterAPI.GetGauge();
 					PKEGaugeValues gauges = gaugesGetter?.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
@@ -82,10 +83,10 @@ namespace AdventureModeLore.Lore.General.Events {
 						return false;
 					}
 
-					hasBluePKE |= gauges.BluePercent >= 0.8f;
-					hasGreenPKE |= gauges.GreenPercent >= 0.8f;
-					hasYellowPKE |= gauges.YellowPercent >= 0.8f;
-					hasRedPKE |= gauges.RedPercent >= 0.8f;
+					hasBluePKE |= gauges.BlueRealPercent >= 0.8f;
+					hasGreenPKE |= gauges.GreenRealPercent >= 0.8f;
+					hasYellowPKE |= gauges.YellowRealPercent >= 0.8f;
+					hasRedPKE |= gauges.RedRealPercent >= 0.8f;
 
 					return hasBluePKE && hasGreenPKE && hasYellowPKE && hasRedPKE;
 				}

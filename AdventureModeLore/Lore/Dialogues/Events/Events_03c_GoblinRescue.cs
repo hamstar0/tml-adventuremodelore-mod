@@ -26,6 +26,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_RescueGoblin,
 						description: "The goblins keep dissidants imprisoned deep in the underground desert. Craft"
 							+"\n"+"Seismic Charges to help liberate any you can find.",
+						isImportant: true,
 						condition: ( obj ) => NPC.savedGoblin
 					)
 				)

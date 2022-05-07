@@ -30,6 +30,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMechanic,
 						description: "Rumors exist of a plan to empower technology with the dungeon's spiritual"
 								+ "\n"+"energies. This could be disasterous. Liberate the engineer.",
+						isImportant: false,
 						condition: ( obj ) => NPC.savedMech
 					)
 				),
@@ -41,6 +42,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindWitchDoctor,
 						description: "A mysterious lizard-man sorcerer may know the plague's secret. Some"
 								+ "\n"+"powerful monster in the jungle has put him into hiding, though.",
+						isImportant: true,
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.WitchDoctor )
 					)
 				)

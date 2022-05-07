@@ -39,6 +39,10 @@ namespace AdventureModeLore.Lore.General.Events {
 
 		internal static IList<GeneralLoreEvent> GetDefinitions() {
 			return new List<GeneralLoreEvent> {
+				GeneralLoreEventDefinitions.GetEvent_Intro(),
+
+				//
+
 				GeneralLoreEventDefinitions.GetEvent_Radio_AnimaEmpty(),
 				//GeneralLoreEventDefinitions.GetEvent_Radio_CursedBones(),
 				//GeneralLoreEventDefinitions.GetEvent_Radio_Dungeon(),
@@ -58,7 +62,9 @@ namespace AdventureModeLore.Lore.General.Events {
 				//GeneralLoreEventDefinitions.GetEvent_Radio_StrongGates(),
 				GeneralLoreEventDefinitions.GetEvent_Radio_Trickster(),
 				//GeneralLoreEventDefinitions.GetEvent_Radio_UGDesert(),
+
 				//
+
 				//GeneralLoreEventDefinitions.GetEvent_Message_JungleWarn(),
 				//GeneralLoreEventDefinitions.GetEvent_Message_UnderworldWarn()
 			};

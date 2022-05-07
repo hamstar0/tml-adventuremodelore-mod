@@ -45,6 +45,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 						description: "The witch doctor describes a ritual to destroy the spiritual energy"
 							+ "\n"+"confluence; the source of the plague. It involves a voodoo sacrifice"
 							+ "\n"+"of one of its makers near its source: The underworld.",
+						isImportant: true,
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.WallofFlesh )
 					)
 				),

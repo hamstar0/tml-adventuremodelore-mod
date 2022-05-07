@@ -24,6 +24,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 							+ " They might come to you if you have something to offer them and a safe place to stay.",
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindMerchant,
+						isImportant: false,
 						description: "Other inhabitants exist in this land, some less enslaved than others. Build a"
 								+ "\n"+"house for a merchant to settle in.",
 						condition: ( obj ) => NPC.AnyNPCs( NPCID.Merchant )
@@ -37,6 +38,7 @@ namespace AdventureModeLore.Lore.Dialogues.Events {
 					objective: new FlatObjective(
 						title: DialogueLoreEventDefinitions.ObjectiveTitle_FindJungle,
 						description: "The old man says there's something suspicious in the jungle. Maybe take a look?",
+						isImportant: true,
 						condition: ( obj ) =>  Main.LocalPlayer.ZoneJungle
 					)
 				),

@@ -18,10 +18,12 @@ namespace AdventureModeLore.Lore.General.Events {
 				return false;
 			}
 
+			//
+
 			PKEMeter.Logic.PKEGaugesGetter gauges = PKEMeter.PKEMeterAPI.GetGauge();
 			PKEMeter.Logic.PKEGaugeValues values = gauges.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
 
-			return values.RedPercent >= 1f;
+			return values.RedRealPercent >= 1f;
 		}
 
 

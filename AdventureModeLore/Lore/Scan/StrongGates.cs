@@ -44,7 +44,7 @@ namespace AdventureModeLore.Lore {
 			//
 
 			string objTitle = "Breach 3 Magical Barrier Gates";
-			string objMsg = "Find and disable 3 magical barriers throughout the world. You may need to increase"
+			string objMsg = "Find and disable 3 magical barriers throughout the world. You'll need to increase"
 				+ "\n"+"your magic to do so. Your binoculars may give you some hints for this.";
 
 			//
@@ -53,7 +53,7 @@ namespace AdventureModeLore.Lore {
 				canScan: CanScan,
 				onScanCompleteAction: () => {
 					Scannables.CreateMessage( msgId, msgTitle, msg );
-					Scannables.CreatePercentObjective( objTitle, objMsg, 3, ObjectiveCondition );
+					Scannables.CreatePercentObjective( objTitle, objMsg, true, 3, ObjectiveCondition );
 				}
 			);
 
