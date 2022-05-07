@@ -20,8 +20,6 @@ namespace AdventureModeLore.Lore.General.Events {
 						isBordered: true,
 						color: new Color(255, 224, 64)
 					);
-
-					SimpleMessage.Top.Set( -128f, 0.5f );
 				},
 				isRepeatable: false
 			);
