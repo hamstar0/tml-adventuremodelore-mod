@@ -2,11 +2,8 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using ModLibsCore.Services.Timers;
 using ModLibsGeneral.Services.Messages.Simple;
-using Messages;
 
 
 namespace AdventureModeLore.Lore.General.Events {
@@ -19,10 +16,12 @@ namespace AdventureModeLore.Lore.General.Events {
 					SimpleMessage.PostMessage(
 						msg: "Terraria, The Land of the Undead",
 						submsg: "Eliminate the source of undeath!",
-						duration: 60 * 5,
-						isBordered: false,
+						duration: 60 * 10,
+						isBordered: true,
 						color: new Color(255, 224, 64)
 					);
+
+					SimpleMessage.Top.Set( -128f, 0.5f );
 				},
 				isRepeatable: false
 			);
