@@ -13,7 +13,7 @@ namespace AdventureModeLore.Lore {
 			string msgId = "Scannable_Scaffolds";
 			string msgTitle = "About Scaffolds";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
-				"Scaffold Erecting Kits may not seem like much, but they're very useful creating for safety and"
+				"Scaffold Erecting Kits may not seem like much, but they're very useful for creating safety and"
 				+" accessability structures. More importantly, in case of any protracted battles against many of"
 				+" the island's brutish enemies, these will all but essential for shaping pieces of your environment"
 				+" for strategic use and manueverability. Don't try to fight the big ones without them!"
