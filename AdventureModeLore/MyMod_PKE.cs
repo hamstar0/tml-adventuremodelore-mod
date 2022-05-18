@@ -30,7 +30,7 @@ namespace AdventureModeLore {
 				return existingGauge;
 			} );
 
-			PKEMeter.PKEMeterAPI.SetMeterText( "AMLoreLostExpeditions", ( plr, pos, gauges ) =>
+			PKEMeter.PKEMeterAPI.SetMeterText( PKEMeter.Logic.PKEGaugeType.Green, (plr, pos, gauges) =>
 				new PKEMeter.Logic.PKETextMessage(
 					message: "CLASS III ECTOPLASM CONCENTRATE VESSEL",
 					color: Color.Lime * (0.5f + (Main.rand.NextFloat() * 0.5f)),
