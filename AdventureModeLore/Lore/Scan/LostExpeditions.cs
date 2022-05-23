@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -11,19 +12,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_LostExpeditions() {
-			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
-
-			bool CanScan( int scrX, int scrY ) {
-				PKEGaugeValues gauge = PKEMeterAPI.GetGauge()?
-					.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
-				return gauge != null
-					? gauge.GreenRealPercent >= 0.85f
-					: false;
-			}
-
-			//
-
+		private static void LoadScannable_LostExpeditions_If() {
 			string msgId = "Scannable_LostExpeditions";
 			string msgTitle = "About Lost Expeditions";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -36,6 +25,20 @@ namespace AdventureModeLore.Lore {
 			);*/
 
 			//
+			
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
+
+			bool CanScan( int scrX, int scrY ) {
+				PKEGaugeValues gauge = PKEMeterAPI.GetGauge()?
+					.Invoke( Main.LocalPlayer, Main.LocalPlayer.MountedCenter );
+				return gauge != null
+					? gauge.GreenRealPercent >= 0.85f
+					: false;
+			}
 
 			//
 

@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
 using Objectives.Definitions;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -12,18 +13,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_StrongGates() {
-			bool CanScan( int scrX, int scrY ) {
-				int mouseTileX = (int)Main.MouseWorld.X / 16;
-				int mouseTileY = (int)Main.MouseWorld.Y / 16;
-
-				return WorldGates.WorldGatesAPI.GetGateBarriers()
-					.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
-					.Any( b => b.TileArea.Contains( mouseTileX, mouseTileY ) );
-			}
-
-			//
-
+		private static void LoadScannable_StrongGates_If() {
 			string msgId = "Scannable_StrongGates";
 			string msgTitle = "About strong World Gates";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -33,6 +23,21 @@ namespace AdventureModeLore.Lore {
 			);
 
 			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
+
+			bool CanScan( int scrX, int scrY ) {
+				int mouseTileX = (int)Main.MouseWorld.X / 16;
+				int mouseTileY = (int)Main.MouseWorld.Y / 16;
+
+				return WorldGates.WorldGatesAPI.GetGateBarriers()
+					.Where( b => b.Strength > Main.LocalPlayer.statManaMax2 )
+					.Any( b => b.TileArea.Contains( mouseTileX, mouseTileY ) );
+			}
 
 			float ObjectiveCondition( Objective objective ) {
 				int downGates = WorldGates.WorldGatesAPI.GetGateBarriers()

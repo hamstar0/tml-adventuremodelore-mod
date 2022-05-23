@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria.ID;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
-using Terraria.ModLoader;
+
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_Scaffolds() {
+		private static void LoadScannable_Scaffolds_If() {
 			string msgId = "Scannable_Scaffolds";
 			string msgTitle = "About Scaffolds";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -18,6 +20,14 @@ namespace AdventureModeLore.Lore {
 				+" the island's brutish enemies, these will all but essential for shaping pieces of your environment"
 				+" for strategic use and manueverability. Don't try to fight the big ones without them!"
 			);
+
+			//
+
+			if( !MessagesAPI.IsUnread( msgId ) ) {
+				return;
+			}
+
+			//
 
 			int[] anyOfItemTypes = new int[] {
 				ModContent.ItemType<Ergophobia.Items.ScaffoldingKit.ScaffoldingErectorKitItem>(),

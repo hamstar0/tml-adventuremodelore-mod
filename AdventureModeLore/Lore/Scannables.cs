@@ -10,21 +10,21 @@ namespace AdventureModeLore.Lore {
 		void ILoadable.OnModsUnload() { }
 
 		void ILoadable.OnPostModsLoad() {
-			Scannables.LoadScannable_CursedBones();
-			Scannables.LoadScannable_Dungeon();
-			Scannables.LoadScannable_Gems();
-			Scannables.LoadScannable_JungleWater();
-			Scannables.LoadScannable_LostExpeditions();
-			Scannables.LoadScannable_MagicItems();
-			Scannables.LoadScannable_PBGvBrambles();
-			Scannables.LoadScannable_Orbs();
-			Scannables.LoadScannable_Scaffolds();
+			Scannables.LoadScannable_CursedBones_If();
+			Scannables.LoadScannable_Dungeon_If();
+			Scannables.LoadScannable_Gems_If();
+			Scannables.LoadScannable_JungleWater_If();
+			Scannables.LoadScannable_LostExpeditions_If();
+			Scannables.LoadScannable_MagicItems_If();
+			Scannables.LoadScannable_PBGvBrambles_If();
+			Scannables.LoadScannable_Orbs_If();
+			Scannables.LoadScannable_Scaffolds_If();
 			Scannables.LoadScannable_ShadowMirror();
-			Scannables.LoadScannable_StrangePlants();
-			Scannables.LoadScannable_StrongGates();
-			Scannables.LoadScannable_UGDesert();
-			Scannables.LoadScannable_Warn_Jungle();
-			Scannables.LoadScannable_Warn_Underworld();
+			Scannables.LoadScannable_StrangePlants_If();
+			Scannables.LoadScannable_StrongGates_If();
+			Scannables.LoadScannable_UGDesert_If();
+			Scannables.LoadScannable_Warn_Jungle_If();
+			Scannables.LoadScannable_Warn_Underworld_If();
 		}
 	}
 }

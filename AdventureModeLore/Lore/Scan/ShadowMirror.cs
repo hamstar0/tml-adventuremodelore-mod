@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -12,11 +13,11 @@ namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
 		private static void LoadScannable_ShadowMirror() {
 			if( ModLoader.GetMod("SpiritWalking") != null ) {
-				Scannables.LoadScannable_Orbs_WeakRef();
+				Scannables.LoadScannable_ShadowMirror_WeakRef_If();
 			}
 		}
 
-		private static void LoadScannable_ShadowMirror_WeakRef() {
+		private static void LoadScannable_ShadowMirror_WeakRef_If() {
 			string msgId = "Scannable_ShadowMirror";
 			string msgTitle = "About the Shadow Mirror";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -33,6 +34,14 @@ namespace AdventureModeLore.Lore {
 				+" the spirit world; body and soul]. Be warned: Entering that dark world may come at a"
 				+" [c/88FF88:cost to your soul]!"
 			);*/
+
+			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
 
 			int[] anyOfItemTypes = new int[] {
 				ModContent.ItemType<SpiritWalking.Items.ShadowMirrorItem>(),

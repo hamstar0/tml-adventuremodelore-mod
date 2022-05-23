@@ -4,6 +4,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -11,13 +12,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_UGDesert() {
-			bool CanScan( int scrX, int scrY ) {
-				return NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert;
-			}
-
-			//
-
+		private static void LoadScannable_UGDesert_If() {
 			string msgId = "Scannable_UGDesert";
 			string msgTitle = "About the Underground Desert";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -29,6 +24,18 @@ namespace AdventureModeLore.Lore {
 				+" hardened sand. There are variations of these explosives available for other uses, also. Don't"
 				+" squander your orbs, though."
 			);
+
+			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
+
+			bool CanScan( int scrX, int scrY ) {
+				return NPC.downedGoblins && !NPC.savedGoblin && Main.LocalPlayer.ZoneUndergroundDesert;
+			}
 
 			//
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -9,7 +10,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_StrangePlants() {
+		private static void LoadScannable_StrangePlants_If() {
 			string msgId = "Scannable_StrangePlants";
 			string msgTitle = "About the Strange Plants";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -18,6 +19,14 @@ namespace AdventureModeLore.Lore {
 				+" statistically plausible, considering all the other types of manifestation we've seen. In any case,"
 				+" try to harvest these when you can. They're just brimming with hidden powers!"
 			);
+
+			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
 
 			int[] anyOfItemTypes = new int[] {
 				ItemID.StrangePlant1,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -9,7 +10,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_Gems() {
+		private static void LoadScannable_Gems_If() {
 			string msgId = "Scannable_Gems";
 			string msgTitle = "About Gems";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -19,6 +20,14 @@ namespace AdventureModeLore.Lore {
 				+"\n \n"
 				+"Be sure to bring me gems to see what to craft from them."
 			);
+
+			//
+			
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
 
 			int[] anyOfItemTypes = new int[] {
 				ItemID.Amethyst,

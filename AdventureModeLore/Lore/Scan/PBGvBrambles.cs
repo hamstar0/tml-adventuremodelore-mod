@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -11,7 +12,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_PBGvBrambles() {
+		private static void LoadScannable_PBGvBrambles_If() {
 			if( ModLoader.GetMod("SoulBarriers") == null ) {
 				return;
 			}
@@ -22,22 +23,12 @@ namespace AdventureModeLore.Lore {
 				return;
 			}
 
-			Scannables.LoadScannable_PBGvBrambles_WeakRef();
-		}
-
-		private static void LoadScannable_PBGvBrambles_WeakRef() {
-			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
-
-			bool CanScan( int scrX, int scrY ) {
-				return Scannables.FindTileNear(
-					(int)Main.MouseWorld.X / 16,
-					(int)Main.MouseWorld.Y / 16,
-					tile => tile.type == brambleType
-				);
-			}
-
 			//
 
+			Scannables.LoadScannable_PBGvBrambles_WeakRef_If();
+		}
+
+		private static void LoadScannable_PBGvBrambles_WeakRef_If() {
 			string msgId = "Scannable_PBGvBrambles";
 			string msgTitle = "About Cursed Brambles";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -51,6 +42,22 @@ namespace AdventureModeLore.Lore {
 			);*/
 
 			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
+
+			int brambleType = ModContent.TileType<CursedBrambles.Tiles.CursedBrambleTile>();
+
+			bool CanScan( int scrX, int scrY ) {
+				return Scannables.FindTileNear(
+					(int)Main.MouseWorld.X / 16,
+					(int)Main.MouseWorld.Y / 16,
+					tile => tile.type == brambleType
+				);
+			}
 
 			//
 

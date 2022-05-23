@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -8,13 +9,21 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_MagicItems() {
+		private static void LoadScannable_MagicItems_If() {
 			string msgId = "Scannable_MagicItems";
 			string msgTitle = "Use magic to find magic";
 			string msg = Message.RenderFormattedDescription( NPCID.OldMan,
 				"Here's something helpful to remember: You can use most magic-using items to help detect"
 				+" other magical things hidden within the land."
 			);
+
+			//
+			
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
 
 			int[] anyOfItemTypes = new int[] {
 				ItemID.WaterBolt,

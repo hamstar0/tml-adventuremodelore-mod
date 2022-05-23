@@ -1,6 +1,6 @@
 # Adventure Mode Lore
 
-Provides cutscene and interactivity elements for Adventure Mode's lore.
+Provides interactivity (lore and story) elements for Adventure Mode.
 
 Credits:
 	koolaidlemonade - Vanilla cyborg tile

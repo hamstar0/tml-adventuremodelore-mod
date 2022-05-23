@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -10,13 +11,15 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_Orbs() {
-			if( ModLoader.GetMod("Orbs") != null ) {
-				Scannables.LoadScannable_Orbs_WeakRef();
+		private static void LoadScannable_Orbs_If() {
+			if( ModLoader.GetMod("Orbs") == null ) {
+				return;
 			}
+
+			Scannables.LoadScannable_Orbs_WeakRef_If();
 		}
 
-		private static void LoadScannable_Orbs_WeakRef() {
+		private static void LoadScannable_Orbs_WeakRef_If() {
 			string msgId = "Scannable_Orbs";
 			string msgTitle = "About Orbs usage";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -40,6 +43,14 @@ namespace AdventureModeLore.Lore {
 				+" seaching for [c/88FF88:hidden magical phenomena] within caves and grottos. Keep your eyes open for [c/88FF88:ways"
 				+" to detect such things]."
 			);*/
+
+			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
 
 			int[] anyOfItemTypes = new int[] {
 				ModContent.ItemType<Orbs.Items.BlueOrbItem>(),

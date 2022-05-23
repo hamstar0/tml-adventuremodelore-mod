@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
+using Messages;
 using Messages.Definitions;
 using PKEMeter;
 using PKEMeter.Logic;
@@ -10,13 +11,7 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_Dungeon() {
-			bool CanScan( int scrX, int scrY ) {
-				return Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
-			}
-
-			//
-
+		private static void LoadScannable_Dungeon_If() {
 			string msgId = "Scannable_Dungeon";
 			string msgTitle = "About the Dungeon";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
@@ -30,6 +25,18 @@ namespace AdventureModeLore.Lore {
 				+" The powerful spiritual presence of this place may even adversely affect your own"
 				+" spiritual state. Do not linger longer than needed!"
 			);
+
+			//
+			
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
+
+			bool CanScan( int scrX, int scrY ) {
+				return Main.LocalPlayer.ZoneDungeon && NPC.downedBoss3;
+			}
 
 			//
 

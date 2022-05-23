@@ -11,18 +11,24 @@ using PKEMeter.Logic;
 
 namespace AdventureModeLore.Lore {
 	partial class Scannables : ILoadable {
-		private static void LoadScannable_Warn_Jungle() {
-			bool CanScan( int scrX, int scrY ) {
-				return Main.LocalPlayer.ZoneJungle;
-			}
-
-			//
-
+		private static void LoadScannable_Warn_Jungle_If() {
 			string msgId = "Scannable_Warn_Jungle";
 			string msgTitle = "Message - Jungle PGB Warning";
 			string msg = Message.RenderFormattedDescription( NPCID.Guide,
 				"Jungle warning: Your PBG decays quickly!"
 			);
+
+			//
+
+			if( !MessagesAPI.IsUnread(msgId) ) {
+				return;
+			}
+
+			//
+
+			bool CanScan( int scrX, int scrY ) {
+				return Main.LocalPlayer.ZoneJungle;
+			}
 
 			//
 
