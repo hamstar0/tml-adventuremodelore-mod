@@ -11,7 +11,7 @@ namespace AdventureModeLore.Lore {
 		void ILoadable.OnModsUnload() { }
 
 		void ILoadable.OnPostModsLoad() {
-			LoadHooks.AddWorldInPlayEachHook( () => {
+			MessagesAPI.AddMessagesCategoriesInitializeEvent( () => {
 				Scannables.LoadScannable_CursedBones_If();
 				Scannables.LoadScannable_Dungeon_If();
 				Scannables.LoadScannable_Gems_If();
