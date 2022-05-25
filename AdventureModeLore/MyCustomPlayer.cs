@@ -6,8 +6,9 @@ using ModLibsCore.Classes.PlayerData;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Extensions;
 using ModLibsMaps.Services.Maps;
-using AdventureModeLore.Lore;
 using LostExpeditions;
+using AdventureModeLore.Lore;
+
 
 namespace AdventureModeLore {
 	partial class AMLCustomPlayer : CustomPlayerData {
